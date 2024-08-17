@@ -214,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>运行以下命令：</p>
+<p>在 RStudio 的 Terminal 窗口依次运行以下命令：</p>
 <ul>
 <li>git remote add origin https://github.com/qbgaoo/r4ms.git</li>
 <li>git branch -M main</li>
@@ -223,7 +223,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>添加如下内容文件：</p>
-<p>``` {.yaml .github/workflows/publish.yml} on: push: branches: main pull_request: branches: main # to be able to trigger a manual build workflow_dispatch: schedule: # run every day at 11 PM - cron: ’0 23 * * *’</p>
+<p>``` {#.github/workflows/publish.yml .yaml} on: push: branches: main pull_request: branches: main # to be able to trigger a manual build workflow_dispatch: schedule: # run every day at 11 PM - cron: ’0 23 * * *’</p>
 <p>name: Render and deploy Book to Github</p>
 <p>jobs: build-deploy: runs-on: ubuntu-latest permissions: contents: write steps: - name: Check out repository uses: actions/checkout@v4</p>
 <pre><code>  - name: Set up Quarto
