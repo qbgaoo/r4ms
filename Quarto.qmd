@@ -17,7 +17,7 @@
 确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 [renv](https://rstudio.github.io/renv/articles/renv.html) 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 `renv.lock` 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：
 
 ::: callout-tip
-运行以下命令：
+在 RStudio 的 Terminal 窗口依次运行以下命令：
 
 -   git remote add origin https://github.com/qbgaoo/r4ms.git
 -   git branch -M main
@@ -26,7 +26,7 @@
 
 添加如下内容文件：
 
-``` {.yaml .github/workflows/publish.yml}
+``` {#.github/workflows/publish.yml .yaml}
 on:
   push:
     branches: main
