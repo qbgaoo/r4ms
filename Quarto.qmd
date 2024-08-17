@@ -59,3 +59,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+::: callout-tip
+## Terminal
+
+运行以下命令：
+
+-   git remote add origin https://github.com/qbgaoo/r4ms.git
+-   git branch -M main
+-   git push -u origin main
+:::
