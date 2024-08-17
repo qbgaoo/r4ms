@@ -24,9 +24,7 @@
 -   git push -u origin main
 :::
 
-在 Quarto 项目中新建文本文件并保存为 `.yml` 格式，保存在 `.github/workflows/publish.yml`（我们这里将其命名为 `publish.yml`），然后在文件中添加如下内容：
-
-.github/workflows/publish.yml
+在 Quarto 项目中新建文本文件，命名为 `publish.yml`（当然也可以是其他命字），保存路径为 `.github/workflows/publish.yml`，在文件中添加如下内容：
 
 ``` yaml
 on:
@@ -72,4 +70,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-这是一个 GitHub Actions 工作流配置文件，保存后后将上述文件提交到 GitHub中，触发文件中的工作流。
+这是一个 GitHub Actions 工作流配置文件，保存后将文件提交到 GitHub中，触发文件中的工作流。
