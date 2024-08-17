@@ -1,0 +1,61 @@
+# **Quarto**/
+
+## **GitHub Action**
+
+呈现和发布内容有几种不同的方法。下面，我们将提供一个使用 [GitHub Actions](https://docs.github.com/en/actions) 和 GitHub Pages 发布内容的指南。
+
+### 执行代码
+
+如果你愿意，可以配置一个 GitHub Action 来执行 R 代码作为渲染的一部分。这虽然是最好的方法，但当在 GitHub Actions 等 CI 服务中执行代码时，请考虑以下要求:
+
+-   你需要在 CI 环境中重新配置所有依赖项（包括 R 以及所需的正确版本的包）。
+-   如果你的代码需要任何特殊权限（例如访问数据库或网络）， CI 服务器上也需要具备这些权限。
+-   你的项目可能包含无法轻易执行的文档（例如使用旧版包的几年前的博客文章）。这些文档可能需要单独启用冻结功能，以防止它们在 CI 上执行。
+
+### **先决条件**
+
+确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 [renv](https://rstudio.github.io/renv/articles/renv.html) 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 `renv.lock` 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：
+
+``` yml
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+  # to be able to trigger a manual build
+  workflow_dispatch:
+  schedule:
+    # run every day at 11 PM
+    - cron: '0 23 * * *'
+
+name: Render and deploy Book to Github
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.4.1'
+
+      - name: Install R Dependencies
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 1
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```

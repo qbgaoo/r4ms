@@ -1,0 +1,36 @@
+/*-- scss:defaults --*/
+
+// fonts
+$font-family-sans-serif: system-ui, -apple-system, Arial, SamSun !default;
+$font-size-root: 15px !default;
+$h1-font-size: 1.4rem !default;
+$h2-font-size: 1.2rem !default;
+$h3-font-size: 1.1rem !default;
+$headings-font-weight:      400 !default;
+
+// text-align 
+$body-text-align: justify !default;
+
+// line space
+$line-height-base: 1.7 !default;
+$line-height-sm:   1.25 !default;
+$line-height-lg:   2 !default;
+
+// color
+$link-color: #A67D3D !default;
+$btn-code-copy-color-active: #A67D3D !default;
+.sidebar-title {
+  color: #A67D3D;
+}
+
+.table {
+  border-collapse: collapse;
+  th, td {
+  border: none;
+  }
+}
+
+.figure {
+  text-align: center;
+}
+
