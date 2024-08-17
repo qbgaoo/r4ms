@@ -16,53 +16,7 @@
 
 确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 [renv](https://rstudio.github.io/renv/articles/renv.html) 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 `renv.lock` 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：
 
-``` yml
-on:
-  push:
-    branches: main
-  pull_request:
-    branches: main
-  # to be able to trigger a manual build
-  workflow_dispatch:
-  schedule:
-    # run every day at 11 PM
-    - cron: '0 23 * * *'
-
-name: Render and deploy Book to Github
-
-jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Install R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.4.1'
-
-      - name: Install R Dependencies
-        uses: r-lib/actions/setup-renv@v2
-        with:
-          cache-version: 1
-
-      - name: Render and Publish
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
 ::: callout-tip
-## Terminal
-
 运行以下命令：
 
 -   git remote add origin https://github.com/qbgaoo/r4ms.git
@@ -70,9 +24,9 @@ jobs:
 -   git push -u origin main
 :::
 
-```{yaml}
-include: .github/workflows/publish.yml
+添加如下内容文件：
 
+``` {.yaml .github/workflows/publish.yml}
 on:
   push:
     branches: main
