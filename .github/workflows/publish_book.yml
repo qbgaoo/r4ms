@@ -13,7 +13,7 @@ name: Render and deploy Book to Github
 
 jobs:
   build-deploy:
-    runs-on: macro-latest
+    runs-on: windows-latest
     permissions:
       contents: write
     steps:
