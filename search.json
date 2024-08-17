@@ -14,7 +14,7 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\ncars |&gt; \n  head() \n\n  speed dist\n1     4    2\n2     4   10\n3     7    4\n4     7   22\n5     8   16\n6     9   10\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -30,8 +30,8 @@
     ]
   },
   {
-    "objectID": "Quarto.html",
-    "href": "Quarto.html",
+    "objectID": "quarto.html",
+    "href": "quarto.html",
     "title": "3  Quarto",
     "section": "",
     "text": "3.1 GitHub Action\n呈现和发布内容有几种不同的方法。下面，我们将提供一个使用 GitHub Actions 和 GitHub Pages 发布内容的指南。",
@@ -40,11 +40,11 @@
     ]
   },
   {
-    "objectID": "Quarto.html#github-action",
-    "href": "Quarto.html#github-action",
+    "objectID": "quarto.html#github-action",
+    "href": "quarto.html#github-action",
     "title": "3  Quarto",
     "section": "",
-    "text": "3.1.1 执行代码\n如果你愿意，可以配置一个 GitHub Action 来执行 R 代码作为渲染的一部分。这虽然是最好的方法，但当在 GitHub Actions 等 CI 服务中执行代码时，请考虑以下要求:\n\n你需要在 CI 环境中重新配置所有依赖项（包括 R 以及所需的正确版本的包）。\n如果你的代码需要任何特殊权限（例如访问数据库或网络）， CI 服务器上也需要具备这些权限。\n你的项目可能包含无法轻易执行的文档（例如使用旧版包的几年前的博客文章）。这些文档可能需要单独启用冻结功能，以防止它们在 CI 上执行。\n\n\n\n3.1.2 先决条件\n确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 renv 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 renv.lock 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：\n\n\n\n\n\n\n提示\n\n\n\n在 RStudio 的 Terminal 窗口依次运行以下命令：\n\ngit remote add origin https://github.com/qbgaoo/r4ms.git\ngit branch -M main\ngit push -u origin main\n\n\n\n添加如下内容文件：\n``` {#.github/workflows/publish.yml .yaml} on: push: branches: main pull_request: branches: main # to be able to trigger a manual build workflow_dispatch: schedule: # run every day at 11 PM - cron: ’0 23 * * *’\nname: Render and deploy Book to Github\njobs: build-deploy: runs-on: ubuntu-latest permissions: contents: write steps: - name: Check out repository uses: actions/checkout@v4\n  - name: Set up Quarto\n    uses: quarto-dev/quarto-actions/setup@v2\n\n  - name: Install R\n    uses: r-lib/actions/setup-r@v2\n    with:\n      r-version: '4.4.1'\n\n  - name: Install R Dependencies\n    uses: r-lib/actions/setup-renv@v2\n    with:\n      cache-version: 1\n\n  - name: Render and Publish\n    uses: quarto-dev/quarto-actions/publish@v2\n    with:\n      target: gh-pages\n    env:\n      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n```",
+    "text": "3.1.1 执行代码\n如果你愿意，可以配置一个 GitHub Action 来执行 R 代码作为渲染的一部分。这虽然是最好的方法，但当在 GitHub Actions 等 CI 服务中执行代码时，请考虑以下要求:\n\n你需要在 CI 环境中重新配置所有依赖项（包括 R 以及所需的正确版本的包）。\n如果你的代码需要任何特殊权限（例如访问数据库或网络）， CI 服务器上也需要具备这些权限。\n你的项目可能包含无法轻易执行的文档（例如使用旧版包的几年前的博客文章）。这些文档可能需要单独启用冻结功能，以防止它们在 CI 上执行。\n\n\n\n3.1.2 先决条件\n确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 renv 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 renv.lock 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：\n\n\n\n\n\n\n提示\n\n\n\n在 RStudio 左下窗口的 Terminal 栏中依次运行以下 Git 命令：\n\ngit remote add origin https://github.com/qbgaoo/r4ms.git\ngit branch -M main\ngit push -u origin main\n\n\n\n在 Quarto 项目中新建文本文件，命名为 publish.yml（当然也可以是其他命字），保存路径为 .github/workflows/publish.yml，在文件中添加如下内容：\non:\n  push:\n    branches: main\n  pull_request:\n    branches: main\n  # to be able to trigger a manual build\n  workflow_dispatch:\n  schedule:\n    # run every day at 11 PM\n    - cron: '0 23 * * *'\n\nname: Render and deploy Book to Github\n\njobs:\n  build-deploy:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: write\n    steps:\n      - name: Check out repository\n        uses: actions/checkout@v4\n\n      - name: Set up Quarto\n        uses: quarto-dev/quarto-actions/setup@v2\n\n      - name: Install R\n        uses: r-lib/actions/setup-r@v2\n        with:\n          r-version: '4.4.1'\n\n      - name: Install R Dependencies\n        uses: r-lib/actions/setup-renv@v2\n        with:\n          cache-version: 1\n\n      - name: Render and Publish\n        uses: quarto-dev/quarto-actions/publish@v2\n        with:\n          target: gh-pages\n        env:\n          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n这是一个 GitHub Actions 工作流配置文件，保存后将文件提交到 GitHub中，触发文件中的工作流。",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Quarto</span>"
     ]
