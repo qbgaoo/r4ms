@@ -13,7 +13,7 @@ name: Render and deploy Book to Github
 
 jobs:
   build-deploy:
-    runs-on: linux-latest
+    runs-on: macOS-latest
     permissions:
       contents: write
     steps:
@@ -37,5 +37,6 @@ jobs:
         uses: quarto-dev/quarto-actions/publish@v2
         with:
           target: gh-pages
+          folder: docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
