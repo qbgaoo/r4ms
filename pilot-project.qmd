@@ -1,0 +1,63 @@
+# 实例分析
+
+**SDTM-ADaM Pilot Project** 数据集是用于临床试验数据标准化的一个示例数据集，遵循了 CDISC（Clinical Data Interchange Standards Consortium）规定的标准：SDTM（Study Data Tabulation Model）和 ADaM（Analysis Data Model）。这些数据集用于演示如何整理和分析临床试验数据，以便提交给监管机构如 FDA。
+
+由于 SDTM-ADaM Pilot Project 数据集的具体变量会因数据集的不同而有所变化，以下是 SDTM 和 ADaM 数据集中一些常见变量的概述：
+
+### **1. SDTM 数据集的常见变量**
+
+SDTM 数据集通常包含与患者、试验设计、访视、药物暴露、实验室数据等相关的变量。
+
+-   **`USUBJID`**: Unique Subject Identifier, 每个受试者的唯一标识符。
+
+-   **`SUBJID`**: Subject Identifier for the Study, 研究中每个受试者的标识符。
+
+-   **`AGE`**: 受试者的年龄。
+
+-   **`SEX`**: 受试者的性别。
+
+-   **`RACE`**: 受试者的种族。
+
+-   **`VISIT`**: 访视名称，表示数据采集的时间点（如访视1，访视2等）。
+
+-   **`VISITNUM`**: 访视编号，通常是一个数字，用于排序访视。
+
+-   **`TRT01A`**: Treatment Group, 表示受试者被随机分配到的治疗组。
+
+-   **`AEDECOD`**: Adverse Event Dictionary-Derived Term, 不良事件的编码名称。
+
+-   **`LBTESTCD`**: Lab Test Code, 实验室检测的简码。
+
+-   **`LBSTRESN`**: Numeric Result/Value, 实验室检测结果的数值。
+
+-   **`EXDOSE`**: Exposure Dose, 受试者实际接受的药物剂量。
+
+### **2. ADaM 数据集的常见变量**
+
+ADaM 数据集用于分析目的，变量名和结构略有不同，通常是为特定分析而创建的派生变量。
+
+-   **`USUBJID`**: 同 SDTM 中，受试者的唯一标识符。
+
+-   **`PARAM`**: Analysis Parameter, 分析参数的名称。
+
+-   **`AVAL`**: Analysis Value, 分析参数的数值。
+
+-   **`BASE`**: Baseline Value, 基线值。
+
+-   **`CHG`**: Change from Baseline, 与基线值的变化。
+
+-   **`TRTA`**: Actual Treatment, 受试者实际接受的治疗。
+
+-   **`AVISIT`**: Analysis Visit, 分析时使用的访视名称。
+
+-   **`ADY`**: Analysis Relative Day, 相对于参考日期的天数。
+
+-   **`ASEQ`**: Sequence Number, 分析记录的顺序编号。
+
+### **如何获取详细的变量定义**
+
+每个 SDTM 和 ADaM 数据集通常会有相应的定义文件（Define-XML），其中详细描述了每个变量的含义、类型、格式等信息。要了解具体数据集中的变量含义，可以参考这些定义文件。
+
+如果你使用的是 SDTM-ADaM Pilot Project 的数据集，通常会有附带的文档或元数据文件来说明每个变量的详细含义。这些文档通常会随数据集一起提供，也可以在 CDISC 的官方网站或项目网站上找到。
+
+如果你有具体的文件或数据集，可以使用 `readr`、`haven` 或者其他合适的 R 包来加载数据，并使用 `str()` 或 `summary()` 函数来查看变量信息。

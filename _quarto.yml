@@ -24,6 +24,7 @@ book:
     - part: stat-anal-report.qmd
       chapters: 
         - quarto.qmd
+        - pilot-project.qmd
 
 format:
   html:
