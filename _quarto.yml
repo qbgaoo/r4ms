@@ -21,7 +21,8 @@ book:
         - quat-data-stat-desc.qmd
         - ttest.qmd
         
-    - part: stat-anal-report.qmd 
+    - part: stat-anal-report.qmd
+      chapters: 
         - quarto.qmd
 
 format:
