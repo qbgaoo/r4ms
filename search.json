@@ -14,7 +14,7 @@
     "href": "intro.html",
     "title": "1  绪论",
     "section": "",
-    "text": "1.1 数据集\n在这个项目中，我们使用了公开的 CDISC 探索性研究数据，这些数据可以在 CDISC GitHub 库中获取。为方便使用，我们从库中下载了所有的数据集，并将这些数据集从 .xpt 格式转换为 .sas7bdat 格式，存储在本项目的 data-adam/文件夹内。数据集结构遵循 CDISC ADaM 标准。\nlibrary(haven)\nlibrary(tidyverse) \n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.3     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nadsl &lt;- read_sas(\"data-adam/adsl.sas7bdat\")",
+    "text": "1.1 数据集\n在这个项目中，我们使用了公开的 CDISC 探索性研究数据，这些数据可以在 CDISC GitHub 库中获取。为方便使用，我们从库中下载了所有的数据集，并将这些数据集从 .xpt 格式转换为 .sas7bdat 格式，存储在本项目的 data-adam/文件夹内。数据集结构遵循 CDISC ADaM 标准。",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>绪论</span>"
     ]
