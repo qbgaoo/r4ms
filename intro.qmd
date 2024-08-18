@@ -5,10 +5,3 @@
 ## **数据集**
 
 在这个项目中，我们使用了公开的 CDISC 探索性研究数据，这些数据可以在 [CDISC GitHub 库](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets)中获取。为方便使用，我们从库中下载了所有的数据集，并将这些数据集从 `.xpt` 格式转换为 `.sas7bdat` 格式，存储在本项目的 `data-adam/`文件夹内。数据集结构遵循 [CDISC ADaM](https://www.cdisc.org/standards/foundational/adam) 标准。
-
-```{r}
-library(haven)
-library(tidyverse) 
-
-adsl <- read_sas("data-adam/adsl.sas7bdat")
-```
