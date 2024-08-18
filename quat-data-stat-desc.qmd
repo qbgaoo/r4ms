@@ -1,0 +1,199 @@
+# 计量资料的统计描述
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+## 安装包
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(kableExtra)
+library(broom)
+library(showtext)                                             # <1>
+```
+
+1.  showtext包允许在绘图时使用系统中任意的TrueType或OpenType字体
+
+## 频数分布
+
+### 频数分布表
+
+**例2-1** 某医院用随机抽样方法检查了138名正常成年女性的红细胞数($\times10^{12}/L$)，其测量结果如下，试编制频数分布表。
+
+------------------------------------------------------------------------
+
+```{r}
+#| echo: false        # <1> 这两个选项去掉任何一个，代码块输出结果都会改变
+#| results: asis      # <1> 这两个选项去掉任何一个，代码块输出结果都会改变
+
+rbc <- haven::read_dta("datasets/例02-01.dta") |> 
+  unlist(use.names = F) 
+cat(rbc)                                                                  
+```
+
+------------------------------------------------------------------------
+
+若rbc为138名正常成年女性的红细胞数的测量值，求rbc的最小值、最大值和极差：
+
+```{r}
+range(rbc)                                    # <1>
+range_rbc <- range(rbc) |>                                
+  diff() |>                                   # <2>
+  print()
+```
+
+1.  `range()`返回包含最小值和最大值的向量
+2.  利用管道操作符和`diff()`计算极差
+
+组段数通常取10\~15组，这里取12，计算组距 (保留两位小数)：
+
+```{r}
+round(range_rbc/12, 2)
+```
+
+根据组距写出组段的上下限：
+
+```{r}
+breaks <- seq(from = 3.0, to = 5.6, by = 0.2)
+breaks |> 
+  t() |> 
+  kbl() |> 
+  kable_classic()
+```
+
+使用`cut()`函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；此函数可判断上述分组方法是否合适： 例如若`seq()`的参数from=3.0，to=5.5，则有变量值的编码区间为`NA>`，此时可调整参数to的值，直到编码区间没有`NA>`为止(这里to=5.6)。
+
+```{r}
+cut(rbc, breaks = breaks, right = F) |> 
+  str_c() |> 
+  c(rep(" ", 6)) |> 
+  matrix(nrow = 18, ncol = 8, byrow = T) |> 
+  kbl() |> 
+  kable_classic()
+```
+
+生成频数分布表：
+
+```{r}
+#| label: tbl-freq-distribute
+#| tbl-cap: 138名正常成年女性的红细胞数频数分布
+
+DescTools::Freq(rbc, breaks = breaks) |> 
+  kbl(digits = 3, align = "c") |>
+  kable_classic(full_width = F) |> 
+  row_spec(0, bold = T)
+```
+
+### 频数分布图
+
+```{r}
+#| label: fig-freq-distribute
+#| fig-cap: 138名正常成年女性的红细胞数频数分布
+
+hist(
+  x              = rbc, 
+  breaks         = breaks, 
+  right          = T, 
+  col            = "light gray", 
+  include.lowest = T,
+  main           = " ",
+  xlab           = "红细胞数",
+  ylab           = "频数",
+  xlim           = c(3, 5.8),
+  ylim           = c(0, 35)
+)
+```
+
+## 集中趋势的描述
+
+### 算术均数
+
+**例2-2** 计算例2-1某医院138名正常成年女性的红细胞数的均数。
+
+```{r}
+mean(rbc, na.rm = T) |> 
+  round(digits = 2)
+```
+
+### 几何均数
+
+**例2-3** 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。
+
+```{r}
+#| echo: false
+#| results: asis
+
+serum_antibody_titer <- haven::read_dta("datasets/例02-05.dta") |> 
+  unlist(use.names = F)
+cat(serum_antibody_titer)
+```
+
+设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：
+
+```{r}
+serum_antibody_titer |> 
+  DescTools::Gmean() |> 
+  round(digits = 1)
+```
+
+### 中位数与四分位数
+
+计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：
+
+```{r}
+median(rbc)
+quantile(rbc, probs = c(0.25, 0.5, 0.75)) |> 
+  round(digits = 2)
+```
+
+## 离散趋势的描述
+
+以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
+
+### 极差
+
+```{r}
+range(rbc) |> 
+  diff()
+```
+
+### 四分位数间距
+
+```{r}
+IQR(rbc) |> 
+  round(digits = 2)
+```
+
+### 方差和标准差
+
+```{r}
+var(rbc)
+sd(rbc)
+```
+
+### 变异系数
+
+```{r}
+sd(rbc) / mean(rbc) * 100
+```
+
+## 医学参考值范围
+
+以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
+
+```{r}
+ref_range <- quantile(rbc, probs = c(0.025, 0.975)) |> 
+  round(digits = 3) |> 
+  print()
+```
+
+由上可知，正常成年女性红细胞数的95%医学参考值范围为: `r paste0("(", ref_range[1], ", ", ref_range[2], ")")`
+
+```{r}
+install.packages("DescTools")
+```

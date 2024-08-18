@@ -11,11 +11,18 @@ book:
   repo-url: https://github.com/qbgaoo/r4ms
   repo-actions: [edit, issue]
   
+  
   chapters:
     - index.qmd
     - intro.qmd
-    - summary.qmd
-    - quarto.qmd
+    
+    - part: basic-stat.qmd
+      chapters:
+        - quat-data-stat-desc.qmd
+        - ttest.qmd
+        
+    - part: stat-anal-report.qmd 
+        - quarto.qmd
 
 format:
   html:
