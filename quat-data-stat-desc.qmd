@@ -145,16 +145,14 @@ DescTools::Freq(bmi, breaks = breaks) |>
 #| fig-cap: 138名正常成年女性的红细胞数频数分布
 
 hist(
-  x              = rbc, 
+  x              = bmi, 
   breaks         = breaks, 
   right          = T, 
   col            = "light gray", 
   include.lowest = T,
   main           = " ",
-  xlab           = "红细胞数",
-  ylab           = "频数",
-  xlim           = c(3, 5.8),
-  ylim           = c(0, 35)
+  xlab           = "BMI",
+  ylab           = "频数"
 )
 ```
 
@@ -165,7 +163,7 @@ hist(
 **例2-2** 计算例2-1某医院138名正常成年女性的红细胞数的均数。
 
 ```{r}
-mean(BMI_BL, na.rm = T) |> 
+mean(bmi) |> 
   round(digits = 2)
 ```
 
@@ -195,8 +193,8 @@ serum_antibody_titer |>
 计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：
 
 ```{r}
-median(rbc)
-quantile(rbc, probs = c(0.25, 0.5, 0.75)) |> 
+median(bmi)
+quantile(bmi, probs = c(0.25, 0.5, 0.75)) |> 
   round(digits = 2)
 ```
 
@@ -207,28 +205,29 @@ quantile(rbc, probs = c(0.25, 0.5, 0.75)) |>
 ### 极差
 
 ```{r}
-range(rbc) |> 
+range(bmi) |> 
   diff()
 ```
 
 ### 四分位数间距
 
 ```{r}
-IQR(rbc) |> 
+IQR(bmi) |> 
   round(digits = 2)
 ```
 
 ### 方差和标准差
 
 ```{r}
-var(rbc)
-sd(rbc)
+var(bmi)
+sd(bmi)
 ```
 
 ### 变异系数
 
 ```{r}
-sd(rbc) / mean(rbc) * 100
+cv <- (sd(bmi) / mean(bmi)) * 100
+round(cv, digits = 2)
 ```
 
 ## 医学参考值范围
@@ -236,13 +235,9 @@ sd(rbc) / mean(rbc) * 100
 以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
 
 ```{r}
-ref_range <- quantile(rbc, probs = c(0.025, 0.975)) |> 
+med_ref_range <- quantile(bmi, probs = c(0.025, 0.975)) |> 
   round(digits = 3) |> 
   print()
 ```
 
-由上可知，正常成年女性红细胞数的95%医学参考值范围为: `r paste0("(", ref_range[1], ", ", ref_range[2], ")")`
-
-```{r}
-install.packages("DescTools")
-```
+由上可知，正常成年女性红细胞数的95%医学参考值范围为: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`
