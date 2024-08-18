@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://qbgaoo.github.io/r4ms/index.html</loc>
-    <lastmod>2024-08-18T00:10:13.178Z</lastmod>
+    <lastmod>2024-08-18T04:07:19.112Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/intro.html</loc>
-    <lastmod>2024-08-18T00:10:13.178Z</lastmod>
+    <lastmod>2024-08-18T04:07:19.112Z</lastmod>
   </url>
   <url>
-    <loc>https://qbgaoo.github.io/r4ms/summary.html</loc>
-    <lastmod>2024-08-18T00:10:13.179Z</lastmod>
+    <loc>https://qbgaoo.github.io/r4ms/quat-data-stat-desc.html</loc>
+    <lastmod>2024-08-18T04:07:19.112Z</lastmod>
   </url>
   <url>
-    <loc>https://qbgaoo.github.io/r4ms/quarto.html</loc>
-    <lastmod>2024-08-18T00:10:13.178Z</lastmod>
+    <loc>https://qbgaoo.github.io/r4ms/ttest.html</loc>
+    <lastmod>2024-08-18T04:07:19.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/basic-stat.html</loc>
+    <lastmod>2024-08-18T04:07:19.110Z</lastmod>
   </url>
 </urlset>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; 计量资料的统计描述 – R 医学统计学</title>
+<title>基本统计方法 – R 医学统计学</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,7 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quarto.html" rel="next">
+<link href="./quat-data-stat-desc.html" rel="next">
 <link href="./intro.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -119,7 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./summary.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="搜索" onclick="window.quartoOpenSearch();">
@@ -165,32 +131,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">绪论</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">基本统计方法</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link active">
+  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">stat-anal-report.qmd - quarto.qmd</span></span>
+  </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">目 录</h2>
+   
+  <ul>
+  <li><a href="#描述性统计" id="toc-描述性统计" class="nav-link active" data-scroll-target="#描述性统计"><strong>1. 描述性统计</strong></a></li>
+  <li><a href="#推断性统计" id="toc-推断性统计" class="nav-link" data-scroll-target="#推断性统计"><strong>2. 推断性统计</strong></a></li>
+  <li><a href="#回归分析" id="toc-回归分析" class="nav-link" data-scroll-target="#回归分析"><strong>3. 回归分析</strong></a></li>
+  <li><a href="#随机化和抽样" id="toc-随机化和抽样" class="nav-link" data-scroll-target="#随机化和抽样"><strong>5. 随机化和抽样</strong></a></li>
+  <li><a href="#误差与功效分析" id="toc-误差与功效分析" class="nav-link" data-scroll-target="#误差与功效分析"><strong>6. 误差与功效分析</strong></a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></h1>
+<h1 class="title">基本统计方法</h1>
 </div>
 
 
@@ -207,15 +198,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>In summary, this book has no content whatsoever.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
+<p>基本的医学统计方法涵盖了数据的收集、整理、描述、分析和解释，旨在帮助研究者理解疾病的发生、发展、治疗效果及健康状况的分布规律。以下是医学研究中常用的一些基本统计方法：</p>
+<section id="描述性统计" class="level3">
+<h3 class="anchored" data-anchor-id="描述性统计"><strong>1. 描述性统计</strong></h3>
+<ul>
+<li><p><strong>频率分析</strong>：计算各类别或数值出现的频数和百分比。</p></li>
+<li><p><strong>集中趋势测量</strong>：平均值、中位数和众数，用于描述数据的中心位置。</p></li>
+<li><p><strong>离散程度测量</strong>：标准差、方差、四分位数间距和极差，反映数据的分散程度。</p></li>
+</ul>
+</section>
+<section id="推断性统计" class="level3">
+<h3 class="anchored" data-anchor-id="推断性统计"><strong>2. 推断性统计</strong></h3>
+<ul>
+<li><p><strong>参数检验</strong>：</p>
+<ul>
+<li><p><strong>t检验</strong>：用于比较两组或几组独立或配对样本的均值差异，如学生t检验、配对t检验。</p></li>
+<li><p><strong>ANOVA（方差分析）</strong>：比较多个样本均值是否存在显著差异。</p></li>
+</ul></li>
+<li><p><strong>非参数检验</strong>：</p>
+<ul>
+<li><p><strong>Mann-Whitney U检验</strong>（Wilcoxon秩和检验的两样本形式）：适用于连续数据但不符合正态分布的两组样本均值差异检验。</p></li>
+<li><p><strong>Kruskal-Wallis H检验</strong>：多组独立样本的中位数差异检验，适用于非正态分布数据。</p></li>
+</ul></li>
+<li><p><strong>卡方检验</strong>（Chi-square test）：用于分析分类变量间的关系，如四格表检验。</p></li>
+</ul>
+</section>
+<section id="回归分析" class="level3">
+<h3 class="anchored" data-anchor-id="回归分析"><strong>3. 回归分析</strong></h3>
+<ul>
+<li><p><strong>线性回归</strong>：研究一个或多个自变量与一个连续因变量之间的线性关系。</p></li>
+<li><p><strong>逻辑回归</strong>（Logistic Regression）：适用于因变量为二分类或多元分类的场合，用来估计事件发生概率。</p></li>
+</ul>
+</section>
+<section id="随机化和抽样" class="level3">
+<h3 class="anchored" data-anchor-id="随机化和抽样"><strong>5. 随机化和抽样</strong></h3>
+<ul>
+<li><p><strong>随机化</strong>：确保研究的组间可比性。</p></li>
+<li><p><strong>抽样技术</strong>：包括简单随机抽样、分层抽样、整群抽样等，确保样本代表性。</p></li>
+</ul>
+</section>
+<section id="误差与功效分析" class="level3">
+<h3 class="anchored" data-anchor-id="误差与功效分析"><strong>6. 误差与功效分析</strong></h3>
+<ul>
+<li><strong>类型I和II错误</strong>的理解，以及统计功效分析，以确定研究设计是否足够强大以检测预期效应。</li>
+</ul>
+<p>选择适当的统计方法需依据研究目的、数据类型（定量或定性）、数据分布（正态与否）、样本大小等因素。理解这些基础统计概念和方法对于设计和解读医学研究至关重要。</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -828,8 +858,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quarto.html" class="pagination-link" aria-label="Quarto">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="计量资料的统计描述">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -838,5 +868,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/summary.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
