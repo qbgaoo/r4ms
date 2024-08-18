@@ -3,10 +3,6 @@ project:
 
 book:
   title: "R 医学统计学"
-  author: "Frank Gao"
-  date: "8/18/2024"
-  date-format: "YYYY[年]M[月]D[日]"
-  
   reader-mode: true
   cover-image: cover.png
   favicon: favicon.png
@@ -20,9 +16,6 @@ book:
     - intro.qmd
     - summary.qmd
     - quarto.qmd
-    - references.qmd
-
-bibliography: references.bib
 
 format:
   html:
