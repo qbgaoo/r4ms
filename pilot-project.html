@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>基本统计方法 – R 医学统计学</title>
+<title>5&nbsp; 实例分析 – R 医学统计学</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./quat-data-stat-desc.html" rel="next">
-<link href="./intro.html" rel="prev">
+<link href="./quarto.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +84,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">实例分析</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="搜索" onclick="window.quartoOpenSearch();">
@@ -133,7 +132,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link active">
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">基本统计方法</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -171,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">实例分析</span></span></a>
   </div>
 </li>
@@ -187,20 +186,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">目 录</h2>
    
   <ul>
-  <li><a href="#描述性统计" id="toc-描述性统计" class="nav-link active" data-scroll-target="#描述性统计"><strong>1. 描述性统计</strong></a></li>
-  <li><a href="#推断性统计" id="toc-推断性统计" class="nav-link" data-scroll-target="#推断性统计"><strong>2. 推断性统计</strong></a></li>
-  <li><a href="#回归分析" id="toc-回归分析" class="nav-link" data-scroll-target="#回归分析"><strong>3. 回归分析</strong></a></li>
-  <li><a href="#随机化和抽样" id="toc-随机化和抽样" class="nav-link" data-scroll-target="#随机化和抽样"><strong>5. 随机化和抽样</strong></a></li>
-  <li><a href="#误差与功效分析" id="toc-误差与功效分析" class="nav-link" data-scroll-target="#误差与功效分析"><strong>6. 误差与功效分析</strong></a></li>
+  <li><a href="#sdtm-数据集的常见变量" id="toc-sdtm-数据集的常见变量" class="nav-link active" data-scroll-target="#sdtm-数据集的常见变量"><span class="header-section-number">5.0.1</span> <strong>1. SDTM 数据集的常见变量</strong></a></li>
+  <li><a href="#adam-数据集的常见变量" id="toc-adam-数据集的常见变量" class="nav-link" data-scroll-target="#adam-数据集的常见变量"><span class="header-section-number">5.0.2</span> <strong>2. ADaM 数据集的常见变量</strong></a></li>
+  <li><a href="#如何获取详细的变量定义" id="toc-如何获取详细的变量定义" class="nav-link" data-scroll-target="#如何获取详细的变量定义"><span class="header-section-number">5.0.3</span> <strong>如何获取详细的变量定义</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">实例分析</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">基本统计方法</h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">实例分析</span></h1>
 </div>
 
 
@@ -217,51 +214,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>基本的医学统计方法涵盖了数据的收集、整理、描述、分析和解释，旨在帮助研究者理解疾病的发生、发展、治疗效果及健康状况的分布规律。以下是医学研究中常用的一些基本统计方法：</p>
-<section id="描述性统计" class="level3">
-<h3 class="anchored" data-anchor-id="描述性统计"><strong>1. 描述性统计</strong></h3>
+<p><strong>SDTM-ADaM Pilot Project</strong> 数据集是用于临床试验数据标准化的一个示例数据集，遵循了 CDISC（Clinical Data Interchange Standards Consortium）规定的标准：SDTM（Study Data Tabulation Model）和 ADaM（Analysis Data Model）。这些数据集用于演示如何整理和分析临床试验数据，以便提交给监管机构如 FDA。</p>
+<p>由于 SDTM-ADaM Pilot Project 数据集的具体变量会因数据集的不同而有所变化，以下是 SDTM 和 ADaM 数据集中一些常见变量的概述：</p>
+<section id="sdtm-数据集的常见变量" class="level3" data-number="5.0.1">
+<h3 data-number="5.0.1" class="anchored" data-anchor-id="sdtm-数据集的常见变量"><span class="header-section-number">5.0.1</span> <strong>1. SDTM 数据集的常见变量</strong></h3>
+<p>SDTM 数据集通常包含与患者、试验设计、访视、药物暴露、实验室数据等相关的变量。</p>
 <ul>
-<li><p><strong>频率分析</strong>：计算各类别或数值出现的频数和百分比。</p></li>
-<li><p><strong>集中趋势测量</strong>：平均值、中位数和众数，用于描述数据的中心位置。</p></li>
-<li><p><strong>离散程度测量</strong>：标准差、方差、四分位数间距和极差，反映数据的分散程度。</p></li>
+<li><p><strong><code>USUBJID</code></strong>: Unique Subject Identifier, 每个受试者的唯一标识符。</p></li>
+<li><p><strong><code>SUBJID</code></strong>: Subject Identifier for the Study, 研究中每个受试者的标识符。</p></li>
+<li><p><strong><code>AGE</code></strong>: 受试者的年龄。</p></li>
+<li><p><strong><code>SEX</code></strong>: 受试者的性别。</p></li>
+<li><p><strong><code>RACE</code></strong>: 受试者的种族。</p></li>
+<li><p><strong><code>VISIT</code></strong>: 访视名称，表示数据采集的时间点（如访视1，访视2等）。</p></li>
+<li><p><strong><code>VISITNUM</code></strong>: 访视编号，通常是一个数字，用于排序访视。</p></li>
+<li><p><strong><code>TRT01A</code></strong>: Treatment Group, 表示受试者被随机分配到的治疗组。</p></li>
+<li><p><strong><code>AEDECOD</code></strong>: Adverse Event Dictionary-Derived Term, 不良事件的编码名称。</p></li>
+<li><p><strong><code>LBTESTCD</code></strong>: Lab Test Code, 实验室检测的简码。</p></li>
+<li><p><strong><code>LBSTRESN</code></strong>: Numeric Result/Value, 实验室检测结果的数值。</p></li>
+<li><p><strong><code>EXDOSE</code></strong>: Exposure Dose, 受试者实际接受的药物剂量。</p></li>
 </ul>
 </section>
-<section id="推断性统计" class="level3">
-<h3 class="anchored" data-anchor-id="推断性统计"><strong>2. 推断性统计</strong></h3>
+<section id="adam-数据集的常见变量" class="level3" data-number="5.0.2">
+<h3 data-number="5.0.2" class="anchored" data-anchor-id="adam-数据集的常见变量"><span class="header-section-number">5.0.2</span> <strong>2. ADaM 数据集的常见变量</strong></h3>
+<p>ADaM 数据集用于分析目的，变量名和结构略有不同，通常是为特定分析而创建的派生变量。</p>
 <ul>
-<li><p><strong>参数检验</strong>：</p>
-<ul>
-<li><p><strong>t检验</strong>：用于比较两组或几组独立或配对样本的均值差异，如学生t检验、配对t检验。</p></li>
-<li><p><strong>ANOVA（方差分析）</strong>：比较多个样本均值是否存在显著差异。</p></li>
-</ul></li>
-<li><p><strong>非参数检验</strong>：</p>
-<ul>
-<li><p><strong>Mann-Whitney U检验</strong>（Wilcoxon秩和检验的两样本形式）：适用于连续数据但不符合正态分布的两组样本均值差异检验。</p></li>
-<li><p><strong>Kruskal-Wallis H检验</strong>：多组独立样本的中位数差异检验，适用于非正态分布数据。</p></li>
-</ul></li>
-<li><p><strong>卡方检验</strong>（Chi-square test）：用于分析分类变量间的关系，如四格表检验。</p></li>
+<li><p><strong><code>USUBJID</code></strong>: 同 SDTM 中，受试者的唯一标识符。</p></li>
+<li><p><strong><code>PARAM</code></strong>: Analysis Parameter, 分析参数的名称。</p></li>
+<li><p><strong><code>AVAL</code></strong>: Analysis Value, 分析参数的数值。</p></li>
+<li><p><strong><code>BASE</code></strong>: Baseline Value, 基线值。</p></li>
+<li><p><strong><code>CHG</code></strong>: Change from Baseline, 与基线值的变化。</p></li>
+<li><p><strong><code>TRTA</code></strong>: Actual Treatment, 受试者实际接受的治疗。</p></li>
+<li><p><strong><code>AVISIT</code></strong>: Analysis Visit, 分析时使用的访视名称。</p></li>
+<li><p><strong><code>ADY</code></strong>: Analysis Relative Day, 相对于参考日期的天数。</p></li>
+<li><p><strong><code>ASEQ</code></strong>: Sequence Number, 分析记录的顺序编号。</p></li>
 </ul>
 </section>
-<section id="回归分析" class="level3">
-<h3 class="anchored" data-anchor-id="回归分析"><strong>3. 回归分析</strong></h3>
-<ul>
-<li><p><strong>线性回归</strong>：研究一个或多个自变量与一个连续因变量之间的线性关系。</p></li>
-<li><p><strong>逻辑回归</strong>（Logistic Regression）：适用于因变量为二分类或多元分类的场合，用来估计事件发生概率。</p></li>
-</ul>
-</section>
-<section id="随机化和抽样" class="level3">
-<h3 class="anchored" data-anchor-id="随机化和抽样"><strong>5. 随机化和抽样</strong></h3>
-<ul>
-<li><p><strong>随机化</strong>：确保研究的组间可比性。</p></li>
-<li><p><strong>抽样技术</strong>：包括简单随机抽样、分层抽样、整群抽样等，确保样本代表性。</p></li>
-</ul>
-</section>
-<section id="误差与功效分析" class="level3">
-<h3 class="anchored" data-anchor-id="误差与功效分析"><strong>6. 误差与功效分析</strong></h3>
-<ul>
-<li><strong>类型I和II错误</strong>的理解，以及统计功效分析，以确定研究设计是否足够强大以检测预期效应。</li>
-</ul>
-<p>选择适当的统计方法需依据研究目的、数据类型（定量或定性）、数据分布（正态与否）、样本大小等因素。理解这些基础统计概念和方法对于设计和解读医学研究至关重要。</p>
+<section id="如何获取详细的变量定义" class="level3" data-number="5.0.3">
+<h3 data-number="5.0.3" class="anchored" data-anchor-id="如何获取详细的变量定义"><span class="header-section-number">5.0.3</span> <strong>如何获取详细的变量定义</strong></h3>
+<p>每个 SDTM 和 ADaM 数据集通常会有相应的定义文件（Define-XML），其中详细描述了每个变量的含义、类型、格式等信息。要了解具体数据集中的变量含义，可以参考这些定义文件。</p>
+<p>如果你使用的是 SDTM-ADaM Pilot Project 的数据集，通常会有附带的文档或元数据文件来说明每个变量的详细含义。这些文档通常会随数据集一起提供，也可以在 CDISC 的官方网站或项目网站上找到。</p>
+<p>如果你有具体的文件或数据集，可以使用 <code>readr</code>、<code>haven</code> 或者其他合适的 R 包来加载数据，并使用 <code>str()</code> 或 <code>summary()</code> 函数来查看变量信息。</p>
 
 
 </section>
@@ -872,14 +864,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link" aria-label="绪论">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">绪论</span></span>
+      <a href="./quarto.html" class="pagination-link" aria-label="Quarto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quarto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="计量资料的统计描述">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -887,5 +876,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
