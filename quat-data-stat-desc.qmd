@@ -45,7 +45,7 @@ cat(bmi)
 
 ------------------------------------------------------------------------
 
-若rbc为138名正常成年女性的红细胞数的测量值，求rbc的最小值、最大值和极差：
+检查缺失值：
 
 ```{r}
 bmi |> 
@@ -60,6 +60,8 @@ bmi_clean <- na.omit(bmi)
 bmi_filled <- if_else(is.na(bmi), mean(bmi, na.rm = T), bmi) |> 
   round(digits = 1)
 ```
+
+若 bmi 为143名女性的 BMI 测量值，求 BMI 的最小值、最大值和极差：
 
 ```{r}
 bmi <- bmi_filled
