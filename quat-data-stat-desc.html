@@ -337,7 +337,7 @@ window.Quarto = {
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25.1 26.1 30.4 23.9 28.1 24.9 23.8 27.8 27.8 25.9 17.7 23.5 18.6 24.9 31.6 22.5 25.7 40.1 NA 31.7 21.8 18.4 38.6 23.8 24.8 21.1 22.7 19.2 23 30.7 24.8 21.3 20.1 27 23.9 15.1 24.6 20.1 26.2 21.3 19.1 22.7 22.6 28.9 20.4 19.7 28 31.4 30.4 26.8 22.7 21.2 21 26.9 24.2 20.9 20.6 30.6 23.8 17.9 26.9 27.8 20.8 23 15.3 23.4 32.8 23.4 20.4 29.2 23.6 20.3 22.1 23.8 25.2 23.8 25.9 23.5 19.6 32.1 27.6 23.6 18.5 20.9 28.7 22 20.8 21.8 18.5 18 19 24 24.8 22.1 21.2 20.8 33 25.6 21.2 20.1 22.6 24.2 15.7 28 24.3 20.9 18.8 20.3 20.3 19.2 25.5 24.6 23 25.6 21.8 23.3 21.3 22.7 28.9 22.7 33.3 33.2 32 26 19.7 24.1 24.6 29.4 23.6 20.4 25.3 24.2 30.2 26.6 21.7 19.3 20 20 22.5 21.8 23.6 27.8 20.5</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p>若rbc为138名正常成年女性的红细胞数的测量值，求rbc的最小值、最大值和极差：</p>
+<p>检查缺失值：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bmi <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">|&gt;</span> </span>
@@ -350,6 +350,7 @@ window.Quarto = {
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bmi_filled <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(bmi), <span class="fu">mean</span>(bmi, <span class="at">na.rm =</span> T), bmi) <span class="sc">|&gt;</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">1</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>若 bmi 为143名女性的 BMI 测量值，求 BMI 的最小值、最大值和极差：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>bmi <span class="ot">&lt;-</span> bmi_filled</span>
 <span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a></span>
