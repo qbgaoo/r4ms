@@ -389,8 +389,7 @@ window.Quarto = {
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>max_bmi <span class="ot">&lt;-</span> <span class="fu">max</span>(bmi)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>range_bmi <span class="ot">&lt;-</span> max_bmi <span class="sc">-</span> min_bmi</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>组段数通常取10~15组，这里取12：</p>
-<p>根据组距写出组段的上下限：</p>
+<p>组段数通常取10~15组，这里取12；利用 <code>seq()</code> 函数得到组段的上下限：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> min_bmi, <span class="at">to =</span> max_bmi, <span class="at">length.out =</span> <span class="dv">12</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>breaks</span>
