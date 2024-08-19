@@ -89,9 +89,7 @@ max_bmi <- max(bmi)
 range_bmi <- max_bmi - min_bmi
 ```
 
-组段数通常取10\~15组，这里取12：
-
-根据组距写出组段的上下限：
+组段数通常取10\~15组，这里取12；利用 `seq()` 函数得到组段的上下限：
 
 ```{r}
 breaks <- seq(from = min_bmi, to = max_bmi, length.out = 12)
