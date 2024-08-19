@@ -318,7 +318,7 @@ window.Quarto = {
 <h2 data-number="2.2" class="anchored" data-anchor-id="频数分布"><span class="header-section-number">2.2</span> 频数分布</h2>
 <section id="频数分布表" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="频数分布表"><span class="header-section-number">2.2.1</span> 频数分布表</h3>
-<p><strong>例</strong> 从 <code>adsl</code> 数据集提取女性的基线 BMI (<span class="math inline">\(kg/m^2\)</span>) 数据，结果如下：</p>
+<p><strong>例</strong> 从 <code>adsl</code> 数据集提取女性基线 BMI (<span class="math inline">\(kg/m^2\)</span>) 数据，结果如下：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"data-adam/adsl.sas7bdat"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tb_bmi_bl <span class="ot">&lt;-</span> adsl <span class="sc">|&gt;</span> </span>
@@ -335,14 +335,14 @@ window.Quarto = {
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anyNA</span>()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>输出结果为TRUE，提示有缺失值。利用下面的代码可以计算缺失值的个数：</p>
+<p>输出结果为TRUE，提示有缺失值；下面的代码可以计算缺失值的个数：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tb_bmi_bl <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sum</span>()</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>输出结果为1， 基线 BMI 中有1个缺失值。数据分析时可根据具体情况做相应处理，例如：</p>
+<p>输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：</p>
 <ol type="1">
 <li>直接删除</li>
 </ol>
@@ -352,7 +352,7 @@ window.Quarto = {
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 142</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>填补缺失值（简单起见，这里直接用均数）</li>
+<li>填补缺失值（简单起见，这里用均数）</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tb_bmi_bl_filled <span class="ot">&lt;-</span> tb_bmi_bl <span class="sc">|&gt;</span> </span>
@@ -391,26 +391,24 @@ window.Quarto = {
 </div>
 <p>组段数通常取10~15组，这里取12；利用 <code>seq()</code> 函数得到组段的上下限：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> min_bmi, <span class="at">to =</span> max_bmi, <span class="at">length.out =</span> <span class="dv">12</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>breaks</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] 15.10000 17.37273 19.64545 21.91818 24.19091 26.46364 28.73636 31.00909</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] 33.28182 35.55455 37.82727 40.10000</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> min_bmi, <span class="at">to =</span> max_bmi, <span class="at">length.out =</span> <span class="dv">13</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>使用<code>cut()</code>函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；</p>
+<p>使用 <code>cut()</code> 函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a>value_bmi <span class="ot">&lt;-</span> <span class="fu">pull</span>(bmi)</span>
-<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(value_bmi, <span class="at">breaks =</span> breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>() <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-4" class="code-annotation-target"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">" "</span>, <span class="fu">ceiling</span>(<span class="fu">nrow</span>(bmi) <span class="sc">/</span> <span class="dv">8</span>) <span class="sc">*</span> <span class="dv">8</span> <span class="sc">-</span> <span class="fu">nrow</span>(bmi))) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">8</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(value_bmi, <span class="at">breaks =</span> breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_c</span>() <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-5" class="code-annotation-target"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">" "</span>, <span class="fu">ceiling</span>(<span class="fu">nrow</span>(bmi) <span class="sc">/</span> <span class="dv">8</span>) <span class="sc">*</span> <span class="dv">8</span> <span class="sc">-</span> <span class="fu">nrow</span>(bmi))) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">8</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-10" data-code-lines="4" data-code-annotation="1">每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。</span>
+<span data-code-cell="annotated-cell-10" data-code-lines="5" data-code-annotation="1">每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。</span>
 </dd>
 </dl>
 </div>
@@ -430,183 +428,183 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[37.8,40.1]</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[37.8,40.1]</td>
-<td style="text-align: left;">[21.9,24.2)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[38,40.1]</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[38,40.1]</td>
+<td style="text-align: left;">[23.4,25.5)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[15.1,17.4)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[15.1,17.2)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[31,33.3)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[15.1,17.4)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[15.1,17.2)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[31,33.3)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[15.1,17.4)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[15.1,17.2)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[17.2,19.3)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[33.3,35.6)</td>
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[31,33.3)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[28.7,31)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
+<td style="text-align: left;">[31.8,33.9)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[24.2,26.5)</td>
-<td style="text-align: left;">[28.7,31)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[17.4,19.6)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[29.7,31.8)</td>
+<td style="text-align: left;">[25.5,27.6)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
-<td style="text-align: left;">[21.9,24.2)</td>
-<td style="text-align: left;">[26.5,28.7)</td>
-<td style="text-align: left;">[19.6,21.9)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[21.4,23.4)</td>
+<td style="text-align: left;">[23.4,25.5)</td>
+<td style="text-align: left;">[27.6,29.7)</td>
+<td style="text-align: left;">[19.3,21.4)</td>
 <td style="text-align: left;"></td>
 </tr>
 </tbody>
@@ -639,77 +637,84 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">[15.1,17.4]</td>
+<td style="text-align: left;">[15.1,17.2]</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">0.0209790</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">0.0209790</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">(17.4,19.6]</td>
+<td style="text-align: left;">(17.2,19.3]</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0839161</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.1048951</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(19.3,21.4]</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0.2167832</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0.3216783</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(21.4,23.4]</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.1608392</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">0.4825175</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(23.4,25.5]</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0.2237762</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">0.7062937</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(25.5,27.6]</td>
 <td style="text-align: right;">14</td>
 <td style="text-align: right;">0.0979021</td>
-<td style="text-align: right;">17</td>
-<td style="text-align: right;">0.1188811</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">0.8041958</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">(19.6,21.9]</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">0.2377622</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">0.3566434</td>
+<td style="text-align: left;">(27.6,29.7]</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0.0839161</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">0.8881119</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">(21.9,24.2]</td>
-<td style="text-align: right;">34</td>
-<td style="text-align: right;">0.2377622</td>
-<td style="text-align: right;">85</td>
-<td style="text-align: right;">0.5944056</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">(24.2,26.5]</td>
-<td style="text-align: right;">24</td>
-<td style="text-align: right;">0.1678322</td>
-<td style="text-align: right;">109</td>
-<td style="text-align: right;">0.7622378</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(26.5,28.7]</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">0.0979021</td>
-<td style="text-align: right;">123</td>
-<td style="text-align: right;">0.8601399</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">(28.7,31]</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">0.0629371</td>
-<td style="text-align: right;">132</td>
-<td style="text-align: right;">0.9230769</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(31,33.3]</td>
+<td style="text-align: left;">(29.7,31.8]</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">0.0559441</td>
-<td style="text-align: right;">140</td>
-<td style="text-align: right;">0.9790210</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">0.9440559</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">(33.3,35.6]</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0.0069930</td>
+<td style="text-align: left;">(31.8,33.9]</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.0419580</td>
 <td style="text-align: right;">141</td>
 <td style="text-align: right;">0.9860140</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">(35.6,37.8]</td>
+<td style="text-align: left;">(33.9,35.9]</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0000000</td>
 <td style="text-align: right;">141</td>
 <td style="text-align: right;">0.9860140</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">(37.8,40.1]</td>
+<td style="text-align: left;">(35.9,38]</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">0.9860140</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(38,40.1]</td>
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">0.0139860</td>
 <td style="text-align: right;">143</td>
@@ -737,15 +742,32 @@ window.Quarto = {
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">main           =</span> <span class="st">" "</span>,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab           =</span> <span class="st">"BMI"</span>,</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab           =</span> <span class="st">"频数"</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bmi, <span class="fu">aes</span>(<span class="at">x =</span> value_bmi)) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"orange"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"BMI"</span>, <span class="at">y =</span> <span class="st">"频数"</span>) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-freq-distribute" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-freq-distribute-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-freq-distribute-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-freq-distribute-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="quat-data-stat-desc_files/figure-html/fig-freq-distribute-1.png" class="img-fluid figure-img" width="480">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-freq-distribute-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-freq-distribute-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 图&nbsp;2.1: 138名正常成年女性的红细胞数频数分布
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-freq-distribute-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-freq-distribute-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quat-data-stat-desc_files/figure-html/fig-freq-distribute-2.png" class="img-fluid figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-freq-distribute-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2.2: 138名正常成年女性的红细胞数频数分布
 </figcaption>
 </figure>
 </div>
