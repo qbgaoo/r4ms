@@ -13,7 +13,6 @@ source("_common.R")
 library(haven)
 library(tidyverse)
 library(kableExtra)
-library(broom)
 library(showtext)                                             # <1>
 ```
 
@@ -23,110 +22,96 @@ library(showtext)                                             # <1>
 
 ### 频数分布表
 
-```{r}
-adsl <- read_sas("data-adam/adsl.sas7bdat")
-BMI_BL <- adsl |> 
-  select(BMIBL)
-```
-
-**例2-1** 某医院用随机抽样方法检查了138名正常成年女性的红细胞数($\times10^{12}/L$)，其测量结果如下，试编制频数分布表。
-
-------------------------------------------------------------------------
+**例** 从 `adsl` 数据集提取女性的基线 BMI ($kg/m^2$) 数据，结果如下：
 
 ```{r}
 adsl <- read_sas("data-adam/adsl.sas7bdat")
-bmi <- adsl |> 
+tb_bmi_bl <- adsl |> 
   select(BMIBL, SEX) |> 
   filter(SEX == "F") |> 
-  select(BMIBL) |> 
-  unlist(use.names = F)
-cat(bmi) 
+  select(BMIBL)
+
+nrow(tb_bmi_bl)
 ```
 
-------------------------------------------------------------------------
-
-检查缺失值：
+共有143例数据，检查是否有缺失值：
 
 ```{r}
-bmi |> 
+tb_bmi_bl |> 
+  anyNA()
+```
+
+输出结果为TRUE，提示有缺失值。利用下面的代码可以计算缺失值的个数：
+
+```{r}
+tb_bmi_bl |> 
   is.na() |> 
   sum()
 ```
 
-bmi 中有1个缺失值，做删除处理或进行缺失值填充：
+输出结果为1， 基线 BMI 中有1个缺失值。数据分析时可根据具体情况做相应处理，例如：
+
+1.  直接删除
 
 ```{r}
-bmi_clean <- na.omit(bmi)
-bmi_filled <- if_else(is.na(bmi), mean(bmi, na.rm = T), bmi) |> 
+tb_bmi_bl_clean <- na.omit(tb_bmi_bl)
+nrow(tb_bmi_bl_clean) 
+```
+
+2.  填补缺失值（简单起见，这里直接用均数）
+
+```{r}
+tb_bmi_bl_filled <- tb_bmi_bl |> 
+  mutate(
+    BMIBL = ifelse(is.na(BMIBL), mean(BMIBL, na.rm = T), BMIBL)
+  ) |> 
   round(digits = 1)
 ```
 
-若 bmi 为143名女性的 BMI 测量值，求 BMI 的最小值、最大值和极差：
+填补完成后，对143名女性的基线BMI 求 最小值、最大值和极差：
 
 ```{r}
-bmi <- bmi_filled
-
+bmi <- tb_bmi_bl_filled
 range(bmi)                                    # <1>
-
 range_bmi <- range(bmi) |>                               
   diff() |>                                   # <2>
   print()
-
-min_bmi <- min(bmi)
-min_bmi
-
-max_bmi <- max(bmi)
-max_bmi 
-
-range_bmi <- max_bmi - min_bmi
-range_bmi
 ```
 
 1.  `range()`返回包含最小值和最大值的向量
 2.  利用管道操作符和`diff()`计算极差
 
-组段数通常取10\~15组，这里取12，计算组距 (保留两位小数)：
+也可用下面的方法计算：
 
 ```{r}
-bin_width <- round(range_bmi/12, 2)
-bin_width
+min_bmi <- min(bmi)
+max_bmi <- max(bmi)
+range_bmi <- max_bmi - min_bmi
 ```
+
+组段数通常取10\~15组，这里取12：
 
 根据组距写出组段的上下限：
 
 ```{r}
-breaks <- seq(from = min_bmi, to = max_bmi, by = bin_width)
-breaks |> 
-  t() |> 
-  kbl() |> 
-  kable_classic()
+breaks <- seq(from = min_bmi, to = max_bmi, length.out = 12)
+breaks
 ```
 
-使用`cut()`函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；此函数可判断上述分组方法是否合适： 例如若 `seq()` 的参数 f`rom = min_bmi`，`to = max_bmi`，则有变量值的编码区间为 `NA`：
+使用`cut()`函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；
 
 ```{r}
-cut(bmi, breaks = breaks, right = F) |> 
+value_bmi <- pull(bmi)
+cut(value_bmi, breaks = breaks, include.lowest = T, right = F) |> 
   str_c() |> 
-  c(rep(" ", ceiling(length(bmi) / 8) * 8 - length(bmi))) |>   # <1>
+  c(rep(" ", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |>   # <1>
   matrix(ncol = 8, byrow = T) |> 
+  as.data.frame() |> 
   kbl() |> 
   kable_classic()
 ```
 
 1.  每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。
-
-此时可调整参数 `from` 或 `to`的值，直到编码区间没有 `NA` 为止；为避免麻烦，直接减（加）上组距。
-
-```{r}
-breaks <- seq(from = min_bmi - bin_width, to = max_bmi + bin_width, by = bin_width)
-
-cut(bmi, breaks = breaks, right = F) |> 
-  str_c() |> 
-  c(rep(" ", ceiling(length(bmi) / 8) * 8 - length(bmi))) |>
-  matrix(nrow = 18, ncol = 8, byrow = T) |> 
-  kbl() |> 
-  kable_classic()
-```
 
 生成频数分布表：
 
@@ -134,10 +119,9 @@ cut(bmi, breaks = breaks, right = F) |>
 #| label: tbl-freq-distribute
 #| tbl-cap: 138名正常成年女性的红细胞数频数分布
 
-DescTools::Freq(bmi, breaks = breaks) |> 
-  kbl(digits = 3, align = "c") |>
-  kable_classic(full_width = F) |> 
-  row_spec(0, bold = T)
+DescTools::Freq(value_bmi, breaks = breaks) |> 
+  kbl() |> 
+  kable_classic()
 ```
 
 ### 频数分布图
@@ -147,7 +131,7 @@ DescTools::Freq(bmi, breaks = breaks) |>
 #| fig-cap: 138名正常成年女性的红细胞数频数分布
 
 hist(
-  x              = bmi, 
+  x              = value_bmi, 
   breaks         = breaks, 
   right          = T, 
   col            = "light gray", 
@@ -165,7 +149,7 @@ hist(
 **例2-2** 计算例2-1某医院138名正常成年女性的红细胞数的均数。
 
 ```{r}
-mean(bmi) |> 
+mean(value_bmi) |> 
   round(digits = 2)
 ```
 
@@ -195,8 +179,8 @@ serum_antibody_titer |>
 计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：
 
 ```{r}
-median(bmi)
-quantile(bmi, probs = c(0.25, 0.5, 0.75)) |> 
+median(value_bmi)
+quantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |> 
   round(digits = 2)
 ```
 
@@ -214,21 +198,21 @@ range(bmi) |>
 ### 四分位数间距
 
 ```{r}
-IQR(bmi) |> 
+IQR(value_bmi) |> 
   round(digits = 2)
 ```
 
 ### 方差和标准差
 
 ```{r}
-var(bmi)
-sd(bmi)
+var(value_bmi)
+sd(value_bmi)
 ```
 
 ### 变异系数
 
 ```{r}
-cv <- (sd(bmi) / mean(bmi)) * 100
+cv <- (sd(value_bmi) / mean(value_bmi)) * 100
 round(cv, digits = 2)
 ```
 
@@ -237,7 +221,7 @@ round(cv, digits = 2)
 以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
 
 ```{r}
-med_ref_range <- quantile(bmi, probs = c(0.025, 0.975)) |> 
+med_ref_range <- quantile(value_bmi, probs = c(0.025, 0.975)) |> 
   round(digits = 3) |> 
   print()
 ```
