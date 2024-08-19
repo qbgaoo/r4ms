@@ -22,7 +22,7 @@ library(showtext)                                             # <1>
 
 ### 频数分布表
 
-**例** 从 `adsl` 数据集提取女性的基线 BMI ($kg/m^2$) 数据，结果如下：
+**例** 从 `adsl` 数据集提取女性基线 BMI ($kg/m^2$) 数据，结果如下：
 
 ```{r}
 adsl <- read_sas("data-adam/adsl.sas7bdat")
@@ -41,7 +41,7 @@ tb_bmi_bl |>
   anyNA()
 ```
 
-输出结果为TRUE，提示有缺失值。利用下面的代码可以计算缺失值的个数：
+输出结果为TRUE，提示有缺失值；下面的代码可以计算缺失值的个数：
 
 ```{r}
 tb_bmi_bl |> 
@@ -49,7 +49,7 @@ tb_bmi_bl |>
   sum()
 ```
 
-输出结果为1， 基线 BMI 中有1个缺失值。数据分析时可根据具体情况做相应处理，例如：
+输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：
 
 1.  直接删除
 
@@ -58,7 +58,7 @@ tb_bmi_bl_clean <- na.omit(tb_bmi_bl)
 nrow(tb_bmi_bl_clean) 
 ```
 
-2.  填补缺失值（简单起见，这里直接用均数）
+2.  填补缺失值（简单起见，这里用均数）
 
 ```{r}
 tb_bmi_bl_filled <- tb_bmi_bl |> 
@@ -92,17 +92,17 @@ range_bmi <- max_bmi - min_bmi
 组段数通常取10\~15组，这里取12；利用 `seq()` 函数得到组段的上下限：
 
 ```{r}
-breaks <- seq(from = min_bmi, to = max_bmi, length.out = 12)
-breaks
+breaks <- seq(from = min_bmi, to = max_bmi, length.out = 13)
 ```
 
-使用`cut()`函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；
+使用 `cut()` 函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；
 
 ```{r}
 value_bmi <- pull(bmi)
+
 cut(value_bmi, breaks = breaks, include.lowest = T, right = F) |> 
   str_c() |> 
-  c(rep(" ", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |>   # <1>
+  c(rep(" ", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |>                # <1>
   matrix(ncol = 8, byrow = T) |> 
   as.data.frame() |> 
   kbl() |> 
@@ -138,6 +138,11 @@ hist(
   xlab           = "BMI",
   ylab           = "频数"
 )
+
+ggplot(bmi, aes(x = value_bmi)) +
+  geom_histogram(fill = "orange", color = "black", bins = 12) +
+  labs(x = "BMI", y = "频数") +
+  theme_light()
 ```
 
 ## 集中趋势的描述
