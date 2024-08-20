@@ -140,9 +140,23 @@ hist(
 )
 
 ggplot(bmi, aes(x = value_bmi)) +
-  geom_histogram(fill = "orange", color = "black", bins = 12) +
+  geom_histogram(
+    fill = "skyblue", 
+    color = "black", 
+    bins = 12
+  ) +
+  stat_bin(
+    geom = "text", 
+    aes(label = after_stat(count)),
+    bins = 12, 
+    size = 3,
+    vjust = - 0.3
+  ) +
   labs(x = "BMI", y = "频数") +
-  theme_light()
+  theme(
+    panel.background = element_blank(),        # 移除背景
+    axis.line = element_line(color = "black")  # 保留坐标轴
+  )
 ```
 
 ## 集中趋势的描述
