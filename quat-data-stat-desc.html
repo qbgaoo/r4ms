@@ -344,7 +344,7 @@ window.Quarto = {
 </div>
 <p>输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：</p>
 <ol type="1">
-<li>直接删除</li>
+<li><strong>直接删除</strong></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tb_bmi_bl_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(tb_bmi_bl)</span>
@@ -352,7 +352,7 @@ window.Quarto = {
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 142</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>填补缺失值（简单起见，这里用均数）</li>
+<li><strong>填补缺失值（简单起见，这里用均数）</strong></li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tb_bmi_bl_filled <span class="ot">&lt;-</span> tb_bmi_bl <span class="sc">|&gt;</span> </span>
@@ -802,7 +802,7 @@ window.Quarto = {
 </section>
 <section id="几何均数" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="几何均数"><span class="header-section-number">2.3.2</span> 几何均数</h3>
-<p><strong>例2-3</strong> 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。</p>
+<p><strong>例</strong> 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。</p>
 <p>10 10 10 10 20 20 20 40 40 40 40 40 40 40 40 40 40 80 80 80 80 80 80 80 80 80 80 160 160 160 160 160 160 160 160 160 160 160 320 320 320 320 320 320 320 320 320 320 320 320 320 320 320 640 640 640 640 640 640 640 640 640 640 640 640 640 640 1280 1280</p>
 <p>设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：</p>
 <div class="cell">
