@@ -1,5 +1,3 @@
 # Introduction
 
-## **Datasets**
-
-In this book, we used publicly available CDISC pilot study data, which is accessible through the [CDISC GitHub repository](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets). To streamline the process, we have downloaded all the datasets from the repository and converted them from `.xpt` format to `.sas7bdat` format for ease of use and compatibility. Then we stored them in the [data/adam/](https://github.com/qbgaoo/r4ms/main/data/adam) folder within this project. Additionally, The dataset structure adheres to the CDISC [Analysis Data Model (ADaM)](https://www.cdisc.org/standards/foundational/adam) standard.
+## 

@@ -1,4 +1,6 @@
-# 计量资料的统计描述
+# Statistical description of quantitative data
+
+This section refers to the process of summarizing and analyzing quantitative data using statistical methods, such as calculating measures of central tendency (mean, median) and dispersion (standard deviation, variance).
 
 ```{r}
 #| echo: false
@@ -6,10 +8,11 @@
 source("_common.R")
 ```
 
-## 安装包
+## Prerequisites
 
 ```{r}
 #| message: false
+
 library(haven)
 library(tidyverse)
 library(kableExtra)
@@ -18,9 +21,9 @@ library(showtext)                                             # <1>
 
 1.  showtext包允许在绘图时使用系统中任意的TrueType或OpenType字体
 
-## 频数分布
+## Frequency distribution
 
-### 频数分布表
+### Frequency Table
 
 **例** 从 `adsl` 数据集提取女性基线 BMI ($kg/m^2$) 数据，结果如下：
 
@@ -122,7 +125,7 @@ DescTools::Freq(value_bmi, breaks = breaks) |>
   kable_classic()
 ```
 
-### 频数分布图
+### Graph of frequency distributio
 
 ```{r}
 #| label: fig-freq-distribute
@@ -159,7 +162,7 @@ ggplot(bmi, aes(x = value_bmi)) +
   )
 ```
 
-## 集中趋势的描述
+## Measures of central tendency
 
 ### 算术均数
 
@@ -201,7 +204,7 @@ quantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |>
   round(digits = 2)
 ```
 
-## 离散趋势的描述
+## Measures of dispersion tendency
 
 以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
 
@@ -233,7 +236,7 @@ cv <- (sd(value_bmi) / mean(value_bmi)) * 100
 round(cv, digits = 2)
 ```
 
-## 医学参考值范围
+## Medical reference range
 
 以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
 

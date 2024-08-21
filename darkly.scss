@@ -2,7 +2,7 @@
 
 // fonts
 $font-family-sans-serif: system-ui, -apple-system, Arial !default;
-$font-size-root: 15px !default;
+$font-size-root: 16px !default;
 $h1-font-size: 1.4rem !default;
 $h2-font-size: 1.2rem !default;
 $h3-font-size: 1.1rem !default;
@@ -12,15 +12,17 @@ $headings-font-weight:      400 !default;
 $body-text-align: justify !default;
 
 // line space
-$line-height-base: 1.7 !default;
+$line-height-base: 1.5 !default;
 $line-height-sm:   1.25 !default;
 $line-height-lg:   2 !default;
 
 // color
 $link-color: #75AADB !default;
 $btn-code-copy-color-active: #75AADB !default;
+
 .sidebar-title {
-  color: #75AADB;
+  color: #FFFFFF;
+  font-weight: bold;
 }
 
 .table {
@@ -34,10 +36,30 @@ $btn-code-copy-color-active: #75AADB !default;
   text-align: center;
 }
 
+div.sidebar-item-container .active {
+  font-weight: bold;
+}
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active{
+  font-weight: bold;
+}
+
+.nav-link.active {
+  background-color: #FFFFFF!important;
+}
+
+.sidebar-navigation a:hover{
+  color: #FFFFFF !important;
+}
 
 
-
-
+@media (prefers-color-scheme: dark) {
+    table, th, td {
+        color: #ffffff !important; /* Ensure text color applies */
+        background-color: #333333 !important; /* Background color */
+        border-color: #ffffff !important; /* Border color */
+    }
+}
 
 
 

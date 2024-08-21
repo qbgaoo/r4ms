@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "R 医学统计学"
+  title: "R for Medical Statistics"
   reader-mode: true
   cover-image: cover.png
   favicon: favicon.png

@@ -1,4 +1,4 @@
-# 总体均数估计与*t* 检验
+# Population mean estimation and t test
 
 ```{r}
 #| echo: false
@@ -6,7 +6,7 @@
 source("_common.R")
 ```
 
-## 安装包
+## Prerequisites
 
 ```{r}
 #| message: false

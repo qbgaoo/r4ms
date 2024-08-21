@@ -2,12 +2,12 @@
   {
     "objectID": "quat-data-stat-desc.html",
     "href": "quat-data-stat-desc.html",
-    "title": "2  计量资料的统计描述",
+    "title": "2  Statistical description of quantitative data",
     "section": "",
-    "text": "2.1 安装包\nlibrary(haven)\nlibrary(tidyverse)\nlibrary(kableExtra)\n1library(showtext)\n\n\n1\n\nshowtext包允许在绘图时使用系统中任意的TrueType或OpenType字体",
+    "text": "2.1 Prerequisites\nlibrary(haven)\nlibrary(tidyverse)\nlibrary(kableExtra)\n1library(showtext)\n\n\n1\n\nshowtext包允许在绘图时使用系统中任意的TrueType或OpenType字体",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>计量资料的统计描述</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
     ]
   },
   {
@@ -46,76 +46,76 @@
   {
     "objectID": "quat-data-stat-desc.html#医学参考值范围",
     "href": "quat-data-stat-desc.html#医学参考值范围",
-    "title": "2  计量资料的统计描述",
+    "title": "2  Statistical description of quantitative data",
     "section": "2.5 医学参考值范围",
     "text": "2.5 医学参考值范围\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(value_bmi, probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;  2.5% 97.5% \n#&gt; 17.81 33.09\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (17.81, 33.09)",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>计量资料的统计描述</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
     ]
   },
   {
     "objectID": "intro.html",
     "href": "intro.html",
-    "title": "1  绪论",
+    "title": "1  Introduction",
     "section": "",
-    "text": "1.1 数据集\n在这个项目中，我们使用了公开的 CDISC 探索性研究数据，这些数据可以在 CDISC GitHub 库中获取。为方便使用，我们从库中下载了所有的数据集，并将这些数据集从 .xpt 格式转换为 .sas7bdat 格式，存储在本项目的 data-adam/文件夹内。数据集结构遵循 CDISC ADaM 标准。",
+    "text": "1.1",
     "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>绪论</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
     "objectID": "basic-stat.html",
     "href": "basic-stat.html",
-    "title": "基本统计方法",
+    "title": "Basic statistical methods",
     "section": "",
     "text": "基本的医学统计方法涵盖了数据的收集、整理、描述、分析和解释，旨在帮助研究者理解疾病的发生、发展、治疗效果及健康状况的分布规律。以下是医学研究中常用的一些基本统计方法：\n\n1. 描述性统计\n\n频率分析：计算各类别或数值出现的频数和百分比。\n集中趋势测量：平均值、中位数和众数，用于描述数据的中心位置。\n离散程度测量：标准差、方差、四分位数间距和极差，反映数据的分散程度。\n\n\n\n2. 推断性统计\n\n参数检验：\n\nt检验：用于比较两组或几组独立或配对样本的均值差异，如学生t检验、配对t检验。\nANOVA（方差分析）：比较多个样本均值是否存在显著差异。\n\n非参数检验：\n\nMann-Whitney U检验（Wilcoxon秩和检验的两样本形式）：适用于连续数据但不符合正态分布的两组样本均值差异检验。\nKruskal-Wallis H检验：多组独立样本的中位数差异检验，适用于非正态分布数据。\n\n卡方检验（Chi-square test）：用于分析分类变量间的关系，如四格表检验。\n\n\n\n3. 回归分析\n\n线性回归：研究一个或多个自变量与一个连续因变量之间的线性关系。\n逻辑回归（Logistic Regression）：适用于因变量为二分类或多元分类的场合，用来估计事件发生概率。\n\n\n\n5. 随机化和抽样\n\n随机化：确保研究的组间可比性。\n抽样技术：包括简单随机抽样、分层抽样、整群抽样等，确保样本代表性。\n\n\n\n6. 误差与功效分析\n\n类型I和II错误的理解，以及统计功效分析，以确定研究设计是否足够强大以检测预期效应。\n\n选择适当的统计方法需依据研究目的、数据类型（定量或定性）、数据分布（正态与否）、样本大小等因素。理解这些基础统计概念和方法对于设计和解读医学研究至关重要。",
     "crumbs": [
-      "基本统计方法"
+      "Basic statistical methods"
     ]
   },
   {
     "objectID": "ttest.html",
     "href": "ttest.html",
-    "title": "3  总体均数估计与t 检验",
+    "title": "5  Population mean estimation and t test",
     "section": "",
-    "text": "3.1 安装包\nlibrary(tidyverse)\nlibrary(kableExtra)\n例3-1 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.32)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以Stata格式保存，利用haven::read_dta()函数导入R变量height_samples中。是部分数据。\nheight_samples &lt;- haven::read_dta(\"datasets/例03-01.dta\") \nhead(height_samples) |&gt; \n  kbl(align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nno\nmean\nsd\n\n\n\n\n1\n167.41\n2.74\n\n\n2\n165.56\n6.57\n\n\n3\n168.20\n5.36\n\n\n4\n166.67\n4.81\n\n\n5\n164.89\n5.41\n\n\n6\n166.36\n4.50",
+    "text": "5.1 Prerequisites\nlibrary(tidyverse)\nlibrary(kableExtra)\n例3-1 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.32)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以Stata格式保存，利用haven::read_dta()函数导入R变量height_samples中。是部分数据。\nheight_samples &lt;- haven::read_dta(\"datasets/例03-01.dta\") \nhead(height_samples) |&gt; \n  kbl(align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nno\nmean\nsd\n\n\n\n\n1\n167.41\n2.74\n\n\n2\n165.56\n6.57\n\n\n3\n168.20\n5.36\n\n\n4\n166.67\n4.81\n\n\n5\n164.89\n5.41\n\n\n6\n166.36\n4.50",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>总体均数估计与*t* 检验</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Population mean estimation and t test</span>"
     ]
   },
   {
     "objectID": "ttest.html#标准误和可信区间",
     "href": "ttest.html#标准误和可信区间",
-    "title": "3  总体均数估计与t 检验",
-    "section": "3.2 标准误和可信区间",
-    "text": "3.2 标准误和可信区间\n\n3.2.1 单一总体均数的可信区间\n例3-2 计算例3-1中每个样本的标准误和可信区间\n\nmean  &lt;- height_samples$mean\nsd    &lt;- height_samples$sd\nlower_bound = vector(mode = \"double\", length = 100)\nupper_bound = vector(mode = \"double\", length = 100)\n\nfor(i in seq(1:100)){\n1  ttest &lt;- DescTools::TTestA(\n  mx = mean[i],\n  sx = sd[i],\n  nx = 10,\n  alternative = \"two.sided\",\n  mu = 167.7\n  )\n  ci &lt;- ttest$conf.int\n  lower_bound[i] &lt;- ci[1]\n  upper_bound[i] &lt;- ci[2]\n}\n\nheight_samples |&gt; \n  mutate(\n    se          = sd / sqrt(10),\n    lower_bound = lower_bound,\n    upper_bound = upper_bound\n  ) |&gt; \n  head()|&gt; \n  kbl(digits = 2, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\nTTestA()根据用户提供的统计量进行单个或两个样本 t 检验，而不是像t.test()中那样基于数据直接进行检验；此例是单样本，两样本类同，参见下例。\n\n\n\n\n\n\n\n\nno\nmean\nsd\nse\nlower_bound\nupper_bound\n\n\n\n\n1\n167.41\n2.74\n0.87\n165.45\n169.37\n\n\n2\n165.56\n6.57\n2.08\n160.86\n170.26\n\n\n3\n168.20\n5.36\n1.69\n164.37\n172.03\n\n\n4\n166.67\n4.81\n1.52\n163.23\n170.11\n\n\n5\n164.89\n5.41\n1.71\n161.02\n168.76\n\n\n6\n166.36\n4.50\n1.42\n163.14\n169.58\n\n\n\n\n\n\n\n\n\n\n3.2.2 两总体均数差的可信区间\n例3-3 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？\n\nttest &lt;- DescTools::TTestA(\nmx = 20.1,\nmy = 16.89,\nsx = 7.02,\nsy = 8.46,\nnx = 29,\nny = 32,\nalternative = \"two.sided\"\n)\nci &lt;- ttest$conf.int |&gt; \n  round(digits = 2)\n\n因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。",
+    "title": "5  Population mean estimation and t test",
+    "section": "5.2 标准误和可信区间",
+    "text": "5.2 标准误和可信区间\n\n5.2.1 单一总体均数的可信区间\n例3-2 计算例3-1中每个样本的标准误和可信区间\n\nmean  &lt;- height_samples$mean\nsd    &lt;- height_samples$sd\nlower_bound = vector(mode = \"double\", length = 100)\nupper_bound = vector(mode = \"double\", length = 100)\n\nfor(i in seq(1:100)){\n1  ttest &lt;- DescTools::TTestA(\n  mx = mean[i],\n  sx = sd[i],\n  nx = 10,\n  alternative = \"two.sided\",\n  mu = 167.7\n  )\n  ci &lt;- ttest$conf.int\n  lower_bound[i] &lt;- ci[1]\n  upper_bound[i] &lt;- ci[2]\n}\n\nheight_samples |&gt; \n  mutate(\n    se          = sd / sqrt(10),\n    lower_bound = lower_bound,\n    upper_bound = upper_bound\n  ) |&gt; \n  head()|&gt; \n  kbl(digits = 2, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\nTTestA()根据用户提供的统计量进行单个或两个样本 t 检验，而不是像t.test()中那样基于数据直接进行检验；此例是单样本，两样本类同，参见下例。\n\n\n\n\n\n\n\n\nno\nmean\nsd\nse\nlower_bound\nupper_bound\n\n\n\n\n1\n167.41\n2.74\n0.87\n165.45\n169.37\n\n\n2\n165.56\n6.57\n2.08\n160.86\n170.26\n\n\n3\n168.20\n5.36\n1.69\n164.37\n172.03\n\n\n4\n166.67\n4.81\n1.52\n163.23\n170.11\n\n\n5\n164.89\n5.41\n1.71\n161.02\n168.76\n\n\n6\n166.36\n4.50\n1.42\n163.14\n169.58\n\n\n\n\n\n\n\n\n\n\n5.2.2 两总体均数差的可信区间\n例3-3 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？\n\nttest &lt;- DescTools::TTestA(\nmx = 20.1,\nmy = 16.89,\nsx = 7.02,\nsy = 8.46,\nnx = 29,\nny = 32,\nalternative = \"two.sided\"\n)\nci &lt;- ttest$conf.int |&gt; \n  round(digits = 2)\n\n因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>总体均数估计与*t* 检验</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Population mean estimation and t test</span>"
     ]
   },
   {
     "objectID": "ttest.html#t-检验",
     "href": "ttest.html#t-检验",
-    "title": "3  总体均数估计与t 检验",
-    "section": "3.3 t 检验",
-    "text": "3.3 t 检验\n计量资料的假设检验中，最常见、最简单的方法是 t 检验。\n\n3.3.1 单样本 t 检验\n例3-4 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？\n\nhaven::read_dta(\"datasets/例03-05.dta\") |&gt; \n  t.test(mu = 140) |&gt; \n1  broom::tidy() |&gt;\n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n把一个对象变成一个整齐的tibble，方便表的格式化输出\n\n\n\n\n\n\n\n\nestimate\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n130.833\n-2.137\n0.04\n35\n122.124\n139.543\nOne Sample t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n3.3.2 配对样本 t 检验\n例3-5 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？\n\npaired &lt;- haven::read_dta(\"datasets/例03-06.dta\") \nt.test(\n  x = paired$x1,\n  y = paired$x2,\n  paired = T\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nestimate\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n0.272\n7.926\n0\n9\n0.195\n0.35\nPaired t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n3.3.3 两样本 t 检验\n例3-6 为研究国产四类新药阿卡波糖胶囊的降血糖效果，某医院用40名II型糖尿病病人进行同期随机对照试验。研究者将这些病人随机等分到试验组(用阿卡波糖胶囊)和对照组(用拜唐苹胶囊)，分别测得试验开始前和8周时的空腹血糖，算得空腹血糖下降值，能否认为该国产四类新药阿卡波糖胶囊与拜唐苹胶囊对空腹血糖的降糖效果不同？\n\ntwo_sample &lt;- haven::read_dta(\"datasets/例03-07.dta\") \nt.test(\n  x = two_sample$x1,\n  y = two_sample$x2,\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nestimate\nestimate1\nestimate2\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n-0.56\n2.065\n2.625\n-0.642\n0.525\n36.086\n-2.329\n1.209\nWelch Two Sample t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n3.3.4 近似 t 检验\n进行两小样本均数比较，若两总体方差不等，可采用近似 t 检验:\n例3-7 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA1c (%)的下降值见 表 3.1 。问使用两种不同药物的患者其HbA1c下降值是否相同？\n\n\n\n\n表 3.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值\n\n\n\n\n\n\n分组\n\\(n\\)\n\\(\\bar{X}\\)\n\\(S\\)\n\n\n\n\n试验组(阿卡波糖胶囊)\n20\n1.13\n0.70\n\n\n对照组(拜唐苹胶囊)\n20\n1.46\n1.36\n\n\n\n\n\n\n\n\n\nknitr::kable()成功将输出到html的表中的字符渲染为数学符号，其他包函数测试不成功\n\n本例中已知样本均数和方差，标准的t.test()通常用于直接分析数据集而非样本统计量，这里采用DescTools::TTestA()函数。经两样本方差齐性的\\(F\\)检验 (在 小节 3.4 中具体介绍)，两组的总体方差不等，故进行近似 t 检验。\n\nDescTools::TTestA(                              \n  mx = 1.13,\n  my = 1.46,\n  sx = 0.70,\n  sy = 1.36,\n  nx = 20,\n  ny = 20,\n  alternative = \"two.sided\",\n1  var.equal = F\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\nvar.equal，指示两个方差是否相等的逻辑变量。如果为FALSE，则使用Welch (或Satterthwaite) 法进行近似 t 检验\n\n\n\n\n\n\n\n\nestimate\nestimate1\nestimate2\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n-0.33\n1.13\n1.46\n-0.965\n0.343\n28.407\n-1.03\n0.37\nWelch Two Sample t-test\ntwo.sided",
+    "title": "5  Population mean estimation and t test",
+    "section": "5.3 t 检验",
+    "text": "5.3 t 检验\n计量资料的假设检验中，最常见、最简单的方法是 t 检验。\n\n5.3.1 单样本 t 检验\n例3-4 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？\n\nhaven::read_dta(\"datasets/例03-05.dta\") |&gt; \n  t.test(mu = 140) |&gt; \n1  broom::tidy() |&gt;\n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n把一个对象变成一个整齐的tibble，方便表的格式化输出\n\n\n\n\n\n\n\n\nestimate\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n130.833\n-2.137\n0.04\n35\n122.124\n139.543\nOne Sample t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n5.3.2 配对样本 t 检验\n例3-5 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？\n\npaired &lt;- haven::read_dta(\"datasets/例03-06.dta\") \nt.test(\n  x = paired$x1,\n  y = paired$x2,\n  paired = T\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nestimate\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n0.272\n7.926\n0\n9\n0.195\n0.35\nPaired t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n5.3.3 两样本 t 检验\n例3-6 为研究国产四类新药阿卡波糖胶囊的降血糖效果，某医院用40名II型糖尿病病人进行同期随机对照试验。研究者将这些病人随机等分到试验组(用阿卡波糖胶囊)和对照组(用拜唐苹胶囊)，分别测得试验开始前和8周时的空腹血糖，算得空腹血糖下降值，能否认为该国产四类新药阿卡波糖胶囊与拜唐苹胶囊对空腹血糖的降糖效果不同？\n\ntwo_sample &lt;- haven::read_dta(\"datasets/例03-07.dta\") \nt.test(\n  x = two_sample$x1,\n  y = two_sample$x2,\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n\n\n\nestimate\nestimate1\nestimate2\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n-0.56\n2.065\n2.625\n-0.642\n0.525\n36.086\n-2.329\n1.209\nWelch Two Sample t-test\ntwo.sided\n\n\n\n\n\n\n\n\n\n\n5.3.4 近似 t 检验\n进行两小样本均数比较，若两总体方差不等，可采用近似 t 检验:\n例3-7 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA1c (%)的下降值见 Table 5.1 。问使用两种不同药物的患者其HbA1c下降值是否相同？\n\n\n\n\nTable 5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值\n\n\n\n\n\n\n分组\n\\(n\\)\n\\(\\bar{X}\\)\n\\(S\\)\n\n\n\n\n试验组(阿卡波糖胶囊)\n20\n1.13\n0.70\n\n\n对照组(拜唐苹胶囊)\n20\n1.46\n1.36\n\n\n\n\n\n\n\n\n\nknitr::kable()成功将输出到html的表中的字符渲染为数学符号，其他包函数测试不成功\n\n本例中已知样本均数和方差，标准的t.test()通常用于直接分析数据集而非样本统计量，这里采用DescTools::TTestA()函数。经两样本方差齐性的\\(F\\)检验 (在 Section 5.4 中具体介绍)，两组的总体方差不等，故进行近似 t 检验。\n\nDescTools::TTestA(                              \n  mx = 1.13,\n  my = 1.46,\n  sx = 0.70,\n  sy = 1.36,\n  nx = 20,\n  ny = 20,\n  alternative = \"two.sided\",\n1  var.equal = F\n) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\nvar.equal，指示两个方差是否相等的逻辑变量。如果为FALSE，则使用Welch (或Satterthwaite) 法进行近似 t 检验\n\n\n\n\n\n\n\n\nestimate\nestimate1\nestimate2\nstatistic\np.value\nparameter\nconf.low\nconf.high\nmethod\nalternative\n\n\n\n\n-0.33\n1.13\n1.46\n-0.965\n0.343\n28.407\n-1.03\n0.37\nWelch Two Sample t-test\ntwo.sided",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>总体均数估计与*t* 检验</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Population mean estimation and t test</span>"
     ]
   },
   {
     "objectID": "ttest.html#sec-homogeneity-test",
     "href": "ttest.html#sec-homogeneity-test",
-    "title": "3  总体均数估计与t 检验",
-    "section": "3.4 正态和方差齐性检验",
-    "text": "3.4 正态和方差齐性检验\n\n3.4.1 正态性检验\n下面对例3-1中的100个样本均数进行正态性检验：\n（一）计算法\n下面分别采用stats::shapiro.test()和DescTools::ShapiroFranciaTest()进行正态性检验：\n\nx &lt;- height_samples |&gt; \n  select(mean) |&gt; \n1  unlist(use.names = F)\n  \n2stats::shapiro.test(x) |&gt;\n  broom::tidy() |&gt; \n  rbind(\n3    DescTools::ShapiroFranciaTest(x) |&gt;\n      broom::tidy()\n  ) |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n注意：这里须加unlist(use.names = FALSE)，否则会报错\n\n2\n\nShapiro-Wilk方法\n\n3\n\nShapiro-Francia方法\n\n\n\n\n\n\n\n\nstatistic\np.value\nmethod\n\n\n\n\n0.994\n0.944\nShapiro-Wilk normality test\n\n\n0.993\n0.802\nShapiro-Francia normality test\n\n\n\n\n\n\n\n\nshapiro.test(x)要求x是数值型变量，所以虽然tibble中的mean是数值型，但不能直接传递给使用shapiro.test(x)，需加一个unlist(x, use.names = FALSE)操作，否则会报错，如下面代码块所示：\n\nx &lt;- height_samples |&gt; \n  select(mean) \nstats::shapiro.test(x)\n#&gt; Error in stats::shapiro.test(x): is.numeric(x) is not TRUE\n\n（二）图示法\n图示法主要使用分位数图 (P-P图)和概率图 (Q-Q图)，其中以Q-Q图效率较高。如果分析的数据服从正态分布，则图上的数据点应分布在直线附近，否则数据点偏离直线较远。\n\nx &lt;- height_samples |&gt; \n  select(mean) |&gt; \n  unlist(use.names = F)\n\n\nstats::qqnorm(\n  x,\n  main = \"Q-Q图\",\n  xlab = \"理论分位数\",\n  ylab = \"样本分位数\",\n  datax = T\n) \nstats::qqline(\n  x,\n  datax = T\n)\n\n\n\n\n\n\n\n\n\n\n3.4.2 方差齐性检验\n对例3-6的数据，利用\\(F\\)检验判断两总体空腹血糖下降值的方差是否相等。这里利用DescTools::LeveneTest()进行方差齐性检验\n\ntb &lt;- two_sample |&gt; \n1  pivot_longer(\n    cols = everything(),\n    names_to = \"group\"\n  ) |&gt; \n  mutate(\n2    group = as.factor(group)\n  )\nDescTools::LeveneTest(tb$value, group = tb$group) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求\n\n2\n\n作为数据分组变量，需转换为因子类型，否则会输出警告\n\n\n\n\n\n\n\n\nstatistic\np.value\ndf\ndf.residual\n\n\n\n\n0.493\n0.487\n1\n38",
+    "title": "5  Population mean estimation and t test",
+    "section": "5.4 正态和方差齐性检验",
+    "text": "5.4 正态和方差齐性检验\n\n5.4.1 正态性检验\n下面对例3-1中的100个样本均数进行正态性检验：\n（一）计算法\n下面分别采用stats::shapiro.test()和DescTools::ShapiroFranciaTest()进行正态性检验：\n\nx &lt;- height_samples |&gt; \n  select(mean) |&gt; \n1  unlist(use.names = F)\n  \n2stats::shapiro.test(x) |&gt;\n  broom::tidy() |&gt; \n  rbind(\n3    DescTools::ShapiroFranciaTest(x) |&gt;\n      broom::tidy()\n  ) |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n注意：这里须加unlist(use.names = FALSE)，否则会报错\n\n2\n\nShapiro-Wilk方法\n\n3\n\nShapiro-Francia方法\n\n\n\n\n\n\n\n\nstatistic\np.value\nmethod\n\n\n\n\n0.994\n0.944\nShapiro-Wilk normality test\n\n\n0.993\n0.802\nShapiro-Francia normality test\n\n\n\n\n\n\n\n\nshapiro.test(x)要求x是数值型变量，所以虽然tibble中的mean是数值型，但不能直接传递给使用shapiro.test(x)，需加一个unlist(x, use.names = FALSE)操作，否则会报错，如下面代码块所示：\n\nx &lt;- height_samples |&gt; \n  select(mean) \nstats::shapiro.test(x)\n#&gt; Error in stats::shapiro.test(x): is.numeric(x) is not TRUE\n\n（二）图示法\n图示法主要使用分位数图 (P-P图)和概率图 (Q-Q图)，其中以Q-Q图效率较高。如果分析的数据服从正态分布，则图上的数据点应分布在直线附近，否则数据点偏离直线较远。\n\nx &lt;- height_samples |&gt; \n  select(mean) |&gt; \n  unlist(use.names = F)\n\n\nstats::qqnorm(\n  x,\n  main = \"Q-Q图\",\n  xlab = \"理论分位数\",\n  ylab = \"样本分位数\",\n  datax = T\n) \nstats::qqline(\n  x,\n  datax = T\n)\n\n\n\n\n\n\n\n\n\n\n5.4.2 方差齐性检验\n对例3-6的数据，利用\\(F\\)检验判断两总体空腹血糖下降值的方差是否相等。这里利用DescTools::LeveneTest()进行方差齐性检验\n\ntb &lt;- two_sample |&gt; \n1  pivot_longer(\n    cols = everything(),\n    names_to = \"group\"\n  ) |&gt; \n  mutate(\n2    group = as.factor(group)\n  )\nDescTools::LeveneTest(tb$value, group = tb$group) |&gt; \n  broom::tidy() |&gt; \n  kbl(digits = 3, align = \"c\") |&gt;\n  kable_classic(full_width = F) |&gt; \n  row_spec(0, bold = T)\n\n\n1\n\n将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求\n\n2\n\n作为数据分组变量，需转换为因子类型，否则会输出警告\n\n\n\n\n\n\n\n\nstatistic\np.value\ndf\ndf.residual\n\n\n\n\n0.493\n0.487\n1\n38",
     "crumbs": [
-      "基本统计方法",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>总体均数估计与*t* 检验</span>"
+      "Basic statistical methods",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Population mean estimation and t test</span>"
     ]
   },
   {
@@ -143,12 +143,77 @@
   {
     "objectID": "pilot-project.html",
     "href": "pilot-project.html",
-    "title": "5  实例分析",
+    "title": "13  A case to analyze",
     "section": "",
-    "text": "SDTM-ADaM Pilot Project 数据集是用于临床试验数据标准化的一个示例数据集，遵循了 CDISC（Clinical Data Interchange Standards Consortium）规定的标准：SDTM（Study Data Tabulation Model）和 ADaM（Analysis Data Model）。这些数据集用于演示如何整理和分析临床试验数据，以便提交给监管机构如 FDA。\n由于 SDTM-ADaM Pilot Project 数据集的具体变量会因数据集的不同而有所变化，以下是 SDTM 和 ADaM 数据集中一些常见变量的概述：\n\n5.0.1 1. SDTM 数据集的常见变量\nSDTM 数据集通常包含与患者、试验设计、访视、药物暴露、实验室数据等相关的变量。\n\nUSUBJID: Unique Subject Identifier, 每个受试者的唯一标识符。\nSUBJID: Subject Identifier for the Study, 研究中每个受试者的标识符。\nAGE: 受试者的年龄。\nSEX: 受试者的性别。\nRACE: 受试者的种族。\nVISIT: 访视名称，表示数据采集的时间点（如访视1，访视2等）。\nVISITNUM: 访视编号，通常是一个数字，用于排序访视。\nTRT01A: Treatment Group, 表示受试者被随机分配到的治疗组。\nAEDECOD: Adverse Event Dictionary-Derived Term, 不良事件的编码名称。\nLBTESTCD: Lab Test Code, 实验室检测的简码。\nLBSTRESN: Numeric Result/Value, 实验室检测结果的数值。\nEXDOSE: Exposure Dose, 受试者实际接受的药物剂量。\n\n\n\n5.0.2 2. ADaM 数据集的常见变量\nADaM 数据集用于分析目的，变量名和结构略有不同，通常是为特定分析而创建的派生变量。\n\nUSUBJID: 同 SDTM 中，受试者的唯一标识符。\nPARAM: Analysis Parameter, 分析参数的名称。\nAVAL: Analysis Value, 分析参数的数值。\nBASE: Baseline Value, 基线值。\nCHG: Change from Baseline, 与基线值的变化。\nTRTA: Actual Treatment, 受试者实际接受的治疗。\nAVISIT: Analysis Visit, 分析时使用的访视名称。\nADY: Analysis Relative Day, 相对于参考日期的天数。\nASEQ: Sequence Number, 分析记录的顺序编号。\n\n\n\n5.0.3 如何获取详细的变量定义\n每个 SDTM 和 ADaM 数据集通常会有相应的定义文件（Define-XML），其中详细描述了每个变量的含义、类型、格式等信息。要了解具体数据集中的变量含义，可以参考这些定义文件。\n如果你使用的是 SDTM-ADaM Pilot Project 的数据集，通常会有附带的文档或元数据文件来说明每个变量的详细含义。这些文档通常会随数据集一起提供，也可以在 CDISC 的官方网站或项目网站上找到。\n如果你有具体的文件或数据集，可以使用 readr、haven 或者其他合适的 R 包来加载数据，并使用 str() 或 summary() 函数来查看变量信息。",
+    "text": "13.1 Datasets\nIn this book, we used publicly available CDISC pilot study data, which is accessible through the CDISC GitHub repository. To streamline the process, we have downloaded all the datasets from the repository and converted them from .xpt format to .sas7bdat format for ease of use and compatibility. Then we stored them in the data/adam/ folder within this project. Additionally, The dataset structure adheres to the CDISC Analysis Data Model (ADaM) standard.\nThe SDTM-ADaM Pilot Project datasets were created to demonstrate the process of converting clinical trial data into formats that comply with the Study Data Tabulation Model (SDTM) and Analysis Data Model (ADaM) standards, which are set by the Clinical Data Interchange Standards Consortium (CDISC). These datasets are used to test, validate, and illustrate how to implement CDISC standards in real-world scenarios, helping pharmaceutical companies and regulatory agencies like the FDA ensure data quality and consistency in clinical trials.",
     "crumbs": [
       "统计分析报告",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>实例分析</span>"
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>A case to analyze</span>"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "R for Medical Statistics",
+    "section": "",
+    "text": "Preface\nThis book is created by Quarto and R in RStudio IDE。Quarto integrates well with R, enabling users to create dynamic documents that combine text, code, and output (like tables and plots) in a single document. It supports R Markdown, allowing the execution of R code within documents and rendering outputs in various formats, such as HTML, PDF, and Word. Quarto is ideal for creating reproducible reports, presentations, and books, especially in academic and research settings where R is extensively used. You can also manage bibliographies, citations, and cross-references easily. Quarto is highly customizable, allowing users to create complex documents with ease, and is often used with GitHub Actions for continuous integration and automated publishing.\nQuarto is an open-source publishing system that integrates seamlessly with Markdown, Jupyter Notebooks, and other formats to produce high-quality documents, including books, articles, presentations, and websites. It’s designed for technical and scientific writing, supporting features like citations, cross-references, and various output formats such as HTML, PDF, and ePub. Quarto is highly customizable, allowing users to create complex documents with ease, and is often used with GitHub Actions for continuous integration and automated publishing.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#frequency-distribution",
+    "href": "quat-data-stat-desc.html#frequency-distribution",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.2 Frequency distribution",
+    "text": "2.2 Frequency distribution\n\n2.2.1 Frequency Table\n例 从 adsl 数据集提取女性基线 BMI (\\(kg/m^2\\)) 数据，结果如下：\n\nadsl &lt;- read_sas(\"data-adam/adsl.sas7bdat\")\ntb_bmi_bl &lt;- adsl |&gt; \n  select(BMIBL, SEX) |&gt; \n  filter(SEX == \"F\") |&gt; \n  select(BMIBL)\n\nnrow(tb_bmi_bl)\n#&gt; [1] 143\n\n共有143例数据，检查是否有缺失值：\n\ntb_bmi_bl |&gt; \n  anyNA()\n#&gt; [1] TRUE\n\n输出结果为TRUE，提示有缺失值；下面的代码可以计算缺失值的个数：\n\ntb_bmi_bl |&gt; \n  is.na() |&gt; \n  sum()\n#&gt; [1] 1\n\n输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：\n\n直接删除\n\n\ntb_bmi_bl_clean &lt;- na.omit(tb_bmi_bl)\nnrow(tb_bmi_bl_clean) \n#&gt; [1] 142\n\n\n填补缺失值（简单起见，这里用均数）\n\n\ntb_bmi_bl_filled &lt;- tb_bmi_bl |&gt; \n  mutate(\n    BMIBL = ifelse(is.na(BMIBL), mean(BMIBL, na.rm = T), BMIBL)\n  ) |&gt; \n  round(digits = 1)\n\n填补完成后，对143名女性的基线BMI 求 最小值、最大值和极差：\n\nbmi &lt;- tb_bmi_bl_filled\n1range(bmi)\nrange_bmi &lt;- range(bmi) |&gt;                               \n2  diff() |&gt;\n  print()\n#&gt; [1] 15.1 40.1\n#&gt; [1] 25\n\n\n1\n\nrange()返回包含最小值和最大值的向量\n\n2\n\n利用管道操作符和diff()计算极差\n\n\n\n\n也可用下面的方法计算：\n\nmin_bmi &lt;- min(bmi)\nmax_bmi &lt;- max(bmi)\nrange_bmi &lt;- max_bmi - min_bmi\n\n组段数通常取10~15组，这里取12；利用 seq() 函数得到组段的上下限：\n\nbreaks &lt;- seq(from = min_bmi, to = max_bmi, length.out = 13)\n\n使用 cut() 函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；\n\nvalue_bmi &lt;- pull(bmi)\n\ncut(value_bmi, breaks = breaks, include.lowest = T, right = F) |&gt; \n  str_c() |&gt; \n1  c(rep(\" \", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |&gt;\n  matrix(ncol = 8, byrow = T) |&gt; \n  as.data.frame() |&gt; \n  kbl() |&gt; \n  kable_classic()\n\n\n1\n\n每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。\n\n\n\n\n\n\n\n\nV1\nV2\nV3\nV4\nV5\nV6\nV7\nV8\n\n\n\n\n[23.4,25.5)\n[25.5,27.6)\n[29.7,31.8)\n[23.4,25.5)\n[27.6,29.7)\n[23.4,25.5)\n[23.4,25.5)\n[27.6,29.7)\n\n\n[27.6,29.7)\n[25.5,27.6)\n[17.2,19.3)\n[23.4,25.5)\n[17.2,19.3)\n[23.4,25.5)\n[29.7,31.8)\n[21.4,23.4)\n\n\n[25.5,27.6)\n[38,40.1]\n[23.4,25.5)\n[29.7,31.8)\n[21.4,23.4)\n[17.2,19.3)\n[38,40.1]\n[23.4,25.5)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[21.4,23.4)\n[17.2,19.3)\n[21.4,23.4)\n[29.7,31.8)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[25.5,27.6)\n[23.4,25.5)\n[15.1,17.2)\n[23.4,25.5)\n[19.3,21.4)\n[25.5,27.6)\n[19.3,21.4)\n\n\n[17.2,19.3)\n[21.4,23.4)\n[21.4,23.4)\n[27.6,29.7)\n[19.3,21.4)\n[19.3,21.4)\n[27.6,29.7)\n[29.7,31.8)\n\n\n[29.7,31.8)\n[25.5,27.6)\n[21.4,23.4)\n[19.3,21.4)\n[19.3,21.4)\n[25.5,27.6)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[29.7,31.8)\n[23.4,25.5)\n[17.2,19.3)\n[25.5,27.6)\n[27.6,29.7)\n[19.3,21.4)\n[21.4,23.4)\n\n\n[15.1,17.2)\n[21.4,23.4)\n[31.8,33.9)\n[21.4,23.4)\n[19.3,21.4)\n[27.6,29.7)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[21.4,23.4)\n[23.4,25.5)\n[23.4,25.5)\n[23.4,25.5)\n[25.5,27.6)\n[23.4,25.5)\n[19.3,21.4)\n[31.8,33.9)\n\n\n[27.6,29.7)\n[23.4,25.5)\n[17.2,19.3)\n[19.3,21.4)\n[27.6,29.7)\n[21.4,23.4)\n[19.3,21.4)\n[21.4,23.4)\n\n\n[17.2,19.3)\n[17.2,19.3)\n[17.2,19.3)\n[23.4,25.5)\n[23.4,25.5)\n[21.4,23.4)\n[19.3,21.4)\n[19.3,21.4)\n\n\n[31.8,33.9)\n[25.5,27.6)\n[19.3,21.4)\n[19.3,21.4)\n[21.4,23.4)\n[23.4,25.5)\n[15.1,17.2)\n[27.6,29.7)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[17.2,19.3)\n[19.3,21.4)\n[19.3,21.4)\n[17.2,19.3)\n[23.4,25.5)\n[23.4,25.5)\n\n\n[21.4,23.4)\n[25.5,27.6)\n[21.4,23.4)\n[21.4,23.4)\n[19.3,21.4)\n[21.4,23.4)\n[27.6,29.7)\n[21.4,23.4)\n\n\n[31.8,33.9)\n[31.8,33.9)\n[31.8,33.9)\n[25.5,27.6)\n[19.3,21.4)\n[23.4,25.5)\n[23.4,25.5)\n[27.6,29.7)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[23.4,25.5)\n[23.4,25.5)\n[29.7,31.8)\n[25.5,27.6)\n[21.4,23.4)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[19.3,21.4)\n[21.4,23.4)\n[21.4,23.4)\n[23.4,25.5)\n[27.6,29.7)\n[19.3,21.4)\n\n\n\n\n\n\n\n\n\n生成频数分布表：\n\nDescTools::Freq(value_bmi, breaks = breaks) |&gt; \n  kbl() |&gt; \n  kable_classic()\n\n\n\nTable 2.1: 138名正常成年女性的红细胞数频数分布\n\n\n\n\n\n\n\nlevel\nfreq\nperc\ncumfreq\ncumperc\n\n\n\n\n[15.1,17.2]\n3\n0.0209790\n3\n0.0209790\n\n\n(17.2,19.3]\n12\n0.0839161\n15\n0.1048951\n\n\n(19.3,21.4]\n31\n0.2167832\n46\n0.3216783\n\n\n(21.4,23.4]\n23\n0.1608392\n69\n0.4825175\n\n\n(23.4,25.5]\n32\n0.2237762\n101\n0.7062937\n\n\n(25.5,27.6]\n14\n0.0979021\n115\n0.8041958\n\n\n(27.6,29.7]\n12\n0.0839161\n127\n0.8881119\n\n\n(29.7,31.8]\n8\n0.0559441\n135\n0.9440559\n\n\n(31.8,33.9]\n6\n0.0419580\n141\n0.9860140\n\n\n(33.9,35.9]\n0\n0.0000000\n141\n0.9860140\n\n\n(35.9,38]\n0\n0.0000000\n141\n0.9860140\n\n\n(38,40.1]\n2\n0.0139860\n143\n1.0000000\n\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2 Graph of frequency distributio\n\nhist(\n  x              = value_bmi, \n  breaks         = breaks, \n  right          = T, \n  col            = \"light gray\", \n  include.lowest = T,\n  main           = \" \",\n  xlab           = \"BMI\",\n  ylab           = \"频数\"\n)\n\nggplot(bmi, aes(x = value_bmi)) +\n  geom_histogram(\n    fill = \"skyblue\", \n    color = \"black\", \n    bins = 12\n  ) +\n  stat_bin(\n    geom = \"text\", \n    aes(label = after_stat(count)),\n    bins = 12, \n    size = 3,\n    vjust = - 0.3\n  ) +\n  labs(x = \"BMI\", y = \"频数\") +\n  theme(\n    panel.background = element_blank(),        # 移除背景\n    axis.line = element_line(color = \"black\")  # 保留坐标轴\n  )\n\n\n\n\n\n\n\nFigure 2.1: 138名正常成年女性的红细胞数频数分布\n\n\n\n\n\n\n\n\n\n\n\nFigure 2.2: 138名正常成年女性的红细胞数频数分布",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#measures-of-central-tendency",
+    "href": "quat-data-stat-desc.html#measures-of-central-tendency",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.3 Measures of central tendency",
+    "text": "2.3 Measures of central tendency\n\n2.3.1 算术均数\n例2-2 计算例2-1某医院138名正常成年女性的红细胞数的均数。\n\nmean(value_bmi) |&gt; \n  round(digits = 2)\n#&gt; [1] 23.99\n\n\n\n2.3.2 几何均数\n例 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。\n10 10 10 10 20 20 20 40 40 40 40 40 40 40 40 40 40 80 80 80 80 80 80 80 80 80 80 160 160 160 160 160 160 160 160 160 160 160 320 320 320 320 320 320 320 320 320 320 320 320 320 320 320 640 640 640 640 640 640 640 640 640 640 640 640 640 640 1280 1280\n设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：\n\nserum_antibody_titer |&gt; \n  DescTools::Gmean() |&gt; \n  round(digits = 1)\n#&gt; [1] 150.6\n\n\n\n2.3.3 中位数与四分位数\n计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：\n\nmedian(value_bmi)\n#&gt; [1] 23.6\nquantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |&gt; \n  round(digits = 2)\n#&gt;   25%   50%   75% \n#&gt; 20.90 23.60 26.05",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#measures-of-dispersion-tendency",
+    "href": "quat-data-stat-desc.html#measures-of-dispersion-tendency",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.4 Measures of dispersion tendency",
+    "text": "2.4 Measures of dispersion tendency\n以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：\n\n2.4.1 极差\n\nrange(bmi) |&gt; \n  diff()\n#&gt; [1] 25\n\n\n\n2.4.2 四分位数间距\n\nIQR(value_bmi) |&gt; \n  round(digits = 2)\n#&gt; [1] 5.15\n\n\n\n2.4.3 方差和标准差\n\nvar(value_bmi)\n#&gt; [1] 18.72291\nsd(value_bmi)\n#&gt; [1] 4.326998\n\n\n\n2.4.4 变异系数\n\ncv &lt;- (sd(value_bmi) / mean(value_bmi)) * 100\nround(cv, digits = 2)\n#&gt; [1] 18.03",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "cox-regression.html",
+    "href": "cox-regression.html",
+    "title": "11  Cox regression",
+    "section": "",
+    "text": "Cox regression, also known as Cox proportional hazards regression, is a statistical method used to analyze the time until an event occurs, typically survival time. It is widely used in medical research to explore the relationship between the survival time of patients and one or more predictor variables. Unlike other models, Cox regression does not require assumptions about the baseline hazard function, making it a flexible tool for handling censored data where the exact time of the event may not be known for all subjects.",
+    "crumbs": [
+      "B**asic statistical methods**",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Cox regression</span>"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#medical-reference-range",
+    "href": "quat-data-stat-desc.html#medical-reference-range",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.5 Medical reference range",
+    "text": "2.5 Medical reference range\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(value_bmi, probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;  2.5% 97.5% \n#&gt; 17.81 33.09\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (17.81, 33.09)",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
     ]
   }
 ]
