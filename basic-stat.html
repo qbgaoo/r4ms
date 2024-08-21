@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>基本统计方法 – R 医学统计学</title>
+<title>Basic statistical methods – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,17 +58,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "没有结果",
-    "search-matching-documents-text": "匹配的文档",
-    "search-copy-link-title": "复制搜索链接",
-    "search-hide-matches-text": "隐藏其它匹配结果",
-    "search-more-match-text": "更多匹配结果",
-    "search-more-matches-text": "更多匹配结果",
-    "search-clear-button-title": "清除",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "取消",
-    "search-submit-button-title": "提交",
-    "search-label": "搜索"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -82,13 +82,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic statistical methods</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="搜索" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -100,11 +100,11 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R 医学统计学</a> 
+      <a href="./">R for Medical Statistics</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/qbgaoo/r4ms" title="源代码" class="quarto-navigation-tool px-1" aria-label="源代码"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="切换阅读器模式">
+    <a href="https://github.com/qbgaoo/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="搜索"></div>
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -134,8 +134,8 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./basic-stat.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">基本统计方法</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+ <span class="menu-text">Basic statistical methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -143,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -161,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ttest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation and t test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -206,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">统计分析报告</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -220,7 +220,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,23 +232,23 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">目 录</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#描述性统计" id="toc-描述性统计" class="nav-link active" data-scroll-target="#描述性统计"><strong>1. 描述性统计</strong></a></li>
-  <li><a href="#推断性统计" id="toc-推断性统计" class="nav-link" data-scroll-target="#推断性统计"><strong>2. 推断性统计</strong></a></li>
-  <li><a href="#回归分析" id="toc-回归分析" class="nav-link" data-scroll-target="#回归分析"><strong>3. 回归分析</strong></a></li>
-  <li><a href="#随机化和抽样" id="toc-随机化和抽样" class="nav-link" data-scroll-target="#随机化和抽样"><strong>5. 随机化和抽样</strong></a></li>
+  <li><a href="#描述性统计" id="toc-描述性统计" class="nav-link active" data-scroll-target="#描述性统计"><strong>1.</strong> 描述性统计</a></li>
+  <li><a href="#推断性统计" id="toc-推断性统计" class="nav-link" data-scroll-target="#推断性统计">2. 推断性统计</a></li>
+  <li><a href="#回归分析" id="toc-回归分析" class="nav-link" data-scroll-target="#回归分析">3. 回归分析</a></li>
+  <li><a href="#随机化和抽样" id="toc-随机化和抽样" class="nav-link" data-scroll-target="#随机化和抽样">5. 随机化和抽样</a></li>
   <li><a href="#误差与功效分析" id="toc-误差与功效分析" class="nav-link" data-scroll-target="#误差与功效分析"><strong>6. 误差与功效分析</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">基本统计方法</h1>
+<h1 class="title">Basic statistical methods</h1>
 </div>
 
 
@@ -267,41 +267,41 @@ ul.task-list li input[type="checkbox"] {
 
 <p>基本的医学统计方法涵盖了数据的收集、整理、描述、分析和解释，旨在帮助研究者理解疾病的发生、发展、治疗效果及健康状况的分布规律。以下是医学研究中常用的一些基本统计方法：</p>
 <section id="描述性统计" class="level3">
-<h3 class="anchored" data-anchor-id="描述性统计"><strong>1. 描述性统计</strong></h3>
+<h3 class="anchored" data-anchor-id="描述性统计"><strong>1.</strong> 描述性统计</h3>
 <ul>
-<li><p><strong>频率分析</strong>：计算各类别或数值出现的频数和百分比。</p></li>
-<li><p><strong>集中趋势测量</strong>：平均值、中位数和众数，用于描述数据的中心位置。</p></li>
-<li><p><strong>离散程度测量</strong>：标准差、方差、四分位数间距和极差，反映数据的分散程度。</p></li>
+<li><p>频率分析：计算各类别或数值出现的频数和百分比。</p></li>
+<li><p>集中趋势测量：平均值、中位数和众数，用于描述数据的中心位置。</p></li>
+<li><p>离散程度测量：标准差、方差、四分位数间距和极差，反映数据的分散程度。</p></li>
 </ul>
 </section>
 <section id="推断性统计" class="level3">
-<h3 class="anchored" data-anchor-id="推断性统计"><strong>2. 推断性统计</strong></h3>
+<h3 class="anchored" data-anchor-id="推断性统计">2. 推断性统计</h3>
 <ul>
-<li><p><strong>参数检验</strong>：</p>
+<li><p>参数检验：</p>
 <ul>
-<li><p><strong>t检验</strong>：用于比较两组或几组独立或配对样本的均值差异，如学生t检验、配对t检验。</p></li>
-<li><p><strong>ANOVA（方差分析）</strong>：比较多个样本均值是否存在显著差异。</p></li>
+<li><p>t检验：用于比较两组或几组独立或配对样本的均值差异，如学生t检验、配对t检验。</p></li>
+<li><p>ANOVA（方差分析）：比较多个样本均值是否存在显著差异。</p></li>
 </ul></li>
-<li><p><strong>非参数检验</strong>：</p>
+<li><p>非参数检验：</p>
 <ul>
-<li><p><strong>Mann-Whitney U检验</strong>（Wilcoxon秩和检验的两样本形式）：适用于连续数据但不符合正态分布的两组样本均值差异检验。</p></li>
-<li><p><strong>Kruskal-Wallis H检验</strong>：多组独立样本的中位数差异检验，适用于非正态分布数据。</p></li>
+<li><p>Mann-Whitney U检验（Wilcoxon秩和检验的两样本形式）：适用于连续数据但不符合正态分布的两组样本均值差异检验。</p></li>
+<li><p>Kruskal-Wallis H检验：多组独立样本的中位数差异检验，适用于非正态分布数据。</p></li>
 </ul></li>
-<li><p><strong>卡方检验</strong>（Chi-square test）：用于分析分类变量间的关系，如四格表检验。</p></li>
+<li><p>卡方检验（Chi-square test）：用于分析分类变量间的关系，如四格表检验。</p></li>
 </ul>
 </section>
 <section id="回归分析" class="level3">
-<h3 class="anchored" data-anchor-id="回归分析"><strong>3. 回归分析</strong></h3>
+<h3 class="anchored" data-anchor-id="回归分析">3. 回归分析</h3>
 <ul>
-<li><p><strong>线性回归</strong>：研究一个或多个自变量与一个连续因变量之间的线性关系。</p></li>
-<li><p><strong>逻辑回归</strong>（Logistic Regression）：适用于因变量为二分类或多元分类的场合，用来估计事件发生概率。</p></li>
+<li><p>线性回归：研究一个或多个自变量与一个连续因变量之间的线性关系。</p></li>
+<li><p>逻辑回归（Logistic Regression）：适用于因变量为二分类或多元分类的场合，用来估计事件发生概率。</p></li>
 </ul>
 </section>
 <section id="随机化和抽样" class="level3">
-<h3 class="anchored" data-anchor-id="随机化和抽样"><strong>5. 随机化和抽样</strong></h3>
+<h3 class="anchored" data-anchor-id="随机化和抽样">5. 随机化和抽样</h3>
 <ul>
-<li><p><strong>随机化</strong>：确保研究的组间可比性。</p></li>
-<li><p><strong>抽样技术</strong>：包括简单随机抽样、分层抽样、整群抽样等，确保样本代表性。</p></li>
+<li><p>随机化：确保研究的组间可比性。</p></li>
+<li><p>抽样技术：包括简单随机抽样、分层抽样、整群抽样等，确保样本代表性。</p></li>
 </ul>
 </section>
 <section id="误差与功效分析" class="level3">
@@ -502,12 +502,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "已复制");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "已复制");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -925,8 +925,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="计量资料的统计描述">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="Statistical description of quantitative data">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -935,5 +935,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/basic-stat.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

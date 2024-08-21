@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; 实例分析 – R 医学统计学</title>
+<title>13&nbsp; A case to analyze – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,17 +57,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "没有结果",
-    "search-matching-documents-text": "匹配的文档",
-    "search-copy-link-title": "复制搜索链接",
-    "search-hide-matches-text": "隐藏其它匹配结果",
-    "search-more-match-text": "更多匹配结果",
-    "search-more-matches-text": "更多匹配结果",
-    "search-clear-button-title": "清除",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "取消",
-    "search-submit-button-title": "提交",
-    "search-label": "搜索"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
@@ -81,13 +81,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">A case to analyze</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="搜索" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -99,11 +99,11 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">R 医学统计学</a> 
+      <a href="./">R for Medical Statistics</a> 
         <div class="sidebar-tools-main tools-wide">
-    <a href="https://github.com/qbgaoo/r4ms" title="源代码" class="quarto-navigation-tool px-1" aria-label="源代码"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="切换阅读器模式">
+    <a href="https://github.com/qbgaoo/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="搜索"></div>
+        <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -133,8 +133,8 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">基本统计方法</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+ <span class="menu-text">Basic statistical methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -142,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -160,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ttest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation and t test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -205,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">统计分析报告</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -219,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
       </ul>
@@ -231,21 +231,19 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">目 录</h2>
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sdtm-数据集的常见变量" id="toc-sdtm-数据集的常见变量" class="nav-link active" data-scroll-target="#sdtm-数据集的常见变量"><span class="header-section-number">13.0.1</span> <strong>1. SDTM 数据集的常见变量</strong></a></li>
-  <li><a href="#adam-数据集的常见变量" id="toc-adam-数据集的常见变量" class="nav-link" data-scroll-target="#adam-数据集的常见变量"><span class="header-section-number">13.0.2</span> <strong>2. ADaM 数据集的常见变量</strong></a></li>
-  <li><a href="#如何获取详细的变量定义" id="toc-如何获取详细的变量定义" class="nav-link" data-scroll-target="#如何获取详细的变量定义"><span class="header-section-number">13.0.3</span> <strong>如何获取详细的变量定义</strong></a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link active" data-scroll-target="#datasets"><span class="header-section-number">13.1</span> <strong>Datasets</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">统计分析报告</a></li><li class="breadcrumb-item"><a href="./pilot-project.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">A case to analyze</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">A case to analyze</span></h1>
 </div>
 
 
@@ -262,46 +260,10 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><strong>SDTM-ADaM Pilot Project</strong> 数据集是用于临床试验数据标准化的一个示例数据集，遵循了 CDISC（Clinical Data Interchange Standards Consortium）规定的标准：SDTM（Study Data Tabulation Model）和 ADaM（Analysis Data Model）。这些数据集用于演示如何整理和分析临床试验数据，以便提交给监管机构如 FDA。</p>
-<p>由于 SDTM-ADaM Pilot Project 数据集的具体变量会因数据集的不同而有所变化，以下是 SDTM 和 ADaM 数据集中一些常见变量的概述：</p>
-<section id="sdtm-数据集的常见变量" class="level3" data-number="13.0.1">
-<h3 data-number="13.0.1" class="anchored" data-anchor-id="sdtm-数据集的常见变量"><span class="header-section-number">13.0.1</span> <strong>1. SDTM 数据集的常见变量</strong></h3>
-<p>SDTM 数据集通常包含与患者、试验设计、访视、药物暴露、实验室数据等相关的变量。</p>
-<ul>
-<li><p><strong><code>USUBJID</code></strong>: Unique Subject Identifier, 每个受试者的唯一标识符。</p></li>
-<li><p><strong><code>SUBJID</code></strong>: Subject Identifier for the Study, 研究中每个受试者的标识符。</p></li>
-<li><p><strong><code>AGE</code></strong>: 受试者的年龄。</p></li>
-<li><p><strong><code>SEX</code></strong>: 受试者的性别。</p></li>
-<li><p><strong><code>RACE</code></strong>: 受试者的种族。</p></li>
-<li><p><strong><code>VISIT</code></strong>: 访视名称，表示数据采集的时间点（如访视1，访视2等）。</p></li>
-<li><p><strong><code>VISITNUM</code></strong>: 访视编号，通常是一个数字，用于排序访视。</p></li>
-<li><p><strong><code>TRT01A</code></strong>: Treatment Group, 表示受试者被随机分配到的治疗组。</p></li>
-<li><p><strong><code>AEDECOD</code></strong>: Adverse Event Dictionary-Derived Term, 不良事件的编码名称。</p></li>
-<li><p><strong><code>LBTESTCD</code></strong>: Lab Test Code, 实验室检测的简码。</p></li>
-<li><p><strong><code>LBSTRESN</code></strong>: Numeric Result/Value, 实验室检测结果的数值。</p></li>
-<li><p><strong><code>EXDOSE</code></strong>: Exposure Dose, 受试者实际接受的药物剂量。</p></li>
-</ul>
-</section>
-<section id="adam-数据集的常见变量" class="level3" data-number="13.0.2">
-<h3 data-number="13.0.2" class="anchored" data-anchor-id="adam-数据集的常见变量"><span class="header-section-number">13.0.2</span> <strong>2. ADaM 数据集的常见变量</strong></h3>
-<p>ADaM 数据集用于分析目的，变量名和结构略有不同，通常是为特定分析而创建的派生变量。</p>
-<ul>
-<li><p><strong><code>USUBJID</code></strong>: 同 SDTM 中，受试者的唯一标识符。</p></li>
-<li><p><strong><code>PARAM</code></strong>: Analysis Parameter, 分析参数的名称。</p></li>
-<li><p><strong><code>AVAL</code></strong>: Analysis Value, 分析参数的数值。</p></li>
-<li><p><strong><code>BASE</code></strong>: Baseline Value, 基线值。</p></li>
-<li><p><strong><code>CHG</code></strong>: Change from Baseline, 与基线值的变化。</p></li>
-<li><p><strong><code>TRTA</code></strong>: Actual Treatment, 受试者实际接受的治疗。</p></li>
-<li><p><strong><code>AVISIT</code></strong>: Analysis Visit, 分析时使用的访视名称。</p></li>
-<li><p><strong><code>ADY</code></strong>: Analysis Relative Day, 相对于参考日期的天数。</p></li>
-<li><p><strong><code>ASEQ</code></strong>: Sequence Number, 分析记录的顺序编号。</p></li>
-</ul>
-</section>
-<section id="如何获取详细的变量定义" class="level3" data-number="13.0.3">
-<h3 data-number="13.0.3" class="anchored" data-anchor-id="如何获取详细的变量定义"><span class="header-section-number">13.0.3</span> <strong>如何获取详细的变量定义</strong></h3>
-<p>每个 SDTM 和 ADaM 数据集通常会有相应的定义文件（Define-XML），其中详细描述了每个变量的含义、类型、格式等信息。要了解具体数据集中的变量含义，可以参考这些定义文件。</p>
-<p>如果你使用的是 SDTM-ADaM Pilot Project 的数据集，通常会有附带的文档或元数据文件来说明每个变量的详细含义。这些文档通常会随数据集一起提供，也可以在 CDISC 的官方网站或项目网站上找到。</p>
-<p>如果你有具体的文件或数据集，可以使用 <code>readr</code>、<code>haven</code> 或者其他合适的 R 包来加载数据，并使用 <code>str()</code> 或 <code>summary()</code> 函数来查看变量信息。</p>
+<section id="datasets" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="datasets"><span class="header-section-number">13.1</span> <strong>Datasets</strong></h2>
+<p>In this book, we used publicly available CDISC pilot study data, which is accessible through the <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets">CDISC GitHub repository</a>. To streamline the process, we have downloaded all the datasets from the repository and converted them from <code>.xpt</code> format to <code>.sas7bdat</code> format for ease of use and compatibility. Then we stored them in the <a href="https://github.com/qbgaoo/r4ms/main/data/adam">data/adam/</a> folder within this project. Additionally, The dataset structure adheres to the CDISC <a href="https://www.cdisc.org/standards/foundational/adam">Analysis Data Model (ADaM)</a> standard.</p>
+<p>The SDTM-ADaM Pilot Project datasets were created to demonstrate the process of converting clinical trial data into formats that comply with the Study Data Tabulation Model (SDTM) and Analysis Data Model (ADaM) standards, which are set by the Clinical Data Interchange Standards Consortium (CDISC). These datasets are used to test, validate, and illustrate how to implement CDISC standards in real-world scenarios, helping pharmaceutical companies and regulatory agencies like the FDA ensure data quality and consistency in clinical trials.</p>
 
 
 </section>
@@ -494,12 +456,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "已复制");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "已复制");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -924,5 +886,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/pilot-project.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
