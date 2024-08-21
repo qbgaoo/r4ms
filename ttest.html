@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; 总体均数估计与t 检验 – R 医学统计学</title>
+<title>5&nbsp; 总体均数估计与t 检验 – R 医学统计学</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./stat-anal-report.html" rel="next">
-<link href="./quat-data-stat-desc.html" rel="prev">
+<link href="./anova.html" rel="next">
+<link href="./confidence-interval.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -150,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="搜索" onclick="window.quartoOpenSearch();">
@@ -213,8 +213,56 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><strong>Description of Categorical Variables</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confidence-interval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><strong>Confidence Interval</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./ttest.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Analysis of Variance</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Chi-Square Test</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparameter-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title"><strong>Nonparametric Tests</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><strong>Correlation and Simple Linear Regression</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><strong>Logistic Regression</strong></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -231,13 +279,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">实例分析</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">实例分析</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,23 +300,23 @@ window.Quarto = {
     <h2 id="toc-title">目 录</h2>
    
   <ul>
-  <li><a href="#安装包" id="toc-安装包" class="nav-link active" data-scroll-target="#安装包"><span class="header-section-number">3.1</span> 安装包</a></li>
-  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">3.2</span> 标准误和可信区间</a>
+  <li><a href="#安装包" id="toc-安装包" class="nav-link active" data-scroll-target="#安装包"><span class="header-section-number">5.1</span> 安装包</a></li>
+  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">5.2</span> 标准误和可信区间</a>
   <ul class="collapse">
-  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">3.2.1</span> 单一总体均数的可信区间</a></li>
-  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">3.2.2</span> 两总体均数差的可信区间</a></li>
+  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">5.2.1</span> 单一总体均数的可信区间</a></li>
+  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">5.2.2</span> 两总体均数差的可信区间</a></li>
   </ul></li>
-  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">3.3</span> <em>t</em> 检验</a>
+  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">5.3</span> <em>t</em> 检验</a>
   <ul class="collapse">
-  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">3.3.1</span> 单样本 <em>t</em> 检验</a></li>
-  <li><a href="#配对样本-t-检验" id="toc-配对样本-t-检验" class="nav-link" data-scroll-target="#配对样本-t-检验"><span class="header-section-number">3.3.2</span> 配对样本 <em>t</em> 检验</a></li>
-  <li><a href="#两样本-t-检验" id="toc-两样本-t-检验" class="nav-link" data-scroll-target="#两样本-t-检验"><span class="header-section-number">3.3.3</span> 两样本 <em>t</em> 检验</a></li>
-  <li><a href="#近似-t-检验" id="toc-近似-t-检验" class="nav-link" data-scroll-target="#近似-t-检验"><span class="header-section-number">3.3.4</span> 近似 <em>t</em> 检验</a></li>
+  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">5.3.1</span> 单样本 <em>t</em> 检验</a></li>
+  <li><a href="#配对样本-t-检验" id="toc-配对样本-t-检验" class="nav-link" data-scroll-target="#配对样本-t-检验"><span class="header-section-number">5.3.2</span> 配对样本 <em>t</em> 检验</a></li>
+  <li><a href="#两样本-t-检验" id="toc-两样本-t-检验" class="nav-link" data-scroll-target="#两样本-t-检验"><span class="header-section-number">5.3.3</span> 两样本 <em>t</em> 检验</a></li>
+  <li><a href="#近似-t-检验" id="toc-近似-t-检验" class="nav-link" data-scroll-target="#近似-t-检验"><span class="header-section-number">5.3.4</span> 近似 <em>t</em> 检验</a></li>
   </ul></li>
-  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">3.4</span> 正态和方差齐性检验</a>
+  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">5.4</span> 正态和方差齐性检验</a>
   <ul class="collapse">
-  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">3.4.1</span> 正态性检验</a></li>
-  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">3.4.2</span> 方差齐性检验</a></li>
+  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">5.4.1</span> 正态性检验</a></li>
+  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">5.4.2</span> 方差齐性检验</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-github"></i>编辑该页面</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>反馈问题</a></li></ul></div></nav>
@@ -276,9 +324,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">基本统计方法</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">总体均数估计与<em>t</em> 检验</span></h1>
 </div>
 
 
@@ -295,8 +343,8 @@ window.Quarto = {
 </header>
 
 
-<section id="安装包" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="安装包"><span class="header-section-number">3.1</span> 安装包</h2>
+<section id="安装包" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="安装包"><span class="header-section-number">5.1</span> 安装包</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -355,10 +403,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="标准误和可信区间" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">3.2</span> 标准误和可信区间</h2>
-<section id="单一总体均数的可信区间" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">3.2.1</span> 单一总体均数的可信区间</h3>
+<section id="标准误和可信区间" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">5.2</span> 标准误和可信区间</h2>
+<section id="单一总体均数的可信区间" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">5.2.1</span> 单一总体均数的可信区间</h3>
 <p><strong>例3-2</strong> 计算例3-1中每个样本的标准误和可信区间</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>mean  <span class="ot">&lt;-</span> height_samples<span class="sc">$</span>mean</span>
@@ -465,8 +513,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="两总体均数差的可信区间" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">3.2.2</span> 两总体均数差的可信区间</h3>
+<section id="两总体均数差的可信区间" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">5.2.2</span> 两总体均数差的可信区间</h3>
 <p><strong>例3-3</strong> 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
@@ -484,11 +532,11 @@ window.Quarto = {
 <p>因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。</p>
 </section>
 </section>
-<section id="t-检验" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">3.3</span> <em>t</em> 检验</h2>
+<section id="t-检验" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">5.3</span> <em>t</em> 检验</h2>
 <p>计量资料的假设检验中，最常见、最简单的方法是 <em>t</em> 检验。</p>
-<section id="单样本-t-检验" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">3.3.1</span> 单样本 <em>t</em> 检验</h3>
+<section id="单样本-t-检验" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">5.3.1</span> 单样本 <em>t</em> 检验</h3>
 <p><strong>例3-4</strong> 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"datasets/例03-05.dta"</span>) <span class="sc">|&gt;</span> </span>
@@ -537,8 +585,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="配对样本-t-检验" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="配对样本-t-检验"><span class="header-section-number">3.3.2</span> 配对样本 <em>t</em> 检验</h3>
+<section id="配对样本-t-检验" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="配对样本-t-检验"><span class="header-section-number">5.3.2</span> 配对样本 <em>t</em> 检验</h3>
 <p><strong>例3-5</strong> 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>paired <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"datasets/例03-06.dta"</span>) </span>
@@ -583,8 +631,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="两样本-t-检验" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="两样本-t-检验"><span class="header-section-number">3.3.3</span> 两样本 <em>t</em> 检验</h3>
+<section id="两样本-t-检验" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="两样本-t-检验"><span class="header-section-number">5.3.3</span> 两样本 <em>t</em> 检验</h3>
 <p><strong>例3-6</strong> 为研究国产四类新药阿卡波糖胶囊的降血糖效果，某医院用40名II型糖尿病病人进行同期随机对照试验。研究者将这些病人随机等分到试验组(用阿卡波糖胶囊)和对照组(用拜唐苹胶囊)，分别测得试验开始前和8周时的空腹血糖，算得空腹血糖下降值，能否认为该国产四类新药阿卡波糖胶囊与拜唐苹胶囊对空腹血糖的降糖效果不同？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>two_sample <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>(<span class="st">"datasets/例03-07.dta"</span>) </span>
@@ -632,15 +680,15 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="近似-t-检验" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="近似-t-检验"><span class="header-section-number">3.3.4</span> 近似 <em>t</em> 检验</h3>
+<section id="近似-t-检验" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="近似-t-检验"><span class="header-section-number">5.3.4</span> 近似 <em>t</em> 检验</h3>
 <p>进行两小样本均数比较，若两总体方差不等，可采用近似 <em>t</em> 检验:</p>
-<p><strong>例3-7</strong> 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA<sub>1</sub>c (%)的下降值见 <a href="#tbl-HbA1c" class="quarto-xref">表&nbsp;<span>3.1</span></a> 。问使用两种不同药物的患者其HbA<sub>1</sub>c下降值是否相同？</p>
+<p><strong>例3-7</strong> 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA<sub>1</sub>c (%)的下降值见 <a href="#tbl-HbA1c" class="quarto-xref">表&nbsp;<span>5.1</span></a> 。问使用两种不同药物的患者其HbA<sub>1</sub>c下降值是否相同？</p>
 <div class="cell">
 <div id="tbl-HbA1c" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HbA1c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-表&nbsp;3.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
+表&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </figcaption>
 <div aria-describedby="tbl-HbA1c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -676,7 +724,7 @@ window.Quarto = {
 <ol type="1">
 <li><code>knitr::kable()</code>成功将输出到html的表中的字符渲染为数学符号，其他包函数测试不成功</li>
 </ol>
-<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>小节 3.4</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
+<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>小节 5.4</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">TTestA</span>(                              </span>
 <span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> <span class="fl">1.13</span>,</span>
@@ -737,10 +785,10 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="sec-homogeneity-test" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">3.4</span> 正态和方差齐性检验</h2>
-<section id="正态性检验" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">3.4.1</span> 正态性检验</h3>
+<section id="sec-homogeneity-test" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">5.4</span> 正态和方差齐性检验</h2>
+<section id="正态性检验" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">5.4.1</span> 正态性检验</h3>
 <p>下面对<strong>例3-1</strong>中的100个样本均数进行正态性检验：</p>
 <p>（一）计算法</p>
 <p>下面分别采用<code>stats::shapiro.test()</code>和<code>DescTools::ShapiroFranciaTest()</code>进行正态性检验：</p>
@@ -835,8 +883,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="方差齐性检验" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">3.4.2</span> 方差齐性检验</h3>
+<section id="方差齐性检验" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">5.4.2</span> 方差齐性检验</h3>
 <p>对<strong>例3-6</strong>的数据，利用<span class="math inline">\(F\)</span>检验判断两总体空腹血糖下降值的方差是否相等。这里利用<code>DescTools::LeveneTest()</code>进行方差齐性检验</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> two_sample <span class="sc">|&gt;</span> </span>
@@ -1498,13 +1546,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="计量资料的统计描述">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">计量资料的统计描述</span></span>
+      <a href="./confidence-interval.html" class="pagination-link" aria-label="**Confidence Interval**">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><strong>Confidence Interval</strong></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./stat-anal-report.html" class="pagination-link" aria-label="统计分析报告">
-        <span class="nav-page-text">统计分析报告</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./anova.html" class="pagination-link" aria-label="**Analysis of Variance**">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Analysis of Variance</strong></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

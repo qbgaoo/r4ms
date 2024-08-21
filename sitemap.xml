@@ -2,34 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://qbgaoo.github.io/r4ms/index.html</loc>
-    <lastmod>2024-08-21T07:43:32.219Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.374Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/intro.html</loc>
-    <lastmod>2024-08-21T07:43:32.219Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.374Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/quat-data-stat-desc.html</loc>
-    <lastmod>2024-08-21T07:43:32.220Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/count-data-stat-desc.html</loc>
+    <lastmod>2024-08-21T09:09:17.216Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/confidence-interval.html</loc>
+    <lastmod>2024-08-21T09:09:17.216Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/ttest.html</loc>
-    <lastmod>2024-08-21T07:43:32.221Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/anova.html</loc>
+    <lastmod>2024-08-21T09:09:17.214Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/chi-square-test.html</loc>
+    <lastmod>2024-08-21T09:09:17.214Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/nonparameter-test.html</loc>
+    <lastmod>2024-08-21T09:09:17.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/simple-linear-regression.html</loc>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/logistic-regression.html</loc>
+    <lastmod>2024-08-21T09:09:17.374Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/cox-regression.html</loc>
+    <lastmod>2024-08-21T09:09:17.218Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/quarto.html</loc>
-    <lastmod>2024-08-21T07:43:32.220Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/pilot-project.html</loc>
-    <lastmod>2024-08-21T07:43:32.219Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/basic-stat.html</loc>
-    <lastmod>2024-08-21T07:43:32.111Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.214Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/stat-anal-report.html</loc>
-    <lastmod>2024-08-21T07:43:32.221Z</lastmod>
+    <lastmod>2024-08-21T09:09:17.375Z</lastmod>
   </url>
 </urlset>
