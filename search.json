@@ -14,7 +14,7 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "1.1 数据集\n在这个项目中，我们使用了公开的 CDISC 探索性研究数据，这些数据可以在 CDISC GitHub 库中获取。为方便使用，我们从库中下载了所有的数据集，并将这些数据集从 .xpt 格式转换为 .sas7bdat 格式，存储在本项目的 data-adam/文件夹内。数据集结构遵循 CDISC ADaM 标准。",
+    "text": "1.1 Datasets\nIn this book, we used publicly available CDISC pilot study data, which is accessible through the CDISC GitHub repository. To streamline the process, we have downloaded all the datasets from the repository and converted them from .xpt format to .sas7bdat format for ease of use and compatibility. Then we stored them in the data/adam/ folder within this project. Additionally, The dataset structure adheres to the CDISC Analysis Data Model (ADaM) standard.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
