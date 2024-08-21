@@ -1,6 +1,4 @@
-# 绪论
-
-这本书由 markdown 和 R 可执行代码创建的。
+# Introduction
 
 ## **数据集**
 
