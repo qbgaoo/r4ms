@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "R 医学统计学",
     "section": "",
-    "text": "卷首语\nThis is a Quarto book. This is a book created from markdown and executable code.\n本书是在 RStudio 内使用 Quarto 编辑的。Quarto 是 POSIT (原RStudio) 开发的一个开源软件，其为医学统计学提供了一个统一的创作框架，结合了 R 代码、文字和R运行结果。Quarto 文档可完全重现，支持数十种输出格式，如 HTML，PDF、Word 和演示文稿等。要了解更多 Quarto 特性，请访问 https://quarto.org/。",
+    "text": "Preface\nThis book is created by Quarto and R in RStudio IDE。Quarto integrates well with R, enabling users to create dynamic documents that combine text, code, and output (like tables and plots) in a single document. It supports R Markdown, allowing the execution of R code within documents and rendering outputs in various formats, such as HTML, PDF, and Word. Quarto is ideal for creating reproducible reports, presentations, and books, especially in academic and research settings where R is extensively used. You can also manage bibliographies, citations, and cross-references easily. Quarto is highly customizable, allowing users to create complex documents with ease, and is often used with GitHub Actions for continuous integration and automated publishing.\nQuarto is an open-source publishing system that integrates seamlessly with Markdown, Jupyter Notebooks, and other formats to produce high-quality documents, including books, articles, presentations, and websites. It’s designed for technical and scientific writing, supporting features like citations, cross-references, and various output formats such as HTML, PDF, and ePub. Quarto is highly customizable, allowing users to create complex documents with ease, and is often used with GitHub Actions for continuous integration and automated publishing.",
     "crumbs": [
-      "卷首语"
+      "Preface"
     ]
   },
   {
