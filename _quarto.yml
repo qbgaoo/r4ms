@@ -19,7 +19,15 @@ book:
     - part: basic-stat.qmd
       chapters:
         - quat-data-stat-desc.qmd
+        - count-data-stat-desc.qmd
+        - confidence-interval.qmd
         - ttest.qmd
+        - anova.qmd
+        - chi-square-test.qmd
+        - nonparameter-test.qmd
+        - simple-linear-regression.qmd
+        - logistic-regression.qmd
+        - cox-regression.qmd
         
     - part: stat-anal-report.qmd
       chapters: 
