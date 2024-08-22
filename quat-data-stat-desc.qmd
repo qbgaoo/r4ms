@@ -20,23 +20,29 @@ library(tidyverse)
 
 ## Importing the data
 
-[Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction)
+HFPD ([Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction))
 
 **例** 从 `adsl` 数据集中筛选女性患者maximum heart rate ($kg/m^2$) 数据，结果如下：
 
-```{r}
-df <- read_csv("datasets/heart.csv", show_col_types = F)
+We can read this file into R using `read_csv()`. The first argument is the most important: the path to the file. You can think about the path as the address of the file: the file is called `heart.csv` and that it lives in the `datasets` folder.
 
+```{r}
+df <- read_csv("datasets/heart.csv")
+```
+
+The code above will work if you have the `heart.csv` file in a `datasets` folder in your project.
+
+```{r}
 max_hr <- df |>
   janitor::clean_names() |> 
-  select(sex, max_hr, heart_disease) |> 
-  filter(sex == "F", heart_disease == 1) |> 
+  select(max_hr, heart_disease) |> 
+  filter(heart_disease == 1) |> 
   select(max_hr)
 
 nrow(max_hr)
 ```
 
-共有50例数据，检查是否有缺失值：
+共有508例数据，检查是否有缺失值：
 
 ```{r}
 max_hr |> 
@@ -52,7 +58,8 @@ max_hr |>
 ```{r}
 max_hr |> 
   pull() |> 
-  mean()
+  mean() |> 
+  round(digits = 1)
 ```
 
 ### Median
@@ -69,7 +76,7 @@ max_hr |>
 
 以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
 
-### 极差
+### Range
 
 ```{r}
 range(max_hr) |> 

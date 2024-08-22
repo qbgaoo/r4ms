@@ -4,7 +4,7 @@
     "href": "quat-data-stat-desc.html",
     "title": "2  Statistical description of quantitative data",
     "section": "",
-    "text": "2.1 Prerequisites\nlibrary(haven)\nlibrary(tidyverse)\nlibrary(kableExtra)\n1library(showtext)\n\n\n1\n\nshowtext包允许在绘图时使用系统中任意的TrueType或OpenType字体",
+    "text": "2.1 Prerequisites\nSetting up the required R packages.\nlibrary(tidyverse)",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
@@ -59,7 +59,7 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "1.1",
+    "text": "1.1 Prerequisites\nWe’ve made a few assumptions about what you already know to get the most out of this book. You should have some basic knowledge about medical statistics, and it’s helpful if you have some basic R programming experience already.\nYou need some things to run the code in this book: R, RStudio and some preinstalled R packages. Packages are the fundamental units of reproducible R code. They include reusable functions, documentation that describes how to use them, and sample data.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -177,7 +177,7 @@
     "href": "quat-data-stat-desc.html#measures-of-central-tendency",
     "title": "2  Statistical description of quantitative data",
     "section": "2.3 Measures of central tendency",
-    "text": "2.3 Measures of central tendency\n\n2.3.1 算术均数\n例2-2 计算例2-1某医院138名正常成年女性的红细胞数的均数。\n\nmean(value_bmi) |&gt; \n  round(digits = 2)\n#&gt; [1] 23.99\n\n\n\n2.3.2 几何均数\n例 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。\n10 10 10 10 20 20 20 40 40 40 40 40 40 40 40 40 40 80 80 80 80 80 80 80 80 80 80 160 160 160 160 160 160 160 160 160 160 160 320 320 320 320 320 320 320 320 320 320 320 320 320 320 320 640 640 640 640 640 640 640 640 640 640 640 640 640 640 1280 1280\n设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：\n\nserum_antibody_titer |&gt; \n  DescTools::Gmean() |&gt; \n  round(digits = 1)\n#&gt; [1] 150.6\n\n\n\n2.3.3 中位数与四分位数\n计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：\n\nmedian(value_bmi)\n#&gt; [1] 23.6\nquantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |&gt; \n  round(digits = 2)\n#&gt;   25%   50%   75% \n#&gt; 20.90 23.60 26.05",
+    "text": "2.3 Measures of central tendency\n\n2.3.1 Mean\n例2-2 计算例2-1某医院138名正常成年女性的红细胞数的均数。\n\nmax_hr |&gt; \n  pull() |&gt; \n  mean()\n#&gt; [1] 127.6555\n\n\n\n2.3.2 Median\n计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：\n\nmax_hr |&gt; \n  pull() |&gt; \n  median()\n#&gt; [1] 126",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
@@ -210,10 +210,62 @@
     "href": "quat-data-stat-desc.html#medical-reference-range",
     "title": "2  Statistical description of quantitative data",
     "section": "2.5 Medical reference range",
-    "text": "2.5 Medical reference range\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(value_bmi, probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;  2.5% 97.5% \n#&gt; 17.81 33.09\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (17.81, 33.09)",
+    "text": "2.5 Medical reference range\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(pull(max_hr), probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;    2.5%   97.5% \n#&gt;  82.000 173.325\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (82, 173.325)",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#importing-the-data",
+    "href": "quat-data-stat-desc.html#importing-the-data",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.2 Importing the data",
+    "text": "2.2 Importing the data\nHeart Failure Prediction Dataset\n例 从 adsl 数据集中筛选女性患者maximum heart rate (\\(kg/m^2\\)) 数据，结果如下：\n\ndf &lt;- read_csv(\"datasets/heart.csv\", show_col_types = F)\nstr(df)\n#&gt; spc_tbl_ [918 × 12] (S3: spec_tbl_df/tbl_df/tbl/data.frame)\n#&gt;  $ Age           : num [1:918] 40 49 37 48 54 39 45 54 37 48 ...\n#&gt;  $ Sex           : chr [1:918] \"M\" \"F\" \"M\" \"F\" ...\n#&gt;  $ ChestPainType : chr [1:918] \"ATA\" \"NAP\" \"ATA\" \"ASY\" ...\n#&gt;  $ RestingBP     : num [1:918] 140 160 130 138 150 120 130 110 140 120 ...\n#&gt;  $ Cholesterol   : num [1:918] 289 180 283 214 195 339 237 208 207 284 ...\n#&gt;  $ FastingBS     : num [1:918] 0 0 0 0 0 0 0 0 0 0 ...\n#&gt;  $ RestingECG    : chr [1:918] \"Normal\" \"Normal\" \"ST\" \"Normal\" ...\n#&gt;  $ MaxHR         : num [1:918] 172 156 98 108 122 170 170 142 130 120 ...\n#&gt;  $ ExerciseAngina: chr [1:918] \"N\" \"N\" \"N\" \"Y\" ...\n#&gt;  $ Oldpeak       : num [1:918] 0 1 0 1.5 0 0 0 0 1.5 0 ...\n#&gt;  $ ST_Slope      : chr [1:918] \"Up\" \"Flat\" \"Up\" \"Flat\" ...\n#&gt;  $ HeartDisease  : num [1:918] 0 1 0 1 0 0 0 0 1 0 ...\n#&gt;  - attr(*, \"spec\")=\n#&gt;   .. cols(\n#&gt;   ..   Age = col_double(),\n#&gt;   ..   Sex = col_character(),\n#&gt;   ..   ChestPainType = col_character(),\n#&gt;   ..   RestingBP = col_double(),\n#&gt;   ..   Cholesterol = col_double(),\n#&gt;   ..   FastingBS = col_double(),\n#&gt;   ..   RestingECG = col_character(),\n#&gt;   ..   MaxHR = col_double(),\n#&gt;   ..   ExerciseAngina = col_character(),\n#&gt;   ..   Oldpeak = col_double(),\n#&gt;   ..   ST_Slope = col_character(),\n#&gt;   ..   HeartDisease = col_double()\n#&gt;   .. )\n#&gt;  - attr(*, \"problems\")=&lt;externalptr&gt;\n\n\nmax_hr &lt;- df |&gt;\n  janitor::clean_names() |&gt; \n  select(max_hr, heart_disease) |&gt; \n  filter(heart_disease == 1) |&gt; \n  select(max_hr)\n\nnrow(max_hr)\n#&gt; [1] 508\n\n共有50例数据，检查是否有缺失值：\n\nmax_hr |&gt; \n  anyNA()\n#&gt; [1] FALSE",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "quat-data-stat-desc.html#measures-of-dispersion",
+    "href": "quat-data-stat-desc.html#measures-of-dispersion",
+    "title": "2  Statistical description of quantitative data",
+    "section": "2.4 Measures of dispersion",
+    "text": "2.4 Measures of dispersion\n以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：\n\n2.4.1 Range\n\nrange(max_hr) |&gt; \n  diff()\n#&gt; [1] 135\n\n\n\n2.4.2 Quartile and percentile\n\nmax_hr |&gt; \n  pull() |&gt; \n  quantile(probs = c(0.25, 0.5, 0.75)) \n#&gt;    25%    50%    75% \n#&gt; 112.00 126.00 144.25\n\nIn R, you can calculate the interquartile range (IQR) of a numeric variable using the IQR() function. Here’s how you can do it:\n\nmax_hr |&gt; \n  pull() |&gt; \n  IQR()\n#&gt; [1] 32.25\n\n\n\n2.4.3 Variance\n\nmax_hr |&gt; \n  pull() |&gt; \n  var()\n#&gt; [1] 546.9482\n\n\n\n2.4.4 Standard deviation\n\nmax_hr |&gt; \n  pull() |&gt; \n  sd()\n#&gt; [1] 23.38692\n\n\n\n2.4.5 变异系数\n\nmean &lt;- max_hr |&gt; \n  pull() |&gt; \n  mean()\n\nsd &lt;- max_hr |&gt; \n  pull() |&gt; \n  sd()\n\n(sd / mean * 100) |&gt; \n  round(digits = 1)\n#&gt; [1] 18.3",
+    "crumbs": [
+      "Basic statistical methods",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#prerequisites",
+    "href": "intro.html#prerequisites",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "1.1.1 R\nTo download R, go to CRAN, the comprehensive R archive network, https://cloud.r-project.org. A new major version of R comes out once a year, and there are 2-3 minor releases each year. It’s a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse. We recommend R 4.4.1 or later for this book.\n\n\n1.1.2 RStudio\nRStudio is an integrated development environment, or IDE, for R programming, which you can download from https://posit.co/download/rstudio-desktop/. RStudio is updated a couple of times a year, and it will automatically let you know when a new version is out, so there’s no need to check back. It’s a good idea to upgrade regularly to take advantage of the latest and greatest features. For this book, make sure you have at least RStudio 2024.04.2.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#running-r-code",
+    "href": "intro.html#running-r-code",
+    "title": "1  Introduction",
+    "section": "1.2 Running R code",
+    "text": "1.2 Running R code\nThe previous section showed you several examples of running R code. The code in the book looks like this:\n\n1 + 2\n#&gt; [1] 3\n\nIf you run the same code in your local console, it will look like this:\n&gt; 1 + 2\n[1] 3\nThere are two main differences. In your console, you type after the &gt;, called the prompt; we don’t show the prompt in the book. In the book, the output is commented out with #&gt;; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.\nThroughout the book, we use a consistent set of conventions to refer to code:\n\nFunctions are displayed in a code font and followed by parentheses, like sum() or mean().\nOther R objects (such as data or function arguments) are in a code font, without parentheses, like flights or x.\nSometimes, to make it clear which package an object comes from, we’ll use the package name followed by two colons, like dplyr::mutate() or nycflights13::flights. This is also valid R code.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#colophon",
+    "href": "intro.html#colophon",
+    "title": "1  Introduction",
+    "section": "1.3 Colophon",
+    "text": "1.3 Colophon\nAn online version of this book is available at https://r4ds.hadley.nz. It will continue to evolve in between reprints of the physical book. The source of the book is available at https://github.com/hadley/r4ds. The book is powered by Quarto, which makes it easy to write books that combine text and executable code.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   }
 ]
