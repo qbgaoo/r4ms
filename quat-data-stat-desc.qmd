@@ -1,6 +1,6 @@
 # Statistical description of quantitative data
 
-This section is about the process of summarizing and analyzing quantitative data using statistical methods, such as calculating measures of central tendency (mean, median) and dispersion (standard deviation, variance).
+In this chapter, you’ll learn how to calculate measures of central tendency and dispersion. In medical studies, they are crucial for summarizing and understanding data distributions. Central tendency provides a single value representing the center of the data, while dispersion shows how much the data varies around this central point. Together, these measures help describe the data's overall pattern, identify outliers, and inform statistical analyses in clinical and epidemiological research.
 
 ```{r}
 #| echo: false
@@ -16,12 +16,13 @@ Setting up the required R packages.
 #| message: false
 
 library(tidyverse)
-library(kableExtra)
 ```
 
 ## Importing the data
 
-**例** 从 `adsl` 数据集提取女性基线 BMI ($kg/m^2$) 数据，结果如下：
+[Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction)
+
+**例** 从 `adsl` 数据集中筛选女性患者maximum heart rate ($kg/m^2$) 数据，结果如下：
 
 ```{r}
 df <- read_csv("datasets/heart.csv", show_col_types = F)
