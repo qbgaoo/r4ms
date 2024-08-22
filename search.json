@@ -24,18 +24,18 @@
     "href": "quat-data-stat-desc.html",
     "title": "2  Statistical description of quantitative data",
     "section": "",
-    "text": "2.1 Prerequisites\nlibrary(haven)\nlibrary(tidyverse)\nlibrary(kableExtra)\n1library(showtext)\n\n\n1\n\nshowtext包允许在绘图时使用系统中任意的TrueType或OpenType字体",
+    "text": "2.1 Prerequisites\nSetting up the required R packages.\nlibrary(tidyverse)",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
     ]
   },
   {
-    "objectID": "quat-data-stat-desc.html#frequency-distribution",
-    "href": "quat-data-stat-desc.html#frequency-distribution",
+    "objectID": "quat-data-stat-desc.html#importing-the-data",
+    "href": "quat-data-stat-desc.html#importing-the-data",
     "title": "2  Statistical description of quantitative data",
-    "section": "2.2 Frequency distribution",
-    "text": "2.2 Frequency distribution\n\n2.2.1 Frequency Table\n例 从 adsl 数据集提取女性基线 BMI (\\(kg/m^2\\)) 数据，结果如下：\n\nadsl &lt;- read_sas(\"data-adam/adsl.sas7bdat\")\ntb_bmi_bl &lt;- adsl |&gt; \n  select(BMIBL, SEX) |&gt; \n  filter(SEX == \"F\") |&gt; \n  select(BMIBL)\n\nnrow(tb_bmi_bl)\n#&gt; [1] 143\n\n共有143例数据，检查是否有缺失值：\n\ntb_bmi_bl |&gt; \n  anyNA()\n#&gt; [1] TRUE\n\n输出结果为TRUE，提示有缺失值；下面的代码可以计算缺失值的个数：\n\ntb_bmi_bl |&gt; \n  is.na() |&gt; \n  sum()\n#&gt; [1] 1\n\n输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：\n\n直接删除\n\n\ntb_bmi_bl_clean &lt;- na.omit(tb_bmi_bl)\nnrow(tb_bmi_bl_clean) \n#&gt; [1] 142\n\n\n填补缺失值（简单起见，这里用均数）\n\n\ntb_bmi_bl_filled &lt;- tb_bmi_bl |&gt; \n  mutate(\n    BMIBL = ifelse(is.na(BMIBL), mean(BMIBL, na.rm = T), BMIBL)\n  ) |&gt; \n  round(digits = 1)\n\n填补完成后，对143名女性的基线BMI 求 最小值、最大值和极差：\n\nbmi &lt;- tb_bmi_bl_filled\n1range(bmi)\nrange_bmi &lt;- range(bmi) |&gt;                               \n2  diff() |&gt;\n  print()\n#&gt; [1] 15.1 40.1\n#&gt; [1] 25\n\n\n1\n\nrange()返回包含最小值和最大值的向量\n\n2\n\n利用管道操作符和diff()计算极差\n\n\n\n\n也可用下面的方法计算：\n\nmin_bmi &lt;- min(bmi)\nmax_bmi &lt;- max(bmi)\nrange_bmi &lt;- max_bmi - min_bmi\n\n组段数通常取10~15组，这里取12；利用 seq() 函数得到组段的上下限：\n\nbreaks &lt;- seq(from = min_bmi, to = max_bmi, length.out = 13)\n\n使用 cut() 函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；\n\nvalue_bmi &lt;- pull(bmi)\n\ncut(value_bmi, breaks = breaks, include.lowest = T, right = F) |&gt; \n  str_c() |&gt; \n1  c(rep(\" \", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |&gt;\n  matrix(ncol = 8, byrow = T) |&gt; \n  as.data.frame() |&gt; \n  kbl() |&gt; \n  kable_classic()\n\n\n1\n\n每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。\n\n\n\n\n\n\n\nV1\nV2\nV3\nV4\nV5\nV6\nV7\nV8\n\n\n\n\n[23.4,25.5)\n[25.5,27.6)\n[29.7,31.8)\n[23.4,25.5)\n[27.6,29.7)\n[23.4,25.5)\n[23.4,25.5)\n[27.6,29.7)\n\n\n[27.6,29.7)\n[25.5,27.6)\n[17.2,19.3)\n[23.4,25.5)\n[17.2,19.3)\n[23.4,25.5)\n[29.7,31.8)\n[21.4,23.4)\n\n\n[25.5,27.6)\n[38,40.1]\n[23.4,25.5)\n[29.7,31.8)\n[21.4,23.4)\n[17.2,19.3)\n[38,40.1]\n[23.4,25.5)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[21.4,23.4)\n[17.2,19.3)\n[21.4,23.4)\n[29.7,31.8)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[25.5,27.6)\n[23.4,25.5)\n[15.1,17.2)\n[23.4,25.5)\n[19.3,21.4)\n[25.5,27.6)\n[19.3,21.4)\n\n\n[17.2,19.3)\n[21.4,23.4)\n[21.4,23.4)\n[27.6,29.7)\n[19.3,21.4)\n[19.3,21.4)\n[27.6,29.7)\n[29.7,31.8)\n\n\n[29.7,31.8)\n[25.5,27.6)\n[21.4,23.4)\n[19.3,21.4)\n[19.3,21.4)\n[25.5,27.6)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[29.7,31.8)\n[23.4,25.5)\n[17.2,19.3)\n[25.5,27.6)\n[27.6,29.7)\n[19.3,21.4)\n[21.4,23.4)\n\n\n[15.1,17.2)\n[21.4,23.4)\n[31.8,33.9)\n[21.4,23.4)\n[19.3,21.4)\n[27.6,29.7)\n[23.4,25.5)\n[19.3,21.4)\n\n\n[21.4,23.4)\n[23.4,25.5)\n[23.4,25.5)\n[23.4,25.5)\n[25.5,27.6)\n[23.4,25.5)\n[19.3,21.4)\n[31.8,33.9)\n\n\n[27.6,29.7)\n[23.4,25.5)\n[17.2,19.3)\n[19.3,21.4)\n[27.6,29.7)\n[21.4,23.4)\n[19.3,21.4)\n[21.4,23.4)\n\n\n[17.2,19.3)\n[17.2,19.3)\n[17.2,19.3)\n[23.4,25.5)\n[23.4,25.5)\n[21.4,23.4)\n[19.3,21.4)\n[19.3,21.4)\n\n\n[31.8,33.9)\n[25.5,27.6)\n[19.3,21.4)\n[19.3,21.4)\n[21.4,23.4)\n[23.4,25.5)\n[15.1,17.2)\n[27.6,29.7)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[17.2,19.3)\n[19.3,21.4)\n[19.3,21.4)\n[17.2,19.3)\n[23.4,25.5)\n[23.4,25.5)\n\n\n[21.4,23.4)\n[25.5,27.6)\n[21.4,23.4)\n[21.4,23.4)\n[19.3,21.4)\n[21.4,23.4)\n[27.6,29.7)\n[21.4,23.4)\n\n\n[31.8,33.9)\n[31.8,33.9)\n[31.8,33.9)\n[25.5,27.6)\n[19.3,21.4)\n[23.4,25.5)\n[23.4,25.5)\n[27.6,29.7)\n\n\n[23.4,25.5)\n[19.3,21.4)\n[23.4,25.5)\n[23.4,25.5)\n[29.7,31.8)\n[25.5,27.6)\n[21.4,23.4)\n[19.3,21.4)\n\n\n[19.3,21.4)\n[19.3,21.4)\n[21.4,23.4)\n[21.4,23.4)\n[23.4,25.5)\n[27.6,29.7)\n[19.3,21.4)\n\n\n\n\n\n\n\n\n生成频数分布表：\n\nDescTools::Freq(value_bmi, breaks = breaks) |&gt; \n  kbl() |&gt; \n  kable_classic()\n\n\n\nTable 2.1: 138名正常成年女性的红细胞数频数分布\n\n\n\n\n\n\nlevel\nfreq\nperc\ncumfreq\ncumperc\n\n\n\n\n[15.1,17.2]\n3\n0.0209790\n3\n0.0209790\n\n\n(17.2,19.3]\n12\n0.0839161\n15\n0.1048951\n\n\n(19.3,21.4]\n31\n0.2167832\n46\n0.3216783\n\n\n(21.4,23.4]\n23\n0.1608392\n69\n0.4825175\n\n\n(23.4,25.5]\n32\n0.2237762\n101\n0.7062937\n\n\n(25.5,27.6]\n14\n0.0979021\n115\n0.8041958\n\n\n(27.6,29.7]\n12\n0.0839161\n127\n0.8881119\n\n\n(29.7,31.8]\n8\n0.0559441\n135\n0.9440559\n\n\n(31.8,33.9]\n6\n0.0419580\n141\n0.9860140\n\n\n(33.9,35.9]\n0\n0.0000000\n141\n0.9860140\n\n\n(35.9,38]\n0\n0.0000000\n141\n0.9860140\n\n\n(38,40.1]\n2\n0.0139860\n143\n1.0000000\n\n\n\n\n\n\n\n\n\n\n\n\n2.2.2 Graph of frequency distributio\n\nhist(\n  x              = value_bmi, \n  breaks         = breaks, \n  right          = T, \n  col            = \"light gray\", \n  include.lowest = T,\n  main           = \" \",\n  xlab           = \"BMI\",\n  ylab           = \"频数\"\n)\n\nggplot(bmi, aes(x = value_bmi)) +\n  geom_histogram(\n    fill = \"skyblue\", \n    color = \"black\", \n    bins = 12\n  ) +\n  stat_bin(\n    geom = \"text\", \n    aes(label = after_stat(count)),\n    bins = 12, \n    size = 3,\n    vjust = - 0.3\n  ) +\n  labs(x = \"BMI\", y = \"频数\") +\n  theme(\n    panel.background = element_blank(),        # 移除背景\n    axis.line = element_line(color = \"black\")  # 保留坐标轴\n  )\n\n\n\n\n\n\n\nFigure 2.1: 138名正常成年女性的红细胞数频数分布\n\n\n\n\n\n\n\n\n\n\n\nFigure 2.2: 138名正常成年女性的红细胞数频数分布",
+    "section": "2.2 Importing the data",
+    "text": "2.2 Importing the data\nHeart Failure Prediction Dataset\n例 从 adsl 数据集中筛选女性患者maximum heart rate (\\(kg/m^2\\)) 数据，结果如下：\n\ndf &lt;- read_csv(\"datasets/heart.csv\", show_col_types = F)\n\nmax_hr &lt;- df |&gt;\n  janitor::clean_names() |&gt; \n  select(sex, max_hr, heart_disease) |&gt; \n  filter(sex == \"F\", heart_disease == 1) |&gt; \n  select(max_hr)\n\nnrow(max_hr)\n#&gt; [1] 50\n\n共有50例数据，检查是否有缺失值：\n\nmax_hr |&gt; \n  anyNA()\n#&gt; [1] FALSE",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
@@ -46,18 +46,18 @@
     "href": "quat-data-stat-desc.html#measures-of-central-tendency",
     "title": "2  Statistical description of quantitative data",
     "section": "2.3 Measures of central tendency",
-    "text": "2.3 Measures of central tendency\n\n2.3.1 算术均数\n例2-2 计算例2-1某医院138名正常成年女性的红细胞数的均数。\n\nmean(value_bmi) |&gt; \n  round(digits = 2)\n#&gt; [1] 23.99\n\n\n\n2.3.2 几何均数\n例 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。\n10 10 10 10 20 20 20 40 40 40 40 40 40 40 40 40 40 80 80 80 80 80 80 80 80 80 80 160 160 160 160 160 160 160 160 160 160 160 320 320 320 320 320 320 320 320 320 320 320 320 320 320 320 640 640 640 640 640 640 640 640 640 640 640 640 640 640 1280 1280\n设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：\n\nserum_antibody_titer |&gt; \n  DescTools::Gmean() |&gt; \n  round(digits = 1)\n#&gt; [1] 150.6\n\n\n\n2.3.3 中位数与四分位数\n计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：\n\nmedian(value_bmi)\n#&gt; [1] 23.6\nquantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |&gt; \n  round(digits = 2)\n#&gt;   25%   50%   75% \n#&gt; 20.90 23.60 26.05",
+    "text": "2.3 Measures of central tendency\n\n2.3.1 Mean\n例2-2 计算例2-1某医院138名正常成年女性的红细胞数的均数。\n\nmax_hr |&gt; \n  pull() |&gt; \n  mean()\n#&gt; [1] 137.82\n\n\n\n2.3.2 Median\n计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：\n\nmax_hr |&gt; \n  pull() |&gt; \n  median()\n#&gt; [1] 142.5",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
     ]
   },
   {
-    "objectID": "quat-data-stat-desc.html#measures-of-dispersion-tendency",
-    "href": "quat-data-stat-desc.html#measures-of-dispersion-tendency",
+    "objectID": "quat-data-stat-desc.html#measures-of-dispersion",
+    "href": "quat-data-stat-desc.html#measures-of-dispersion",
     "title": "2  Statistical description of quantitative data",
-    "section": "2.4 Measures of dispersion tendency",
-    "text": "2.4 Measures of dispersion tendency\n以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：\n\n2.4.1 极差\n\nrange(bmi) |&gt; \n  diff()\n#&gt; [1] 25\n\n\n\n2.4.2 四分位数间距\n\nIQR(value_bmi) |&gt; \n  round(digits = 2)\n#&gt; [1] 5.15\n\n\n\n2.4.3 方差和标准差\n\nvar(value_bmi)\n#&gt; [1] 18.72291\nsd(value_bmi)\n#&gt; [1] 4.326998\n\n\n\n2.4.4 变异系数\n\ncv &lt;- (sd(value_bmi) / mean(value_bmi)) * 100\nround(cv, digits = 2)\n#&gt; [1] 18.03",
+    "section": "2.4 Measures of dispersion",
+    "text": "2.4 Measures of dispersion\n以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：\n\n2.4.1 极差\n\nrange(max_hr) |&gt; \n  diff()\n#&gt; [1] 84\n\n\n\n2.4.2 Quartile and percentile\n\nmax_hr |&gt; \n  pull() |&gt; \n  quantile(probs = c(0.25, 0.5, 0.75)) \n#&gt;   25%   50%   75% \n#&gt; 123.0 142.5 154.0\n\nIn R, you can calculate the interquartile range (IQR) of a numeric variable using the IQR() function. Here’s how you can do it:\n\nmax_hr |&gt; \n  pull() |&gt; \n  IQR()\n#&gt; [1] 31\n\n\n\n2.4.3 Variance\n\nmax_hr |&gt; \n  pull() |&gt; \n  var()\n#&gt; [1] 476.1506\n\n\n\n2.4.4 Standard deviation\n\nmax_hr |&gt; \n  pull() |&gt; \n  sd()\n#&gt; [1] 21.82088\n\n\n\n2.4.5 变异系数\n\nmean &lt;- max_hr |&gt; \n  pull() |&gt; \n  mean()\n\nsd &lt;- max_hr |&gt; \n  pull() |&gt; \n  sd()\n\n(sd / mean * 100) |&gt; \n  round(digits = 1)\n#&gt; [1] 15.8",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
@@ -68,7 +68,7 @@
     "href": "quat-data-stat-desc.html#medical-reference-range",
     "title": "2  Statistical description of quantitative data",
     "section": "2.5 Medical reference range",
-    "text": "2.5 Medical reference range\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(value_bmi, probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;  2.5% 97.5% \n#&gt; 17.81 33.09\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (17.81, 33.09)",
+    "text": "2.5 Medical reference range\n以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：\n\nmed_ref_range &lt;- quantile(pull(max_hr), probs = c(0.025, 0.975)) |&gt; \n  round(digits = 3) |&gt; \n  print()\n#&gt;    2.5%   97.5% \n#&gt;  97.225 169.775\n\n由上可知，正常成年女性红细胞数的95%医学参考值范围为: (97.225, 169.775)",
     "crumbs": [
       "Basic statistical methods",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Statistical description of quantitative data</span>"
