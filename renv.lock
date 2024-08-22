@@ -226,9 +226,9 @@
     },
     "bslib": {
       "Package": "bslib",
-      "Version": "0.7.0",
+      "Version": "0.8.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "base64enc",
@@ -244,7 +244,7 @@
         "rlang",
         "sass"
       ],
-      "Hash": "8644cc53f43828f19133548195d7e59e"
+      "Hash": "b299c6741ca9746fb227debcb0f9fb6c"
     },
     "cachem": {
       "Package": "cachem",
@@ -819,6 +819,28 @@
       ],
       "Hash": "0080607b4a1a7b28979aecef976d8bc2"
     },
+    "janitor": {
+      "Package": "janitor",
+      "Version": "2.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "hms",
+        "lifecycle",
+        "lubridate",
+        "magrittr",
+        "purrr",
+        "rlang",
+        "snakecase",
+        "stringi",
+        "stringr",
+        "tidyr",
+        "tidyselect"
+      ],
+      "Hash": "5baae149f1082f466df9d1442ba7aa65"
+    },
     "jquerylib": {
       "Package": "jquerylib",
       "Version": "0.1.4",
@@ -1023,16 +1045,14 @@
     },
     "mvtnorm": {
       "Package": "mvtnorm",
-      "Version": "1.2-5",
-      "Source": "Local",
-      "Repository": "RSPM",
-      "RemoteType": "local",
-      "RemoteUrl": "~/Downloads/a0caa565fdec246143cdbfd6a1f1ad99b21d137ff7d73f48fc1765f124063638.tar",
+      "Version": "1.2-6",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "stats"
       ],
-      "Hash": "344450ad3e3473cb638dfc7660772499"
+      "Hash": "b5b11e71e41d9d0eef7d8dc26903ed55"
     },
     "nlme": {
       "Package": "nlme",
@@ -1281,7 +1301,7 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.27",
+      "Version": "2.28",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1300,7 +1320,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "27f9502e1cdbfa195f94e03b0f517484"
+      "Hash": "062470668513dcda416927085ee9bdc7"
     },
     "rootSolve": {
       "Package": "rootSolve",
@@ -1415,6 +1435,18 @@
         "utils"
       ],
       "Hash": "c12e756cf947e58b0f2c2a520521a5a8"
+    },
+    "snakecase": {
+      "Package": "snakecase",
+      "Version": "0.11.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "stringi",
+        "stringr"
+      ],
+      "Hash": "58767e44739b76965332e8a4fe3f91f1"
     },
     "stringi": {
       "Package": "stringi",
@@ -1711,15 +1743,16 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.46",
+      "Version": "0.47",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
+        "R",
         "grDevices",
         "stats",
         "tools"
       ],
-      "Hash": "00ce32f398db0415dde61abfef11300c"
+      "Hash": "36ab21660e2d095fef0d83f689e0477c"
     },
     "xml2": {
       "Package": "xml2",
