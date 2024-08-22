@@ -1,6 +1,6 @@
 # Statistical description of quantitative data
 
-This section refers to the process of summarizing and analyzing quantitative data using statistical methods, such as calculating measures of central tendency (mean, median) and dispersion (standard deviation, variance).
+This section is about the process of summarizing and analyzing quantitative data using statistical methods, such as calculating measures of central tendency (mean, median) and dispersion (standard deviation, variance).
 
 ```{r}
 #| echo: false
@@ -10,230 +10,116 @@ source("_common.R")
 
 ## Prerequisites
 
+Setting up the required R packages.
+
 ```{r}
 #| message: false
 
-library(haven)
 library(tidyverse)
 library(kableExtra)
-library(showtext)                                             # <1>
 ```
 
-1.  showtext包允许在绘图时使用系统中任意的TrueType或OpenType字体
-
-## Frequency distribution
-
-### Frequency Table
+## Importing the data
 
 **例** 从 `adsl` 数据集提取女性基线 BMI ($kg/m^2$) 数据，结果如下：
 
 ```{r}
-adsl <- read_sas("data-adam/adsl.sas7bdat")
-tb_bmi_bl <- adsl |> 
-  select(BMIBL, SEX) |> 
-  filter(SEX == "F") |> 
-  select(BMIBL)
+df <- read_csv("datasets/heart.csv", show_col_types = F)
 
-nrow(tb_bmi_bl)
+max_hr <- df |>
+  janitor::clean_names() |> 
+  select(sex, max_hr, heart_disease) |> 
+  filter(sex == "F", heart_disease == 1) |> 
+  select(max_hr)
+
+nrow(max_hr)
 ```
 
-共有143例数据，检查是否有缺失值：
+共有50例数据，检查是否有缺失值：
 
 ```{r}
-tb_bmi_bl |> 
+max_hr |> 
   anyNA()
-```
-
-输出结果为TRUE，提示有缺失值；下面的代码可以计算缺失值的个数：
-
-```{r}
-tb_bmi_bl |> 
-  is.na() |> 
-  sum()
-```
-
-输出结果为1， 提示变量中有1个缺失值；数据分析时根据不同情况做相应处理，例如：
-
-1.  **直接删除**
-
-```{r}
-tb_bmi_bl_clean <- na.omit(tb_bmi_bl)
-nrow(tb_bmi_bl_clean) 
-```
-
-2.  **填补缺失值（简单起见，这里用均数）**
-
-```{r}
-tb_bmi_bl_filled <- tb_bmi_bl |> 
-  mutate(
-    BMIBL = ifelse(is.na(BMIBL), mean(BMIBL, na.rm = T), BMIBL)
-  ) |> 
-  round(digits = 1)
-```
-
-填补完成后，对143名女性的基线BMI 求 最小值、最大值和极差：
-
-```{r}
-bmi <- tb_bmi_bl_filled
-range(bmi)                                    # <1>
-range_bmi <- range(bmi) |>                               
-  diff() |>                                   # <2>
-  print()
-```
-
-1.  `range()`返回包含最小值和最大值的向量
-2.  利用管道操作符和`diff()`计算极差
-
-也可用下面的方法计算：
-
-```{r}
-min_bmi <- min(bmi)
-max_bmi <- max(bmi)
-range_bmi <- max_bmi - min_bmi
-```
-
-组段数通常取10\~15组，这里取12；利用 `seq()` 函数得到组段的上下限：
-
-```{r}
-breaks <- seq(from = min_bmi, to = max_bmi, length.out = 13)
-```
-
-使用 `cut()` 函数将数据分到指定的组段，并根据它们落在哪个区间对变量值进行编码；
-
-```{r}
-value_bmi <- pull(bmi)
-
-cut(value_bmi, breaks = breaks, include.lowest = T, right = F) |> 
-  str_c() |> 
-  c(rep(" ", ceiling(nrow(bmi) / 8) * 8 - nrow(bmi))) |>                # <1>
-  matrix(ncol = 8, byrow = T) |> 
-  as.data.frame() |> 
-  kbl() |> 
-  kable_classic()
-```
-
-1.  每行输出8个区间，输出元素个数是8的整数倍，不足的用空字符补足。
-
-生成频数分布表：
-
-```{r}
-#| label: tbl-freq-distribute
-#| tbl-cap: 138名正常成年女性的红细胞数频数分布
-
-DescTools::Freq(value_bmi, breaks = breaks) |> 
-  kbl() |> 
-  kable_classic()
-```
-
-### Graph of frequency distributio
-
-```{r}
-#| label: fig-freq-distribute
-#| fig-cap: 138名正常成年女性的红细胞数频数分布
-
-hist(
-  x              = value_bmi, 
-  breaks         = breaks, 
-  right          = T, 
-  col            = "light gray", 
-  include.lowest = T,
-  main           = " ",
-  xlab           = "BMI",
-  ylab           = "频数"
-)
-
-ggplot(bmi, aes(x = value_bmi)) +
-  geom_histogram(
-    fill = "skyblue", 
-    color = "black", 
-    bins = 12
-  ) +
-  stat_bin(
-    geom = "text", 
-    aes(label = after_stat(count)),
-    bins = 12, 
-    size = 3,
-    vjust = - 0.3
-  ) +
-  labs(x = "BMI", y = "频数") +
-  theme(
-    panel.background = element_blank(),        # 移除背景
-    axis.line = element_line(color = "black")  # 保留坐标轴
-  )
 ```
 
 ## Measures of central tendency
 
-### 算术均数
+### Mean
 
 **例2-2** 计算例2-1某医院138名正常成年女性的红细胞数的均数。
 
 ```{r}
-mean(value_bmi) |> 
-  round(digits = 2)
+max_hr |> 
+  pull() |> 
+  mean()
 ```
 
-### 几何均数
-
-**例** 69例类风湿关节炎（RA）患者血清EBV-VCA-lgG抗体滴度测量值如下，求其平均抗体滴度。
-
-```{r}
-#| echo: false
-#| results: asis
-
-serum_antibody_titer <- haven::read_dta("datasets/例02-05.dta") |> 
-  unlist(use.names = F)
-cat(serum_antibody_titer)
-```
-
-设serum_antibody_titer为患者血清抗体滴度变量，则几何均数为：
-
-```{r}
-serum_antibody_titer |> 
-  DescTools::Gmean() |> 
-  round(digits = 1)
-```
-
-### 中位数与四分位数
+### Median
 
 计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：
 
 ```{r}
-median(value_bmi)
-quantile(value_bmi, probs = c(0.25, 0.5, 0.75)) |> 
-  round(digits = 2)
+max_hr |> 
+  pull() |> 
+  median()
 ```
 
-## Measures of dispersion tendency
+## Measures of dispersion
 
 以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
 
 ### 极差
 
 ```{r}
-range(bmi) |> 
+range(max_hr) |> 
   diff()
 ```
 
-### 四分位数间距
+### **Quartile** and **percentile**
 
 ```{r}
-IQR(value_bmi) |> 
-  round(digits = 2)
+max_hr |> 
+  pull() |> 
+  quantile(probs = c(0.25, 0.5, 0.75)) 
 ```
 
-### 方差和标准差
+In R, you can calculate the interquartile range (IQR) of a numeric variable using the `IQR()` function. Here’s how you can do it:
 
 ```{r}
-var(value_bmi)
-sd(value_bmi)
+max_hr |> 
+  pull() |> 
+  IQR()
+```
+
+### Variance
+
+```{r}
+max_hr |> 
+  pull() |> 
+  var()
+```
+
+### **Standard deviation**
+
+```{r}
+max_hr |> 
+  pull() |> 
+  sd()
 ```
 
 ### 变异系数
 
 ```{r}
-cv <- (sd(value_bmi) / mean(value_bmi)) * 100
-round(cv, digits = 2)
+mean <- max_hr |> 
+  pull() |> 
+  mean()
+
+sd <- max_hr |> 
+  pull() |> 
+  sd()
+
+(sd / mean * 100) |> 
+  round(digits = 1)
 ```
 
 ## Medical reference range
@@ -241,7 +127,7 @@ round(cv, digits = 2)
 以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
 
 ```{r}
-med_ref_range <- quantile(value_bmi, probs = c(0.025, 0.975)) |> 
+med_ref_range <- quantile(pull(max_hr), probs = c(0.025, 0.975)) |> 
   round(digits = 3) |> 
   print()
 ```
