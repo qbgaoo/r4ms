@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -205,7 +239,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">统计分析报告</span></a>
+ <span class="menu-text">Statistical analysis report</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -235,7 +269,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section"><span class="header-section-number">1.1</span> </a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">1.1</span> <strong>Prerequisites</strong></a>
+  <ul class="collapse">
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">1.1.1</span> <strong>R</strong></a></li>
+  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio"><span class="header-section-number">1.1.2</span> <strong>RStudio</strong></a></li>
+  </ul></li>
+  <li><a href="#running-r-code" id="toc-running-r-code" class="nav-link" data-scroll-target="#running-r-code"><span class="header-section-number">1.2</span> <strong>Running R code</strong></a></li>
+  <li><a href="#colophon" id="toc-colophon" class="nav-link" data-scroll-target="#colophon"><span class="header-section-number">1.3</span> <strong>Colophon</strong></a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -261,8 +301,40 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="section" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.1</span> </h2>
+<section id="prerequisites" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">1.1</span> <strong>Prerequisites</strong></h2>
+<p>We’ve made a few assumptions about what you already know to get the most out of this book. You should have some basic knowledge about medical statistics, and it’s helpful if you have some basic R programming experience already.</p>
+<p>You need some things to run the code in this book: R, RStudio and some preinstalled R packages. Packages are the fundamental units of reproducible R code. They include reusable functions, documentation that describes how to use them, and sample data.</p>
+<section id="r" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="r"><span class="header-section-number">1.1.1</span> <strong>R</strong></h3>
+<p>To download R, go to CRAN, the&nbsp;<strong>c</strong>omprehensive <strong>R</strong> <strong>a</strong>rchive&nbsp;<strong>n</strong>etwork, <a href="#0">https://cloud.r-project.org</a>. A new major version of R comes out once a year, and there are 2-3 minor releases each year. It’s a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse. We recommend R 4.4.1 or later for this book.</p>
+</section>
+<section id="rstudio" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.1.2</span> <strong>RStudio</strong></h3>
+<p>RStudio is an integrated development environment, or IDE, for R programming, which you can download from <a href="#0">https://posit.co/download/rstudio-desktop/</a>. RStudio is updated a couple of times a year, and it will automatically let you know when a new version is out, so there’s no need to check back. It’s a good idea to upgrade regularly to take advantage of the latest and greatest features. For this book, make sure you have at least RStudio 2024.04.2.</p>
+</section>
+</section>
+<section id="running-r-code" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="running-r-code"><span class="header-section-number">1.2</span> <strong>Running R code</strong></h2>
+<p>The previous section showed you several examples of running R code. The code in the book looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you run the same code in your local console, it will look like this:</p>
+<pre style="background-color: light gray"><code>&gt; 1 + 2
+[1] 3</code></pre>
+<p>There are two main differences. In your console, you type after the&nbsp;<code>&gt;</code>, called the&nbsp;<strong>prompt</strong>; we don’t show the prompt in the book. In the book, the output is commented out with&nbsp;<code>#&gt;</code>; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.</p>
+<p>Throughout the book, we use a consistent set of conventions to refer to code:</p>
+<ul>
+<li><p>Functions are displayed in a code font and followed by parentheses, like <code>sum()</code> or <code>mean()</code>.</p></li>
+<li><p>Other R objects (such as data or function arguments) are in a code font, without parentheses, like <code>flights</code> or <code>x</code>.</p></li>
+<li><p>Sometimes, to make it clear which package an object comes from, we’ll use the package name followed by two colons, like <code>dplyr::mutate()</code> or <code>nycflights13::flights</code>. This is also valid R code.</p></li>
+</ul>
+</section>
+<section id="colophon" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="colophon"><span class="header-section-number">1.3</span> <strong>Colophon</strong></h2>
+<p>An online version of this book is available at <a href="#0">https://qbgaoo.github.io/r4ms/</a>. It will continue to evolve in between reprints of the physical book. The source of the book is available at <a href="https://qbgaoo.github.io/r4ms/" class="uri">https://qbgaoo.github.io/r4ms/</a>. The book is powered by <a href="#0">Quarto</a>, which makes it easy to write books that combine text and executable code.</p>
 
 
 </section>
