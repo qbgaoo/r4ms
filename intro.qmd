@@ -30,12 +30,12 @@ The previous section showed you several examples of running R code. The code in 
 
 If you run the same code in your local console, it will look like this:
 
-``` {style="background-color: light gray"}
+``` yacc
 > 1 + 2
 [1] 3
 ```
 
-There are two main differences. In your console, you type after the `>`, called the **prompt**; we don’t show the prompt in the book. In the book, the output is commented out with `#>`; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.
+There are two main differences. In your console, you type after the `>`, called the **prompt**; we don’t show the prompt in the book. In the book, the output is commented out with `#>`; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.
 
 Throughout the book, we use a consistent set of conventions to refer to code:
 
@@ -45,6 +45,8 @@ Throughout the book, we use a consistent set of conventions to refer to code:
 
 -   Sometimes, to make it clear which package an object comes from, we’ll use the package name followed by two colons, like `dplyr::mutate()` or `nycflights13::flights`. This is also valid R code.
 
+-    To improves readability, variable names and function names are named using snake case.
+
 ## **Colophon**
 
-An online version of this book is available at [https://qbgaoo.github.io/r4ms/](#0). It will continue to evolve in between reprints of the physical book. The source of the book is available at <https://qbgaoo.github.io/r4ms/>. The book is powered by [Quarto](#0), which makes it easy to write books that combine text and executable code.
+The book is written by Quarto, an online version of it is available at [https://qbgaoo.github.io/r4ms/](#0). It will continue to evolve in between reprints of the physical book. The source of the book is available at <https://qbgaoo.github.io/r4ms/>.

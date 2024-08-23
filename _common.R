@@ -5,7 +5,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   # cache = TRUE,
   fig.retina = 2,
-  fig.width = 5,
+  fig.height = 4,
   fig.asp = 2/3,
   fig.show = "hold"
 )

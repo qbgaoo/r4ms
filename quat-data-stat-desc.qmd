@@ -1,6 +1,12 @@
 # Statistical description of quantitative data
 
-In this chapter, you’ll learn how to calculate measures of central tendency and dispersion. In medical studies, they are crucial for summarizing and understanding data distributions. Central tendency provides a single value representing the center of the data, while dispersion shows how much the data varies around this central point. Together, these measures help describe the data's overall pattern, identify outliers, and inform statistical analyses in clinical and epidemiological research.
+The statistical description of quantitative data involves summarizing and analyzing numerical variable to understand its distribution and characteristics. Key measures include:
+
+-   Measures of central tendency: mean, median.
+-   Measures of dispersion: range , variance, standard deviation , and interquartile range (IQR).
+-   Visualization: frequency table and frequency histogram.
+
+Together, these measures help describe the data's overall distribution, identify outliers, and inform statistical analysis in clinical and epidemiological research.
 
 ```{r}
 #| echo: false
@@ -18,22 +24,25 @@ Setting up the required R packages.
 library(tidyverse)
 ```
 
-## Importing the data
+## Dataset used below
 
-HFPD ([Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction))
-
-**例** 从 `adsl` 数据集中筛选女性患者maximum heart rate ($kg/m^2$) 数据，结果如下：
-
-We can read this file into R using `read_csv()`. The first argument is the most important: the path to the file. You can think about the path as the address of the file: the file is called `heart.csv` and that it lives in the `datasets` folder.
+In this chapter, we use the [Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction) refered as `heart.csv` in the context to demonstrate the issues. The file is downloaded and saved in the `datasets` folder of this project. You can import this file into R by `read_csv()` function. The first argument is the most important: the path to the file. You can think about the path as the address of the file.
 
 ```{r}
-df <- read_csv("datasets/heart.csv")
+heart <- read_csv("datasets/heart.csv")
 ```
 
-The code above will work if you have the `heart.csv` file in a `datasets` folder in your project.
+The code above will work if you have the `heart.csv` file in a `datasets` folder in your project. Here is a show of some data in the file.
 
 ```{r}
-max_hr <- df |>
+heart |> 
+  select(1:6)
+```
+
+Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use `janitor::clean_names()` to turn all column names of `heart` into snake case. Then a variable named `max_hr` (i.e. maximum heart rate) is selected for subsequent analysis.
+
+```{r}
+max_hr <- heart |>
   janitor::clean_names() |> 
   select(max_hr, heart_disease) |> 
   filter(heart_disease == 1) |> 
@@ -42,14 +51,109 @@ max_hr <- df |>
 nrow(max_hr)
 ```
 
-共有508例数据，检查是否有缺失值：
+Totally there are 508 observations. The missing values are checked below：
 
 ```{r}
 max_hr |> 
   anyNA()
 ```
 
+The output `FALSE` indicates no missing values is present.
+
+## Frequency distribution
+
+### Frequency table
+
+A frequency table mentioned here is a statistical tool that organizes data into intervals and lists the number of frequency in each interval. It helps summarize large dataset by showing how often each value or range of values occurs, making it easier to identify trends and the overall distribution of the data. This table is often used in conjunction with visual tools like histogram to enhance data interpretation.
+
+Here is the steps for creating a frequency table for continuous variables.
+
+1.  Computing the minimum and maximum of the variable.
+
+```{r}
+min_max_hr <- max_hr |> 
+  min()
+
+max_max_hr <- max_hr |> 
+  max()
+```
+
+2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **12**. The `seq()` function is used to obtain upper and lower limits of the intervals.
+
+```{r}
+breaks <- seq(min_max_hr, max_max_hr, length.out = 13)
+breaks
+```
+
+3.  Using the `cut()` function to dive each data into their respective intervals.
+
+```{r}
+cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |> 
+  head(40)
+```
+
+1.  8 intervals per line, with the total number of elements being a multiple of 8. Use empty characters to pad if necessary.
+
+```{=html}
+<!-- -->
+```
+4.  Generating the frequency table.
+
+```{r}
+cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
+  table() |> 
+  knitr::kable(col.names = c("interval", "freq"), align = "c")
+```
+
+### Frequency histogram
+
+A frequency histogram is a graphical representation of a frequency table. It displays the distribution of numerical variales by showing the frequency (count) of a value within specific intervals (bins) on the x-axis, with the y-axis representing the frequency. Each bar in the histogram corresponds to an interval, and the height of the bar indicates how many valuess fall within that range. This visual tool is useful for quickly assessing the shape, spread, and central tendency of the data distribution.
+
+```{r}
+hist(
+  x              = pull(max_hr), 
+  breaks         = breaks, 
+  freq           = T,
+  right          = F, 
+  col            = "skyblue", 
+  include.lowest = T,
+  main           = " ",
+  xlab           = "Maximum heart rate",
+  ylab           = "Frequency",
+  ylim           = c(0, 120),
+  labels         = T
+)
+```
+
+An alternative approach to plot the same histogram is also supplied below.
+
+```{r}
+ggplot(max_hr, aes(x = max_hr)) +
+  geom_histogram(
+    fill = "skyblue", 
+    stat = "bin",
+    color = "black",
+    linewidth = 0.4,
+    breaks = breaks,
+    closed = "left"
+  ) +
+  stat_bin(
+    geom = "text", 
+    aes(label = after_stat(count)),
+    breaks = breaks, 
+    closed = "left",
+    vjust = - 0.5
+  ) +
+  labs(x = "Maximum heart rate", y = "Frequency") +
+  theme(
+    panel.background = element_blank(),        
+    axis.line = element_line(color = "black") 
+  )
+```
+
 ## Measures of central tendency
+
+Central tendency provides a single value representing the center of the data.
 
 ### Mean
 
@@ -73,6 +177,8 @@ max_hr |>
 ```
 
 ## Measures of dispersion
+
+while dispersion shows how much the data varies around this central point.
 
 以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
 
