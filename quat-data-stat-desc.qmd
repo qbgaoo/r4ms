@@ -44,17 +44,19 @@ Once you read data in, the first step usually involves transforming it in some w
 ```{r}
 max_hr <- heart |>
   janitor::clean_names() |> 
-  select(max_hr, heart_disease) |> 
+  select(max_hr, heart_disease)
+  
+patient_hr <- max_hr |> 
   filter(heart_disease == 1) |> 
-  select(max_hr)
+  select(patient_hr = max_hr)
 
-nrow(max_hr)
+nrow(patient_hr)
 ```
 
 Totally there are 508 observations. The missing values are checked below：
 
 ```{r}
-max_hr |> 
+patient_hr |> 
   anyNA()
 ```
 
@@ -71,24 +73,24 @@ Here is the steps for creating a frequency table for continuous variables.
 1.  Computing the minimum and maximum of the variable.
 
 ```{r}
-min_max_hr <- max_hr |> 
+min_patient_hr <- patient_hr |> 
   min()
 
-max_max_hr <- max_hr |> 
+max_patient_hr <- patient_hr |> 
   max()
 ```
 
 2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **12**. The `seq()` function is used to obtain upper and lower limits of the intervals.
 
 ```{r}
-breaks <- seq(min_max_hr, max_max_hr, length.out = 13)
+breaks <- seq(min_patient_hr, max_patient_hr, length.out = 13)
 breaks
 ```
 
 3.  Using the `cut()` function to dive each data into their respective intervals.
 
 ```{r}
-cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |> 
+cut(pull(patient_hr), breaks = breaks, include.lowest = T, right = F) |> 
   head(40)
 ```
 
@@ -100,7 +102,7 @@ cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
 4.  Generating the frequency table.
 
 ```{r}
-cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
+cut(pull(patient_hr), breaks = breaks, include.lowest = T, right = F) |>
   table() |> 
   knitr::kable(col.names = c("interval", "freq"), align = "c")
 ```
@@ -111,7 +113,7 @@ A frequency histogram is a graphical representation of a frequency table. It dis
 
 ```{r}
 hist(
-  x              = pull(max_hr), 
+  x              = pull(patient_hr), 
   breaks         = breaks, 
   freq           = T,
   right          = F, 
@@ -128,12 +130,12 @@ hist(
 An alternative approach to plot the same histogram is also supplied below.
 
 ```{r}
-ggplot(max_hr, aes(x = max_hr)) +
+patient_hr |> 
+  ggplot(aes(x = patient_hr)) +
   geom_histogram(
     fill = "skyblue", 
     stat = "bin",
     color = "black",
-    linewidth = 0.4,
     breaks = breaks,
     closed = "left"
   ) +
@@ -142,10 +144,15 @@ ggplot(max_hr, aes(x = max_hr)) +
     aes(label = after_stat(count)),
     breaks = breaks, 
     closed = "left",
-    vjust = - 0.5
+    size = 4,
+    vjust = - 0.3
   ) +
   labs(x = "Maximum heart rate", y = "Frequency") +
   theme(
+    axis.title.x = element_text(size = 12), 
+    axis.title.y = element_text(size = 12), 
+    axis.text.x = element_text(size = 11),  
+    axis.text.y = element_text(size = 11),
     panel.background = element_blank(),        
     axis.line = element_line(color = "black") 
   )
@@ -153,97 +160,173 @@ ggplot(max_hr, aes(x = max_hr)) +
 
 ## Measures of central tendency
 
-Central tendency provides a single value representing the center of the data.
+Central tendency is a statistical concept that refers to the measure of the center or typical value in a data set. It provides a summary of the data with a single value that represents the middle or average of the data. The most common measures of central tendency are:
 
 ### Mean
 
-**例2-2** 计算例2-1某医院138名正常成年女性的红细胞数的均数。
+The arithmetic average of all values. It’s calculated by summing all the values and dividing by the number of values.
+
+For a population:
+
+$$
+\mu = \frac{\sum X_i}{N}
+$$
+
+For a sample:
+
+$$
+\bar{X} = \frac{\sum X_i}{n}
+$$
+
+where $X_i$ represents each value, and $N$ and $n$ are the sizes of the population and sample, respectively.
 
 ```{r}
-max_hr |> 
+patient_hr |> 
   pull() |> 
-  mean() |> 
-  round(digits = 1)
+  mean()
 ```
 
 ### Median
 
-计算例2-1某医院138名正常成年女性的红细胞数的中位数和四分位数：
+The middle value in a data set when the values are sorted in ascending order. If there is an even number of values, the median is the average of the two middle values. To find the median:
+
+-   Sort the data set.
+-   If the number of observations N is odd, the median is the middle value.
+-   If N is even, the median is the average of the two central values.
 
 ```{r}
-max_hr |> 
+patient_hr |> 
   pull() |> 
   median()
 ```
 
 ## Measures of dispersion
 
-while dispersion shows how much the data varies around this central point.
-
-以例2-1某医院138名正常成年女性的红细胞数为例，计算描述离散趋势的统计指标：
+Dispersion or variability, describe the spread or dispersion of data points in a data set. They provide insight into how much individual data points differ from the central value (mean, median, etc.). Common measures of dispersion include:
 
 ### Range
 
+The difference between the maximum and minimum values in the data set.
+
+$$
+\text{range} = \text{max} - \text{min} 
+$$
+
 ```{r}
-range(max_hr) |> 
+range(patient_hr) |> 
   diff()
 ```
 
-### **Quartile** and **percentile**
+### Interquartile Range (IQR)
+
+The range of the middle 50% of the data, calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1).
+
+$$
+\text{IQR} = Q3 - Q1 
+$$
+
+You can directly use the `IQR()` function to get IQR.
 
 ```{r}
-max_hr |> 
-  pull() |> 
-  quantile(probs = c(0.25, 0.5, 0.75)) 
-```
-
-In R, you can calculate the interquartile range (IQR) of a numeric variable using the `IQR()` function. Here’s how you can do it:
-
-```{r}
-max_hr |> 
+patient_hr |> 
   pull() |> 
   IQR()
 ```
 
 ### Variance
 
+Measures the average squared deviation of each data point from the mean.
+
+For a population:
+
+$$
+\sigma^2 = \frac{1}{N} \sum_{i=1}^N (X_i - \mu)^2 
+$$
+
+For a sample:
+
+$$
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 
+$$
+
+where $\mu$ is the population mean, $\bar{X}$ is the sample mean, $X_i$ represents each value, and $N$ and $n$ are are the sizes of the population and sample, respectively.
+
+You can directly use the `var()` function to get variance.
+
 ```{r}
-max_hr |> 
+patient_hr |> 
   pull() |> 
   var()
 ```
 
-### **Standard deviation**
+### Standard deviation
+
+The square root of the variance, providing a measure of spread in the same units as the data.
+
+For a population:
+
+$$
+\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (X_i - \mu)^2}
+$$
+
+For a sample:
+
+$$
+S = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2}
+$$
+
+You can directly use the `sd()` function to get standard deviation.
 
 ```{r}
-max_hr |> 
+patient_hr |> 
   pull() |> 
   sd()
 ```
 
-### 变异系数
+### Coefficient of Variation (CV)
+
+The ratio of the standard deviation to the mean, expressed as a percentage, useful for comparing variability between variables with different units or scales.
+
+For a population:
+
+$$
+\text{CV} = \frac{\sigma}{\mu} \times 100% 
+$$
+
+where $\sigma$ is the standard deviation and $\mu$ is the mean of a population.
+
+For a sample:
+
+$$
+\text{CV} = \frac{S}{\bar{X}} \times 100% 
+$$
+
+where $S$ is the standard deviation and $\bar{X}$ is the mean of a sample.
 
 ```{r}
-mean <- max_hr |> 
+mean <- patient_hr |> 
   pull() |> 
   mean()
 
-sd <- max_hr |> 
+sd <- patient_hr |> 
   pull() |> 
   sd()
 
-(sd / mean * 100) |> 
-  round(digits = 1)
+sd / mean * 100
 ```
 
 ## Medical reference range
 
-以例2-1某医院138名正常成年女性的红细胞数为例，确定其医学参考值范围：
+A medical reference range is a set of values that is used by healthcare providers to interpret laboratory test results. These ranges are typically established by testing a large group of healthy individuals and determining the normal distribution of values within that population. The reference range provides a context for understanding whether a individual’s test results fall within a normal, expected range or if they indicate a potential health issue.
 
 ```{r}
-med_ref_range <- quantile(pull(max_hr), probs = c(0.025, 0.975)) |> 
-  round(digits = 3) |> 
+med_ref_range <- max_hr |> 
+  filter(heart_disease == 0) |> 
+  select(normal_hr = max_hr) |> 
+  pull() |> 
+  quantile(probs = c(0.025, 0.975)) |> 
+  round(digits = 0) |> 
   print()
 ```
 
-由上可知，正常成年女性红细胞数的95%医学参考值范围为: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`
+The result indicates that the 95% medical reference range for the maximum heart rate in normal individuals is: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`
