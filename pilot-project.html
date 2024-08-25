@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -148,19 +182,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Description of Categorical Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./confidence-interval.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Confidence Interval</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Confidence interval</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ttest.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation and t test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation and <em>t</em> test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -172,7 +206,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chi-Square Test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -264,6 +298,97 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="13.1" class="anchored" data-anchor-id="datasets"><span class="header-section-number">13.1</span> <strong>Datasets</strong></h2>
 <p>In this book, we used publicly available CDISC pilot study data, which is accessible through the <a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets">CDISC GitHub repository</a>. To streamline the process, we have downloaded all the datasets from the repository and converted them from <code>.xpt</code> format to <code>.sas7bdat</code> format for ease of use and compatibility. Then we stored them in the <a href="https://github.com/qbgaoo/r4ms/main/data/adam">data/adam/</a> folder within this project. Additionally, The dataset structure adheres to the CDISC <a href="https://www.cdisc.org/standards/foundational/adam">Analysis Data Model (ADaM)</a> standard.</p>
 <p>The SDTM-ADaM Pilot Project datasets were created to demonstrate the process of converting clinical trial data into formats that comply with the Study Data Tabulation Model (SDTM) and Analysis Data Model (ADaM) standards, which are set by the Clinical Data Interchange Standards Consortium (CDISC). These datasets are used to test, validate, and illustrate how to implement CDISC standards in real-world scenarios, helping pharmaceutical companies and regulatory agencies like the FDA ensure data quality and consistency in clinical trials.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> <span class="fu">read_sas</span>(<span class="st">"data-adam/adsl.sas7bdat"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ARM, ITTFL, EFFFL) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(EFFFL <span class="sc">==</span> <span class="st">"Y"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ARM) <span class="sc">|&gt;</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  ARM                      n
+  &lt;chr&gt;                &lt;int&gt;
+1 Placebo                 79
+2 Xanomeline High Dose    74
+3 Xanomeline Low Dose     81</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>adsl <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 254
+Columns: 48
+$ STUDYID  &lt;chr&gt; "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01", "CDISCPILOT01…
+$ USUBJID  &lt;chr&gt; "01-701-1015", "01-701-1023", "01-701-1028", "01-701-1033", "…
+$ SUBJID   &lt;chr&gt; "1015", "1023", "1028", "1033", "1034", "1047", "1097", "1111…
+$ SITEID   &lt;chr&gt; "701", "701", "701", "701", "701", "701", "701", "701", "701"…
+$ SITEGR1  &lt;chr&gt; "701", "701", "701", "701", "701", "701", "701", "701", "701"…
+$ ARM      &lt;chr&gt; "Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low…
+$ TRT01P   &lt;chr&gt; "Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low…
+$ TRT01PN  &lt;dbl&gt; 0, 0, 81, 54, 81, 0, 54, 54, 54, 0, 0, 81, 81, 81, 0, 81, 81,…
+$ TRT01A   &lt;chr&gt; "Placebo", "Placebo", "Xanomeline High Dose", "Xanomeline Low…
+$ TRT01AN  &lt;dbl&gt; 0, 0, 81, 54, 81, 0, 54, 54, 54, 0, 0, 81, 81, 81, 0, 81, 81,…
+$ TRTSDT   &lt;date&gt; 2014-01-02, 2012-08-05, 2013-07-19, 2014-03-18, 2014-07-01, …
+$ TRTEDT   &lt;date&gt; 2014-07-02, 2012-09-01, 2014-01-14, 2014-03-31, 2014-12-30, …
+$ TRTDUR   &lt;dbl&gt; 182, 28, 180, 14, 183, 26, 190, 10, 55, 182, 183, 183, 38, 18…
+$ AVGDD    &lt;dbl&gt; 0.0, 0.0, 77.7, 54.0, 76.9, 0.0, 54.0, 54.0, 54.0, 0.0, 0.0, …
+$ CUMDOSE  &lt;dbl&gt; 0, 0, 13986, 756, 14067, 0, 10260, 540, 2970, 0, 0, 14121, 26…
+$ AGE      &lt;dbl&gt; 63, 64, 71, 74, 77, 85, 68, 81, 84, 52, 84, 81, 75, 57, 79, 5…
+$ AGEGR1   &lt;chr&gt; "&lt;65", "&lt;65", "65-80", "65-80", "65-80", "&gt;80", "65-80", "&gt;80…
+$ AGEGR1N  &lt;dbl&gt; 1, 1, 2, 2, 2, 3, 2, 3, 3, 1, 3, 3, 2, 1, 2, 1, 2, 2, 2, 3, 2…
+$ AGEU     &lt;chr&gt; "YEARS", "YEARS", "YEARS", "YEARS", "YEARS", "YEARS", "YEARS"…
+$ RACE     &lt;chr&gt; "WHITE", "WHITE", "WHITE", "WHITE", "WHITE", "WHITE", "WHITE"…
+$ RACEN    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1…
+$ SEX      &lt;chr&gt; "F", "M", "M", "M", "F", "F", "M", "F", "M", "M", "M", "F", "…
+$ ETHNIC   &lt;chr&gt; "HISPANIC OR LATINO", "HISPANIC OR LATINO", "NOT HISPANIC OR …
+$ SAFFL    &lt;chr&gt; "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…
+$ ITTFL    &lt;chr&gt; "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…
+$ EFFFL    &lt;chr&gt; "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "…
+$ COMP8FL  &lt;chr&gt; "Y", "N", "Y", "N", "Y", "N", "Y", "N", "Y", "Y", "Y", "Y", "…
+$ COMP16FL &lt;chr&gt; "Y", "N", "Y", "N", "Y", "N", "Y", "N", "N", "Y", "Y", "Y", "…
+$ COMP24FL &lt;chr&gt; "Y", "N", "Y", "N", "Y", "N", "Y", "N", "N", "Y", "Y", "Y", "…
+$ DISCONFL &lt;chr&gt; "", "Y", "", "Y", "", "Y", "", "Y", "Y", "", "", "", "Y", "",…
+$ DSRAEFL  &lt;chr&gt; "", "Y", "", "", "", "Y", "", "Y", "Y", "", "", "", "Y", "", …
+$ DTHFL    &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "…
+$ BMIBL    &lt;dbl&gt; 25.1, 30.4, 31.4, 28.8, 26.1, 30.4, 27.3, 23.9, 23.9, 21.9, 2…
+$ BMIBLGR1 &lt;chr&gt; "25-&lt;30", "&gt;=30", "&gt;=30", "25-&lt;30", "25-&lt;30", "&gt;=30", "25-&lt;30…
+$ HEIGHTBL &lt;dbl&gt; 147.3, 162.6, 177.8, 175.3, 154.9, 148.6, 168.9, 158.2, 181.6…
+$ WEIGHTBL &lt;dbl&gt; 54.4, 80.3, 99.3, 88.5, 62.6, 67.1, 78.0, 59.9, 78.9, 71.2, 7…
+$ EDUCLVL  &lt;dbl&gt; 16, 14, 16, 12, 9, 8, 18, 22, 12, 14, 12, 10, 16, 15, 6, 16, …
+$ DISONSDT &lt;date&gt; 2010-04-30, 2006-03-11, 2009-12-16, 2009-08-02, 2011-09-29, …
+$ DURDIS   &lt;dbl&gt; 43.9, 76.4, 42.8, 55.3, 32.9, 42.0, 99.1, 40.7, 101.9, 44.2, …
+$ DURDSGR1 &lt;chr&gt; "&gt;=12", "&gt;=12", "&gt;=12", "&gt;=12", "&gt;=12", "&gt;=12", "&gt;=12", "&gt;=12…
+$ VISIT1DT &lt;date&gt; 2013-12-26, 2012-07-22, 2013-07-11, 2014-03-10, 2014-06-24, …
+$ RFSTDTC  &lt;chr&gt; "2014-01-02", "2012-08-05", "2013-07-19", "2014-03-18", "2014…
+$ RFENDTC  &lt;chr&gt; "2014-07-02", "2012-09-02", "2014-01-14", "2014-04-14", "2014…
+$ VISNUMEN &lt;dbl&gt; 12, 5, 12, 5, 12, 6, 12, 4, 8, 12, 12, 12, 7, 12, 12, 7, 4, 7…
+$ RFENDT   &lt;date&gt; 2014-07-02, 2012-09-02, 2014-01-14, 2014-04-14, 2014-12-30, …
+$ DCDECOD  &lt;chr&gt; "COMPLETED", "ADVERSE EVENT", "COMPLETED", "STUDY TERMINATED …
+$ DCREASCD &lt;chr&gt; "Completed", "Adverse Event", "Completed", "Sponsor Decision"…
+$ MMSETOT  &lt;dbl&gt; 23, 23, 23, 23, 21, 23, 10, 23, 20, 20, 19, 21, 22, 21, 10, 1…</code></pre>
+</div>
+</div>
+<p><code>glimpse()</code> makes it possible to see every column in a data frame. It’s a little like <code>str()</code> applied to a data frame but it tries to show you as much data as possible.</p>
+<p>Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use <code>janitor::clean_names()</code> to turn all column names of data frame <code>adsl</code> into snake case.</p>
 
 
 </section>
