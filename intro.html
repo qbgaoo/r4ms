@@ -318,12 +318,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.2" class="anchored" data-anchor-id="running-r-code"><span class="header-section-number">1.2</span> <strong>Running R code</strong></h2>
 <p>The previous section showed you several examples of running R code. The code in the book looks like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 3</code></pre>
+</div>
 </div>
 <p>If you run the same code in your local console, it will look like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode yacc code-with-copy"><code class="sourceCode yacc"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>&gt; 1 + 2</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>[1] 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yacc code-with-copy"><code class="sourceCode yacc"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&gt; 1 + 2</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[1] 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>There are two main differences. In your console, you type after the <code>&gt;</code>, called the <strong>prompt</strong>; we don’t show the prompt in the book. In the book, the output is commented out with <code>#&gt;</code>; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.</p>
 <p>Throughout the book, we use a consistent set of conventions to refer to code:</p>
 <ul>
