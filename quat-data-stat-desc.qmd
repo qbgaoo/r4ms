@@ -80,10 +80,6 @@ cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
   head(40)
 ```
 
-1.  8 intervals per line, with the total number of elements being a multiple of 8. Use empty characters to pad if necessary.
-
-<!-- -->
-
 4.  Generating the frequency table.
 
 ```{r}
