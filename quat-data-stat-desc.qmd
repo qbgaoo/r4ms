@@ -139,6 +139,45 @@ max_hr |>
   )
 ```
 
+```{r}
+library(shiny)
+
+shinyApp(
+  ui = fillPage(
+    
+    # App title ----
+    title = "Frequency distribution graph",
+    # Sidebar with a slider input for number of bins 
+    sidebarLayout(
+        sidebarPanel(
+            sliderInput("bins",
+                        "Number of bins:",
+                        min = 10,
+                        max = 15,
+                        value = 10)
+        ),
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+),
+  server = function(input, output) {
+    input
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'skyblue', border = 'black',
+             xlab = 'Maximum heart rate',
+             main = '')
+    })
+}
+)
+```
+
 ## Measures of central tendency
 
 Central tendency is a statistical concept that refers to the measure of the center or typical value in a data set. It provides a summary of the data with a single value that represents the middle or average of the data. The most common measures of central tendency are:
