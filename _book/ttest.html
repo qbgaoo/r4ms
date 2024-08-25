@@ -350,7 +350,6 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>例3-1</strong> 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3<sup>2</sup>)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以Stata格式保存，利用<code>haven::read_csv()</code>函数导入R变量 <code>height_sample</code> 中。是部分数据。</p>
-<p>You can import this data file into R by <code>read_csv()</code> function. The first argument is the most important: the path to the file. You can think about the path as the address of the file.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>height_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex03-01.csv"</span>) </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 100 Columns: 3</span></span>

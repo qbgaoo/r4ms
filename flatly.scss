@@ -48,3 +48,16 @@ div.sidebar-item-container .active {
 .sidebar-navigation a:hover{
   color: #000000 !important;
 }
+
+.example {
+  color: #333333;  /* font color */
+  padding-left: 12px;  
+  padding-right: 12px;  
+  padding-top: 6px;
+  border-radius: 5px;  /* round corner */
+  border: 2px solid #A0D8DD;  
+}
+
+.example strong {
+  font-weight: bold;  /* only Example is bold */
+}

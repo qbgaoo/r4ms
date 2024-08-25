@@ -24,13 +24,11 @@ Setting up the required R packages.
 library(tidyverse)
 ```
 
-::: {.callout-tip icon="false"}
-## Example
-
+::: example
 Some researchers used a random sampling method to examine the maximum heart rate of 143 normal adult women. The measuring results are saved in a `.csv` file. Please use the data to create a frequency distribution table.
 :::
 
-Here we import the data file into R by `read_csv()` function.
+Here we use `read_csv()` function to import the data file into R.
 
 ```{r}
 max_hr <- read_csv("datasets/ex02-01.csv")
@@ -67,10 +65,11 @@ max_max_hr <- max_hr |>
   max()
 ```
 
-2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **12**. The `seq()` function is used to obtain upper and lower limits of the intervals.
+2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **10**. The `seq()` function is used to obtain upper and lower limits of the intervals.
 
 ```{r}
-breaks <- seq(min_max_hr, max_max_hr, length.out = 13)
+n_of_bins = 10
+breaks <- seq(min_max_hr, max_max_hr, length.out = n_of_bins + 1)
 breaks
 ```
 

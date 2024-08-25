@@ -356,20 +356,11 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="example">
+<strong>Example 1:</strong> 
 <p>Some researchers used a random sampling method to examine the maximum heart rate of 143 normal adult women. The measuring results are saved in a <code>.csv</code> file. Please use the data to create a frequency distribution table.</p>
 </div>
-</div>
-<p>Here we can import the data file into R by <code>read_csv()</code> function. The first argument is the most important: the path to the file. You can think about the path as the address of the file.</p>
+<p>Here we use <code>read_csv()</code> function to import the data file into R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>max_hr <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex02-01.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Rows: 143 Columns: 1</span></span>
@@ -380,8 +371,9 @@ Example
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The code above will work if you have the <code>ex02-01.csv</code> file in the <code>datasets</code> folder of your project.</p>
-<p>The missing values are checked below：</p>
+<p>The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a <code>ex02-01.csv</code> file in the <code>datasets</code> folder of your project.</p>
+<p>When you run <code>read_csv()</code>, it prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains). It also prints out some information about retrieving the full column specification and how to quiet this message.</p>
+<p>The data file has only one column with name <code>max_hr</code>. Let’s check if there are some missing values present in it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>max_hr <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anyNA</span>()</span>
@@ -406,13 +398,13 @@ Example
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt <strong>12</strong>. The <code>seq()</code> function is used to obtain upper and lower limits of the intervals.</li>
+<li>Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt <strong>10</strong>. The <code>seq()</code> function is used to obtain upper and lower limits of the intervals.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(min_max_hr, max_max_hr, <span class="at">length.out =</span> <span class="dv">13</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>breaks</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  90.0  98.5 107.0 115.5 124.0 132.5 141.0 149.5 158.0 166.5 175.0 183.5</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] 192.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_of_bins <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(min_max_hr, max_max_hr, <span class="at">length.out =</span> n_of_bins <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>breaks</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  90.0 100.2 110.4 120.6 130.8 141.0 151.2 161.4 171.6 181.8 192.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="3" type="1">
 <li>Using the <code>cut()</code> function to dive each data into their respective intervals.</li>
@@ -420,13 +412,13 @@ Example
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(<span class="fu">pull</span>(max_hr), <span class="at">breaks =</span> breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F) <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">40</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] [166,175) [116,124) [141,150) [132,141) [150,158) [158,166) [141,150)</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] [158,166) [124,132) [150,158) [141,150) [141,150) [124,132) [124,132)</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [15] [150,158) [132,141) [166,175) [175,184) [141,150) [124,132) [141,150)</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [22] [107,116) [150,158) [141,150) [158,166) [141,150) [175,184) [107,116)</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] [124,132) [132,141) [184,192] [132,141) [184,192] [175,184) [132,141)</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] [116,124) [175,184) [175,184) [132,141) [90,98.5)</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 Levels: [90,98.5) [98.5,107) [107,116) [116,124) [124,132) ... [184,192]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] [161,172) [110,121) [141,151) [131,141) [141,151) [161,172) [141,151)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] [161,172) [121,131) [151,161) [141,151) [141,151) [121,131) [121,131)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [15] [141,151) [131,141) [161,172) [172,182) [141,151) [121,131) [141,151)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [22] [110,121) [141,151) [141,151) [151,161) [141,151) [172,182) [100,110)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [29] [121,131) [131,141) [182,192] [131,141) [182,192] [172,182) [131,141)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [36] [110,121) [172,182) [172,182) [131,141) [90,100) </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 Levels: [90,100) [100,110) [110,121) [121,131) [131,141) ... [182,192]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>8 intervals per line, with the total number of elements being a multiple of 8. Use empty characters to pad if necessary.</li>
@@ -449,52 +441,44 @@ Example
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">[90,98.5)</td>
+<td style="text-align: center;">[90,100)</td>
 <td style="text-align: center;">4</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">[98.5,107)</td>
-<td style="text-align: center;">0</td>
+<td style="text-align: center;">[100,110)</td>
+<td style="text-align: center;">2</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">[107,116)</td>
-<td style="text-align: center;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">[116,124)</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">[124,132)</td>
-<td style="text-align: center;">14</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">[132,141)</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">[141,150)</td>
-<td style="text-align: center;">15</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">[150,158)</td>
-<td style="text-align: center;">20</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">[158,166)</td>
-<td style="text-align: center;">28</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">[166,175)</td>
-<td style="text-align: center;">16</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">[175,184)</td>
+<td style="text-align: center;">[110,121)</td>
 <td style="text-align: center;">12</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">[184,192]</td>
-<td style="text-align: center;">4</td>
+<td style="text-align: center;">[121,131)</td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[131,141)</td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[141,151)</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[151,161)</td>
+<td style="text-align: center;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[161,172)</td>
+<td style="text-align: center;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[172,182)</td>
+<td style="text-align: center;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[182,192]</td>
+<td style="text-align: center;">5</td>
 </tr>
 </tbody>
 </table>

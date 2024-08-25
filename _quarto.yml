@@ -10,8 +10,7 @@ book:
   site-url: https://qbgaoo.github.io/r4ms
   repo-url: https://github.com/qbgaoo/r4ms
   repo-actions: [edit, issue]
-  
-  
+   
   chapters:
     - index.qmd
     - intro.qmd
@@ -45,3 +44,5 @@ format:
 
 editor: visual
 
+filters:
+  - example-numbering.lua
