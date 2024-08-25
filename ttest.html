@@ -301,22 +301,23 @@ window.Quarto = {
    
   <ul>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">5.1</span> Prerequisites</a></li>
-  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">5.2</span> 标准误和可信区间</a>
+  <li><a href="#t-distribution" id="toc-t-distribution" class="nav-link" data-scroll-target="#t-distribution"><span class="header-section-number">5.2</span> <em>t</em> distribution</a></li>
+  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">5.3</span> 标准误和可信区间</a>
   <ul class="collapse">
-  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">5.2.1</span> 单一总体均数的可信区间</a></li>
-  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">5.2.2</span> 两总体均数差的可信区间</a></li>
+  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">5.3.1</span> 单一总体均数的可信区间</a></li>
+  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">5.3.2</span> 两总体均数差的可信区间</a></li>
   </ul></li>
-  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">5.3</span> <em>t</em> 检验</a>
+  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">5.4</span> <em>t</em> 检验</a>
   <ul class="collapse">
-  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">5.3.1</span> 单样本 <em>t</em> 检验</a></li>
-  <li><a href="#paired-sample-t-test" id="toc-paired-sample-t-test" class="nav-link" data-scroll-target="#paired-sample-t-test"><span class="header-section-number">5.3.2</span> Paired sample <em>t</em> test</a></li>
-  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">5.3.3</span> Two-sample <em>t</em>-test</a></li>
-  <li><a href="#approximate-t-test" id="toc-approximate-t-test" class="nav-link" data-scroll-target="#approximate-t-test"><span class="header-section-number">5.3.4</span> Approximate <em>t</em>-test</a></li>
+  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">5.4.1</span> 单样本 <em>t</em> 检验</a></li>
+  <li><a href="#paired-sample-t-test" id="toc-paired-sample-t-test" class="nav-link" data-scroll-target="#paired-sample-t-test"><span class="header-section-number">5.4.2</span> Paired sample <em>t</em> test</a></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">5.4.3</span> Two-sample <em>t</em>-test</a></li>
+  <li><a href="#approximate-t-test" id="toc-approximate-t-test" class="nav-link" data-scroll-target="#approximate-t-test"><span class="header-section-number">5.4.4</span> Approximate <em>t</em>-test</a></li>
   </ul></li>
-  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">5.4</span> 正态和方差齐性检验</a>
+  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">5.5</span> 正态和方差齐性检验</a>
   <ul class="collapse">
-  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">5.4.1</span> 正态性检验</a></li>
-  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">5.4.2</span> 方差齐性检验</a></li>
+  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">5.5.1</span> 正态性检验</a></li>
+  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">5.5.2</span> 方差齐性检验</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/qbgaoo/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/qbgaoo/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -349,6 +350,9 @@ window.Quarto = {
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="t-distribution" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="t-distribution"><span class="header-section-number">5.2</span> <em>t</em> distribution</h2>
 <p><strong>例3-1</strong> 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3<sup>2</sup>)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以Stata格式保存，利用<code>haven::read_csv()</code>函数导入R变量 <code>height_sample</code> 中。是部分数据。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>height_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex03-01.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -412,10 +416,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="标准误和可信区间" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">5.2</span> 标准误和可信区间</h2>
-<section id="单一总体均数的可信区间" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">5.2.1</span> 单一总体均数的可信区间</h3>
+<section id="标准误和可信区间" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">5.3</span> 标准误和可信区间</h2>
+<section id="单一总体均数的可信区间" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">5.3.1</span> 单一总体均数的可信区间</h3>
 <p><strong>例3-2</strong> 计算例3-1中每个样本的标准误和可信区间</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>mean  <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>mean</span>
@@ -522,8 +526,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="两总体均数差的可信区间" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">5.2.2</span> 两总体均数差的可信区间</h3>
+<section id="两总体均数差的可信区间" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">5.3.2</span> 两总体均数差的可信区间</h3>
 <p><strong>例3-3</strong> 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
@@ -541,11 +545,11 @@ window.Quarto = {
 <p>因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。</p>
 </section>
 </section>
-<section id="t-检验" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">5.3</span> <em>t</em> 检验</h2>
+<section id="t-检验" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">5.4</span> <em>t</em> 检验</h2>
 <p>计量资料的假设检验中，最常见、最简单的方法是 <em>t</em> 检验。</p>
-<section id="单样本-t-检验" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">5.3.1</span> 单样本 <em>t</em> 检验</h3>
+<section id="单样本-t-检验" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">5.4.1</span> 单样本 <em>t</em> 检验</h3>
 <p><strong>例3-4</strong> 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex03-05.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
@@ -593,8 +597,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="paired-sample-t-test" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="paired-sample-t-test"><span class="header-section-number">5.3.2</span> Paired sample <em>t</em> test</h3>
+<section id="paired-sample-t-test" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="paired-sample-t-test"><span class="header-section-number">5.4.2</span> Paired sample <em>t</em> test</h3>
 <p><strong>例3-5</strong> 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>paired <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex03-06.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -648,8 +652,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="two-sample-t-test" class="level3" data-number="5.3.3">
-<h3 data-number="5.3.3" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">5.3.3</span> Two-sample <em>t</em>-test</h3>
+<section id="two-sample-t-test" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">5.4.3</span> Two-sample <em>t</em>-test</h3>
 <p>The two-sample t-test (aka, the independent t-test) can be performed using base R functions without the need for additional packages.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -719,8 +723,8 @@ Example
 </div>
 </div>
 </section>
-<section id="approximate-t-test" class="level3" data-number="5.3.4">
-<h3 data-number="5.3.4" class="anchored" data-anchor-id="approximate-t-test"><span class="header-section-number">5.3.4</span> Approximate <em>t</em>-test</h3>
+<section id="approximate-t-test" class="level3" data-number="5.4.4">
+<h3 data-number="5.4.4" class="anchored" data-anchor-id="approximate-t-test"><span class="header-section-number">5.4.4</span> Approximate <em>t</em>-test</h3>
 <p>进行两小样本均数比较，若两总体方差不等，可采用近似 <em>t</em> 检验:</p>
 <p><strong>例3-7</strong> 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA<sub>1</sub>c (%)的下降值见 <a href="#tbl-HbA1c" class="quarto-xref">Table&nbsp;<span>5.1</span></a> 。问使用两种不同药物的患者其HbA<sub>1</sub>c下降值是否相同？</p>
 <div class="cell">
@@ -763,7 +767,7 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 <ol type="1">
 <li><code>knitr::kable()</code>成功将输出到html的表中的字符渲染为数学符号，其他包函数测试不成功</li>
 </ol>
-<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>Section 5.4</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
+<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>Section 5.5</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">TTestA</span>(                              </span>
 <span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> <span class="fl">1.13</span>,</span>
@@ -824,10 +828,10 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </div>
 </section>
 </section>
-<section id="sec-homogeneity-test" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">5.4</span> 正态和方差齐性检验</h2>
-<section id="正态性检验" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">5.4.1</span> 正态性检验</h3>
+<section id="sec-homogeneity-test" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">5.5</span> 正态和方差齐性检验</h2>
+<section id="正态性检验" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">5.5.1</span> 正态性检验</h3>
 <p>下面对<strong>例3-1</strong>中的100个样本均数进行正态性检验：</p>
 <p>（一）计算法</p>
 <p>下面分别采用<code>stats::shapiro.test()</code>和<code>DescTools::ShapiroFranciaTest()</code>进行正态性检验：</p>
@@ -931,8 +935,8 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </div>
 </div>
 </section>
-<section id="方差齐性检验" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">5.4.2</span> 方差齐性检验</h3>
+<section id="方差齐性检验" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">5.5.2</span> 方差齐性检验</h3>
 <p>对<strong>例3-6</strong>的数据，利用<span class="math inline">\(F\)</span>检验判断两总体空腹血糖下降值的方差是否相等。这里利用<code>DescTools::LeveneTest()</code>进行方差齐性检验</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> two_sample <span class="sc">|&gt;</span> </span>
