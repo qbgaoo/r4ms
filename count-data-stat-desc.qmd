@@ -1,1 +1,1 @@
-# Description of Categorical Variables
+# Statistical description of count data

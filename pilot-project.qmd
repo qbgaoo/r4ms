@@ -5,3 +5,28 @@
 In this book, we used publicly available CDISC pilot study data, which is accessible through the [CDISC GitHub repository](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets). To streamline the process, we have downloaded all the datasets from the repository and converted them from `.xpt` format to `.sas7bdat` format for ease of use and compatibility. Then we stored them in the [data/adam/](https://github.com/qbgaoo/r4ms/main/data/adam) folder within this project. Additionally, The dataset structure adheres to the CDISC [Analysis Data Model (ADaM)](https://www.cdisc.org/standards/foundational/adam) standard.
 
 The SDTM-ADaM Pilot Project datasets were created to demonstrate the process of converting clinical trial data into formats that comply with the Study Data Tabulation Model (SDTM) and Analysis Data Model (ADaM) standards, which are set by the Clinical Data Interchange Standards Consortium (CDISC). These datasets are used to test, validate, and illustrate how to implement CDISC standards in real-world scenarios, helping pharmaceutical companies and regulatory agencies like the FDA ensure data quality and consistency in clinical trials.
+
+```{r}
+library(haven)
+library(tidyverse)
+```
+
+```{r}
+adsl <- read_sas("data-adam/adsl.sas7bdat")
+
+adsl |> 
+  select(ARM, ITTFL, EFFFL) |> 
+  filter(EFFFL == "Y") |> 
+  group_by(ARM) |> 
+  summarise(n = n())
+  
+```
+
+```{r}
+adsl |> 
+  glimpse()
+```
+
+`glimpse()` makes it possible to see every column in a data frame. It's a little like `str()` applied to a data frame but it tries to show you as much data as possible.
+
+Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use `janitor::clean_names()` to turn all column names of data frame `adsl` into snake case.

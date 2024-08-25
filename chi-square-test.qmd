@@ -1,1 +1,1 @@
-# Chi-Square Test
+# Chi-square test

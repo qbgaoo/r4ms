@@ -1,20 +1,20 @@
 # Statistical description of quantitative data
 
-The statistical description of quantitative data involves summarizing and analyzing numerical variable to understand its distribution and characteristics. Key measures include:
-
--   Measures of central tendency: mean, median.
--   Measures of dispersion: range , variance, standard deviation , and interquartile range (IQR).
--   Visualization: frequency table and frequency histogram.
-
-Together, these measures help describe the data's overall distribution, identify outliers, and inform statistical analysis in clinical and epidemiological research.
-
 ```{r}
 #| echo: false
 
 source("_common.R")
 ```
 
-## Prerequisites
+The statistical description of quantitative data involves summarizing and analyzing numerical variable to understand its distribution and characteristics. Key measures include:
+
+-   Visualization: frequency table and frequency histogram.
+-   Measures of central tendency: mean, median.
+-   Measures of dispersion: range , variance, standard deviation , and interquartile range (IQR).
+
+Together, these measures help describe the data's overall distribution, identify outliers, and inform statistical analysis in clinical and epidemiological research.Prerequisites
+
+## Prerequisite
 
 Setting up the required R packages.
 
@@ -24,45 +24,32 @@ Setting up the required R packages.
 library(tidyverse)
 ```
 
-## Dataset used below
+::: {.callout-tip icon="false"}
+## Example
 
-In this chapter, we use the [Heart Failure Prediction Dataset](https://www.kaggle.com/fedesoriano/heart-failure-prediction) refered as `heart.csv` in the context to demonstrate the issues. The file is downloaded and saved in the `datasets` folder of this project. You can import this file into R by `read_csv()` function. The first argument is the most important: the path to the file. You can think about the path as the address of the file.
+Some researchers used a random sampling method to examine the maximum heart rate of 143 normal adult women. The measuring results are saved in a `.csv` file. Please use the data to create a frequency distribution table.
+:::
+
+Here we import the data file into R by `read_csv()` function.
 
 ```{r}
-heart <- read_csv("datasets/heart.csv")
+max_hr <- read_csv("datasets/ex02-01.csv")
 ```
 
-The code above will work if you have the `heart.csv` file in a `datasets` folder in your project. Here is a show of some data in the file.
+The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a `ex02-01.csv` file in the `datasets` folder of your project.
+
+When you run `read_csv()`, it prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains). It also prints out some information about retrieving the full column specification and how to quiet this message.
+
+The data file has only one column with name `max_hr`. Let's check if there are some missing values present in it.
 
 ```{r}
-heart |> 
-  select(1:6)
-```
-
-Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use `janitor::clean_names()` to turn all column names of `heart` into snake case. Then a variable named `max_hr` (i.e. maximum heart rate) is selected for subsequent analysis.
-
-```{r}
-max_hr <- heart |>
-  janitor::clean_names() |> 
-  select(max_hr, heart_disease)
-  
-patient_hr <- max_hr |> 
-  filter(heart_disease == 1) |> 
-  select(patient_hr = max_hr)
-
-nrow(patient_hr)
-```
-
-Totally there are 508 observations. The missing values are checked below：
-
-```{r}
-patient_hr |> 
+max_hr |> 
   anyNA()
 ```
 
 The output `FALSE` indicates no missing values is present.
 
-## Frequency distribution
+## Visualization
 
 ### Frequency table
 
@@ -73,36 +60,35 @@ Here is the steps for creating a frequency table for continuous variables.
 1.  Computing the minimum and maximum of the variable.
 
 ```{r}
-min_patient_hr <- patient_hr |> 
+min_max_hr <- max_hr |> 
   min()
 
-max_patient_hr <- patient_hr |> 
+max_max_hr <- max_hr |> 
   max()
 ```
 
 2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **12**. The `seq()` function is used to obtain upper and lower limits of the intervals.
 
 ```{r}
-breaks <- seq(min_patient_hr, max_patient_hr, length.out = 13)
+breaks <- seq(min_max_hr, max_max_hr, length.out = 13)
 breaks
 ```
 
 3.  Using the `cut()` function to dive each data into their respective intervals.
 
 ```{r}
-cut(pull(patient_hr), breaks = breaks, include.lowest = T, right = F) |> 
+cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |> 
   head(40)
 ```
 
 1.  8 intervals per line, with the total number of elements being a multiple of 8. Use empty characters to pad if necessary.
 
-```{=html}
 <!-- -->
-```
+
 4.  Generating the frequency table.
 
 ```{r}
-cut(pull(patient_hr), breaks = breaks, include.lowest = T, right = F) |>
+cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
   table() |> 
   knitr::kable(col.names = c("interval", "freq"), align = "c")
 ```
@@ -113,7 +99,7 @@ A frequency histogram is a graphical representation of a frequency table. It dis
 
 ```{r}
 hist(
-  x              = pull(patient_hr), 
+  x              = pull(max_hr), 
   breaks         = breaks, 
   freq           = T,
   right          = F, 
@@ -122,7 +108,7 @@ hist(
   main           = " ",
   xlab           = "Maximum heart rate",
   ylab           = "Frequency",
-  ylim           = c(0, 120),
+  ylim           = c(0, 30),
   labels         = T
 )
 ```
@@ -130,8 +116,8 @@ hist(
 An alternative approach to plot the same histogram is also supplied below.
 
 ```{r}
-patient_hr |> 
-  ggplot(aes(x = patient_hr)) +
+max_hr |> 
+  ggplot(aes(x = max_hr)) +
   geom_histogram(
     fill = "skyblue", 
     stat = "bin",
@@ -181,7 +167,7 @@ $$
 where $X_i$ represents each value, and $N$ and $n$ are the sizes of the population and sample, respectively.
 
 ```{r}
-patient_hr |> 
+max_hr |> 
   pull() |> 
   mean()
 ```
@@ -195,7 +181,7 @@ The middle value in a data set when the values are sorted in ascending order. If
 -   If N is even, the median is the average of the two central values.
 
 ```{r}
-patient_hr |> 
+max_hr |> 
   pull() |> 
   median()
 ```
@@ -213,7 +199,7 @@ $$
 $$
 
 ```{r}
-range(patient_hr) |> 
+range(max_hr) |> 
   diff()
 ```
 
@@ -228,7 +214,7 @@ $$
 You can directly use the `IQR()` function to get IQR.
 
 ```{r}
-patient_hr |> 
+max_hr |> 
   pull() |> 
   IQR()
 ```
@@ -254,7 +240,7 @@ where $\mu$ is the population mean, $\bar{X}$ is the sample mean, $X_i$ represen
 You can directly use the `var()` function to get variance.
 
 ```{r}
-patient_hr |> 
+max_hr |> 
   pull() |> 
   var()
 ```
@@ -278,7 +264,7 @@ $$
 You can directly use the `sd()` function to get standard deviation.
 
 ```{r}
-patient_hr |> 
+max_hr |> 
   pull() |> 
   sd()
 ```
@@ -304,11 +290,11 @@ $$
 where $S$ is the standard deviation and $\bar{X}$ is the mean of a sample.
 
 ```{r}
-mean <- patient_hr |> 
+mean <- max_hr |> 
   pull() |> 
   mean()
 
-sd <- patient_hr |> 
+sd <- max_hr |> 
   pull() |> 
   sd()
 
@@ -321,8 +307,6 @@ A medical reference range is a set of values that is used by healthcare provider
 
 ```{r}
 med_ref_range <- max_hr |> 
-  filter(heart_disease == 0) |> 
-  select(normal_hr = max_hr) |> 
   pull() |> 
   quantile(probs = c(0.025, 0.975)) |> 
   round(digits = 0) |> 

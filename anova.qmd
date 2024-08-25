@@ -1,1 +1,32 @@
 # Analysis of Variance
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(haven)
+library(tidyverse)
+```
+
+## Completely randomized design
+
+::: {.callout-tip icon="false"}
+## Example
+
+To evaluate the efficacy of xanomeline in subjects with mild to moderate Alzheimer’s disease, subjects were randomized equally to placebo, xanomeline low dose, or xanomeline high dose. Subjects applied 2 patches daily and were followed for a total of 26 weeks. Primary efficacy endpoints
+:::
+
+```{r}
+# haven::read_dta("datasets/例02-05.dta") |> 
+#   write_csv("datasets/ex02-05.csv")
+```
+
+## 
+
