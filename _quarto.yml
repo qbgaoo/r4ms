@@ -35,13 +35,13 @@ book:
 
 format:
   html:
+    runtime: shiny
     theme:
       light: [flatly, flatly.scss]
       dark:  [darkly, darkly.scss]
     code-copy: hover
     code-annotations: hover
     smooth-scroll: true
-    runtime: shiny
 
 editor: visual
 

@@ -61,3 +61,16 @@ div.sidebar-item-container .active {
 .example strong {
   font-weight: bold;  /* only Example is bold */
 }
+
+.custom-button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 17px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.custom-button:hover {
+    background-color: #45a049;
+}

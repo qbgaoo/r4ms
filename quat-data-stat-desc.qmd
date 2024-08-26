@@ -28,13 +28,15 @@ library(tidyverse)
 Some researchers used a random sampling method to examine the maximum heart rate of 143 normal adult women. The measuring results are saved in a `.csv` file. Please use the data to create a frequency distribution table.
 :::
 
-Here we use `read_csv()` function to import the data file into R.
+<a href="datasets/ex02-01.csv" download="ex02-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+Click on the download button above to download as a `.csv` file. Save it in your working directory and import the data file into R using the code below.
 
 ```{r}
 max_hr <- read_csv("datasets/ex02-01.csv")
 ```
 
-The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a `ex02-01.csv` file in the `datasets` folder of your project.
+Here we use the `read_csv()` function. The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a `ex02-01.csv` file in the `datasets` folder of your project.
 
 When you run `read_csv()`, it prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains). It also prints out some information about retrieving the full column specification and how to quiet this message.
 
@@ -92,6 +94,11 @@ cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
 
 A frequency histogram is a graphical representation of a frequency table. It displays the distribution of numerical variales by showing the frequency (count) of a value within specific intervals (bins) on the x-axis, with the y-axis representing the frequency. Each bar in the histogram corresponds to an interval, and the height of the bar indicates how many valuess fall within that range. This visual tool is useful for quickly assessing the shape, spread, and central tendency of the data distribution.
 
+Here we supply two methods to plot a histogram.
+
+::: panel-tabset
+## base
+
 ```{r}
 hist(
   x              = pull(max_hr), 
@@ -108,7 +115,7 @@ hist(
 )
 ```
 
-An alternative approach to plot the same histogram is also supplied below.
+## ggplot2
 
 ```{r}
 max_hr |> 
@@ -138,44 +145,27 @@ max_hr |>
     axis.line = element_line(color = "black") 
   )
 ```
+:::
 
+### Call Shiny App
+
+<button class="btn btn-primary" id="shiny-button"> Launch Shiny App </button>
+
+```{=html}
+<script>
+// 在按钮点击时启动 Shiny 应用
+document.getElementById("shiny-button").onclick = function() {
+    Shiny.onInputChange('shiny_trigger', Math.random());
+};
+</script>
+```
 ```{r}
 library(shiny)
 
-shinyApp(
-  ui = fillPage(
-    
-    # App title ----
-    title = "Frequency distribution graph",
-    # Sidebar with a slider input for number of bins 
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 10,
-                        max = 15,
-                        value = 10)
-        ),
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
-        )
-    )
-),
-  server = function(input, output) {
-    input
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'skyblue', border = 'black',
-             xlab = 'Maximum heart rate',
-             main = '')
-    })
-}
-)
+# 定义触发 Shiny App 的函数
+observeEvent(input$shiny_trigger, {
+  runApp("shiny/histogram", launch.browser = F)
+})
 ```
 
 ## Measures of central tendency
