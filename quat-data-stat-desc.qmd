@@ -70,8 +70,8 @@ max_max_hr <- max_hr |>
 2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **10**. The `seq()` function is used to obtain upper and lower limits of the intervals.
 
 ```{r}
-n_of_bins = 10
-breaks <- seq(min_max_hr, max_max_hr, length.out = n_of_bins + 1)
+bins = 10
+breaks <- seq(min_max_hr, max_max_hr, length.out = bins + 1)
 breaks
 ```
 
@@ -121,28 +121,28 @@ hist(
 max_hr |> 
   ggplot(aes(x = max_hr)) +
   geom_histogram(
-    fill = "skyblue", 
-    stat = "bin",
-    color = "black",
+    fill   = "skyblue", 
+    stat   = "bin",
+    color  = "black",
     breaks = breaks,
     closed = "left"
   ) +
   stat_bin(
-    geom = "text", 
+    geom   = "text", 
     aes(label = after_stat(count)),
     breaks = breaks, 
     closed = "left",
-    size = 4,
-    vjust = - 0.3
+    size   = 4,
+    vjust  = - 0.3
   ) +
   labs(x = "Maximum heart rate", y = "Frequency") +
   theme(
-    axis.title.x = element_text(size = 12), 
-    axis.title.y = element_text(size = 12), 
-    axis.text.x = element_text(size = 11),  
-    axis.text.y = element_text(size = 11),
+    axis.title.x     = element_text(size = 12), 
+    axis.title.y     = element_text(size = 12), 
+    axis.text.x      = element_text(size = 11),  
+    axis.text.y      = element_text(size = 11),
     panel.background = element_blank(),        
-    axis.line = element_line(color = "black") 
+    axis.line        = element_line(color = "black") 
   )
 ```
 :::
@@ -153,7 +153,7 @@ max_hr |>
 
 ```{=html}
 <script>
-// 在按钮点击时启动 Shiny 应用
+// Launch the Shiny application when the button is clicked
 document.getElementById("shiny-button").onclick = function() {
     Shiny.onInputChange('shiny_trigger', Math.random());
 };
@@ -162,7 +162,7 @@ document.getElementById("shiny-button").onclick = function() {
 ```{r}
 library(shiny)
 
-# 定义触发 Shiny App 的函数
+# Define function that trigger a Shiny App
 observeEvent(input$shiny_trigger, {
   runApp("shiny/histogram", launch.browser = F)
 })
@@ -324,17 +324,3 @@ sd <- max_hr |>
 
 sd / mean * 100
 ```
-
-## Medical reference range
-
-A medical reference range is a set of values that is used by healthcare providers to interpret laboratory test results. These ranges are typically established by testing a large group of healthy individuals and determining the normal distribution of values within that population. The reference range provides a context for understanding whether a individual’s test results fall within a normal, expected range or if they indicate a potential health issue.
-
-```{r}
-med_ref_range <- max_hr |> 
-  pull() |> 
-  quantile(probs = c(0.025, 0.975)) |> 
-  round(digits = 0) |> 
-  print()
-```
-
-The result indicates that the 95% medical reference range for the maximum heart rate in normal individuals is: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`

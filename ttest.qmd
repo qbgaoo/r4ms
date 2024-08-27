@@ -1,4 +1,4 @@
-# Population mean estimation and *t* test
+# Population mean estimation and *t*-test
 
 ```{r}
 #| echo: false
@@ -17,10 +17,13 @@ library(kableExtra)
 
 ## *t* distribution
 
-**例3-1** 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3^2^)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以Stata格式保存，利用`haven::read_csv()`函数导入R变量 `height_sample` 中。是部分数据。
+::: example
+:::
+
+**例3-1** 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3^2^)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以 `.csv` 格式保存，利用`read_csv()`函数导入R变量 `height_sample` 中。
 
 ```{r}
-height_sample <- read_csv("datasets/ex03-01.csv") 
+height_sample <- read_csv("datasets/ex04-01.csv") 
 
 head(height_sample) |> 
   kbl(align = "c") |>
@@ -96,7 +99,7 @@ ci <- ttest$conf.int |>
 **例3-4** 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？
 
 ```{r}
-read_csv("datasets/ex03-05.csv", show_col_types = F) |> 
+read_csv("datasets/ex04-05.csv", show_col_types = F) |> 
   t.test(mu = 140) |> 
   broom::tidy() |>                                          # <1>
   kbl(digits = 3, align = "c") |>
@@ -110,7 +113,7 @@ read_csv("datasets/ex03-05.csv", show_col_types = F) |>
 **例3-5** 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？
 
 ```{r}
-paired <- read_csv("datasets/ex03-06.csv") 
+paired <- read_csv("datasets/ex04-06.csv") 
 t.test(
   x = paired$x1,
   y = paired$x2,
@@ -133,7 +136,7 @@ The two-sample t-test (aka, the independent t-test) can be performed using base 
 :::
 
 ```{r}
-two_sample <- read_csv("datasets/ex03-07.csv")  
+two_sample <- read_csv("datasets/ex04-07.csv")  
 
 t.test(
   x = two_sample$x1,

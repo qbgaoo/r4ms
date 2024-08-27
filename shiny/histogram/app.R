@@ -2,11 +2,11 @@ library(shiny)
 
 # Define UI for application that draws a histogram
 ui = fillPage(
-  title = "Frequency distribution graph",
+  title = "Frequency distribution histogram",
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      sliderInput("bins", "Number of bins:", min = 8, max = 18, value = 10)),
+      sliderInput("bins", "Number of bins:", min = 9, max = 16, value = 10)),
     # Show a plot of the generated distribution
     mainPanel(plotOutput("distPlot"))
   )

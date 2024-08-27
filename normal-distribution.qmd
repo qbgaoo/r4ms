@@ -1,0 +1,219 @@
+# Normal distribution and medical reference range
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+The normal distribution, also known as the Gaussian distribution, is one of the most important probability distributions in statistics. It is characterized by its "bell-shaped" curve, which is symmetric about the mean. The normal distribution is used to model a wide range of real-world phenomena, including heights and weights of adults, blood pressures, reaction times in psychological experiments, and more.
+
+## Prerequisite
+
+Setting up the required R packages in this chapter.
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(nortest)
+library(scales)
+```
+
+## Normal distribution
+
+The probability density function of a normal distribution is given by the formula:
+
+$$f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}$$
+
+where $x$ is the variable, $\mu$ is the mean and $\sigma$ is the standard deviation of the distribution.
+
+```{r}
+tibble(
+  x  = seq(-4, 4, length.out = 150),
+  y1 = dnorm(x, mean = 0,   sd = 1),
+  y2 = dnorm(x, mean = -1,  sd = 1)
+) |> 
+  pivot_longer(
+    cols      = contains("y"),
+    values_to = "density",
+    names_to  = "group"
+  ) |> 
+  ggplot(aes(x = x, y = density, linetype = group)) +
+  geom_line() +
+  scale_linetype_manual(
+    name   = "",
+    values = c("solid", "dotdash"),
+    labels = c("mean = 0", "mean = -1")
+  ) +
+  theme(
+    axis.text   = element_text(size = 12),
+    axis.title  = element_text(size = 12),
+    legend.text = element_text(size = 12)
+  )
+```
+
+```{r}
+tibble(
+  x  = seq(-4, 4, length.out = 150),
+  y1 = dnorm(x, mean = 0, sd = 0.5),
+  y2 = dnorm(x, mean = 0, sd = 1),
+  y3 = dnorm(x, mean = 0, sd = 1.5)
+) |> 
+  pivot_longer(
+    cols      = contains("y"),
+    values_to = "density",
+    names_to  = "group"
+  ) |> 
+  ggplot(aes(x = x, y = density, linetype = group)) +
+  geom_line() +
+  scale_linetype_manual(
+    name   = "",
+    values = c("solid", "dotdash", "dashed"),
+    labels = c("sd = 0.5", "sd = 1", "sd = 1.5")
+  ) +
+  theme(
+    axis.text   = element_text(size = 12),
+    axis.title  = element_text(size = 12),
+    legend.text = element_text(size = 12)
+  )
+```
+
+```{r}
+df <- tibble(
+  x       = seq(-4, 4, length.out = 600),
+  density = dnorm(x, mean = 0,   sd = 1)
+) 
+
+df |> 
+  ggplot(aes(x = x, y = density)) +
+  geom_line() +
+  geom_area(
+    data = filter(df, x >= 1.96),
+    aes(x = x, y = density),
+    alpha = 0.5
+  ) + 
+  geom_area(
+    data = filter(df, x <= -1.96),
+    aes(x = x, y = density),
+    alpha = 0.5
+  ) + 
+  scale_x_continuous(
+    breaks = c(-1.96, 0, 1.96),                    
+    labels = expression(mu-1.96*sigma, mu, mu+1.96*sigma)) +
+  annotate(
+    "text", x = -2.6, y = 0.04, 
+    label = percent(pnorm(-1.96), accuracy = 0.1)
+  ) +  
+  annotate(
+    "text", x = 2.6, y = 0.04, 
+    label = percent(1 - pnorm(1.96), accuracy = 0.1)
+  ) +  
+  theme(
+    axis.text   = element_text(size = 12),
+    axis.title  = element_text(size = 12),
+    legend.text = element_text(size = 12)
+  )
+```
+
+Area of the shaded tails
+
+```{r}
+
+```
+
+## 
+
+::: example
+Some researchers used a random sampling method to examine the red blood cell count of 55 normal adults. The measuring results are saved in a `.csv` file. Please analyze its normality.
+:::
+
+<a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+You can click on the download button above to download and the save it in your own folder. Here we import the data file into R and assign to a tibble named `rbc`.
+
+```{r}
+rbc <- read_csv("datasets/ex03-01.csv")
+```
+
+Test of normality is used to determine if a data is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Here are some common tests of normality:
+
+-   Shapiro-Wilk test: Best for small to medium-sized data.
+-   Shapiro-Francia test: A variation of the Shapiro-Wilk test. It is generally more appropriate for dealing with larger sample size data compared to the Shapiro-Wilk test, particularly for data that is expected to be normally distributed.
+-   Anderson-Darling test: Gives more weight to the tails of the distribution.
+-   Q-Q Plot: Always useful as a supplementary method.
+
+Here we perform the Shapiro-Wilk test of normality using `shapiro.test()`, which lies in `stats` package. The difference is Shapiro-Francia test and Anderson-Darling test are performed by `sf.test()` and `ad.test()`, respectively. Both of them come from the `nortest` package, which need to be installed before used.
+
+::: panel-tabset
+## Shapiro-Wilk
+
+```{r}
+rbc |> 
+  pull() |> 
+  shapiro.test()
+```
+
+## Shapiro-Francia
+
+```{r}
+rbc |> 
+  pull() |> 
+  sf.test()
+```
+
+## Anderson-Darling
+
+```{r}
+rbc |> 
+  pull() |> 
+  ad.test()
+```
+:::
+
+-   If the p-value is greater than 0.05, the data is normally distributed (fail to reject the null hypothesis).
+-   If the p-value is less than 0.05, the data is not normally distributed (reject the null hypothesis).
+
+In addition to formal tests, visual inspection of the data can be very informative. You can create a Q-Q Plot (Quantile-Quantile Plot) using `qqnorm()` function. More, you can add a line to a theoretically normal quantile-quantile plot by `qqline()`, which passes through the first and third quartiles by default.
+
+```{r}
+rbc |> 
+  pull() |> 
+  qqnorm(main = "", datax = T)
+
+rbc |> 
+  pull() |> 
+  qqline(datax = T)
+```
+
+Alternatively you can use the `ggplot2` package to create a Q-Q plot, which has more customization and flexibility. Here is an example.
+
+```{r}
+rbc |>
+  ggplot(aes(sample = rbc)) +
+  geom_qq(shape = 1, size = 2.3) +
+  geom_qq_line() +
+  labs(x = "Theoretical Quantiles", y = "Sample Quantiles") +
+  coord_flip() +
+  theme(
+    axis.text  = element_text(size = 12),
+    axis.title = element_text(size = 12)
+  )
+```
+
+-   If the data points fall approximately along the reference line in the Q-Q plot, the data is likely normally distributed.
+-   Significant deviations from the line indicate departures from normality.
+
+## Medical reference range
+
+A medical reference range is a set of values that is used by healthcare providers to interpret laboratory test results. These ranges are typically established by testing a large group of healthy individuals and determining the normal distribution of values within that population. The reference range provides a context for understanding whether a individual’s test results fall within a normal, expected range or if they indicate a potential health issue.
+
+```{r}
+med_ref_range <- rbc |> 
+  pull() |> 
+  quantile(probs = c(0.025, 0.975)) |> 
+  round(digits = 2) |> 
+  print()
+```
+
+The result indicates that the 95% medical reference range for the maximum heart rate in normal individuals is: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`.
