@@ -25,7 +25,7 @@ library(tidyverse)
 ```
 
 ::: example
-Some researchers used a random sampling method to examine the maximum heart rate of 143 normal adult women. The measuring results are saved in a `.csv` file. Please use the data to create a frequency distribution table.
+Some researchers used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a `data` file. Please use the data to create a frequency distribution table.
 :::
 
 <a href="datasets/ex02-01.csv" download="ex02-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
@@ -33,17 +33,17 @@ Some researchers used a random sampling method to examine the maximum heart rate
 Click on the download button above to download as a `.csv` file. Save it in your working directory and import the data file into R using the code below.
 
 ```{r}
-max_hr <- read_csv("datasets/ex02-01.csv")
+rbc <- read_csv("datasets/ex02-01.csv")
 ```
 
 Here we use the `read_csv()` function. The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a `ex02-01.csv` file in the `datasets` folder of your project.
 
 When you run `read_csv()`, it prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains). It also prints out some information about retrieving the full column specification and how to quiet this message.
 
-The data file has only one column with name `max_hr`. Let's check if there are some missing values present in it.
+The data file has only one column with name `rbc`. Let's check if there are some missing values present in it.
 
 ```{r}
-max_hr |> 
+rbc |> 
   anyNA()
 ```
 
@@ -60,32 +60,32 @@ Here is the steps for creating a frequency table for continuous variables.
 1.  Computing the minimum and maximum of the variable.
 
 ```{r}
-min_max_hr <- max_hr |> 
+min_rbc <- rbc |> 
   min()
 
-max_max_hr <- max_hr |> 
+max_rbc <- rbc |> 
   max()
 ```
 
 2.  Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt **10**. The `seq()` function is used to obtain upper and lower limits of the intervals.
 
 ```{r}
-bins = 10
-breaks <- seq(min_max_hr, max_max_hr, length.out = bins + 1)
+bins = 12
+breaks <- seq(min_rbc, max_rbc, length.out = bins + 1)
 breaks
 ```
 
 3.  Using the `cut()` function to dive each data into their respective intervals.
 
 ```{r}
-cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |> 
+cut(pull(rbc), breaks = breaks, include.lowest = T, right = F) |> 
   head(40)
 ```
 
 4.  Generating the frequency table.
 
 ```{r}
-cut(pull(max_hr), breaks = breaks, include.lowest = T, right = F) |>
+cut(pull(rbc), breaks = breaks, include.lowest = T, right = F) |>
   table() |> 
   knitr::kable(col.names = c("interval", "freq"), align = "c")
 ```
@@ -101,7 +101,7 @@ Here we supply two methods to plot a histogram.
 
 ```{r}
 hist(
-  x              = pull(max_hr), 
+  x              = pull(rbc), 
   breaks         = breaks, 
   freq           = T,
   right          = F, 
@@ -110,7 +110,7 @@ hist(
   main           = " ",
   xlab           = "Maximum heart rate",
   ylab           = "Frequency",
-  ylim           = c(0, 30),
+  ylim           = c(0, 32),
   labels         = T
 )
 ```
@@ -118,8 +118,8 @@ hist(
 ## ggplot2
 
 ```{r}
-max_hr |> 
-  ggplot(aes(x = max_hr)) +
+rbc |> 
+  ggplot(aes(x = rbc)) +
   geom_histogram(
     fill   = "skyblue", 
     stat   = "bin",
@@ -143,7 +143,7 @@ max_hr |>
     axis.text.y      = element_text(size = 11),
     panel.background = element_blank(),        
     axis.line        = element_line(color = "black") 
-  )
+  ) 
 ```
 :::
 
@@ -191,21 +191,21 @@ $$
 where $X_i$ represents each value, and $N$ and $n$ are the sizes of the population and sample, respectively.
 
 ```{r}
-max_hr |> 
+rbc |> 
   pull() |> 
   mean()
 ```
 
 ### Median
 
-The middle value in a data set when the values are sorted in ascending order. If there is an even number of values, the median is the average of the two middle values. To find the median:
+The middle value in a data set when the values are sorted in ascending order. If there is an even number of values, the median is the average of the two middle values. Unlike the mean, the median is not affected by outliers or skewed data, making it a robust indicator of central tendency. To find the median:
 
 -   Sort the data set.
 -   If the number of observations N is odd, the median is the middle value.
 -   If N is even, the median is the average of the two central values.
 
 ```{r}
-max_hr |> 
+rbc |> 
   pull() |> 
   median()
 ```
@@ -223,7 +223,7 @@ $$
 $$
 
 ```{r}
-range(max_hr) |> 
+range(rbc) |> 
   diff()
 ```
 
@@ -238,7 +238,7 @@ $$
 You can directly use the `IQR()` function to get IQR.
 
 ```{r}
-max_hr |> 
+rbc |> 
   pull() |> 
   IQR()
 ```
@@ -264,7 +264,7 @@ where $\mu$ is the population mean, $\bar{X}$ is the sample mean, $X_i$ represen
 You can directly use the `var()` function to get variance.
 
 ```{r}
-max_hr |> 
+rbc |> 
   pull() |> 
   var()
 ```
@@ -288,7 +288,7 @@ $$
 You can directly use the `sd()` function to get standard deviation.
 
 ```{r}
-max_hr |> 
+rbc |> 
   pull() |> 
   sd()
 ```
@@ -314,11 +314,11 @@ $$
 where $S$ is the standard deviation and $\bar{X}$ is the mean of a sample.
 
 ```{r}
-mean <- max_hr |> 
+mean <- rbc |> 
   pull() |> 
   mean()
 
-sd <- max_hr |> 
+sd <- rbc |> 
   pull() |> 
   sd()
 

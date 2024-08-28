@@ -1,52 +1,213 @@
 # Introduction
 
-```{r}
-#| echo: false
+## Medical statistics
 
-source("_common.R")
+Medical statistics is the science of applying statistical techniques and principles to analyze data related to health, disease, treatment effectiveness, and public health issues. It involves the systematic collection, organization, description, and inference of health-related data to assist healthcare professionals in making evidence-based, scientific decisions.
+
+**Key Components:**
+
+1\. **Data Collection**: Gathering health-related data systematically through experiments, observational studies, or clinical trials.
+
+2\. **Data Organization and Description**: Using statistical measures, such as means, variances, and frequency distributions, to describe and summarize the basic characteristics of the data.
+
+3\. **Data Analysis**: Applying inferential statistical methods, such as hypothesis testing, regression analysis, and analysis of variance (ANOVA), to uncover patterns and causal relationships in the data.
+
+4\. **Interpretation of Results**: Applying the results of statistical analyses to the medical field, explaining the occurrence and progression of diseases, the effectiveness of treatments, and providing evidence-based support for clinical decisions and public health policies.
+
+Medical statistics is widely used in medical research, the design of clinical trials, the evaluation of diagnostic tests, the comparison of treatment outcomes, and the epidemiological study of diseases.
+
+## Population and sample
+
+Population and sample are fundamental concepts in statistics, and they are key to understanding data analysis, particularly in the context of statistical inference.
+
+### Population
+
+A population includes all members of a defined group that we are studying or collecting information on for data-driven decisions. The population represents the entire group of interest, which could be people, objects, events, or measurements.
+
+Examples: All adults living in a particular country. All patients treated for a particular condition in a hospital over a decade. • Characteristics:
+
+Parameters: The numerical characteristics of a population are called parameters (e.g., population mean, population standard deviation).
+
+Size: The population can be finite (e.g., all students in a school) or infinite (e.g., all possible outcomes of rolling a die).
+
+### Sample
+
+A sample is a subset of the population selected for study. It is often impractical or impossible to study an entire population, so researchers use a sample to draw conclusions about the population.
+
+Examples: 1,000 randomly selected adults from a country. 200 patients selected from the hospital’s records.
+
+Statistics: The numerical characteristics of a sample are called statistics (e.g., sample mean, sample standard deviation).
+
+Size: The size of the sample (denoted as n) is always smaller than the population size (denoted as N).
+
+### Relationship between population and sample
+
+Sampling: The process of selecting a sample from a population is called sampling. It is crucial that the sample is representative of the population to ensure that the conclusions drawn from the sample can be generalized to the population.
+
+Inference: Statistical inference involves making predictions or generalizations about a population based on information from a sample. This is done using various statistical methods, including estimation and hypothesis testing.
+
+Bias and Variability: A sample might not perfectly represent the population due to sampling bias or variability. Researchers use random sampling techniques to minimize these issues and improve the reliability of the inference.
+
+Practical Example
+
+Imagine you want to study the average height of all adult women in a country (population). Measuring the height of every woman in the country would be impractical, so instead, you randomly select 500 women (sample) and measure their heights. The average height of these 500 women is a statistic. You then use this statistic to estimate the parameter—the average height of all adult women in the country.
+
+Key Points to Remember
+
+Population: Entire group of interest; parameters describe it.
+
+Sample: Subset of the population; statistics describe it.
+
+Inference: Drawing conclusions about the population based on sample data.
+
+Representativeness: A sample should represent the population to ensure valid inferences.
+
+Understanding the distinction between population and sample is essential for conducting valid and reliable statistical analyses.
+
+## Data
+
+In statistics, data can be classified into different types based on various characteristics. Understanding these data types is crucial for selecting appropriate statistical methods and accurately interpreting results. Below are the main types of data:
+
+### Quantitative data 
+
+Quantitative data (numerical data) refers to data that can be measured and expressed numerically. This type of data is critical in the medical field as it allows for precise measurements, comparisons, and statistical analysis, ultimately leading to better understanding, diagnosis, treatment, and prevention of diseases. Quantitative data can be further classified into two main types:
+
+**1. Discrete Data**
+
+Discrete data consist of distinct, separate values that are countable. These values are typically whole numbers, and there is no intermediate value between them.
+
+**Examples:**
+
+Number of patients: The number of patients admitted to a hospital.
+
+Number of medications: The number of medications a patient is taking.
+
+Number of occurrences: The number of heartbeats per minute (heart rate).
+
+**2. Continuous Data**
+
+Continuous data can take any value within a given range. These data represent measurements and can have decimal places, meaning they are not restricted to whole numbers.
+
+Examples:
+
+Blood pressure: Systolic and diastolic blood pressure measurements (e.g., 120/80 mmHg).
+
+Body temperature: Body temperature measured in degrees Celsius or Fahrenheit (e.g., 36.6°C).
+
+Cholesterol levels: Blood cholesterol levels measured in milligrams per deciliter (e.g., 180 mg/dL).
+
+Quantitative data is fundamental in many areas of medicine:
+
+1.  Diagnosis: • Quantitative measurements such as blood pressure, blood glucose levels, and cholesterol levels are used to diagnose conditions like hypertension, diabetes, and hyperlipidemia. 2. Treatment Monitoring: • Quantitative data is crucial for monitoring treatment effectiveness. For example, changes in tumor size (measured in millimeters or centimeters) can indicate whether cancer treatment is effective. 3. Epidemiology: • Quantitative data is used to track disease incidence and prevalence rates, mortality rates, and other public health indicators. • Example: Tracking the number of new COVID-19 cases per day during a pandemic. 4. Clinical Research: • In clinical trials, quantitative data is collected to assess the safety and efficacy of new drugs or treatments. • Example: Measuring the reduction in blood pressure in participants taking an antihypertensive drug. 5. Medical Imaging: • Quantitative data is used in medical imaging to measure organ size, tumor volume, and other anatomical features. • Example: Measuring the size of a kidney stone on an ultrasound image.
+
+Statistical Analysis of Quantitative Data in Medicine
+
+Quantitative data allows for a variety of statistical analyses, including:
+
+1.  Descriptive Statistics: • Mean: The average value (e.g., average heart rate of a group of patients). • Median: The middle value when data is ordered (e.g., median age of patients in a study). • Standard Deviation: A measure of the variability or spread of data (e.g., variability in blood pressure readings).
+2.  Inferential Statistics: • t-tests and ANOVA: Used to compare means between two or more groups. • Regression Analysis: Used to model the relationship between a dependent variable and one or more independent variables. • Correlation: Used to assess the strength and direction of the relationship between two continuous variables.
+3.  Probability and Distributions: • Quantitative data often follows specific statistical distributions (e.g., normal distribution), which are used in probability and inferential statistics.
+
+Examples of Quantitative Data in Medical Practice
+
+Vital Signs Monitoring: • Continuous monitoring of heart rate, blood pressure, and oxygen saturation levels in critically ill patients. • Laboratory Tests: • Quantitative measurement of blood glucose levels, complete blood count (CBC), and electrolyte levels. • Growth and Development: • Tracking height, weight, and head circumference in pediatric patients over time to assess growth and development. • Pharmacokinetics: • Measuring drug concentrations in the blood over time to understand absorption, distribution, metabolism, and excretion.
+
+Application of Quantitative Data in Medical Research
+
+1.  Randomized Controlled Trials (RCTs): • Quantitative data is used to compare the effectiveness of new treatments or interventions with standard care or placebo. • Example: Measuring the reduction in blood pressure in patients receiving a new antihypertensive drug versus a placebo.
+2.  Longitudinal Studies: • Quantitative data is collected over time to study changes in health outcomes, risk factors, or disease progression. • Example: Tracking changes in lung function in smokers versus non-smokers over several years.
+3.  Health Economics: • Quantitative data is used to evaluate the cost-effectiveness of medical interventions, including cost per quality-adjusted life year (QALY) gained. • Example: Calculating the cost-effectiveness of a new cancer treatment based on survival rates and costs.
+
+Quantitative data is a cornerstone of medical science, providing the foundation for diagnosis, treatment, research, and public health. Its ability to be precisely measured and analyzed makes it indispensable for advancing medical knowledge, improving patient care, and making informed decisions in healthcare.
+
+### **Qualitative data (Categorical data)**
+
+Qualitative data in medicine refers to non-numerical data that represent categories or groups. Unlike quantitative data, which deals with numbers and measurements, qualitative data describes characteristics or attributes that can be used to classify individuals, objects, or events into distinct groups. This type of data is crucial in medical research and practice for understanding patient demographics, disease classifications, and treatment outcomes. ain types:
+
+**1. Nominal Data**
+
+Nominal data consists of categories that do not have a natural order or ranking. These categories are mutually exclusive, meaning that an individual or event can belong to only one category.
+
+**Blood Type:** Categories like A, B, AB, and O.
+
+**Gender:** Male, Female, Other.
+
+**Presence or Absence of a Condition:** Yes/No responses (e.g., presence of hypertension).
+
+### **Ordinal Data**
+
+Ordinal data consists of categories that have a meaningful order or ranking, but the intervals between the categories are not necessarily equal or meaningful.
+
+**Severity of Disease:** Mild, Moderate, Severe.
+
+**Pain Scale:** Numeric rating scale (e.g., 0–10), where 0 is no pain and 10 is the worst pain imaginable.
+
+**Stage of Cancer:** Stages I, II, III, IV.
+
+Qualitative data plays a vital role in various aspects:
+
+-   **Patient Demographics:**
+    -   **Categorization:** Patients are often categorized based on attributes like age group, gender, race, and ethnicity, which are critical for understanding the distribution of diseases and tailoring medical interventions.
+    -   **Example:** A study may categorize patients by age group (e.g., children, adults, elderly) to analyze how a particular disease affects different age groups.
+-   **Disease Classification:**
+    -   **Diagnosis:** Diseases are classified into categories based on symptoms, genetic markers, or other clinical criteria. This classification helps in diagnosing, treating, and researching diseases.
+    -   **Example:** Types of diabetes (Type 1, Type 2, Gestational Diabetes) are categorical variables that guide treatment plans.
+-   **Treatment Outcomes:**
+    -   **Outcome Measures:** Treatment outcomes can be categorized as successful/unsuccessful, improved/no improvement, or recurrence/no recurrence. These qualitative outcomes are essential for evaluating the effectiveness of treatments.
+    -   **Example:** A study on cancer treatment might categorize outcomes as “complete remission,” “partial remission,” or “no response.”
+-   **Quality of Life and Patient Satisfaction:**
+    -   **Surveys and Questionnaires:** Patient satisfaction surveys and quality of life assessments often use ordinal scales (e.g., very satisfied, satisfied, neutral, dissatisfied, very dissatisfied) to gather qualitative data on patient experiences.
+    -   **Example:** A patient satisfaction survey may categorize responses to a question about hospital care quality into five levels, from “very poor” to “excellent.”
+
+**Statistical Analysis of Qualitative Data**
+
+-   **Frequency and Proportion:** The most basic analysis involves counting the number of occurrences in each category and expressing them as frequencies or proportions (percentages).
+
+    **Example:** Proportion of patients with a specific blood type in a population.
+
+-   **Chi-Square Tests:** Used to determine if there is a significant association between two categorical variables.
+
+    **Example:** Assessing the relationship between smoking status (smoker, non-smoker) and lung cancer diagnosis (yes, no).
+
+```{=html}
+<!-- -->
 ```
+-   **Logistic Regression:** Used for modeling the probability of a binary outcome based on one or more predictor variables.
 
-## **Prerequisites**
+    **Example:** Predicting the likelihood of a disease relapse based on treatment type and other categorical factors.
 
-We’ve made a few assumptions about what you already know to get the most out of this book. You should have some basic knowledge about medical statistics, and it’s helpful if you have some basic R programming experience already.
+-   **Cross-Tabulation:** A method used to examine the relationship between two or more categorical variables by displaying the data in a matrix format.
 
-You need some things to run the code in this book: R, RStudio and some preinstalled R packages. Packages are the fundamental units of reproducible R code. They include reusable functions, documentation that describes how to use them, and sample data.
+    **Example:** Cross-tabulating the relationship between gender and the prevalence of a specific medical condition.
 
-### **R**
+**Applications in Medical Research**
 
-To download R, go to CRAN, the **c**omprehensive **R** **a**rchive **n**etwork, [https://cloud.r-project.org](#0). A new major version of R comes out once a year, and there are 2-3 minor releases each year. It’s a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse. We recommend R 4.4.1 or later for this book.
+1.  **Epidemiology:**
 
-### **RStudio**
+Researchers often use qualitative data to study the distribution and determinants of health-related states in populations.
 
-RStudio is an integrated development environment, or IDE, for R programming, which you can download from [https://posit.co/download/rstudio-desktop/](#0). RStudio is updated a couple of times a year, and it will automatically let you know when a new version is out, so there’s no need to check back. It’s a good idea to upgrade regularly to take advantage of the latest and greatest features. For this book, make sure you have at least RStudio 2024.04.2.
+**Example:** Categorizing patients by exposure to a risk factor (e.g., exposure to asbestos: yes/no) and examining its relationship with disease occurrence.
 
-## **Running R code**
+2.  **Clinical Trials:**
 
-The previous section showed you several examples of running R code. The code in the book looks like this:
+Clinical trials use qualitative data to classify participants, monitor treatment adherence, and assess treatment responses.
 
-```{r}
-1 + 2
-```
+**Example:** Categorizing patients based on their response to a new drug as “responsive,” “partially responsive,” or “non-responsive.”
 
-If you run the same code in your local console, it will look like this:
+3.  **Public Health:**
 
-``` yacc
-> 1 + 2
-[1] 3
-```
+Public health studies often categorize populations based on demographic factors to identify health disparities and target interventions.
 
-There are two main differences. In your console, you type after the `>`, called the **prompt**; we don’t show the prompt in the book. In the book, the output is commented out with `#>`; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.
+**Example:** Identifying vaccination rates across different ethnic groups to improve immunization programs.
 
-Throughout the book, we use a consistent set of conventions to refer to code:
+Qualitative data is essential in the medical field for categorizing and analyzing various aspects of health and disease. It provides the basis for understanding patterns, making clinical decisions, and conducting research that ultimately improves patient care. Properly collecting, analyzing, and interpreting qualitative data ensures that medical interventions are tailored to the specific needs of patients and populations.
 
--   Functions are displayed in a code font and followed by parentheses, like `sum()` or `mean()`.
 
--   Other R objects (such as data or function arguments) are in a code font, without parentheses, like `flights` or `x`.
 
--   Sometimes, to make it clear which package an object comes from, we’ll use the package name followed by two colons, like `dplyr::mutate()` or `nycflights13::flights`. This is also valid R code.
 
--   To improves readability, variable names and function names are named using snake case.
 
-## **Colophon**
 
-The book is written by Quarto, an online version of it is available at [https://qbgaoo.github.io/r4ms/](#0). It will continue to evolve in between reprints of the physical book. The source of the book is available at <https://qbgaoo.github.io/r4ms/>.
+
+
+
+

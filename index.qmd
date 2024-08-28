@@ -1,5 +1,7 @@
 # Welcome {.unnumbered}
 
+The topics of this book line up closely with traditional teaching progression; however, the book also highlights computer-intensive approaches to motivate the more traditional approach. The authors emphasize realistic data and examples and rely on visualization techniques to gather insight. They introduce statistics and R seamlessly, giving students the tools they need to use R and the information they need to navigate the sometimes complex world of statistical computing.
+
 This book is created by Quarto and R in RStudio IDE。[Quarto](https://quarto.org/){.uri} is an open-source publishing system that integrates well with R, enabling users to create dynamic documents that combine text, code, and output (like tables and plots) in a single document. It supports R Markdown, allowing the execution of R code within documents and rendering outputs in various formats, such as HTML, PDF, and Word. Quarto is ideal for creating reproducible reports, presentations, and books, especially in academic and research settings where R is extensively used. You can also manage bibliographies, citations, and cross-references easily. Quarto is highly customizable, allowing users to create complex documents with ease, and is often used with GitHub Actions for continuous integration and automated publishing.
 
 ```{r}

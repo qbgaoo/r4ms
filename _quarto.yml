@@ -13,13 +13,14 @@ book:
    
   chapters:
     - index.qmd
+    - preface.qmd
     - intro.qmd
     
     - part: basic-stat.qmd
       chapters:
         - quat-data-stat-desc.qmd
         - normal-distribution.qmd
-        - confidence-interval.qmd
+        - mean-estimation.qmd
         - ttest.qmd
         - anova.qmd
         - count-data-stat-desc.qmd
