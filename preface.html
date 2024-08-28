@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>14&nbsp; Multiple factor ANOVA – R for Medical Statistics</title>
+<title>1&nbsp; Preface – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./repeated-measure.html" rel="next">
-<link href="./advanced-stat.html" rel="prev">
+<link href="./intro.html" rel="next">
+<link href="./index.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./multi-factor-anova.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./preface.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -126,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+  <a href="./preface.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -224,7 +258,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link active">
+  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
   </div>
 </li>
@@ -264,15 +298,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">1.1</span> Prerequisites</a>
+  <ul class="collapse">
+  <li><a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">1.1.1</span> R</a></li>
+  <li><a href="#rstudio" id="toc-rstudio" class="nav-link" data-scroll-target="#rstudio"><span class="header-section-number">1.1.2</span> RStudio</a></li>
+  </ul></li>
+  <li><a href="#running-r-code" id="toc-running-r-code" class="nav-link" data-scroll-target="#running-r-code"><span class="header-section-number">1.2</span> Running R code</a></li>
+  <li><a href="#colophon" id="toc-colophon" class="nav-link" data-scroll-target="#colophon"><span class="header-section-number">1.3</span> Colophon</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./multi-factor-anova.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></h1>
 </div>
 
 
@@ -289,8 +335,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="prerequisites" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">1.1</span> Prerequisites</h2>
+<p>We’ve made a few assumptions about what you already know to get the most out of this book. You should have some basic knowledge about medical statistics, and it’s helpful if you have some basic R programming experience already.</p>
+<p>You need some things to run the code in this book: R, RStudio and some preinstalled R packages. Packages are the fundamental units of reproducible R code. They include reusable functions, documentation that describes how to use them, and sample data.</p>
+<section id="r" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="r"><span class="header-section-number">1.1.1</span> R</h3>
+<p>To download R, go to CRAN, the&nbsp;<strong>c</strong>omprehensive <strong>R</strong> <strong>a</strong>rchive&nbsp;<strong>n</strong>etwork, <a href="#0">https://cloud.r-project.org</a>. A new major version of R comes out once a year, and there are 2-3 minor releases each year. It’s a good idea to update regularly. Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse. We recommend R 4.4.1 or later for this book.</p>
+</section>
+<section id="rstudio" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.1.2</span> RStudio</h3>
+<p>RStudio is an integrated development environment, or IDE, for R programming, which you can download from <a href="#0">https://posit.co/download/rstudio-desktop/</a>. RStudio is updated a couple of times a year, and it will automatically let you know when a new version is out, so there’s no need to check back. It’s a good idea to upgrade regularly to take advantage of the latest and greatest features. For this book, make sure you have at least RStudio 2024.04.2.</p>
+</section>
+</section>
+<section id="running-r-code" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="running-r-code"><span class="header-section-number">1.2</span> Running R code</h2>
+<p>The previous section showed you several examples of running R code. The code in the book looks like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 3</code></pre>
+</div>
+</div>
+<p>If you run the same code in your local console, it will look like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yacc code-with-copy"><code class="sourceCode yacc"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>&gt; 1 + 2</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>[1] 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are two main differences. In your console, you type after the <code>&gt;</code>, called the <strong>prompt</strong>; we don’t show the prompt in the book. In the book, the output is commented out with <code>#&gt;</code>; in your console, it appears directly after your code. These two differences mean that if you’re working with an electronic version of the book, you can easily copy code out of the book and paste it into the console.</p>
+<p>Throughout the book, we use a consistent set of conventions to refer to code:</p>
+<ul>
+<li><p>Functions are displayed in a code font and followed by parentheses, like <code>sum()</code> or <code>mean()</code>.</p></li>
+<li><p>Other R objects (such as data or function arguments) are in a code font, without parentheses, like <code>flights</code> or <code>x</code>.</p></li>
+<li><p>Sometimes, to make it clear which package an object comes from, we’ll use the package name followed by two colons, like <code>dplyr::mutate()</code> or <code>nycflights13::flights</code>. This is also valid R code.</p></li>
+<li><p>To improves readability, variable names and function names are named using snake case.</p></li>
+</ul>
+</section>
+<section id="colophon" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="colophon"><span class="header-section-number">1.3</span> Colophon</h2>
+<p>The book is written by Quarto, an online version of it is available at <a href="#0">https://qbgaoo.github.io/r4ms/</a>. It will continue to evolve in between reprints of the physical book. The source of the book is available at <a href="https://qbgaoo.github.io/r4ms/" class="uri">https://qbgaoo.github.io/r4ms/</a>.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -898,13 +982,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./advanced-stat.html" class="pagination-link" aria-label="Advanced methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Advanced methods</span>
+      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./repeated-measure.html" class="pagination-link" aria-label="Repeated measurement data">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
