@@ -453,7 +453,7 @@ window.Quarto = {
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">6.2.1</span> 单一总体均数的可信区间</h3>
 <p><strong>例3-2</strong> 计算例3-1中每个样本的标准误和可信区间</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>mean  <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>mean</span>
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean  &lt;- height_sample$mean</span></span>
 <span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sd    &lt;- height_sample$sd</span></span>
 <span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lower_bound = vector(mode = "double", length = 100)</span></span>
 <span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># upper_bound = vector(mode = "double", length = 100)</span></span>
@@ -495,19 +495,19 @@ window.Quarto = {
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">6.2.2</span> 两总体均数差的可信区间</h3>
 <p><strong>例3-3</strong> 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a><span class="at">mx =</span> <span class="fl">20.1</span>,</span>
-<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a><span class="at">my =</span> <span class="fl">16.89</span>,</span>
-<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a><span class="at">sx =</span> <span class="fl">7.02</span>,</span>
-<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a><span class="at">sy =</span> <span class="fl">8.46</span>,</span>
-<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a><span class="at">nx =</span> <span class="dv">29</span>,</span>
-<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a><span class="at">ny =</span> <span class="dv">32</span>,</span>
-<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span></span>
-<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> ttest<span class="sc">$</span>conf.int <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ttest &lt;- DescTools::TTestA(</span></span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mx = 20.1,</span></span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># my = 16.89,</span></span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># sx = 7.02,</span></span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># sy = 8.46,</span></span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># nx = 29,</span></span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ny = 32,</span></span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># alternative = "two.sided"</span></span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ci &lt;- ttest$conf.int |&gt; </span></span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   round(digits = 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。</p>
+<p>因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为<code>paste0("(", ci[1], ", ", ci[2], ")")</code>。</p>
 </section>
 </section>
 <section id="t-检验" class="level2" data-number="6.3">
