@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Normal distribution and medical reference range – R for Medical Statistics</title>
+<title>4&nbsp; Normal distribution – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./mean-estimation.html" rel="next">
+<link href="./statistical-inference.html" rel="next">
 <link href="./quat-data-stat-desc.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -107,8 +107,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -148,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution and medical reference range</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -164,7 +178,8 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R for Medical Statistics</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -217,13 +232,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution and medical reference range</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mean-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation</span></span></a>
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -335,25 +350,30 @@ window.Quarto = {
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">4.1</span> Prerequisite</a></li>
   <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">4.2</span> Normal distribution</a>
   <ul class="collapse">
-  <li><a href="#visualizing-the-area-under-the-normal-curve" id="toc-visualizing-the-area-under-the-normal-curve" class="nav-link" data-scroll-target="#visualizing-the-area-under-the-normal-curve"><span class="header-section-number">4.2.1</span> Visualizing the area under the normal curve</a></li>
-  <li><a href="#normality-tests" id="toc-normality-tests" class="nav-link" data-scroll-target="#normality-tests"><span class="header-section-number">4.2.2</span> Normality Tests</a></li>
-  <li><a href="#q-q-plot" id="toc-q-q-plot" class="nav-link" data-scroll-target="#q-q-plot"><span class="header-section-number">4.2.3</span> Q-Q Plot</a></li>
+  <li><a href="#standard-normal-distribution" id="toc-standard-normal-distribution" class="nav-link" data-scroll-target="#standard-normal-distribution"><span class="header-section-number">4.2.1</span> Standard normal distribution</a></li>
+  <li><a href="#area-under-curve" id="toc-area-under-curve" class="nav-link" data-scroll-target="#area-under-curve"><span class="header-section-number">4.2.2</span> Area under curve</a></li>
+  <li><a href="#visualizing-the-area" id="toc-visualizing-the-area" class="nav-link" data-scroll-target="#visualizing-the-area"><span class="header-section-number">4.2.3</span> Visualizing the area</a></li>
   </ul></li>
-  <li><a href="#medical-reference-range" id="toc-medical-reference-range" class="nav-link" data-scroll-target="#medical-reference-range"><span class="header-section-number">4.3</span> Medical reference range</a>
+  <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">4.3</span> Normality test</a>
   <ul class="collapse">
-  <li><a href="#establishment" id="toc-establishment" class="nav-link" data-scroll-target="#establishment"><span class="header-section-number">4.3.1</span> Establishment</a></li>
-  <li><a href="#results-interpretation" id="toc-results-interpretation" class="nav-link" data-scroll-target="#results-interpretation"><span class="header-section-number">4.3.2</span> Results interpretation</a></li>
-  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">4.3.3</span> Considerations</a></li>
+  <li><a href="#hypothesis-test-method" id="toc-hypothesis-test-method" class="nav-link" data-scroll-target="#hypothesis-test-method"><span class="header-section-number">4.3.1</span> Hypothesis test method</a></li>
+  <li><a href="#visualization-method" id="toc-visualization-method" class="nav-link" data-scroll-target="#visualization-method"><span class="header-section-number">4.3.2</span> Visualization method</a></li>
+  </ul></li>
+  <li><a href="#medical-reference-range" id="toc-medical-reference-range" class="nav-link" data-scroll-target="#medical-reference-range"><span class="header-section-number">4.4</span> Medical reference range</a>
+  <ul class="collapse">
+  <li><a href="#establishment" id="toc-establishment" class="nav-link" data-scroll-target="#establishment"><span class="header-section-number">4.4.1</span> Establishment</a></li>
+  <li><a href="#result-interpretation" id="toc-result-interpretation" class="nav-link" data-scroll-target="#result-interpretation"><span class="header-section-number">4.4.2</span> Result interpretation</a></li>
+  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">4.4.3</span> Considerations</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/normal-distribution.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution and medical reference range</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution and medical reference range</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></h1>
 </div>
 
 
@@ -384,8 +404,8 @@ window.Quarto = {
 <section id="normal-distribution" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">4.2</span> Normal distribution</h2>
 <p>The probability density function of a normal distribution is given by the formula:</p>
-<p><span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}\]</span></p>
-<p>where <span class="math inline">\(x\)</span> is the variable, <span class="math inline">\(\mu\)</span> is the mean, and <span class="math inline">\(\sigma\)</span> is the standard deviation. The <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are two parameters of the distribution. The mean <span class="math inline">\(\mu\)</span> is a <strong>location parameter</strong>, which defines the central position, as shown in <a href="#fig-normal-mean" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> . The standard deviation <span class="math inline">\(\sigma\)</span> is the <strong>shape parameter</strong>, which defines the width and height of the distribution, as shown in <a href="#fig-normal-sd" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> .</p>
+<p><span class="math display">f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}</span></p>
+<p>where <span class="math inline">x</span> is the variable, <span class="math inline">\mu</span> is the mean, and <span class="math inline">\sigma</span> is the standard deviation. The <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> are two parameters of the distribution. The mean <span class="math inline">\mu</span> is a <strong>location parameter</strong>, which defines the central position, as shown in <a href="#fig-normal-mean" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> . The standard deviation <span class="math inline">\sigma</span> is the <strong>shape parameter</strong>, which defines the width and height of the distribution, as shown in <a href="#fig-normal-sd" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> .</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-normal-mean" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -414,8 +434,17 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 </div>
 </div>
 </div>
-<p>The cumulative distribution function is the probability that a normal random variable <span class="math inline">\(x\)</span> will be less than or equal to a given value x, which is defined by the formula:</p>
-<p><span class="math display">\[F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(x - \mu)^2}{2\sigma^2}}\]</span>The area under the curve of a normal distribution over a specific interval represents the probability that the random variable falls within that interval. This is computed using the cumulative distribution function.</p>
+<section id="standard-normal-distribution" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="standard-normal-distribution"><span class="header-section-number">4.2.1</span> Standard normal distribution</h3>
+<p>As shown above, the change of <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> affects the shape of a normal distribution. For convenience, let</p>
+<p><span class="math display">z = \frac{x - \mu}{\sigma}</span></p>
+<p>then the above mentioned probability density function will become as:</p>
+<p><span class="math display">f(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2}</span> which is called the standard normal distribution, where of <span class="math inline">\mu = 0</span> and <span class="math inline">\sigma = 1</span>.</p>
+</section>
+<section id="area-under-curve" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="area-under-curve"><span class="header-section-number">4.2.2</span> Area under curve</h3>
+<p>The cumulative distribution function is the probability that a normal random variable <span class="math inline">X</span> will be less than or equal to a given value <span class="math inline">x</span>, which is defined by the formula:</p>
+<p><span class="math display">F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(x - \mu)^2}{2\sigma^2}}</span>The area under the curve of a normal distribution over a specific interval represents the probability that the random variable falls within that interval. This is computed using the cumulative distribution function.</p>
 <p>In R, you can calculate the area under the curve between two points using the <code>pnorm()</code> function.</p>
 <div class="example">
 <strong>Example 1:</strong> 
@@ -428,8 +457,9 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 <pre><code>#&gt; [1] 0.9500042</code></pre>
 </div>
 </div>
-<section id="visualizing-the-area-under-the-normal-curve" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="visualizing-the-area-under-the-normal-curve"><span class="header-section-number">4.2.1</span> Visualizing the area under the normal curve</h3>
+</section>
+<section id="visualizing-the-area" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="visualizing-the-area"><span class="header-section-number">4.2.3</span> Visualizing the area</h3>
 <p>You can use <code>ggplot2</code> package in R to plot the normal distribution curve and shade the area under the curve. Here is example to shade the area of the left and right tails.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -440,16 +470,20 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="normality-test" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">4.3</span> Normality test</h2>
 <div class="example">
 <strong>Example 2:</strong> 
-<p>Some researchers used a random sampling method to examine the red blood cell count of 55 normal adults. The measuring results are saved in a <code>.csv</code> file. Please analyze its normality.</p>
+<p>Some researchers used a random sampling method to examine the red blood cell count of 29 normal adults. The measuring results are saved in a <code>.csv</code> file. Please analyze its normality.</p>
 </div>
-<p><a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex04-01.csv" download="ex04-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 <p>You can click on the download button above to download and the save it in your own folder. Here we import the data file into R and assign to a tibble named <code>rbc</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex03-01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Rows: 55 Columns: 1
+<pre><code>#&gt; Rows: 29 Columns: 1
 #&gt; ── Column specification ─────────────────────────────────────────────────────
 #&gt; Delimiter: ","
 #&gt; dbl (1): rbc
@@ -458,28 +492,22 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 #&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
-<p>Test of normality is used to determine if a variable is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Histogram () can be used as a visual tool to assess whether a variable follows a normal distribution, but it should be used with caution due to the reasons below:</p>
+<p>Test of normality is used to determine if a variable is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Histogram (<a href="quat-data-stat-desc.html#sec-frequency-histogram" class="quarto-xref"><span>Section 3.2.2</span></a>) can be used as a visual tool to assess whether a variable follows a normal distribution, but it should be used with caution due to the reasons below:</p>
 <ul>
 <li>For a small sample data, the histogram might not provide a clear picture of the distribution, making it harder to assess normality. With larger samples, the histogram gives a better indication but may still be misleading.</li>
 <li>The appearance of the histogram can change significantly depending on the number of bins (or the bin width). Too few bins might obscure important features of the data, while too many bins might introduce noise.</li>
 <li>The interpretation of a histogram is somewhat subjective. Two people might look at the same histogram and draw different conclusions about normality.</li>
 </ul>
-<p>Since histogram can sometimes be misleading or ambiguous, it’s good practice to use it alongside other methods:</p>
-<ul>
-<li><p><strong>Normality Tests</strong></p>
+<p>Since histogram can sometimes be misleading or ambiguous, it’s a good practice to use it alongside other methods:</p>
+<section id="hypothesis-test-method" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="hypothesis-test-method"><span class="header-section-number">4.3.1</span> Hypothesis test method</h3>
+<p>Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size. Here we only show a few commonly used:</p>
 <ul>
 <li>Shapiro-Wilk test: Best for small to medium-sized data.</li>
 <li>Shapiro-Francia test: A variation of the Shapiro-Wilk test. It is generally more appropriate for dealing with larger sample size data compared to the Shapiro-Wilk test, particularly for data that is expected to be normally distributed.</li>
 <li>Anderson-Darling test: Gives more weight to the tails of the distribution.</li>
 </ul>
-<p>Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size.</p></li>
-<li><p><strong>Q-Q Plot (Quantile-Quantile Plot)</strong></p>
-<p>This is a more reliable visual tool that plots the quantiles of the data against the quantiles of a theoretical normal distribution. Always useful as a supplementary method.</p></li>
-</ul>
-</section>
-<section id="normality-tests" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="normality-tests"><span class="header-section-number">4.2.2</span> Normality Tests</h3>
-<p>Here we perform the Shapiro-Wilk test using <code>shapiro.test()</code>, which lies in the <code>stats</code> package of base R. The Shapiro-Francia test and Anderson-Darling test are performed by <code>sf.test()</code> and <code>ad.test()</code>, respectively. Both of them come from the <code>nortest</code> package, which need to be installed beforehand.</p>
+<p>We perform the Shapiro-Wilk test using <code>shapiro.test()</code>, which lies in the <code>stats</code> package of base R. The Shapiro-Francia test and Anderson-Darling test are performed by <code>sf.test()</code> and <code>ad.test()</code>, respectively. Both of them come from the <code>nortest</code> package, which need to be installed beforehand.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Shapiro-Wilk</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Shapiro-Francia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Anderson-Darling</a></li></ul>
 <div class="tab-content">
@@ -493,7 +521,7 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 #&gt;  Shapiro-Wilk normality test
 #&gt; 
 #&gt; data:  pull(rbc)
-#&gt; W = 0.98527, p-value = 0.7343</code></pre>
+#&gt; W = 0.98382, p-value = 0.9228</code></pre>
 </div>
 </div>
 </div>
@@ -507,7 +535,7 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 #&gt;  Shapiro-Francia normality test
 #&gt; 
 #&gt; data:  pull(rbc)
-#&gt; W = 0.98475, p-value = 0.6158</code></pre>
+#&gt; W = 0.97756, p-value = 0.682</code></pre>
 </div>
 </div>
 </div>
@@ -521,7 +549,7 @@ Figure&nbsp;4.2: The normal curve with different standard deviation
 #&gt;  Anderson-Darling normality test
 #&gt; 
 #&gt; data:  pull(rbc)
-#&gt; A = 0.2194, p-value = 0.8284</code></pre>
+#&gt; A = 0.22677, p-value = 0.7975</code></pre>
 </div>
 </div>
 </div>
@@ -544,9 +572,10 @@ Note
 </div>
 </div>
 </section>
-<section id="q-q-plot" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="q-q-plot"><span class="header-section-number">4.2.3</span> Q-Q Plot</h3>
-<p>Visual inspection of the data can be very informative. You can create a Q-Q Plot using <code>qqnorm()</code> function. More, you can add a line to a theoretically normal quantile-quantile plot by <code>qqline()</code>, which passes through the first and third quartiles by default. These two functions can be found from the <code>stats</code> package of base R.</p>
+<section id="visualization-method" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="visualization-method"><span class="header-section-number">4.3.2</span> Visualization method</h3>
+<p>Q-Q Plot (Quantile-Quantile Plot) is a more reliable visual tool that plots the quantiles of the data against the quantiles of a theoretical normal distribution. Visual inspection of the data can be very informative and is always useful as a supplementary method.</p>
+<p>You can create a Q-Q Plot using <code>qqnorm()</code> function. More, you can add a line to a theoretically normal quantile-quantile plot by <code>qqline()</code>, which passes through the first and third quartiles by default. These two functions can be found from the <code>stats</code> package of base R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
@@ -563,7 +592,7 @@ Note
 </div>
 </div>
 </div>
-<p>Alternatively you can use the <code>ggplot2</code> package to create a Q-Q plot, which has more customization and flexibility. Here is an example.</p>
+<p>Alternatively, you can use the <code>ggplot2</code> package to create a Q-Q plot, which has more customization and flexibility. Here is an example.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> rbc)) <span class="sc">+</span></span>
@@ -601,34 +630,48 @@ Note
 </div>
 </section>
 </section>
-<section id="medical-reference-range" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="medical-reference-range"><span class="header-section-number">4.3</span> Medical reference range</h2>
+<section id="medical-reference-range" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="medical-reference-range"><span class="header-section-number">4.4</span> Medical reference range</h2>
 <p>A medical reference range is the set of values that a medical test result falls within for a healthy population. These ranges are used by healthcare providers to interpret laboratory results and determine whether a patient’s test results are normal or indicate a potential health issue.</p>
-<section id="establishment" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="establishment"><span class="header-section-number">4.3.1</span> Establishment</h3>
+<section id="establishment" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="establishment"><span class="header-section-number">4.4.1</span> Establishment</h3>
 <p>Reference ranges are typically established by testing a large sample of healthy individuals and determining the range within which a certain percentage (often 95%) of results fall. The middle 95% of the population’s values are considered the reference range, meaning that 2.5% of healthy individuals might naturally have results slightly below this range and another 2.5% slightly above it.</p>
-</section>
-<section id="results-interpretation" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="results-interpretation"><span class="header-section-number">4.3.2</span> Results interpretation</h3>
-<p>A test result that falls within the reference range is usually considered normal. A result outside the reference range might indicate an abnormal condition, but this must be interpreted in the context of the patient’s overall health, symptoms, and medical history. Not all out-of-range results indicate disease; they might be normal for a specific individual due to factors like temporary stress, diet, or exercise.</p>
-</section>
-<section id="considerations" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="considerations"><span class="header-section-number">4.3.3</span> Considerations</h3>
-<p>Variability: Reference ranges are not absolute; what is normal for one individual may not be normal for another, especially at the edges of the range.</p>
-<p>Clinical Context: Doctors consider a variety of factors, including patient history and symptoms, when interpreting test results. An out-of-range result may warrant further testing or a different interpretation based on the clinical context. •</p>
-<p>Reference Range Updates: Reference ranges may be updated as new research and technologies emerge, so staying informed about the latest standards is important for accurate diagnosis and treatment.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>A investigator randomly sampled 180 normal adult males in a region, and measured the fibrinogen levels (g/L) in their venous blood. The data is saved in a file below. Have a try to establish the 95% medical reference range for fibrinogen level of normal adult males in that region.</p>
+</div>
+<p><a href="datasets/ex04-02.csv" download="ex04-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p>The code chunk below can print the results directly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>med_ref_range <span class="ot">&lt;-</span> rbc <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>med_ref_range <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-02.csv"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Rows: 180 Columns: 1
+#&gt; ── Column specification ─────────────────────────────────────────────────────
+#&gt; Delimiter: ","
+#&gt; dbl (1): fibrinogen
+#&gt; 
+#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
+#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;  2.5% 97.5% 
-#&gt;  4.12  6.07</code></pre>
+#&gt;  1.77  3.63</code></pre>
 </div>
 </div>
-<p>The result indicates that the 95% medical reference range for the maximum heart rate in normal individuals is: (4.12, 6.07).</p>
+<p>The result indicates that the 95% medical reference range for the fibrinogen level of normal adult males is: (1.77, 3.63).</p>
+</section>
+<section id="result-interpretation" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="result-interpretation"><span class="header-section-number">4.4.2</span> Result interpretation</h3>
+<p>A test result that falls within the reference range is usually considered normal. A result outside the reference range might indicate an abnormal condition, but this must be interpreted in the context of the patient’s overall health, symptoms, and medical history. Not all out-of-range results indicate disease; they might be normal for a specific individual due to factors like temporary stress, diet, or exercise.</p>
+</section>
+<section id="considerations" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="considerations"><span class="header-section-number">4.4.3</span> Considerations</h3>
+<p>Reference ranges are not absolute; what is normal for one individual may not be normal for another, especially at the edges of the range. Doctors consider a variety of factors, including patient history and symptoms, when interpreting test results. An out-of-range result may warrant further testing or a different interpretation based on the clinical context.</p>
+<p>Reference ranges may be updated as new research and technologies emerge, so staying informed about the latest standards is important for accurate diagnosis and treatment.</p>
 
 
 </section>
@@ -1245,8 +1288,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mean-estimation.html" class="pagination-link" aria-label="Population mean estimation">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Population mean estimation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./statistical-inference.html" class="pagination-link" aria-label="Statistical inference">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1255,5 +1298,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/normal-distribution.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
