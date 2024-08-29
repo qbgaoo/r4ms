@@ -8,7 +8,7 @@ book:
   favicon: favicon.png
   
   site-url: https://qbgaoo.github.io/r4ms
-  #repo-url: https://qbgaoo.github.io/r4ms
+  repo-url: https://qbgaoo.github.io/r4ms
   repo-actions: [edit, issue]
    
   chapters:

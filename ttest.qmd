@@ -34,33 +34,33 @@ head(height_sample) |>
 
 ```{r}
 mean  <- height_sample$mean
-sd    <- height_sample$sd
-lower_bound = vector(mode = "double", length = 100)
-upper_bound = vector(mode = "double", length = 100)
-
-for(i in seq(1:100)){
-  ttest <- DescTools::TTestA(                            # <1>
-  mx = mean[i],
-  sx = sd[i],
-  nx = 10,
-  alternative = "two.sided",
-  mu = 167.7
-  )
-  ci <- ttest$conf.int
-  lower_bound[i] <- ci[1]
-  upper_bound[i] <- ci[2]
-}
-
-height_sample |> 
-  mutate(
-    se          = sd / sqrt(10),
-    lower_bound = lower_bound,
-    upper_bound = upper_bound
-  ) |> 
-  head()|> 
-  kbl(digits = 2, align = "c") |>
-  kable_classic(full_width = F) |> 
-  row_spec(0, bold = T)
+# sd    <- height_sample$sd
+# lower_bound = vector(mode = "double", length = 100)
+# upper_bound = vector(mode = "double", length = 100)
+# 
+# for(i in seq(1:100)){
+#   ttest <- DescTools::TTestA(                            # <1>
+#   mx = mean[i],
+#   sx = sd[i],
+#   nx = 10,
+#   alternative = "two.sided",
+#   mu = 167.7
+#   )
+#   ci <- ttest$conf.int
+#   lower_bound[i] <- ci[1]
+#   upper_bound[i] <- ci[2]
+# }
+# 
+# height_sample |> 
+#   mutate(
+#     se          = sd / sqrt(10),
+#     lower_bound = lower_bound,
+#     upper_bound = upper_bound
+#   ) |> 
+#   head()|> 
+#   kbl(digits = 2, align = "c") |>
+#   kable_classic(full_width = F) |> 
+#   row_spec(0, bold = T)
 ```
 
 1.  `TTestA()`根据用户提供的统计量进行单个或两个样本 *t* 检验，而不是像`t.test()`中那样基于数据直接进行检验；此例是单样本，两样本类同，参见下例。
