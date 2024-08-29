@@ -116,15 +116,11 @@ The mean of the sample means is $17.5$, equal to the population mean $\mu=1.75$,
 
 The standard deviation of the distribution of the sample means is called the standard error (SE). It reflects the typical distance between a sample mean and the population mean. The standard error of sample means is given by:
 
-$$
-\sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
-$$
+$$\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}}$$
 
-However, the population parameter $\sigma$ is usually unknown, therefore, the sample standard deviation $S$ is used as an estimator for the population standard deviation. Therefore, an estimation of the standard error above mentioned is defined by
+However, the population parameter $\sigma$ is usually unknown, therefore, the sample standard deviation $S$ is used as an estimator for the population standard deviation. Therefore, an estimation of the standard error above mentioned is defined by:
 
-$$
-S_\bar{X} = \frac{S}{\sqrt{n}}
-$$
+$$S_{\bar{X}} = \frac{S}{\sqrt{n}}$$
 
 As the sample size $n$ increases, the standard error decreases, meaning the sample means will be closer to the population mean.
 
