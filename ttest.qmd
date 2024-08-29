@@ -33,7 +33,7 @@ head(height_sample) |>
 **例3-2** 计算例3-1中每个样本的标准误和可信区间
 
 ```{r}
-mean  <- height_sample$mean
+# mean  <- height_sample$mean
 # sd    <- height_sample$sd
 # lower_bound = vector(mode = "double", length = 100)
 # upper_bound = vector(mode = "double", length = 100)
@@ -70,17 +70,17 @@ mean  <- height_sample$mean
 **例3-3** 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？
 
 ```{r}
-ttest <- DescTools::TTestA(                            # <1>
-mx = 20.1,
-my = 16.89,
-sx = 7.02,
-sy = 8.46,
-nx = 29,
-ny = 32,
-alternative = "two.sided"
-)
-ci <- ttest$conf.int |> 
-  round(digits = 2)
+# ttest <- DescTools::TTestA(                            # <1>
+# mx = 20.1,
+# my = 16.89,
+# sx = 7.02,
+# sy = 8.46,
+# nx = 29,
+# ny = 32,
+# alternative = "two.sided"
+# )
+# ci <- ttest$conf.int |> 
+#   round(digits = 2)
 ```
 
 因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为`r paste0("(", ci[1], ", ", ci[2], ")")`。
