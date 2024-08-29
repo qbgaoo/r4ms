@@ -1,4 +1,4 @@
-#  t-test
+# t-test
 
 ```{r}
 #| echo: false
@@ -198,19 +198,19 @@ DescTools::TTestA(
 下面分别采用`stats::shapiro.test()`和`DescTools::ShapiroFranciaTest()`进行正态性检验：
 
 ```{r}
-x <- height_sample |> 
-  select(mean) |> 
-  unlist(use.names = F)                                   # <1>
-  
-stats::shapiro.test(x) |>                                 # <2>
-  broom::tidy() |> 
-  rbind(
-    DescTools::ShapiroFranciaTest(x) |>                   # <3>
-      broom::tidy()
-  ) |> 
-  kbl(digits = 3, align = "c") |>
-  kable_classic(full_width = F) |> 
-  row_spec(0, bold = T)
+# x <- height_sample |> 
+#   select(mean) |> 
+#   unlist(use.names = F)                                   # <1>
+#   
+# stats::shapiro.test(x) |>                                 # <2>
+#   broom::tidy() |> 
+#   rbind(
+#     DescTools::ShapiroFranciaTest(x) |>                   # <3>
+#       broom::tidy()
+#   ) |> 
+#   kbl(digits = 3, align = "c") |>
+#   kable_classic(full_width = F) |> 
+#   row_spec(0, bold = T)
 ```
 
 1.  注意：这里须加`unlist(use.names = FALSE)`，否则会报错
@@ -222,9 +222,9 @@ stats::shapiro.test(x) |>                                 # <2>
 ```{r}
 #| error: true
 
-x <- height_samples |> 
-  select(mean) 
-stats::shapiro.test(x)
+# x <- height_samples |> 
+#   select(mean) 
+# stats::shapiro.test(x)
 ```
 
 （二）图示法
@@ -232,22 +232,22 @@ stats::shapiro.test(x)
 图示法主要使用分位数图 (P-P图)和概率图 (Q-Q图)，其中以Q-Q图效率较高。如果分析的数据服从正态分布，则图上的数据点应分布在直线附近，否则数据点偏离直线较远。
 
 ```{r}
-x <- height_sample |> 
-  select(mean) |> 
-  unlist(use.names = F)
-
-
-stats::qqnorm(
-  x,
-  main = "Q-Q图",
-  xlab = "理论分位数",
-  ylab = "样本分位数",
-  datax = T
-) 
-stats::qqline(
-  x,
-  datax = T
-)
+# x <- height_sample |> 
+#   select(mean) |> 
+#   unlist(use.names = F)
+# 
+# 
+# stats::qqnorm(
+#   x,
+#   main = "Q-Q图",
+#   xlab = "理论分位数",
+#   ylab = "样本分位数",
+#   datax = T
+# ) 
+# stats::qqline(
+#   x,
+#   datax = T
+# )
 ```
 
 ### 方差齐性检验
@@ -255,19 +255,19 @@ stats::qqline(
 对**例3-6**的数据，利用$F$检验判断两总体空腹血糖下降值的方差是否相等。这里利用`DescTools::LeveneTest()`进行方差齐性检验
 
 ```{r}
-tb <- two_sample |> 
-  pivot_longer(                                           # <1>
-    cols = everything(),
-    names_to = "group"
-  ) |> 
-  mutate(
-    group = as.factor(group)                              # <2>
-  )
-DescTools::LeveneTest(tb$value, group = tb$group) |> 
-  broom::tidy() |> 
-  kbl(digits = 3, align = "c") |>
-  kable_classic(full_width = F) |> 
-  row_spec(0, bold = T)
+# tb <- two_sample |> 
+#   pivot_longer(                                           # <1>
+#     cols = everything(),
+#     names_to = "group"
+#   ) |> 
+#   mutate(
+#     group = as.factor(group)                              # <2>
+#   )
+# DescTools::LeveneTest(tb$value, group = tb$group) |> 
+#   broom::tidy() |> 
+#   kbl(digits = 3, align = "c") |>
+#   kable_classic(full_width = F) |> 
+#   row_spec(0, bold = T)
 ```
 
 1.  将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求
