@@ -28,12 +28,12 @@ library(tidyverse)
 Some researchers used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a `data` file. Please use the data to create a frequency distribution table.
 :::
 
-<a href="datasets/ex02-01.csv" download="ex02-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 Click on the download button above to download as a `.csv` file. Save it in your working directory and import the data file into R using the code below.
 
 ```{r}
-rbc <- read_csv("datasets/ex02-01.csv")
+rbc <- read_csv("datasets/ex03-01.csv")
 ```
 
 Here we use the `read_csv()` function. The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a `ex02-01.csv` file in the `datasets` folder of your project.
@@ -90,7 +90,7 @@ cut(pull(rbc), breaks = breaks, include.lowest = T, right = F) |>
   knitr::kable(col.names = c("interval", "freq"), align = "c")
 ```
 
-### Frequency histogram
+### Frequency histogram {#sec-frequency-histogram}
 
 A frequency histogram is a graphical representation of a frequency table. It displays the distribution of numerical variales by showing the frequency (count) of a value within specific intervals (bins) on the x-axis, with the y-axis representing the frequency. Each bar in the histogram corresponds to an interval, and the height of the bar indicates how many valuess fall within that range. This visual tool is useful for quickly assessing the shape, spread, and central tendency of the data distribution.
 
@@ -149,7 +149,11 @@ rbc |>
 
 ### Call Shiny App
 
-<button class="btn btn-primary" id="shiny-button"> Launch Shiny App </button>
+<button class="btn btn-primary" id="shiny-button">
+
+Launch Shiny App
+
+</button>
 
 ```{=html}
 <script>
@@ -179,16 +183,16 @@ The arithmetic average of all values. It’s calculated by summing all the value
 For a population:
 
 $$
-\mu = \frac{\sum X_i}{N}
+\mu = \frac{\sum x_i}{N}
 $$
 
 For a sample:
 
 $$
-\bar{X} = \frac{\sum X_i}{n}
+\bar{X} = \frac{\sum x_i}{n}
 $$
 
-where $X_i$ represents each value, and $N$ and $n$ are the sizes of the population and sample, respectively.
+where $x_i$ represents values of a random variable $X$, and $N$ and $n$ are the sizes of the population and sample, respectively.
 
 ```{r}
 rbc |> 
@@ -227,9 +231,9 @@ range(rbc) |>
   diff()
 ```
 
-### Interquartile Range (IQR)
+### Interquartile range
 
-The range of the middle 50% of the data, calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1).
+Interquartile range (IQR) is the range of the middle 50% of the data, calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1).
 
 $$
 \text{IQR} = Q3 - Q1 
@@ -250,16 +254,16 @@ Measures the average squared deviation of each data point from the mean.
 For a population:
 
 $$
-\sigma^2 = \frac{1}{N} \sum_{i=1}^N (X_i - \mu)^2 
+\sigma^2 = \frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2 
 $$
 
 For a sample:
 
 $$
-S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{X})^2 
 $$
 
-where $\mu$ is the population mean, $\bar{X}$ is the sample mean, $X_i$ represents each value, and $N$ and $n$ are are the sizes of the population and sample, respectively.
+where $\mu$ is the population mean, $\bar{X}$ is the sample mean, $x_i$ represents each value, and $N$ and $n$ are are the sizes of the population and sample, respectively.
 
 You can directly use the `var()` function to get variance.
 
@@ -276,13 +280,13 @@ The square root of the variance, providing a measure of spread in the same units
 For a population:
 
 $$
-\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (X_i - \mu)^2}
+\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2}
 $$
 
 For a sample:
 
 $$
-S = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2}
+S = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{X})^2}
 $$
 
 You can directly use the `sd()` function to get standard deviation.
@@ -293,7 +297,7 @@ rbc |>
   sd()
 ```
 
-### Coefficient of Variation (CV)
+### Coefficient of variation
 
 The ratio of the standard deviation to the mean, expressed as a percentage, useful for comparing variability between variables with different units or scales.
 

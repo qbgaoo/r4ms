@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Medical Statistics - 5&nbsp; t-test</title>
+<title>R for Medical Statistics - 6&nbsp; t-test</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./anova.html" rel="next">
-<link href="./mean-estimation.html" rel="prev">
+<link href="./statistical-inference.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -150,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -191,8 +191,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -207,67 +213,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Normal distribution and medical reference range</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mean-estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population mean estimation</span></span></a>
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ttest.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./nonparameter-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./simple-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Correlation and Simple Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlation and Simple Linear Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -284,13 +290,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,13 +313,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
       </ul>
@@ -328,29 +334,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">5.1</span> Prerequisites</a></li>
-  <li><a href="#t-distribution" id="toc-t-distribution" class="nav-link" data-scroll-target="#t-distribution"><span class="header-section-number">5.2</span> t distribution</a>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">6.1</span> Prerequisites</a></li>
+  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">6.2</span> 标准误和可信区间</a>
   <ul class="collapse">
-  <li><a href="#key-characteristics" id="toc-key-characteristics" class="nav-link" data-scroll-target="#key-characteristics"><span class="header-section-number">5.2.1</span> Key characteristics</a></li>
-  <li><a href="#common-uses" id="toc-common-uses" class="nav-link" data-scroll-target="#common-uses"><span class="header-section-number">5.2.2</span> Common uses</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">5.2.3</span> </a></li>
+  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">6.2.1</span> 单一总体均数的可信区间</a></li>
+  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">6.2.2</span> 两总体均数差的可信区间</a></li>
   </ul></li>
-  <li><a href="#标准误和可信区间" id="toc-标准误和可信区间" class="nav-link" data-scroll-target="#标准误和可信区间"><span class="header-section-number">5.3</span> 标准误和可信区间</a>
+  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">6.3</span> <em>t</em> 检验</a>
   <ul class="collapse">
-  <li><a href="#单一总体均数的可信区间" id="toc-单一总体均数的可信区间" class="nav-link" data-scroll-target="#单一总体均数的可信区间"><span class="header-section-number">5.3.1</span> 单一总体均数的可信区间</a></li>
-  <li><a href="#两总体均数差的可信区间" id="toc-两总体均数差的可信区间" class="nav-link" data-scroll-target="#两总体均数差的可信区间"><span class="header-section-number">5.3.2</span> 两总体均数差的可信区间</a></li>
+  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">6.3.1</span> 单样本 <em>t</em> 检验</a></li>
+  <li><a href="#paired-sample-t-test" id="toc-paired-sample-t-test" class="nav-link" data-scroll-target="#paired-sample-t-test"><span class="header-section-number">6.3.2</span> Paired sample <em>t</em> test</a></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">6.3.3</span> Two-sample <em>t</em>-test</a></li>
+  <li><a href="#approximate-t-test" id="toc-approximate-t-test" class="nav-link" data-scroll-target="#approximate-t-test"><span class="header-section-number">6.3.4</span> Approximate <em>t</em>-test</a></li>
   </ul></li>
-  <li><a href="#t-检验" id="toc-t-检验" class="nav-link" data-scroll-target="#t-检验"><span class="header-section-number">5.4</span> <em>t</em> 检验</a>
+  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">6.4</span> 正态和方差齐性检验</a>
   <ul class="collapse">
-  <li><a href="#单样本-t-检验" id="toc-单样本-t-检验" class="nav-link" data-scroll-target="#单样本-t-检验"><span class="header-section-number">5.4.1</span> 单样本 <em>t</em> 检验</a></li>
-  <li><a href="#paired-sample-t-test" id="toc-paired-sample-t-test" class="nav-link" data-scroll-target="#paired-sample-t-test"><span class="header-section-number">5.4.2</span> Paired sample <em>t</em> test</a></li>
-  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">5.4.3</span> Two-sample <em>t</em>-test</a></li>
-  <li><a href="#approximate-t-test" id="toc-approximate-t-test" class="nav-link" data-scroll-target="#approximate-t-test"><span class="header-section-number">5.4.4</span> Approximate <em>t</em>-test</a></li>
-  </ul></li>
-  <li><a href="#sec-homogeneity-test" id="toc-sec-homogeneity-test" class="nav-link" data-scroll-target="#sec-homogeneity-test"><span class="header-section-number">5.5</span> 正态和方差齐性检验</a>
-  <ul class="collapse">
-  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">5.5.1</span> 正态性检验</a></li>
-  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">5.5.2</span> 方差齐性检验</a></li>
+  <li><a href="#正态性检验" id="toc-正态性检验" class="nav-link" data-scroll-target="#正态性检验"><span class="header-section-number">6.4.1</span> 正态性检验</a></li>
+  <li><a href="#方差齐性检验" id="toc-方差齐性检验" class="nav-link" data-scroll-target="#方差齐性检验"><span class="header-section-number">6.4.2</span> 方差齐性检验</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -358,9 +358,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">t-test</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">t-test</span></h1>
 </div>
 
 
@@ -377,86 +377,15 @@ window.Quarto = {
 </header>
 
 
-<section id="prerequisites" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">5.1</span> Prerequisites</h2>
+<section id="prerequisites" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">6.1</span> Prerequisites</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="t-distribution" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="t-distribution"><span class="header-section-number">5.2</span> t distribution</h2>
-<p>The t-distribution, also known as Student’s t-distribution, is a probability distribution that is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in hypothesis testing, confidence intervals, and regression analysis.</p>
-<p>For a sample mean <span class="math inline">\(\bar{X}\)</span> , sample standard deviation <span class="math inline">\(S\)</span> , and sample size <span class="math inline">\(n\)</span> , the t-statistic is calculated as:</p>
-<p><span class="math display">\[
-t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
-\]</span></p>
-<p>Where <span class="math inline">\(\mu\)</span> is the hypothesized population mean.</p>
-<p>Visual Representation:</p>
-<p>The t-distribution can be plotted to show how it compares with the normal distribution. It would have thicker tails, indicating a higher probability of values further from the mean, especially with smaller degrees of freedom. As degrees of freedom increase, the t-distribution curve will converge toward the standard normal distribution curve.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x  =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">500</span>),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y1 =</span> <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">1</span>),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y2 =</span> <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">5</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y3 =</span> <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="cn">Inf</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols      =</span> <span class="fu">contains</span>(<span class="st">"y"</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"density"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to  =</span> <span class="st">"group"</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> density, <span class="at">linetype =</span> group)) <span class="sc">+</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">name   =</span> <span class="st">""</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>, <span class="st">"dotdash"</span>),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"df = 1"</span>, <span class="st">"df = 5"</span>, <span class="st">"df = Inf"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text   =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ttest_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="key-characteristics" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="key-characteristics"><span class="header-section-number">5.2.1</span> Key characteristics</h3>
-<ul>
-<li>Shape: The t-distribution is similar to the standard normal distribution (bell-shaped and symmetric around zero), but it has heavier tails. This means it is more prone to producing values that fall far from its mean.</li>
-<li>Degrees of Freedom (df): The shape of the t-distribution depends on the degrees of freedom, which is typically related to the sample size (df = n - 1 for a single sample t-test). As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. For large sample sizes (df &gt; 30), the t-distribution and normal distribution are almost indistinguishable.</li>
-<li>Mean and Variance: The mean of the t-distribution is 0. • The variance is greater than 1 and depends on the degrees of freedom. Specifically, the variance is for df &gt; 2 .</li>
-</ul>
-</section>
-<section id="common-uses" class="level3" data-number="5.2.2">
-<h3 data-number="5.2.2" class="anchored" data-anchor-id="common-uses"><span class="header-section-number">5.2.2</span> Common uses</h3>
-<ul>
-<li>Confidence intervals: The t-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.</li>
-<li>t-test: Used to compare the means of two groups (independent or paired samples) when the sample size is small and the population standard deviation is unknown.
-<ul>
-<li>One-sample t-test: Tests if the mean of a single sample is significantly different from a known value.</li>
-<li>Two-sample t-test: Tests if the means of two independent groups are significantly different.</li>
-<li>Paired t-test: Tests if the means of two related groups (e.g., before and after measurements) are significantly different.</li>
-</ul></li>
-<li>Regression Analysis: In linear regression, t-test are used to determine whether the coefficients of the independent variables are significantly different from zero.</li>
-</ul>
-<p>Example:</p>
-<div class="example">
-<strong>Example 1:</strong> 
-<p>Imagine you have a small sample of 15 observations, and you want to test if the mean of this sample is different from a known value, say 50. Since the sample size is small, you would use the t-distribution to conduct this test, accounting for the fact that the true standard deviation of the population is unknown.</p>
-</div>
-</section>
-<section id="section" class="level3" data-number="5.2.3">
-<h3 data-number="5.2.3" class="anchored" data-anchor-id="section"><span class="header-section-number">5.2.3</span> </h3>
 <p><strong>例3-1</strong> 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3<sup>2</sup>)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以 <code>.csv</code> 格式保存，利用<code>read_csv()</code>函数导入R变量 <code>height_sample</code> 中。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>height_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-01.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>height_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-01.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Rows: 100 Columns: 3
 #&gt; ── Column specification ─────────────────────────────────────────────────────
@@ -466,10 +395,10 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 #&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
 #&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(height_sample) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(height_sample) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
@@ -519,46 +448,45 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 </div>
 </div>
 </section>
-</section>
-<section id="标准误和可信区间" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">5.3</span> 标准误和可信区间</h2>
-<section id="单一总体均数的可信区间" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">5.3.1</span> 单一总体均数的可信区间</h3>
+<section id="标准误和可信区间" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="标准误和可信区间"><span class="header-section-number">6.2</span> 标准误和可信区间</h2>
+<section id="单一总体均数的可信区间" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="单一总体均数的可信区间"><span class="header-section-number">6.2.1</span> 单一总体均数的可信区间</h3>
 <p><strong>例3-2</strong> 计算例3-1中每个样本的标准误和可信区间</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>mean  <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>mean</span>
-<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>sd    <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>sd</span>
-<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">=</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"double"</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
-<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">=</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"double"</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
-<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)){</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-7" class="code-annotation-target"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a>  ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
-<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> mean[i],</span>
-<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sx =</span> sd[i],</span>
-<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">nx =</span> <span class="dv">10</span>,</span>
-<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
-<span id="annotated-cell-5-12"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fl">167.7</span></span>
-<span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>  ci <span class="ot">&lt;-</span> ttest<span class="sc">$</span>conf.int</span>
-<span id="annotated-cell-5-15"><a href="#annotated-cell-5-15" aria-hidden="true" tabindex="-1"></a>  lower_bound[i] <span class="ot">&lt;-</span> ci[<span class="dv">1</span>]</span>
-<span id="annotated-cell-5-16"><a href="#annotated-cell-5-16" aria-hidden="true" tabindex="-1"></a>  upper_bound[i] <span class="ot">&lt;-</span> ci[<span class="dv">2</span>]</span>
-<span id="annotated-cell-5-17"><a href="#annotated-cell-5-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="annotated-cell-5-18"><a href="#annotated-cell-5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-5-19"><a href="#annotated-cell-5-19" aria-hidden="true" tabindex="-1"></a>height_sample <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-20"><a href="#annotated-cell-5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-5-21"><a href="#annotated-cell-5-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">se          =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">10</span>),</span>
-<span id="annotated-cell-5-22"><a href="#annotated-cell-5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_bound =</span> lower_bound,</span>
-<span id="annotated-cell-5-23"><a href="#annotated-cell-5-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_bound =</span> upper_bound</span>
-<span id="annotated-cell-5-24"><a href="#annotated-cell-5-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-25"><a href="#annotated-cell-5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()<span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-26"><a href="#annotated-cell-5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-5-27"><a href="#annotated-cell-5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-5-28"><a href="#annotated-cell-5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a>mean  <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>mean</span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>sd    <span class="ot">&lt;-</span> height_sample<span class="sc">$</span>sd</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">=</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"double"</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="annotated-cell-4-4"><a href="#annotated-cell-4-4" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">=</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"double"</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="annotated-cell-4-5"><a href="#annotated-cell-4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-6"><a href="#annotated-cell-4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)){</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7" aria-hidden="true" tabindex="-1"></a>  ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
+<span id="annotated-cell-4-8"><a href="#annotated-cell-4-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> mean[i],</span>
+<span id="annotated-cell-4-9"><a href="#annotated-cell-4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">sx =</span> sd[i],</span>
+<span id="annotated-cell-4-10"><a href="#annotated-cell-4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">nx =</span> <span class="dv">10</span>,</span>
+<span id="annotated-cell-4-11"><a href="#annotated-cell-4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
+<span id="annotated-cell-4-12"><a href="#annotated-cell-4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="fl">167.7</span></span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14" aria-hidden="true" tabindex="-1"></a>  ci <span class="ot">&lt;-</span> ttest<span class="sc">$</span>conf.int</span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15" aria-hidden="true" tabindex="-1"></a>  lower_bound[i] <span class="ot">&lt;-</span> ci[<span class="dv">1</span>]</span>
+<span id="annotated-cell-4-16"><a href="#annotated-cell-4-16" aria-hidden="true" tabindex="-1"></a>  upper_bound[i] <span class="ot">&lt;-</span> ci[<span class="dv">2</span>]</span>
+<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="annotated-cell-4-18"><a href="#annotated-cell-4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-4-19"><a href="#annotated-cell-4-19" aria-hidden="true" tabindex="-1"></a>height_sample <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-20"><a href="#annotated-cell-4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-4-21"><a href="#annotated-cell-4-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">se          =</span> sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">10</span>),</span>
+<span id="annotated-cell-4-22"><a href="#annotated-cell-4-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_bound =</span> lower_bound,</span>
+<span id="annotated-cell-4-23"><a href="#annotated-cell-4-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_bound =</span> upper_bound</span>
+<span id="annotated-cell-4-24"><a href="#annotated-cell-4-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-25"><a href="#annotated-cell-4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()<span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-26"><a href="#annotated-cell-4-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-4-27"><a href="#annotated-cell-4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-28"><a href="#annotated-cell-4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-5" data-code-lines="7" data-code-annotation="1"><code>TTestA()</code>根据用户提供的统计量进行单个或两个样本 <em>t</em> 检验，而不是像<code>t.test()</code>中那样基于数据直接进行检验；此例是单样本，两样本类同，参见下例。</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="1"><code>TTestA()</code>根据用户提供的统计量进行单个或两个样本 <em>t</em> 检验，而不是像<code>t.test()</code>中那样基于数据直接进行检验；此例是单样本，两样本类同，参见下例。</span>
 </dd>
 </dl>
 </div>
@@ -632,42 +560,42 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 </div>
 </div>
 </section>
-<section id="两总体均数差的可信区间" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">5.3.2</span> 两总体均数差的可信区间</h3>
+<section id="两总体均数差的可信区间" class="level3" data-number="6.2.2">
+<h3 data-number="6.2.2" class="anchored" data-anchor-id="两总体均数差的可信区间"><span class="header-section-number">6.2.2</span> 两总体均数差的可信区间</h3>
 <p><strong>例3-3</strong> 61名患者随机分为两组，已知安慰剂组29例，试验组32例，治疗前安慰剂组IL-2的均数为20.1，标准差为7.02；试验组IL-2的均数为16.89，标准差为8.46。问两组治疗前基线的IL-2相差有多大？</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
-<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="at">mx =</span> <span class="fl">20.1</span>,</span>
-<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a><span class="at">my =</span> <span class="fl">16.89</span>,</span>
-<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a><span class="at">sx =</span> <span class="fl">7.02</span>,</span>
-<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a><span class="at">sy =</span> <span class="fl">8.46</span>,</span>
-<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a><span class="at">nx =</span> <span class="dv">29</span>,</span>
-<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a><span class="at">ny =</span> <span class="dv">32</span>,</span>
-<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span></span>
-<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="annotated-cell-6-10"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> ttest<span class="sc">$</span>conf.int <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-6-11"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">TTestA</span>(</span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a><span class="at">mx =</span> <span class="fl">20.1</span>,</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a><span class="at">my =</span> <span class="fl">16.89</span>,</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a><span class="at">sx =</span> <span class="fl">7.02</span>,</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a><span class="at">sy =</span> <span class="fl">8.46</span>,</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a><span class="at">nx =</span> <span class="dv">29</span>,</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a><span class="at">ny =</span> <span class="dv">32</span>,</span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a><span class="at">alternative =</span> <span class="st">"two.sided"</span></span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> ttest<span class="sc">$</span>conf.int <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>因此，两组治疗前基线的IL-2总体均数之差的95%可信区间为(-0.76, 7.18)。</p>
 </section>
 </section>
-<section id="t-检验" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">5.4</span> <em>t</em> 检验</h2>
+<section id="t-检验" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="t-检验"><span class="header-section-number">6.3</span> <em>t</em> 检验</h2>
 <p>计量资料的假设检验中，最常见、最简单的方法是 <em>t</em> 检验。</p>
-<section id="单样本-t-检验" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">5.4.1</span> 单样本 <em>t</em> 检验</h3>
+<section id="单样本-t-检验" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="单样本-t-检验"><span class="header-section-number">6.3.1</span> 单样本 <em>t</em> 检验</h3>
 <p><strong>例3-4</strong> 某医生测量了36名从事铅作业男性工人的血红蛋白含量，算得其均数为130.83g/L，标准差为25.74g/L。问从事铅作业工人的血红蛋白是否不同于正常成年男性平均值140g/L？</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-7"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-7-1"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex04-05.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-7-2"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">140</span>) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-3" class="code-annotation-target"><a href="#annotated-cell-7-3" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-7-4"><a href="#annotated-cell-7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-7-5"><a href="#annotated-cell-7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex04-05.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">140</span>) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="3" data-code-annotation="1">把一个对象变成一个整齐的tibble，方便表的格式化输出</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="1">把一个对象变成一个整齐的tibble，方便表的格式化输出</span>
 </dd>
 </dl>
 </div>
@@ -705,11 +633,11 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 </div>
 </div>
 </section>
-<section id="paired-sample-t-test" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="paired-sample-t-test"><span class="header-section-number">5.4.2</span> Paired sample <em>t</em> test</h3>
+<section id="paired-sample-t-test" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="paired-sample-t-test"><span class="header-section-number">6.3.2</span> Paired sample <em>t</em> test</h3>
 <p><strong>例3-5</strong> 为比较两种方法对乳酸饮料中脂肪含量测定结果是否不同，随机抽取了10份乳酸饮料制品，分别用脂肪酸水解法和哥特里－罗紫法测定其结果。问两法测定结果是否不同？</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>paired <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-06.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>paired <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-06.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Rows: 10 Columns: 3
 #&gt; ── Column specification ─────────────────────────────────────────────────────
@@ -719,15 +647,15 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 #&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
 #&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> paired<span class="sc">$</span>x1,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> paired<span class="sc">$</span>x2,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">paired =</span> T</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> paired<span class="sc">$</span>x1,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> paired<span class="sc">$</span>x2,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">paired =</span> T</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
@@ -762,8 +690,8 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 </div>
 </div>
 </section>
-<section id="two-sample-t-test" class="level3" data-number="5.4.3">
-<h3 data-number="5.4.3" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">5.4.3</span> Two-sample <em>t</em>-test</h3>
+<section id="two-sample-t-test" class="level3" data-number="6.3.3">
+<h3 data-number="6.3.3" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">6.3.3</span> Two-sample <em>t</em>-test</h3>
 <p>The two-sample t-test (aka, the independent t-test) can be performed using base R functions without the need for additional packages.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -779,7 +707,7 @@ Example
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>two_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-07.csv"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>two_sample <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-07.csv"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Rows: 20 Columns: 2
 #&gt; ── Column specification ─────────────────────────────────────────────────────
@@ -789,14 +717,14 @@ Example
 #&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
 #&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> two_sample<span class="sc">$</span>x1,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> two_sample<span class="sc">$</span>x2,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> two_sample<span class="sc">$</span>x1,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> two_sample<span class="sc">$</span>x2,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <table class="lightable-classic table table-sm table-striped small" data-quarto-postprocess="true">
@@ -835,15 +763,15 @@ Example
 </div>
 </div>
 </section>
-<section id="approximate-t-test" class="level3" data-number="5.4.4">
-<h3 data-number="5.4.4" class="anchored" data-anchor-id="approximate-t-test"><span class="header-section-number">5.4.4</span> Approximate <em>t</em>-test</h3>
+<section id="approximate-t-test" class="level3" data-number="6.3.4">
+<h3 data-number="6.3.4" class="anchored" data-anchor-id="approximate-t-test"><span class="header-section-number">6.3.4</span> Approximate <em>t</em>-test</h3>
 <p>进行两小样本均数比较，若两总体方差不等，可采用近似 <em>t</em> 检验:</p>
-<p><strong>例3-7</strong> 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA<sub>1</sub>c (%)的下降值见 <a href="#tbl-HbA1c" class="quarto-xref">Table&nbsp;<span>5.1</span></a> 。问使用两种不同药物的患者其HbA<sub>1</sub>c下降值是否相同？</p>
+<p><strong>例3-7</strong> 在上述例3-6国产四类新药阿卡波糖胶囊的降血糖效果研究中，测得用拜唐苹胶囊对照组20例患者和阿卡波糖胶囊试验组20例患者，其8周时糖化血红蛋白HbA<sub>1</sub>c (%)的下降值见 <a href="#tbl-HbA1c" class="quarto-xref">Table&nbsp;<span>6.1</span></a> 。问使用两种不同药物的患者其HbA<sub>1</sub>c下降值是否相同？</p>
 <div class="cell">
 <div id="tbl-HbA1c" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-HbA1c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
+Table&nbsp;6.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </figcaption>
 <div aria-describedby="tbl-HbA1c-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -879,27 +807,27 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 <ol type="1">
 <li><code>knitr::kable()</code>成功将输出到html的表中的字符渲染为数学符号，其他包函数测试不成功</li>
 </ol>
-<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>Section 5.5</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
+<p>本例中已知样本均数和方差，标准的<code>t.test()</code>通常用于直接分析数据集而非样本统计量，这里采用<code>DescTools::TTestA()</code>函数。经两样本方差齐性的<span class="math inline">\(F\)</span>检验 (在 <a href="#sec-homogeneity-test" class="quarto-xref"><span>Section 6.4</span></a> 中具体介绍)，两组的总体方差不等，故进行近似 <em>t</em> 检验。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">TTestA</span>(                              </span>
-<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> <span class="fl">1.13</span>,</span>
-<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">my =</span> <span class="fl">1.46</span>,</span>
-<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sx =</span> <span class="fl">0.70</span>,</span>
-<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sy =</span> <span class="fl">1.36</span>,</span>
-<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">nx =</span> <span class="dv">20</span>,</span>
-<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ny =</span> <span class="dv">20</span>,</span>
-<span id="annotated-cell-12-8"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-9" class="code-annotation-target"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> F</span>
-<span id="annotated-cell-12-10"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-12-12"><a href="#annotated-cell-12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-12-13"><a href="#annotated-cell-12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-12-14"><a href="#annotated-cell-12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">TTestA</span>(                              </span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">mx =</span> <span class="fl">1.13</span>,</span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">my =</span> <span class="fl">1.46</span>,</span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sx =</span> <span class="fl">0.70</span>,</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sy =</span> <span class="fl">1.36</span>,</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">nx =</span> <span class="dv">20</span>,</span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ny =</span> <span class="dv">20</span>,</span>
+<span id="annotated-cell-11-8"><a href="#annotated-cell-11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">"two.sided"</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-9" class="code-annotation-target"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> F</span>
+<span id="annotated-cell-11-10"><a href="#annotated-cell-11-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-11"><a href="#annotated-cell-11-11" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-12"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-11-13"><a href="#annotated-cell-11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-14"><a href="#annotated-cell-11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="9" data-code-annotation="1"><code>var.equal</code>，指示两个方差是否相等的逻辑变量。如果为FALSE，则使用Welch (或Satterthwaite) 法进行近似 <em>t</em> 检验</span>
+<span data-code-cell="annotated-cell-11" data-code-lines="9" data-code-annotation="1"><code>var.equal</code>，指示两个方差是否相等的逻辑变量。如果为FALSE，则使用Welch (或Satterthwaite) 法进行近似 <em>t</em> 检验</span>
 </dd>
 </dl>
 </div>
@@ -942,40 +870,40 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </div>
 </section>
 </section>
-<section id="sec-homogeneity-test" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">5.5</span> 正态和方差齐性检验</h2>
-<section id="正态性检验" class="level3" data-number="5.5.1">
-<h3 data-number="5.5.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">5.5.1</span> 正态性检验</h3>
+<section id="sec-homogeneity-test" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="sec-homogeneity-test"><span class="header-section-number">6.4</span> 正态和方差齐性检验</h2>
+<section id="正态性检验" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="正态性检验"><span class="header-section-number">6.4.1</span> 正态性检验</h3>
 <p>下面对<strong>例3-1</strong>中的100个样本均数进行正态性检验：</p>
 <p>（一）计算法</p>
 <p>下面分别采用<code>stats::shapiro.test()</code>和<code>DescTools::ShapiroFranciaTest()</code>进行正态性检验：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_sample <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-3" class="code-annotation-target"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(<span class="at">use.names =</span> F)</span>
-<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-5" class="code-annotation-target"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">shapiro.test</span>(x) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3">3</button><span id="annotated-cell-13-8" class="code-annotation-target"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>    DescTools<span class="sc">::</span><span class="fu">ShapiroFranciaTest</span>(x) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
-<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-13-11"><a href="#annotated-cell-13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-12"><a href="#annotated-cell-13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-13-13"><a href="#annotated-cell-13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_sample <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-3" class="code-annotation-target"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(<span class="at">use.names =</span> F)</span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2">2</button><span id="annotated-cell-12-5" class="code-annotation-target"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">shapiro.test</span>(x) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-6"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="3">3</button><span id="annotated-cell-12-8" class="code-annotation-target"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a>    DescTools<span class="sc">::</span><span class="fu">ShapiroFranciaTest</span>(x) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-9"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a>      broom<span class="sc">::</span><span class="fu">tidy</span>()</span>
+<span id="annotated-cell-12-10"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-12-12"><a href="#annotated-cell-12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-12-13"><a href="#annotated-cell-12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="3" data-code-annotation="1">注意：这里须加<code>unlist(use.names = FALSE)</code>，否则会报错</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="3" data-code-annotation="1">注意：这里须加<code>unlist(use.names = FALSE)</code>，否则会报错</span>
 </dd>
-<dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="5" data-code-annotation="2">Shapiro-Wilk方法</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="5" data-code-annotation="2">Shapiro-Wilk方法</span>
 </dd>
-<dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="8" data-code-annotation="3">Shapiro-Francia方法</span>
+<span data-code-cell="annotated-cell-12" data-code-lines="8" data-code-annotation="3">Shapiro-Francia方法</span>
 </dd>
 </dl>
 </div>
@@ -1009,12 +937,12 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 </div>
 <p><code>shapiro.test(x)</code>要求x是数值型变量，所以虽然tibble中的mean是数值型，但不能直接传递给使用<code>shapiro.test(x</code>)，需加一个<code>unlist(x, use.names = FALSE)</code>操作，否则会报错，如下面代码块所示：</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_samples <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_samples <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in eval(expr, envir, enclos): object 'height_samples' not found</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">shapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">shapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Shapiro-Wilk normality test
@@ -1026,57 +954,57 @@ Table&nbsp;5.1: 阿卡波糖胶囊组和拜唐苹胶囊组HbA1c (%)的下降值
 <p>（二）图示法</p>
 <p>图示法主要使用分位数图 (P-P图)和概率图 (Q-Q图)，其中以Q-Q图效率较高。如果分析的数据服从正态分布，则图上的数据点应分布在直线附近，否则数据点偏离直线较远。</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_sample <span class="sc">|&gt;</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(<span class="at">use.names =</span> F)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">qqnorm</span>(</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  x,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Q-Q图"</span>,</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"理论分位数"</span>,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"样本分位数"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">datax =</span> T</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>) </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">qqline</span>(</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  x,</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">datax =</span> T</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> height_sample <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>(<span class="at">use.names =</span> F)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">qqnorm</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  x,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Q-Q图"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"理论分位数"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">"样本分位数"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">datax =</span> T</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">qqline</span>(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  x,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">datax =</span> T</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ttest_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="ttest_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="方差齐性检验" class="level3" data-number="5.5.2">
-<h3 data-number="5.5.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">5.5.2</span> 方差齐性检验</h3>
+<section id="方差齐性检验" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="方差齐性检验"><span class="header-section-number">6.4.2</span> 方差齐性检验</h3>
 <p>对<strong>例3-6</strong>的数据，利用<span class="math inline">\(F\)</span>检验判断两总体空腹血糖下降值的方差是否相等。这里利用<code>DescTools::LeveneTest()</code>进行方差齐性检验</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-17-1"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> two_sample <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-2" class="code-annotation-target"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
-<span id="annotated-cell-17-4"><a href="#annotated-cell-17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span></span>
-<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-17-6"><a href="#annotated-cell-17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="2">2</button><span id="annotated-cell-17-7" class="code-annotation-target"><a href="#annotated-cell-17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">as.factor</span>(group)</span>
-<span id="annotated-cell-17-8"><a href="#annotated-cell-17-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="annotated-cell-17-9"><a href="#annotated-cell-17-9" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">LeveneTest</span>(tb<span class="sc">$</span>value, <span class="at">group =</span> tb<span class="sc">$</span>group) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-17-10"><a href="#annotated-cell-17-10" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-17-11"><a href="#annotated-cell-17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-17-12"><a href="#annotated-cell-17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-17-13"><a href="#annotated-cell-17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> two_sample <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-2" class="code-annotation-target"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span></span>
+<span id="annotated-cell-16-5"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="2">2</button><span id="annotated-cell-16-7" class="code-annotation-target"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">as.factor</span>(group)</span>
+<span id="annotated-cell-16-8"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="annotated-cell-16-9"><a href="#annotated-cell-16-9" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">LeveneTest</span>(tb<span class="sc">$</span>value, <span class="at">group =</span> tb<span class="sc">$</span>group) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-10"><a href="#annotated-cell-16-10" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-11"><a href="#annotated-cell-16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>(<span class="at">digits =</span> <span class="dv">3</span>, <span class="at">align =</span> <span class="st">"c"</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-16-12"><a href="#annotated-cell-16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic</span>(<span class="at">full_width =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-16-13"><a href="#annotated-cell-16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-17" data-code-lines="2" data-code-annotation="1">将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="2" data-code-annotation="1">将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求</span>
 </dd>
-<dt data-target-cell="annotated-cell-17" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-16" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-17" data-code-lines="7" data-code-annotation="2">作为数据分组变量，需转换为因子类型，否则会输出警告</span>
+<span data-code-cell="annotated-cell-16" data-code-lines="7" data-code-annotation="2">作为数据分组变量，需转换为因子类型，否则会输出警告</span>
 </dd>
 </dl>
 </div>
@@ -1705,13 +1633,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./mean-estimation.html" class="pagination-link" aria-label="Population mean estimation">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Population mean estimation</span></span>
+      <a href="./statistical-inference.html" class="pagination-link" aria-label="Statistical inference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./anova.html" class="pagination-link" aria-label="Analysis of Variance">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

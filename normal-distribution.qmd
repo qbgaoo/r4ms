@@ -1,4 +1,4 @@
-# Normal distribution and medical reference range
+# Normal distribution
 
 ```{r}
 #| echo: false
@@ -88,7 +88,19 @@ tibble(
   )
 ```
 
-The cumulative distribution function is the probability that a normal random variable $x$ will be less than or equal to a given value x, which is defined by the formula:
+### Standard normal distribution
+
+As shown above, the change of $\mu$ and $\sigma$ affects the shape of a normal distribution. For convenience, let
+
+$$z = \frac{x - \mu}{\sigma}$$
+
+then the above mentioned probability density function will become as:
+
+$$f(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2}$$ which is called the standard normal distribution, where of $\mu = 0$ and $\sigma = 1$.
+
+### Area under curve
+
+The cumulative distribution function is the probability that a normal random variable $X$ will be less than or equal to a given value $x$, which is defined by the formula:
 
 $$F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(x - \mu)^2}{2\sigma^2}}$$The area under the curve of a normal distribution over a specific interval represents the probability that the random variable falls within that interval. This is computed using the cumulative distribution function.
 
@@ -103,7 +115,7 @@ area_under_curve <- pnorm(1.96, mean = 0, sd = 1) - pnorm(-1.96, mean = 0, sd = 
 area_under_curve
 ```
 
-### Visualizing the area under the normal curve
+### Visualizing the area
 
 You can use `ggplot2` package in R to plot the normal distribution curve and shade the area under the curve. Here is example to shade the area of the left and right tails.
 
@@ -146,41 +158,37 @@ df |>
   )
 ```
 
+## Normality test
+
 ::: example
-Some researchers used a random sampling method to examine the red blood cell count of 55 normal adults. The measuring results are saved in a `.csv` file. Please analyze its normality.
+Some researchers used a random sampling method to examine the red blood cell count of 29 normal adults. The measuring results are saved in a `.csv` file. Please analyze its normality.
 :::
 
-<a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex04-01.csv" download="ex04-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 You can click on the download button above to download and the save it in your own folder. Here we import the data file into R and assign to a tibble named `rbc`.
 
 ```{r}
-rbc <- read_csv("datasets/ex03-01.csv")
+rbc <- read_csv("datasets/ex04-01.csv")
 ```
 
-Test of normality is used to determine if a variable is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Histogram () can be used as a visual tool to assess whether a variable follows a normal distribution, but it should be used with caution due to the reasons below:
+Test of normality is used to determine if a variable is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Histogram (@sec-frequency-histogram) can be used as a visual tool to assess whether a variable follows a normal distribution, but it should be used with caution due to the reasons below:
 
 -   For a small sample data, the histogram might not provide a clear picture of the distribution, making it harder to assess normality. With larger samples, the histogram gives a better indication but may still be misleading.
 -   The appearance of the histogram can change significantly depending on the number of bins (or the bin width). Too few bins might obscure important features of the data, while too many bins might introduce noise.
 -   The interpretation of a histogram is somewhat subjective. Two people might look at the same histogram and draw different conclusions about normality.
 
-Since histogram can sometimes be misleading or ambiguous, it’s good practice to use it alongside other methods:
+Since histogram can sometimes be misleading or ambiguous, it’s a good practice to use it alongside other methods:
 
--   **Normality Tests**
+### Hypothesis test method
 
-    -   Shapiro-Wilk test: Best for small to medium-sized data.
-    -   Shapiro-Francia test: A variation of the Shapiro-Wilk test. It is generally more appropriate for dealing with larger sample size data compared to the Shapiro-Wilk test, particularly for data that is expected to be normally distributed.
-    -   Anderson-Darling test: Gives more weight to the tails of the distribution.
+Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size. Here we only show a few commonly used:
 
-    Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size.
+-   Shapiro-Wilk test: Best for small to medium-sized data.
+-   Shapiro-Francia test: A variation of the Shapiro-Wilk test. It is generally more appropriate for dealing with larger sample size data compared to the Shapiro-Wilk test, particularly for data that is expected to be normally distributed.
+-   Anderson-Darling test: Gives more weight to the tails of the distribution.
 
--   **Q-Q Plot (Quantile-Quantile Plot)**
-
-    This is a more reliable visual tool that plots the quantiles of the data against the quantiles of a theoretical normal distribution. Always useful as a supplementary method.
-
-### Normality Tests
-
-Here we perform the Shapiro-Wilk test using `shapiro.test()`, which lies in the `stats` package of base R. The Shapiro-Francia test and Anderson-Darling test are performed by `sf.test()` and `ad.test()`, respectively. Both of them come from the `nortest` package, which need to be installed beforehand.
+We perform the Shapiro-Wilk test using `shapiro.test()`, which lies in the `stats` package of base R. The Shapiro-Francia test and Anderson-Darling test are performed by `sf.test()` and `ad.test()`, respectively. Both of them come from the `nortest` package, which need to be installed beforehand.
 
 ::: panel-tabset
 ## Shapiro-Wilk
@@ -213,9 +221,11 @@ rbc |>
 -   If the p-value is less than 0.05, the data is not normally distributed (reject the null hypothesis).
 :::
 
-### Q-Q Plot
+### Visualization method
 
-Visual inspection of the data can be very informative. You can create a Q-Q Plot using `qqnorm()` function. More, you can add a line to a theoretically normal quantile-quantile plot by `qqline()`, which passes through the first and third quartiles by default. These two functions can be found from the `stats` package of base R.
+Q-Q Plot (Quantile-Quantile Plot) is a more reliable visual tool that plots the quantiles of the data against the quantiles of a theoretical normal distribution. Visual inspection of the data can be very informative and is always useful as a supplementary method.
+
+You can create a Q-Q Plot using `qqnorm()` function. More, you can add a line to a theoretically normal quantile-quantile plot by `qqline()`, which passes through the first and third quartiles by default. These two functions can be found from the `stats` package of base R.
 
 ```{r}
 rbc |> 
@@ -227,7 +237,7 @@ rbc |>
   qqline(datax = T)
 ```
 
-Alternatively you can use the `ggplot2` package to create a Q-Q plot, which has more customization and flexibility. Here is an example.
+Alternatively, you can use the `ggplot2` package to create a Q-Q plot, which has more customization and flexibility. Here is an example.
 
 ```{r}
 rbc |>
@@ -255,24 +265,30 @@ A medical reference range is the set of values that a medical test result falls 
 
 Reference ranges are typically established by testing a large sample of healthy individuals and determining the range within which a certain percentage (often 95%) of results fall. The middle 95% of the population’s values are considered the reference range, meaning that 2.5% of healthy individuals might naturally have results slightly below this range and another 2.5% slightly above it.
 
-### Results interpretation
+::: example
+A investigator randomly sampled 180 normal adult males in a region, and measured the fibrinogen levels (g/L) in their venous blood. The data is saved in a file below. Have a try to establish the 95% medical reference range for fibrinogen level of normal adult males in that region.
+:::
 
-A test result that falls within the reference range is usually considered normal. A result outside the reference range might indicate an abnormal condition, but this must be interpreted in the context of the patient’s overall health, symptoms, and medical history. Not all out-of-range results indicate disease; they might be normal for a specific individual due to factors like temporary stress, diet, or exercise.
+<a href="datasets/ex04-02.csv" download="ex04-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
-### Considerations
-
-Variability: Reference ranges are not absolute; what is normal for one individual may not be normal for another, especially at the edges of the range.
-
-Clinical Context: Doctors consider a variety of factors, including patient history and symptoms, when interpreting test results. An out-of-range result may warrant further testing or a different interpretation based on the clinical context. •
-
-Reference Range Updates: Reference ranges may be updated as new research and technologies emerge, so staying informed about the latest standards is important for accurate diagnosis and treatment.
+The code chunk below can print the results directly.
 
 ```{r}
-med_ref_range <- rbc |> 
+med_ref_range <- read_csv("datasets/ex04-02.csv") |> 
   pull() |> 
   quantile(probs = c(0.025, 0.975)) |> 
   round(digits = 2) |> 
   print()
 ```
 
-The result indicates that the 95% medical reference range for the maximum heart rate in normal individuals is: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`.
+The result indicates that the 95% medical reference range for the fibrinogen level of normal adult males is: `r paste0("(", med_ref_range[1], ", ", med_ref_range[2], ")")`.
+
+### Result interpretation
+
+A test result that falls within the reference range is usually considered normal. A result outside the reference range might indicate an abnormal condition, but this must be interpreted in the context of the patient’s overall health, symptoms, and medical history. Not all out-of-range results indicate disease; they might be normal for a specific individual due to factors like temporary stress, diet, or exercise.
+
+### Considerations
+
+Reference ranges are not absolute; what is normal for one individual may not be normal for another, especially at the edges of the range. Doctors consider a variety of factors, including patient history and symptoms, when interpreting test results. An out-of-range result may warrant further testing or a different interpretation based on the clinical context.
+
+Reference ranges may be updated as new research and technologies emerge, so staying informed about the latest standards is important for accurate diagnosis and treatment.

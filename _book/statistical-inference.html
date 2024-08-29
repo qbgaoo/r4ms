@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Medical Statistics - 4&nbsp; Normal distribution</title>
+<title>R for Medical Statistics - 5&nbsp; Statistical inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./statistical-inference.html" rel="next">
-<link href="./quat-data-stat-desc.html" rel="prev">
+<link href="./ttest.html" rel="next">
+<link href="./normal-distribution.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -106,6 +106,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
@@ -162,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./statistical-inference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -230,13 +232,13 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link active">
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
   </div>
 </li>
@@ -346,33 +348,34 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">4.1</span> Prerequisite</a></li>
-  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link" data-scroll-target="#normal-distribution"><span class="header-section-number">4.2</span> Normal distribution</a>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">5.1</span> Prerequisites</a></li>
+  <li><a href="#distribution-of-sample-means" id="toc-distribution-of-sample-means" class="nav-link" data-scroll-target="#distribution-of-sample-means"><span class="header-section-number">5.2</span> Distribution of sample means</a>
   <ul class="collapse">
-  <li><a href="#standard-normal-distribution" id="toc-standard-normal-distribution" class="nav-link" data-scroll-target="#standard-normal-distribution"><span class="header-section-number">4.2.1</span> Standard normal distribution</a></li>
-  <li><a href="#area-under-curve" id="toc-area-under-curve" class="nav-link" data-scroll-target="#area-under-curve"><span class="header-section-number">4.2.2</span> Area under curve</a></li>
-  <li><a href="#visualizing-the-area" id="toc-visualizing-the-area" class="nav-link" data-scroll-target="#visualizing-the-area"><span class="header-section-number">4.2.3</span> Visualizing the area</a></li>
+  <li><a href="#standard-error" id="toc-standard-error" class="nav-link" data-scroll-target="#standard-error"><span class="header-section-number">5.2.1</span> Standard error</a></li>
+  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem"><span class="header-section-number">5.2.2</span> Central Limit Theorem</a></li>
   </ul></li>
-  <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">4.3</span> Normality test</a>
+  <li><a href="#t-distribution" id="toc-t-distribution" class="nav-link" data-scroll-target="#t-distribution"><span class="header-section-number">5.3</span> t distribution</a>
   <ul class="collapse">
-  <li><a href="#hypothesis-test-method" id="toc-hypothesis-test-method" class="nav-link" data-scroll-target="#hypothesis-test-method"><span class="header-section-number">4.3.1</span> Hypothesis test method</a></li>
-  <li><a href="#visualization-method" id="toc-visualization-method" class="nav-link" data-scroll-target="#visualization-method"><span class="header-section-number">4.3.2</span> Visualization method</a></li>
+  <li><a href="#key-characteristics" id="toc-key-characteristics" class="nav-link" data-scroll-target="#key-characteristics"><span class="header-section-number">5.3.1</span> Key characteristics</a></li>
+  <li><a href="#common-uses" id="toc-common-uses" class="nav-link" data-scroll-target="#common-uses"><span class="header-section-number">5.3.2</span> Common uses</a></li>
   </ul></li>
-  <li><a href="#medical-reference-range" id="toc-medical-reference-range" class="nav-link" data-scroll-target="#medical-reference-range"><span class="header-section-number">4.4</span> Medical reference range</a>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">5.4</span> Parameter estimation</a>
   <ul class="collapse">
-  <li><a href="#establishment" id="toc-establishment" class="nav-link" data-scroll-target="#establishment"><span class="header-section-number">4.4.1</span> Establishment</a></li>
-  <li><a href="#result-interpretation" id="toc-result-interpretation" class="nav-link" data-scroll-target="#result-interpretation"><span class="header-section-number">4.4.2</span> Result interpretation</a></li>
-  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">4.4.3</span> Considerations</a></li>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">5.4.1</span> Point estimation</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">5.4.2</span> Confidence Intervals</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">5.4.3</span> Assumptions</a></li>
   </ul></li>
+  <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test"><span class="header-section-number">5.5</span> Hypothesis test</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">5.6</span> Prediction</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./normal-distribution.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./statistical-inference.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></h1>
 </div>
 
 
@@ -389,291 +392,228 @@ window.Quarto = {
 </header>
 
 
-<p>The normal distribution, also known as the Gaussian distribution, is one of the most important probability distributions in statistics. It is characterized by its “bell-shaped” curve, which is symmetric about the mean. The normal distribution is used to model a wide range of real-world phenomena, including heights and weights of adults, blood pressures, reaction times in psychological experiments, and more.</p>
-<section id="prerequisite" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">4.1</span> Prerequisite</h2>
-<p>Setting up the required R packages in this chapter.</p>
+<p>In statistics we often use samples to infer population characteristics, since it’s impractical or impossible usually to measure the entire population. This process is called statistical inference. It involves using statistical techniques to make estimates, test hypothesis, and make predictions about population parameters.</p>
+<section id="prerequisites" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">5.1</span> Prerequisites</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="normal-distribution" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="normal-distribution"><span class="header-section-number">4.2</span> Normal distribution</h2>
-<p>The probability density function of a normal distribution is given by the formula:</p>
-<p><span class="math display">f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}</span></p>
-<p>where <span class="math inline">x</span> is the variable, <span class="math inline">\mu</span> is the mean, and <span class="math inline">\sigma</span> is the standard deviation. The <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> are two parameters of the distribution. The mean <span class="math inline">\mu</span> is a <strong>location parameter</strong>, which defines the central position, as shown in <a href="#fig-normal-mean" class="quarto-xref">Figure&nbsp;<span>4.1</span></a> . The standard deviation <span class="math inline">\sigma</span> is the <strong>shape parameter</strong>, which defines the width and height of the distribution, as shown in <a href="#fig-normal-sd" class="quarto-xref">Figure&nbsp;<span>4.2</span></a> .</p>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-normal-mean" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-normal-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="normal-distribution_files/figure-html/fig-normal-mean-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: The normal curve with different means
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div id="fig-normal-sd" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-normal-sd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="normal-distribution_files/figure-html/fig-normal-sd-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-sd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: The normal curve with different standard deviation
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="standard-normal-distribution" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="standard-normal-distribution"><span class="header-section-number">4.2.1</span> Standard normal distribution</h3>
-<p>As shown above, the change of <span class="math inline">\mu</span> and <span class="math inline">\sigma</span> affects the shape of a normal distribution. For convenience, let</p>
-<p><span class="math display">z = \frac{x - \mu}{\sigma}</span></p>
-<p>then the above mentioned probability density function will become as:</p>
-<p><span class="math display">f(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2}</span> which is called the standard normal distribution, where of <span class="math inline">\mu = 0</span> and <span class="math inline">\sigma = 1</span>.</p>
-</section>
-<section id="area-under-curve" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="area-under-curve"><span class="header-section-number">4.2.2</span> Area under curve</h3>
-<p>The cumulative distribution function is the probability that a normal random variable <span class="math inline">X</span> will be less than or equal to a given value <span class="math inline">x</span>, which is defined by the formula:</p>
-<p><span class="math display">F(x) = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{(x - \mu)^2}{2\sigma^2}}</span>The area under the curve of a normal distribution over a specific interval represents the probability that the random variable falls within that interval. This is computed using the cumulative distribution function.</p>
-<p>In R, you can calculate the area under the curve between two points using the <code>pnorm()</code> function.</p>
+<section id="distribution-of-sample-means" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="distribution-of-sample-means"><span class="header-section-number">5.2</span> Distribution of sample means</h2>
+<p>The distribution of sample means is a fundamental concept in statistics, describing the distribution of sample means obtained from multiple samples drawn from the same population. Here is a example to demonstrate the distribution of sample means.</p>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>Calculating the area under the standard normal curve between -1.96 and 1.96.</p>
+<p>Assume thrombin time follow the normal distribution of <span class="math inline">\mu=17.5</span>, <span class="math inline">\sigma=1.25</span>. A researcher randomly drew <span class="math inline">120</span> samples from the population, with each sample containing <span class="math inline">n=12</span> observations. The data is saved the the data below. The mean <span class="math inline">\bar{X}</span> and standard deviation <span class="math inline">S</span> for each sample are shown in <a href="#tbl-mean-distribution" class="quarto-xref">Table&nbsp;<span>5.1</span></a>, please analyze the distribution of the <span class="math inline">120</span> means.</p>
 </div>
+<p><a href="datasets/ex05-01.csv" download="ex05-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>area_under_curve <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fl">1.96</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.96</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>area_under_curve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.9500042</code></pre>
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex05-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(</span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">n       =</span> <span class="sc">~</span> <span class="fu">n</span>(),</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">median  =</span> median,</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">mean    =</span> mean,</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">sd      =</span> sd        </span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols      =</span> <span class="fu">everything</span>(),</span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to  =</span> <span class="fu">c</span>(<span class="st">"sample"</span>, <span class="st">".value"</span>),</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_sep =</span> <span class="st">"_"</span></span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(mean, sd), \(x)<span class="fu">round</span>(x, <span class="dv">2</span>)))</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="1">Here <code>n()</code> must use a style of anonymous function, unlike the other three ones.</span>
+</dd>
+</dl>
+</div>
+<div id="tbl-mean-distribution" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mean-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5.1: The n, median, mean and sd of the 120 random samples
+</figcaption>
+<div aria-describedby="tbl-mean-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sample"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["median"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"s1","2":"12","3":"16.70","4":"16.88","5":"1.67"},{"1":"s2","2":"12","3":"17.15","4":"17.19","5":"0.84"},{"1":"s3","2":"12","3":"17.90","4":"17.82","5":"0.60"},{"1":"s4","2":"12","3":"16.85","4":"16.89","5":"1.22"},{"1":"s5","2":"12","3":"17.15","4":"17.43","5":"1.14"},{"1":"s6","2":"12","3":"17.95","4":"17.98","5":"0.67"},{"1":"s7","2":"12","3":"17.35","4":"17.41","5":"1.59"},{"1":"s8","2":"12","3":"17.80","4":"18.26","5":"1.12"},{"1":"s9","2":"12","3":"17.00","4":"17.33","5":"1.37"},{"1":"s10","2":"12","3":"17.80","4":"17.77","5":"0.95"},{"1":"s11","2":"12","3":"17.30","4":"17.31","5":"0.94"},{"1":"s12","2":"12","3":"17.75","4":"17.88","5":"1.22"},{"1":"s13","2":"12","3":"17.25","4":"17.19","5":"1.45"},{"1":"s14","2":"12","3":"17.90","4":"18.19","5":"1.44"},{"1":"s15","2":"12","3":"16.70","4":"17.10","5":"2.05"},{"1":"s16","2":"12","3":"17.25","4":"17.88","5":"1.40"},{"1":"s17","2":"12","3":"17.65","4":"17.89","5":"1.55"},{"1":"s18","2":"12","3":"17.85","4":"17.31","5":"1.33"},{"1":"s19","2":"12","3":"17.55","4":"17.74","5":"1.23"},{"1":"s20","2":"12","3":"18.10","4":"18.02","5":"1.02"},{"1":"s21","2":"12","3":"16.85","4":"17.15","5":"1.29"},{"1":"s22","2":"12","3":"17.30","4":"17.68","5":"0.77"},{"1":"s23","2":"12","3":"17.05","4":"17.06","5":"0.98"},{"1":"s24","2":"12","3":"18.45","4":"18.31","5":"0.95"},{"1":"s25","2":"12","3":"17.75","4":"17.82","5":"1.10"},{"1":"s26","2":"12","3":"17.50","4":"17.33","5":"1.22"},{"1":"s27","2":"12","3":"17.65","4":"17.62","5":"1.25"},{"1":"s28","2":"12","3":"17.60","4":"17.78","5":"1.34"},{"1":"s29","2":"12","3":"18.00","4":"18.00","5":"1.26"},{"1":"s30","2":"12","3":"17.65","4":"17.48","5":"1.33"},{"1":"s31","2":"12","3":"17.45","4":"17.48","5":"1.61"},{"1":"s32","2":"12","3":"17.50","4":"17.58","5":"1.29"},{"1":"s33","2":"12","3":"17.80","4":"18.05","5":"0.96"},{"1":"s34","2":"12","3":"17.95","4":"17.82","5":"1.05"},{"1":"s35","2":"12","3":"17.05","4":"17.18","5":"1.38"},{"1":"s36","2":"12","3":"17.40","4":"17.55","5":"1.20"},{"1":"s37","2":"12","3":"17.65","4":"17.97","5":"1.06"},{"1":"s38","2":"12","3":"16.85","4":"17.03","5":"1.53"},{"1":"s39","2":"12","3":"17.55","4":"17.53","5":"1.13"},{"1":"s40","2":"12","3":"17.10","4":"16.92","5":"1.08"},{"1":"s41","2":"12","3":"17.30","4":"17.40","5":"1.09"},{"1":"s42","2":"12","3":"17.10","4":"16.94","5":"0.75"},{"1":"s43","2":"12","3":"17.00","4":"17.25","5":"1.44"},{"1":"s44","2":"12","3":"17.05","4":"16.92","5":"1.07"},{"1":"s45","2":"12","3":"17.45","4":"17.75","5":"1.29"},{"1":"s46","2":"12","3":"17.25","4":"17.55","5":"1.46"},{"1":"s47","2":"12","3":"17.00","4":"17.12","5":"1.15"},{"1":"s48","2":"12","3":"17.50","4":"17.42","5":"0.81"},{"1":"s49","2":"12","3":"17.50","4":"17.64","5":"1.11"},{"1":"s50","2":"12","3":"17.60","4":"17.62","5":"1.64"},{"1":"s51","2":"12","3":"16.90","4":"16.82","5":"1.38"},{"1":"s52","2":"12","3":"17.70","4":"17.39","5":"1.52"},{"1":"s53","2":"12","3":"18.20","4":"18.12","5":"0.98"},{"1":"s54","2":"12","3":"17.55","4":"17.42","5":"1.37"},{"1":"s55","2":"12","3":"17.55","4":"17.44","5":"1.24"},{"1":"s56","2":"12","3":"17.15","4":"17.16","5":"1.28"},{"1":"s57","2":"12","3":"17.95","4":"17.54","5":"1.18"},{"1":"s58","2":"12","3":"16.70","4":"16.84","5":"1.10"},{"1":"s59","2":"12","3":"17.45","4":"17.55","5":"1.45"},{"1":"s60","2":"12","3":"18.05","4":"18.05","5":"1.05"},{"1":"s61","2":"12","3":"17.70","4":"17.44","5":"0.93"},{"1":"s62","2":"12","3":"16.70","4":"16.73","5":"0.84"},{"1":"s63","2":"12","3":"16.75","4":"16.82","5":"1.04"},{"1":"s64","2":"12","3":"17.65","4":"17.81","5":"1.24"},{"1":"s65","2":"12","3":"17.50","4":"18.04","5":"1.59"},{"1":"s66","2":"12","3":"17.30","4":"17.26","5":"0.79"},{"1":"s67","2":"12","3":"17.10","4":"17.41","5":"1.20"},{"1":"s68","2":"12","3":"17.80","4":"17.77","5":"1.19"},{"1":"s69","2":"12","3":"17.60","4":"17.94","5":"0.92"},{"1":"s70","2":"12","3":"18.45","4":"18.23","5":"1.12"},{"1":"s71","2":"12","3":"17.30","4":"17.25","5":"1.23"},{"1":"s72","2":"12","3":"17.35","4":"17.46","5":"1.03"},{"1":"s73","2":"12","3":"16.45","4":"16.54","5":"0.95"},{"1":"s74","2":"12","3":"17.75","4":"18.15","5":"0.97"},{"1":"s75","2":"12","3":"17.60","4":"17.38","5":"1.17"},{"1":"s76","2":"12","3":"18.10","4":"17.78","5":"1.61"},{"1":"s77","2":"12","3":"18.45","4":"18.42","5":"0.97"},{"1":"s78","2":"12","3":"17.35","4":"17.28","5":"1.23"},{"1":"s79","2":"12","3":"17.75","4":"17.62","5":"0.66"},{"1":"s80","2":"12","3":"17.30","4":"17.26","5":"1.48"},{"1":"s81","2":"12","3":"18.15","4":"17.97","5":"1.91"},{"1":"s82","2":"12","3":"18.45","4":"18.23","5":"0.99"},{"1":"s83","2":"12","3":"16.90","4":"17.08","5":"1.10"},{"1":"s84","2":"12","3":"17.70","4":"17.66","5":"1.58"},{"1":"s85","2":"12","3":"16.65","4":"16.75","5":"1.16"},{"1":"s86","2":"12","3":"17.90","4":"17.68","5":"0.94"},{"1":"s87","2":"12","3":"17.75","4":"17.46","5":"1.30"},{"1":"s88","2":"12","3":"17.10","4":"17.30","5":"1.05"},{"1":"s89","2":"12","3":"17.70","4":"17.56","5":"1.28"},{"1":"s90","2":"12","3":"17.05","4":"17.25","5":"1.23"},{"1":"s91","2":"12","3":"18.00","4":"18.12","5":"1.20"},{"1":"s92","2":"12","3":"17.70","4":"17.66","5":"1.29"},{"1":"s93","2":"12","3":"17.85","4":"17.48","5":"1.52"},{"1":"s94","2":"12","3":"17.35","4":"17.37","5":"0.91"},{"1":"s95","2":"12","3":"17.85","4":"17.69","5":"1.31"},{"1":"s96","2":"12","3":"17.25","4":"17.23","5":"1.62"},{"1":"s97","2":"12","3":"17.75","4":"17.77","5":"1.18"},{"1":"s98","2":"12","3":"18.15","4":"17.84","5":"1.04"},{"1":"s99","2":"12","3":"17.85","4":"17.87","5":"1.10"},{"1":"s100","2":"12","3":"17.40","4":"17.42","5":"1.45"},{"1":"s101","2":"12","3":"17.10","4":"17.61","5":"1.28"},{"1":"s102","2":"12","3":"17.65","4":"17.24","5":"1.62"},{"1":"s103","2":"12","3":"17.10","4":"17.20","5":"0.88"},{"1":"s104","2":"12","3":"17.35","4":"17.03","5":"0.99"},{"1":"s105","2":"12","3":"16.65","4":"17.11","5":"1.15"},{"1":"s106","2":"12","3":"18.55","4":"18.58","5":"1.49"},{"1":"s107","2":"12","3":"17.85","4":"17.62","5":"1.39"},{"1":"s108","2":"12","3":"17.40","4":"17.71","5":"1.24"},{"1":"s109","2":"12","3":"17.55","4":"17.42","5":"1.35"},{"1":"s110","2":"12","3":"17.80","4":"17.77","5":"0.98"},{"1":"s111","2":"12","3":"18.10","4":"17.98","5":"1.13"},{"1":"s112","2":"12","3":"17.65","4":"17.63","5":"0.96"},{"1":"s113","2":"12","3":"17.75","4":"17.88","5":"1.26"},{"1":"s114","2":"12","3":"17.70","4":"17.58","5":"1.55"},{"1":"s115","2":"12","3":"17.40","4":"17.80","5":"0.93"},{"1":"s116","2":"12","3":"17.10","4":"16.98","5":"1.46"},{"1":"s117","2":"12","3":"18.00","4":"17.92","5":"1.21"},{"1":"s118","2":"12","3":"17.75","4":"17.73","5":"1.38"},{"1":"s119","2":"12","3":"17.15","4":"17.48","5":"1.01"},{"1":"s120","2":"12","3":"16.95","4":"17.19","5":"1.49"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
-</section>
-<section id="visualizing-the-area" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="visualizing-the-area"><span class="header-section-number">4.2.3</span> Visualizing the area</h3>
-<p>You can use <code>ggplot2</code> package in R to plot the normal distribution curve and shade the area under the curve. Here is example to shade the area of the left and right tails.</p>
+</div>
+</figure>
+</div>
+</div>
+<p>It is clear that the mean of each sample is different, and also may not equal to the mean of the population. The difference between a population parameter and a corresponding sample statistic is called sampling error. It arises because only a random sample of the entire population is observed, which may not perfectly represent the entire population.</p>
+<p>To visualize the distribution of the 120 sample means, here we create a histogram:</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mean) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">freq           =</span> T,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">right          =</span> F, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col            =</span> <span class="st">"skyblue"</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">include.lowest =</span> T,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">main           =</span> <span class="st">" "</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab           =</span> <span class="st">"The average of the thrombin time"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab           =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim           =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">26</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels         =</span> T</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="normal-distribution_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statistical-inference_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>From the figure above we can say that the distribution of the sample mean can be approximated by a normal distribution. The two sample statistics of mean <span class="math inline">\bar{X}</span> and standard deviation <span class="math inline">S</span> can be achieved by the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">x =</span> mean) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(x),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd   =</span> <span class="fu">sd</span>(x)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">mean</th>
+<th style="text-align: center;">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">17.5</td>
+<td style="text-align: center;">0.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The mean of the sample means is <span class="math inline">17.5</span>, equal to the population mean <span class="math inline">\mu=1.75</span>, while the standard deviation of the sample mean is <span class="math inline">0.4</span>, less than the standard deviation of population <span class="math inline">\sigma = 1.25</span>.</p>
+<section id="standard-error" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="standard-error"><span class="header-section-number">5.2.1</span> Standard error</h3>
+<p>The standard deviation of the distribution of the sample means is called the standard error (SE). It reflects the typical distance between a sample mean and the population mean. The standard error of sample means is given by:</p>
+<p><span class="math display">
+\sigma_\bar{X} = \frac{\sigma}{\sqrt{n}}
+</span></p>
+<p>However, the population parameter <span class="math inline">\sigma</span> is usually unknown, therefore, the sample standard deviation <span class="math inline">S</span> is used as an estimator for the population standard deviation. Therefore, an estimation of the standard error above mentioned is defined by</p>
+<p><span class="math display">
+S_\bar{X} = \frac{S}{\sqrt{n}}
+</span></p>
+<p>As the sample size <span class="math inline">n</span> increases, the standard error decreases, meaning the sample means will be closer to the population mean.</p>
+<p>It is need to be pointed out that the above formula for calculating the sampling error of the mean is only adapt to simple random sampling. For other sampling methods, there are corresponding formulas exist.</p>
+</section>
+<section id="central-limit-theorem" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="central-limit-theorem"><span class="header-section-number">5.2.2</span> Central Limit Theorem</h3>
+<p>Regardless of the population distribution, as the sample size <span class="math inline">n</span> becomes large (typically <span class="math inline">n \geq 30</span> is considered sufficient), the sampling distribution of the sample mean will approximate a normal distribution. This is the essence of the Central Limit Theorem in statistics.</p>
+<p>For small sample sizes, if the population itself is normally distributed, the distribution of the sample means will also be normally distributed.</p>
+<p>Because the sampling distribution of the sample means can be approximated by a normal distribution (especially for large <span class="math inline">n</span>), it allows for the construction of confidence intervals for the population mean and the conducting of hypothesis tests. The normality of the sampling distribution justifies the use of z-test or t-test depending on whether the population variance is known or unknown and the sample size.</p>
 </section>
 </section>
-<section id="normality-test" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">4.3</span> Normality test</h2>
+<section id="t-distribution" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="t-distribution"><span class="header-section-number">5.3</span> t distribution</h2>
+<p>The t-distribution, also known as Student’s t-distribution, is a probability distribution that is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in confidence intervals, hypothesis testing, and regression analysis.</p>
+<p>For a sample mean <span class="math inline">\bar{X}</span> , sample standard deviation <span class="math inline">S</span> , and sample size <span class="math inline">n</span> , the t-statistic is calculated as:</p>
+<p><span class="math display">
+t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+</span></p>
+<p>Where <span class="math inline">\mu</span> is the hypothesized population mean.</p>
+<p>Visual Representation:</p>
+<p>The t-distribution can be plotted to show how it compares with the normal distribution. It would have thicker tails, indicating a higher probability of values further from the mean, especially with smaller degrees of freedom. As degrees of freedom increase, the t-distribution curve will converge toward the standard normal distribution curve.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statistical-inference_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="key-characteristics" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="key-characteristics"><span class="header-section-number">5.3.1</span> Key characteristics</h3>
+<ul>
+<li>Shape: The t-distribution is similar to the standard normal distribution (bell-shaped and symmetric around zero), but it has heavier tails. This means it is more prone to producing values that fall far from its mean.</li>
+<li>Degrees of Freedom (df): The shape of the t-distribution depends on the degrees of freedom, which is typically related to the sample size (df = n - 1 for a single sample t-test). As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. For large sample sizes (df &gt; 30), the t-distribution and normal distribution are almost indistinguishable.</li>
+<li>Mean and Variance: The mean of the t-distribution is 0. • The variance is greater than 1 and depends on the degrees of freedom. Specifically, the variance is for df &gt; 2 .</li>
+</ul>
+</section>
+<section id="common-uses" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="common-uses"><span class="header-section-number">5.3.2</span> Common uses</h3>
+<ul>
+<li>Confidence intervals: The t-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.</li>
+<li>t-test: Used to compare the means of two groups (independent or paired samples) when the sample size is small and the population standard deviation is unknown.
+<ul>
+<li>One-sample t-test: Tests if the mean of a single sample is significantly different from a known value.</li>
+<li>Two-sample t-test: Tests if the means of two independent groups are significantly different.</li>
+<li>Paired t-test: Tests if the means of two related groups (e.g., before and after measurements) are significantly different.</li>
+</ul></li>
+<li>Regression Analysis: In linear regression, t-test are used to determine whether the coefficients of the independent variables are significantly different from zero.</li>
+</ul>
+<p>Example:</p>
 <div class="example">
 <strong>Example 2:</strong> 
-<p>Some researchers used a random sampling method to examine the red blood cell count of 29 normal adults. The measuring results are saved in a <code>.csv</code> file. Please analyze its normality.</p>
+<p>Imagine you have a small sample of 15 observations, and you want to test if the mean of this sample is different from a known value, say 50. Since the sample size is small, you would use the t-distribution to conduct this test, accounting for the fact that the true standard deviation of the population is unknown.</p>
 </div>
-<p><a href="datasets/ex04-01.csv" download="ex04-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-<p>You can click on the download button above to download and the save it in your own folder. Here we import the data file into R and assign to a tibble named <code>rbc</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Rows: 29 Columns: 1
-#&gt; ── Column specification ─────────────────────────────────────────────────────
-#&gt; Delimiter: ","
-#&gt; dbl (1): rbc
-#&gt; 
-#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
-#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-<p>Test of normality is used to determine if a variable is well-modeled by a normal distribution. This is an important assumption for many statistical tests. Histogram (<a href="quat-data-stat-desc.html#sec-frequency-histogram" class="quarto-xref"><span>Section 3.2.2</span></a>) can be used as a visual tool to assess whether a variable follows a normal distribution, but it should be used with caution due to the reasons below:</p>
+</section>
+</section>
+<section id="parameter-estimation" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">5.4</span> Parameter estimation</h2>
+<p>Parameter estimation is a concept in statistics that involves using sample data to estimate the parameters of a population. The sample should be random and large enough to provide an accurate estimate. A parameter is a numerical characteristic of a population, such as a mean, proportion, or standard deviation. There are two types of parameter estimation:</p>
+<section id="point-estimation" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">5.4.1</span> Point estimation</h3>
+<p>This involves using sample data to calculate a single value that serves as the best guess for a population parameter (e.g., mean, proportion). However, obtaining an exact point estimate of the population parameter from just one random sample is almost unattainable.</p>
+<p>Calculate the sample mean <span class="math inline">\bar{x}</span>: The sample mean is calculated using the formula:</p>
+<p><span class="math display">
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+</span></p>
+<p>where <span class="math inline">n</span> is the sample size, and <span class="math inline">x_i</span> are the individual sample values. The sample mean (<span class="math inline">\bar{x}</span>) serves as an estimate of the population mean (<span class="math inline">\mu</span>).</p>
+<p>Hower, a point estimate does not consider the sampling error and cannot tell you how close the estimate is likely to be to the true population mean. Instead of relying on a single point estimate, interval estimation are often used because they provide a range of values within which the true population mean is likely to lie. along with a level of confidence (e.g., 95%).</p>
+</section>
+<section id="confidence-intervals" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">5.4.2</span> Confidence Intervals</h3>
+<p>A confidence interval (CI) is associated with a confidence level, typically 95%, which indicates the degree of certainty that the true population mean falls in the range. For example, a 95% confidence interval can be calculated as:</p>
+<p><span class="math display">
+\text{CI} = \bar{x} \pm z \times \text{SE}
+</span></p>
+<p>where <span class="math inline">z</span> is the critical value from the standard normal distribution (e.g., 1.96 for 95% confidence); <span class="math inline">\text{SE}</span> denotes standard error of the mean, which indicates how much the sample mean is expected to vary from the true population mean:</p>
+<p><span class="math display">
+SE = \frac{S}{\sqrt{n}}
+</span></p>
+<p>where <span class="math inline">S</span> is the sample standard deviation, <span class="math inline">n</span> is the sample size.</p>
+</section>
+<section id="assumptions" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">5.4.3</span> Assumptions</h3>
+<p>In Statistical Inference there are two assumptions:</p>
 <ul>
-<li>For a small sample data, the histogram might not provide a clear picture of the distribution, making it harder to assess normality. With larger samples, the histogram gives a better indication but may still be misleading.</li>
-<li>The appearance of the histogram can change significantly depending on the number of bins (or the bin width). Too few bins might obscure important features of the data, while too many bins might introduce noise.</li>
-<li>The interpretation of a histogram is somewhat subjective. Two people might look at the same histogram and draw different conclusions about normality.</li>
+<li>Random sampling: The sample should be randomly selected to avoid bias.</li>
+<li>Independence: Observations in the sample should be independent of each other.</li>
 </ul>
-<p>Since histogram can sometimes be misleading or ambiguous, it’s a good practice to use it alongside other methods:</p>
-<section id="hypothesis-test-method" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="hypothesis-test-method"><span class="header-section-number">4.3.1</span> Hypothesis test method</h3>
-<p>Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size. Here we only show a few commonly used:</p>
-<ul>
-<li>Shapiro-Wilk test: Best for small to medium-sized data.</li>
-<li>Shapiro-Francia test: A variation of the Shapiro-Wilk test. It is generally more appropriate for dealing with larger sample size data compared to the Shapiro-Wilk test, particularly for data that is expected to be normally distributed.</li>
-<li>Anderson-Darling test: Gives more weight to the tails of the distribution.</li>
-</ul>
-<p>We perform the Shapiro-Wilk test using <code>shapiro.test()</code>, which lies in the <code>stats</code> package of base R. The Shapiro-Francia test and Anderson-Darling test are performed by <code>sf.test()</code> and <code>ad.test()</code>, respectively. Both of them come from the <code>nortest</code> package, which need to be installed beforehand.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Shapiro-Wilk</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Shapiro-Francia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Anderson-Darling</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shapiro.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Shapiro-Wilk normality test
-#&gt; 
-#&gt; data:  pull(rbc)
-#&gt; W = 0.98382, p-value = 0.9228</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sf.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Shapiro-Francia normality test
-#&gt; 
-#&gt; data:  pull(rbc)
-#&gt; W = 0.97756, p-value = 0.682</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ad.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Anderson-Darling normality test
-#&gt; 
-#&gt; data:  pull(rbc)
-#&gt; A = 0.22677, p-value = 0.7975</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>If the p-value is greater than 0.05, the data is normally distributed (fail to reject the null hypothesis).</li>
-<li>If the p-value is less than 0.05, the data is not normally distributed (reject the null hypothesis).</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="visualization-method" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="visualization-method"><span class="header-section-number">4.3.2</span> Visualization method</h3>
-<p>Q-Q Plot (Quantile-Quantile Plot) is a more reliable visual tool that plots the quantiles of the data against the quantiles of a theoretical normal distribution. Visual inspection of the data can be very informative and is always useful as a supplementary method.</p>
-<p>You can create a Q-Q Plot using <code>qqnorm()</code> function. More, you can add a line to a theoretically normal quantile-quantile plot by <code>qqline()</code>, which passes through the first and third quartiles by default. These two functions can be found from the <code>stats</code> package of base R.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qqnorm</span>(<span class="at">main =</span> <span class="st">""</span>, <span class="at">datax =</span> T)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qqline</span>(<span class="at">datax =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="normal-distribution_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Alternatively, you can use the <code>ggplot2</code> package to create a Q-Q plot, which has more customization and flexibility. Here is an example.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> rbc)) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fl">2.3</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical Quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample Quantiles"</span>) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text  =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="normal-distribution_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>If the data points fall approximately along the reference line in the Q-Q plot, the data is likely normally distributed.</li>
-<li>Significant deviations from the line indicate departures from normality.</li>
-</ul>
-</div>
-</div>
 </section>
 </section>
-<section id="medical-reference-range" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="medical-reference-range"><span class="header-section-number">4.4</span> Medical reference range</h2>
-<p>A medical reference range is the set of values that a medical test result falls within for a healthy population. These ranges are used by healthcare providers to interpret laboratory results and determine whether a patient’s test results are normal or indicate a potential health issue.</p>
-<section id="establishment" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="establishment"><span class="header-section-number">4.4.1</span> Establishment</h3>
-<p>Reference ranges are typically established by testing a large sample of healthy individuals and determining the range within which a certain percentage (often 95%) of results fall. The middle 95% of the population’s values are considered the reference range, meaning that 2.5% of healthy individuals might naturally have results slightly below this range and another 2.5% slightly above it.</p>
-<div class="example">
-<strong>Example 3:</strong> 
-<p>A investigator randomly sampled 180 normal adult males in a region, and measured the fibrinogen levels (g/L) in their venous blood. The data is saved in a file below. Have a try to establish the 95% medical reference range for fibrinogen level of normal adult males in that region.</p>
-</div>
-<p><a href="datasets/ex04-02.csv" download="ex04-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-<p>The code chunk below can print the results directly.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>med_ref_range <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex04-02.csv"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(<span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Rows: 180 Columns: 1
-#&gt; ── Column specification ─────────────────────────────────────────────────────
-#&gt; Delimiter: ","
-#&gt; dbl (1): fibrinogen
-#&gt; 
-#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
-#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  2.5% 97.5% 
-#&gt;  1.77  3.63</code></pre>
-</div>
-</div>
-<p>The result indicates that the 95% medical reference range for the fibrinogen level of normal adult males is: (1.77, 3.63).</p>
+<section id="hypothesis-test" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="hypothesis-test"><span class="header-section-number">5.5</span> Hypothesis test</h2>
+<p>Hypothesis test is a formal procedure for comparing sample data against a hypothesis about the population. It involves: Null Hypothesis (H_0): The default assumption, typically that there is no effect or difference. Alternative Hypothesis (H_1): The hypothesis that there is an effect or difference. Test Statistic: A standardized value calculated from sample data, used to assess the strength of evidence against H_0. P-value: The probability of observing the data, or something more extreme, assuming H_0 is true. Decision Rule: Based on the p-value and a significance level (e.g., 0.05), the researcher decides whether to reject H_0.</p>
+<p>Hypothesis test will be in next chapter</p>
 </section>
-<section id="result-interpretation" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="result-interpretation"><span class="header-section-number">4.4.2</span> Result interpretation</h3>
-<p>A test result that falls within the reference range is usually considered normal. A result outside the reference range might indicate an abnormal condition, but this must be interpreted in the context of the patient’s overall health, symptoms, and medical history. Not all out-of-range results indicate disease; they might be normal for a specific individual due to factors like temporary stress, diet, or exercise.</p>
-</section>
-<section id="considerations" class="level3" data-number="4.4.3">
-<h3 data-number="4.4.3" class="anchored" data-anchor-id="considerations"><span class="header-section-number">4.4.3</span> Considerations</h3>
-<p>Reference ranges are not absolute; what is normal for one individual may not be normal for another, especially at the edges of the range. Doctors consider a variety of factors, including patient history and symptoms, when interpreting test results. An out-of-range result may warrant further testing or a different interpretation based on the clinical context.</p>
-<p>Reference ranges may be updated as new research and technologies emerge, so staying informed about the latest standards is important for accurate diagnosis and treatment.</p>
+<section id="prediction" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="prediction"><span class="header-section-number">5.6</span> Prediction</h2>
+<p>Using sample data to predict future observations or outcomes within the population. Prediction involves estimating the expected value of a dependent variable based on independent variables.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1271,13 +1211,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./quat-data-stat-desc.html" class="pagination-link" aria-label="Statistical description of quantitative data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span>
+      <a href="./normal-distribution.html" class="pagination-link" aria-label="Normal distribution">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./statistical-inference.html" class="pagination-link" aria-label="Statistical inference">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ttest.html" class="pagination-link" aria-label="t-test">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">t-test</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

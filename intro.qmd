@@ -24,7 +24,9 @@ Population and sample are fundamental concepts in statistics, and they are key t
 
 A population includes all members of a defined group that we are studying or collecting information on for data-driven decisions. The population represents the entire group of interest, which could be people, objects, events, or measurements.
 
-Examples: All adults living in a particular country. All patients treated for a particular condition in a hospital over a decade. • Characteristics:
+Examples: All adults living in a particular country. All patients treated for a particular condition in a hospital over a decade.
+
+Characteristics:
 
 Parameters: The numerical characteristics of a population are called parameters (e.g., population mean, population standard deviation).
 
@@ -68,7 +70,7 @@ Understanding the distinction between population and sample is essential for con
 
 In statistics, data can be classified into different types based on various characteristics. Understanding these data types is crucial for selecting appropriate statistical methods and accurately interpreting results. Below are the main types of data:
 
-### Quantitative data 
+### Quantitative data
 
 Quantitative data (numerical data) refers to data that can be measured and expressed numerically. This type of data is critical in the medical field as it allows for precise measurements, comparisons, and statistical analysis, ultimately leading to better understanding, diagnosis, treatment, and prevention of diseases. Quantitative data can be further classified into two main types:
 
@@ -169,9 +171,8 @@ Qualitative data plays a vital role in various aspects:
 
     **Example:** Assessing the relationship between smoking status (smoker, non-smoker) and lung cancer diagnosis (yes, no).
 
-```{=html}
 <!-- -->
-```
+
 -   **Logistic Regression:** Used for modeling the probability of a binary outcome based on one or more predictor variables.
 
     **Example:** Predicting the likelihood of a disease relapse based on treatment type and other categorical factors.
@@ -201,13 +202,3 @@ Public health studies often categorize populations based on demographic factors 
 **Example:** Identifying vaccination rates across different ethnic groups to improve immunization programs.
 
 Qualitative data is essential in the medical field for categorizing and analyzing various aspects of health and disease. It provides the basis for understanding patterns, making clinical decisions, and conducting research that ultimately improves patient care. Properly collecting, analyzing, and interpreting qualitative data ensures that medical interventions are tailored to the specific needs of patients and populations.
-
-
-
-
-
-
-
-
-
-

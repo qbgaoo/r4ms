@@ -20,7 +20,7 @@ book:
       chapters:
         - quat-data-stat-desc.qmd
         - normal-distribution.qmd
-        - mean-estimation.qmd
+        - statistical-inference.qmd
         - ttest.qmd
         - anova.qmd
         - count-data-stat-desc.qmd
@@ -43,6 +43,7 @@ book:
 format:
   html:
     runtime: shiny
+    html-math-method: katex
     
     theme:
       light: [flatly, flatly.scss]

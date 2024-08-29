@@ -74,3 +74,13 @@ div.sidebar-item-container .active {
 .custom-button:hover {
     background-color: #45a049;
 }
+
+/* For inline formulas */
+.katex {
+    font-size: 100% !important;
+}
+
+/* For block (display) formulas */
+.katex-display {
+    font-size: 100% !important;
+}
