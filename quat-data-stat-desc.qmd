@@ -147,31 +147,6 @@ rbc |>
 ```
 :::
 
-### Call Shiny App
-
-<button class="btn btn-primary" id="shiny-button">
-
-Launch Shiny App
-
-</button>
-
-```{=html}
-<script>
-// Launch the Shiny application when the button is clicked
-document.getElementById("shiny-button").onclick = function() {
-    Shiny.onInputChange('shiny_trigger', Math.random());
-};
-</script>
-```
-```{r}
-library(shiny)
-
-# Define function that trigger a Shiny App
-observeEvent(input$shiny_trigger, {
-  runApp("shiny/histogram", launch.browser = F)
-})
-```
-
 ## Measures of central tendency
 
 Central tendency is a statistical concept that refers to the measure of the center or typical value in a data set. It provides a summary of the data with a single value that represents the middle or average of the data. The most common measures of central tendency are:

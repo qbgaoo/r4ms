@@ -6,7 +6,7 @@
 source("_common.R")
 ```
 
-In statistics we often use samples to infer population characteristics, since it’s impractical or impossible usually to measure the entire population. This process is called statistical inference. It involves using statistical techniques to make estimates, test hypothesis, and make predictions about population parameters.
+In statistics we often use samples to infer population characteristics, since it’s impractical or impossible usually to measure the entire population. This process is called statistical inference. It involves using statistical techniques to make estimates, test hypothesis, and make predictions about population parameters. In this chapter, we maily focus on the estimation of population means.
 
 ## Prerequisites
 
@@ -54,7 +54,7 @@ Assume thrombin time follow the normal distribution of $\mu=17.5$, $\sigma=1.25$
 
 ```{r}
 #| label: tbl-mean-distribution
-#| tbl-cap: The n, median, mean and sd of the 120 random samples
+#| tbl-cap: The n, median, mean and sd of the 120 random samples (s)
 df <- read_csv("datasets/ex05-01.csv", show_col_types = F) |> 
   summarise_all(
     list(
@@ -132,39 +132,49 @@ Regardless of the population distribution, as the sample size $n$ becomes large 
 
 For small sample sizes, if the population itself is normally distributed, the distribution of the sample means will also be normally distributed.
 
-Because the sampling distribution of the sample means can be approximated by a normal distribution (especially for large $n$), it allows for the construction of confidence intervals for the population mean and the conducting of hypothesis tests. The normality of the sampling distribution justifies the use of z-test or t-test depending on whether the population variance is known or unknown and the sample size.
+Because the sampling distribution of the sample means can be approximated by a normal distribution (especially for large $n$), it allows for the construction of confidence intervals for the population mean and the conducting of hypothesis tests. The normality of the sampling distribution justifies the use of *z*-test or *t*-test depending on whether the population variance is known or unknown and the sample size.
 
 ## t distribution
 
-The t-distribution, also known as Student’s t-distribution, is a probability distribution that is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in confidence intervals, hypothesis testing, and regression analysis.
+The sample mean $\bar{X}$ follows a normal distribution when the underlying population is normally distributed, or when the sample size is sufficiently large due to the Central Limit Theorem. However, when you’re converting the sample mean into a standardized form, the distribution you use depends on whether or not you know the population standard deviation $\sigma$.
 
-For a sample mean $\bar{X}$ , sample standard deviation $S$ , and sample size $n$ , the t-statistic is calculated as:
+-   If $\sigma$ is known, the sample mean $\bar{X}$ can be standardized using the formula:
 
 $$
-t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}
 $$
 
-Where $\mu$ is the hypothesized population mean.
+In this case, the standardized variable $Z$ follows a standard normal distribution $N(0, 1)$.
 
-Visual Representation:
+-   If $\sigma$ is unknown, which is often the case in practice, you need to estimate it using the sample standard deviation $S$. The formula for standardizing the sample mean becomes:
 
-The t-distribution can be plotted to show how it compares with the normal distribution. It would have thicker tails, indicating a higher probability of values further from the mean, especially with smaller degrees of freedom. As degrees of freedom increase, the t-distribution curve will converge toward the standard normal distribution curve.
+$$
+t = \frac{\bar{X} - \mu}{S_{\bar{X}}} = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+$$
+
+Here, $t$ doesn't not follow a standard normal distribution anymore, it follows a *t*-distribution with degrees of freedom $\nu = n - 1$ ($n$ is the sample size).
+
+The *t*-distribution, also known as Student’s *t*-distribution, is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in confidence intervals, hypothesis testing, and regression analysis.
+
+### Visual representation
+
+The *t*-distribution can be plotted to show how it compares with the normal distribution.
 
 ```{r}
 #| echo: false
 
 tibble(
-  x  = seq(-4, 4, length.out = 500),
-  y1 = dt(x, df = 1),
-  y2 = dt(x, df = 5),
-  y3 = dt(x, df = Inf)
+  t  = seq(-4, 4, length.out = 500),
+  y1 = dt(t, df = 1),
+  y2 = dt(t, df = 5),
+  y3 = dt(t, df = Inf)
 ) |> 
   pivot_longer(
     cols      = contains("y"),
     values_to = "density",
     names_to  = "group"
   ) |> 
-  ggplot(aes(x = x, y = density, linetype = group)) +
+  ggplot(aes(x = t, y = density, linetype = group)) +
   geom_line() +
   scale_linetype_manual(
     name   = "",
@@ -178,74 +188,243 @@ tibble(
   )
 ```
 
-### Key characteristics
+The *t*-distribution is similar to the standard normal distribution, but it has heavier tails. This means a higher probability of values further from the mean, especially with a smaller degree of freedom. As degrees of freedom increase, the *t*-distribution curve will converge toward the standard normal distribution curve.
 
--   Shape: The t-distribution is similar to the standard normal distribution (bell-shaped and symmetric around zero), but it has heavier tails. This means it is more prone to producing values that fall far from its mean.
--   Degrees of Freedom (df): The shape of the t-distribution depends on the degrees of freedom, which is typically related to the sample size (df = n - 1 for a single sample t-test). As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. For large sample sizes (df \> 30), the t-distribution and normal distribution are almost indistinguishable.
--   Mean and Variance: The mean of the t-distribution is 0. • The variance is greater than 1 and depends on the degrees of freedom. Specifically, the variance is \frac{df}{df - 2} for df \> 2 .
+The shape of the *t*-distribution depends on the degrees of freedom $\nu$, which is typically related to the sample size ($\nu = n - 1$). As the degrees of freedom increase, the *t*-distribution approaches the standard normal distribution. For large sample sizes ($\nu > 60$), the *t*-distribution and normal distribution are almost indistinguishable.
 
 ### Common uses
 
--   Confidence intervals: The t-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.
--   t-test: Used to compare the means of two groups (independent or paired samples) when the sample size is small and the population standard deviation is unknown.
-    -   One-sample t-test: Tests if the mean of a single sample is significantly different from a known value.
-    -   Two-sample t-test: Tests if the means of two independent groups are significantly different.
-    -   Paired t-test: Tests if the means of two related groups (e.g., before and after measurements) are significantly different.
--   Regression Analysis: In linear regression, t-test are used to determine whether the coefficients of the independent variables are significantly different from zero.
+-   Confidence intervals
 
-Example:
+    The *t*-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.
 
-::: example
-Imagine you have a small sample of 15 observations, and you want to test if the mean of this sample is different from a known value, say 50. Since the sample size is small, you would use the t-distribution to conduct this test, accounting for the fact that the true standard deviation of the population is unknown.
-:::
+-   *t*-test: Used to compare the means of two groups when the sample size is small and the population standard deviation is unknown.
 
-## Parameter estimation
+-   Regression analysis: In linear regression, *t*-test are used to determine whether the coefficients of the independent variables are significantly different from zero.
 
-Parameter estimation is a concept in statistics that involves using sample data to estimate the parameters of a population. The sample should be random and large enough to provide an accurate estimate. A parameter is a numerical characteristic of a population, such as a mean, proportion, or standard deviation. There are two types of parameter estimation:
+## Estimation of population mean
+
+Parameter estimation is a concept in statistics that involves using statistic off a sample to estimate parameters of the corresponding population. The sample should be random and large enough to provide an accurate estimate. A parameter is a numerical characteristic about a population, such as a mean, proportion, or standard deviation. Here we just talk about the estimation of population mean.
 
 ### Point estimation
 
-This involves using sample data to calculate a single value that serves as the best guess for a population parameter (e.g., mean, proportion). However, obtaining an exact point estimate of the population parameter from just one random sample is almost unattainable.
+This involves using sample data to calculate a single value that serves as the best guess for a population mean. However, obtaining an exact point estimate of the population mean from just one random sample is almost unattainable.
 
-Calculate the sample mean $\bar{x}$: The sample mean is calculated using the formula:
-
-$$
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
-$$
-
-where $n$ is the sample size, and $x_i$ are the individual sample values. The sample mean ($\bar{x}$) serves as an estimate of the population mean ($\mu$).
-
-Hower, a point estimate does not consider the sampling error and cannot tell you how close the estimate is likely to be to the true population mean. Instead of relying on a single point estimate, interval estimation are often used because they provide a range of values within which the true population mean is likely to lie. along with a level of confidence (e.g., 95%).
-
-### Confidence Intervals
-
-A confidence interval (CI) is associated with a confidence level, typically 95%, which indicates the degree of certainty that the true population mean falls in the range. For example, a 95% confidence interval can be calculated as:
+Calculate the sample mean $\bar{X}$: The sample mean is calculated using the formula:
 
 $$
-\text{CI} = \bar{x} \pm z \times \text{SE}
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} x_i
 $$
 
-where $z$ is the critical value from the standard normal distribution (e.g., 1.96 for 95% confidence); $\text{SE}$ denotes standard error of the mean, which indicates how much the sample mean is expected to vary from the true population mean:
+where $n$ is the sample size, and $x_i$ are the individual sample values. The sample mean ($\bar{X}$) serves as an estimate of the population mean ($\mu$).
+
+However, a point estimate does not consider the sampling error and cannot tell you how close the estimate is likely to be to the true population mean. Instead of relying on a single point estimate, interval estimation are often used because they provide a range of values within which the true population mean is likely to lie along with a confidence level.
+
+### Confidence interval
+
+The method for calculating the confidence interval of the population mean varies depending on whether the population standard deviation $\sigma$ is known and the size of sample $n$. Typically, there are two types of methods: the *t*-distribution and the *z*-distribution (also known as the u-distribution). The following will introduce the methods for calculating the confidence interval of a single population mean and the confidence interval of the difference between two population means.
+
+**Single population mean**
+
+Confidence interval (CI) is associated with a confidence level, typically 95%, which indicates the degree of certainty that the true population mean falls in the range. The two-sided $1-\alpha$ confidence interval of single population mean can be formulated as:
 
 $$
-SE = \frac{S}{\sqrt{n}}
+\text{CI} = \bar{X} \pm t_{\nu,\alpha/2} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \text{CI} = \bar{X} \pm z_{\alpha/2} \cdot \frac{S}{\sqrt{n}}
 $$
 
-where $S$ is the sample standard deviation, $n$ is the sample size.
+Similarly, the one-sided $1-\alpha$ confidence interval for the population mean is given by：
 
-### Assumptions
+$$
+\mu> \bar{X} - t_{\nu,\alpha} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \mu> \bar{X} - z_\alpha \cdot \frac{S}{\sqrt{n}}
+$$
 
-In Statistical Inference there are two assumptions:
+$$
+\mu < \bar{X} + t_{\nu,\alpha} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \mu < \bar{X} + z_\alpha \cdot \frac{S}{\sqrt{n}}
+$$
 
--   Random sampling: The sample should be randomly selected to avoid bias.
--   Independence: Observations in the sample should be independent of each other.
+where $t$ is the critical value from the *t*-distribution, it depends on the degree of freedom $\nu$ and the level of confidence $\alpha$; $z$ is the critical value from the standard normal distribution, it depends on the level of confidence $\alpha$.
 
-## Hypothesis test
+::: example
+A research group randomly selected 20 adult men in a area and measured their red blood cell count. Please calculate the 95% confidence interval for the population mean.
+:::
 
-Hypothesis test is a formal procedure for comparing sample data against a hypothesis about the population. It involves: Null Hypothesis (H_0): The default assumption, typically that there is no effect or difference. Alternative Hypothesis (H_1): The hypothesis that there is an effect or difference. Test Statistic: A standardized value calculated from sample data, used to assess the strength of evidence against H_0. P-value: The probability of observing the data, or something more extreme, assuming H_0 is true. Decision Rule: Based on the p-value and a significance level (e.g., 0.05), the researcher decides whether to reject H_0.
+<a href="datasets/ex05-02.csv" download="ex05-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
-Hypothesis test will be in next chapter
+Since the sample size is small, we would use the *t*-distribution to estimate the population mean. In practice, you can always use the *t*-distribution regardless of the size of samples, because as the increase of degrees of freedom , *t*-distribution approaches the standard normal distribution.
 
-## Prediction
+In this chapter, we write a pair of custom functions based on *t*-distribution to tackle such problems. They are named as `mean_CI()` and `mean_diff_CI()`.
 
-Using sample data to predict future observations or outcomes within the population. Prediction involves estimating the expected value of a dependent variable based on independent variables.
+```{r}
+mean_CI  <- function(x, alternative = "two.sided", conf.level = 0.95){
+  x_bar  <- mean(x, na.rm = T)
+  s      <-  sd(x, na.rm = T)
+  n      <- length(x)  
+  stderr <- s / sqrt(n)
+  
+  type  <- alternative
+  alpha <- 1- conf.level
+  
+  case_when(
+    type == "two.sided" ~ {
+      t_stat <- qt(1 - alpha / 2, df = n - 1)
+      tibble( 
+        mean       = x_bar,
+        lower_ci   = x_bar - stderr * t_stat,
+        upper_ci   = x_bar + stderr * t_stat,
+        conf_level = conf.level
+      )
+    },
+    
+    type == "greater"   ~ {
+      t_stat <- qt(alpha, df = n - 1)
+      tibble(
+        mean       = x_bar,
+        lower_ci   = x_bar + stderr * t_stat,
+        upper_ci   = Inf,
+        conf_level = conf.level
+      )
+    },
+      
+    type == "less"      ~ {
+      t_stat <- qt(alpha, df = n - 1)
+      tibble( 
+        mean       = x_bar,
+        lower_ci   = -Inf,
+        upper_ci   = x_bar - stderr * t_stat,
+        conf_level = conf.level
+     )
+    }
+  )
+}
+```
+
+```{r}
+read_csv("datasets/ex05-02.csv", show_col_types = F) |> 
+  pull() |> 
+  mean_CI() 
+```
+
+```{r}
+read_csv("datasets/ex05-02.csv", show_col_types = F) |> 
+  pull() |>
+  DescTools::MeanCI()
+```
+
+**Difference between two population means**
+
+The confidence interval for the difference between two population means is used to estimate the range within which the true difference between the means of two populations lies, based on sample data.
+
+Randomly sample from two normal populations $N(\mu_1, \sigma^2)$ and $N(\mu_2, \sigma^2)$ with equal population variances but unequal population means. The sample sizes, means, and standard deviations of the two samples are denoted by $n_1$, $\bar{X}_1$, $S_1$ and $n_2$, $\bar{X}_2$, $S_2$ respectively. If the population variances are unknown and the sample sizes are small, then the two-sided ($1-\alpha$) confidence interval for the difference between the two population means ($\mu_1 - \mu_2$) is given by:
+
+$$
+(\bar{X}_1 - \bar{X}2) \pm t_{\alpha/2, \nu} \cdot \sqrt{S_c^2(\frac{1}{n_1} + \frac{1}{n_2})} \ , \quad S_c^2 = \frac{(n_1 -1)S_1^2 + (n_2 -1)S_2^2}{n_1 + n_2 -2} 
+$$
+
+Where $t_{\alpha/2, \nu}$ is the *t*-score with $\nu = n_1 + n_2 - 2$ degrees of freedom, $\alpha$ is the level of confidence, $S_c^2$ is called the pooled variance.
+
+If thevariances of the two populations mentiond above are unknown and unequal, then the two-sided ($1-\alpha$) confidence interval for the difference between the two population means ($\mu_1 - \mu_2$) is given by:
+
+$$
+(\bar{X}_1 - \bar{X}2) \pm t_{\alpha/2, \nu} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}\ , \ 
+\nu \approx \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
+$$
+
+If the sample sizes of both samples are large (e.g., both are greater than 60)， the confidence interval for the difference between two population means $\mu_1 - \mu_2$ is given by:
+
+$$
+(\bar{X}_1 - \bar{X}2) \pm z_{\alpha/2} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}
+$$
+
+Where $\bar{X}_1$ and $\bar{X}_2$ are the sample means；$n_1$ and $n_2$ are the sample sizes. $S_1^2$ and $S_2^2$are the sample variances*.* $z_{\alpha/2}$ is the z-score corresponding to the desired confidence level.
+
+```{r}
+mean_diff_CI <- function(x, y, alternative = "two.sided", conf.level = 0.95, 
+                         var.equal = FALSE){
+  x <- na.omit(x)
+  y <- na.omit(y)
+  
+  x_bar <- mean(x)
+  v1    <- var(x)
+  n1    <- length(x)  
+  
+  y_bar <- mean(y)
+  v2    <- var(y)
+  n2    <- length(y)  
+  
+  type  <- alternative
+  alpha <- 1- conf.level
+  diff  <-  x_bar - y_bar 
+  
+  if(var.equal) {
+    df     <- n1 + n2 - 2
+    var    <- ((n1 - 1) * v1 + (n2 - 1) * v2) / df
+    stderr <- sqrt(var * (1 / n1 + 1 / n2))
+  } else{
+    stderr1 <- sqrt(v1/n1)
+    stderr2 <- sqrt(v2/n2)
+    stderr  <- sqrt(stderr1^2 + stderr2^2)
+    df      <- stderr^4/(stderr1^4/(n1 - 1) + stderr2^4/(n2 - 1))
+  }
+  
+  case_when(
+    type == "two.sided" ~ {
+      t_stat <- qt(1 - alpha / 2, df)
+      tibble( 
+        mean_x     = x_bar,
+        mean_y     = y_bar,
+        mean_diff  = diff,
+        lower_ci   = diff - stderr * t_stat,
+        upper_ci   = diff + stderr * t_stat,
+        conf_level = conf.level
+      )
+    },
+    
+    type == "greater"   ~ {
+      t_stat <- qt(alpha, df)
+      tibble( 
+        mean_x     = x_bar,
+        mean_y     = y_bar,
+        mean_diff  = diff,
+        lower_ci   = diff + stderr * t_stat,
+        upper_ci   = Inf,
+        conf_level = conf.level
+      )
+    },
+      
+    type == "less"      ~ {
+      t_stat <- qt(alpha, df)
+      tibble( 
+        mean_x     = x_bar,
+        mean_y     = y_bar,
+        mean_diff  = diff,
+        lower_ci   = -Inf,
+        upper_ci   = diff - stderr * t_stat,
+        conf_level = conf.level
+     )
+    }
+  )
+}
+```
+
+::: example
+To compare the difference of hemoglobin concentration between people with alpha thalassemia trait and silent carrier, a doctor choose a random sample of 42 patients from a patient database. 22 subjects have alpha thalassemia trait, 20 are silent_carrier. Have a try to analyze the 95% confidence interval of the two populations.
+:::
+
+<a href="datasets/ex05-03.csv" download="ex05-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+```{r}
+df <- read_csv("datasets/ex05-03.csv", show_col_types = F)
+x <- pull(df, 1)
+y <- pull(df, -1)
+mean_diff_CI(x, y)
+```
+
+```{r}
+DescTools::MeanDiffCI(x, y, na.rm = T)
+```
+
+### Interpreting the confidence interval
+
+The results will give you a range that represents the interval within which the true difference between the population means or the true population mean (for single population) is expected to fall, with a certain level of confidence (usually 95%).
+
+More, if the interval includes 0, this suggests that there may be no significant difference between the two population means. If the interval does not include 0, it suggests that there is a significant difference.

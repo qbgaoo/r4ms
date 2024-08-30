@@ -357,17 +357,15 @@ window.Quarto = {
   </ul></li>
   <li><a href="#t-distribution" id="toc-t-distribution" class="nav-link" data-scroll-target="#t-distribution"><span class="header-section-number">5.3</span> t distribution</a>
   <ul class="collapse">
-  <li><a href="#key-characteristics" id="toc-key-characteristics" class="nav-link" data-scroll-target="#key-characteristics"><span class="header-section-number">5.3.1</span> Key characteristics</a></li>
+  <li><a href="#visual-representation" id="toc-visual-representation" class="nav-link" data-scroll-target="#visual-representation"><span class="header-section-number">5.3.1</span> Visual representation</a></li>
   <li><a href="#common-uses" id="toc-common-uses" class="nav-link" data-scroll-target="#common-uses"><span class="header-section-number">5.3.2</span> Common uses</a></li>
   </ul></li>
-  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">5.4</span> Parameter estimation</a>
+  <li><a href="#estimation-of-population-mean" id="toc-estimation-of-population-mean" class="nav-link" data-scroll-target="#estimation-of-population-mean"><span class="header-section-number">5.4</span> Estimation of population mean</a>
   <ul class="collapse">
   <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">5.4.1</span> Point estimation</a></li>
-  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">5.4.2</span> Confidence Intervals</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">5.4.3</span> Assumptions</a></li>
+  <li><a href="#confidence-interval" id="toc-confidence-interval" class="nav-link" data-scroll-target="#confidence-interval"><span class="header-section-number">5.4.2</span> Confidence interval</a></li>
+  <li><a href="#interpreting-the-confidence-interval" id="toc-interpreting-the-confidence-interval" class="nav-link" data-scroll-target="#interpreting-the-confidence-interval"><span class="header-section-number">5.4.3</span> Interpreting the confidence interval</a></li>
   </ul></li>
-  <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test"><span class="header-section-number">5.5</span> Hypothesis test</a></li>
-  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">5.6</span> Prediction</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/statistical-inference.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -393,7 +391,7 @@ window.Quarto = {
 </header>
 
 
-<p>In statistics we often use samples to infer population characteristics, since it’s impractical or impossible usually to measure the entire population. This process is called statistical inference. It involves using statistical techniques to make estimates, test hypothesis, and make predictions about population parameters.</p>
+<p>In statistics we often use samples to infer population characteristics, since it’s impractical or impossible usually to measure the entire population. This process is called statistical inference. It involves using statistical techniques to make estimates, test hypothesis, and make predictions about population parameters. In this chapter, we maily focus on the estimation of population means.</p>
 <section id="prerequisites" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">5.1</span> Prerequisites</h2>
 <div class="cell">
@@ -438,7 +436,7 @@ window.Quarto = {
 <div id="tbl-mean-distribution" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mean-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;5.1: The n, median, mean and sd of the 120 random samples
+Table&nbsp;5.1: The n, median, mean and sd of the 120 random samples (s)
 </figcaption>
 <div aria-describedby="tbl-mean-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -518,19 +516,30 @@ Table&nbsp;5.1: The n, median, mean and sd of the 120 random samples
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="central-limit-theorem"><span class="header-section-number">5.2.2</span> Central Limit Theorem</h3>
 <p>Regardless of the population distribution, as the sample size <span class="math inline">n</span> becomes large (typically <span class="math inline">n \geq 30</span> is considered sufficient), the sampling distribution of the sample mean will approximate a normal distribution. This is the essence of the Central Limit Theorem in statistics.</p>
 <p>For small sample sizes, if the population itself is normally distributed, the distribution of the sample means will also be normally distributed.</p>
-<p>Because the sampling distribution of the sample means can be approximated by a normal distribution (especially for large <span class="math inline">n</span>), it allows for the construction of confidence intervals for the population mean and the conducting of hypothesis tests. The normality of the sampling distribution justifies the use of z-test or t-test depending on whether the population variance is known or unknown and the sample size.</p>
+<p>Because the sampling distribution of the sample means can be approximated by a normal distribution (especially for large <span class="math inline">n</span>), it allows for the construction of confidence intervals for the population mean and the conducting of hypothesis tests. The normality of the sampling distribution justifies the use of <em>z</em>-test or <em>t</em>-test depending on whether the population variance is known or unknown and the sample size.</p>
 </section>
 </section>
 <section id="t-distribution" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="t-distribution"><span class="header-section-number">5.3</span> t distribution</h2>
-<p>The t-distribution, also known as Student’s t-distribution, is a probability distribution that is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in confidence intervals, hypothesis testing, and regression analysis.</p>
-<p>For a sample mean <span class="math inline">\bar{X}</span> , sample standard deviation <span class="math inline">S</span> , and sample size <span class="math inline">n</span> , the t-statistic is calculated as:</p>
+<p>The sample mean <span class="math inline">\bar{X}</span> follows a normal distribution when the underlying population is normally distributed, or when the sample size is sufficiently large due to the Central Limit Theorem. However, when you’re converting the sample mean into a standardized form, the distribution you use depends on whether or not you know the population standard deviation <span class="math inline">\sigma</span>.</p>
+<ul>
+<li>If <span class="math inline">\sigma</span> is known, the sample mean <span class="math inline">\bar{X}</span> can be standardized using the formula:</li>
+</ul>
 <p><span class="math display">
-t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+z = \frac{\bar{X} - \mu}{\sigma_{\bar{X}}} = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}}
 </span></p>
-<p>Where <span class="math inline">\mu</span> is the hypothesized population mean.</p>
-<p>Visual Representation:</p>
-<p>The t-distribution can be plotted to show how it compares with the normal distribution. It would have thicker tails, indicating a higher probability of values further from the mean, especially with smaller degrees of freedom. As degrees of freedom increase, the t-distribution curve will converge toward the standard normal distribution curve.</p>
+<p>In this case, the standardized variable <span class="math inline">Z</span> follows a standard normal distribution <span class="math inline">N(0, 1)</span>.</p>
+<ul>
+<li>If <span class="math inline">\sigma</span> is unknown, which is often the case in practice, you need to estimate it using the sample standard deviation <span class="math inline">S</span>. The formula for standardizing the sample mean becomes:</li>
+</ul>
+<p><span class="math display">
+t = \frac{\bar{X} - \mu}{S_{\bar{X}}} = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+</span></p>
+<p>Here, <span class="math inline">t</span> doesn’t not follow a standard normal distribution anymore, it follows a <em>t</em>-distribution with degrees of freedom <span class="math inline">\nu = n - 1</span> (<span class="math inline">n</span> is the sample size).</p>
+<p>The <em>t</em>-distribution, also known as Student’s <em>t</em>-distribution, is used in statistics when estimating population parameters when the sample size is small and/or the population variance is unknown. It’s especially important in confidence intervals, hypothesis testing, and regression analysis.</p>
+<section id="visual-representation" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="visual-representation"><span class="header-section-number">5.3.1</span> Visual representation</h3>
+<p>The <em>t</em>-distribution can be plotted to show how it compares with the normal distribution.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -540,77 +549,235 @@ t = \frac{\bar{X} - \mu}{S / \sqrt{n}}
 </div>
 </div>
 </div>
-<section id="key-characteristics" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="key-characteristics"><span class="header-section-number">5.3.1</span> Key characteristics</h3>
-<ul>
-<li>Shape: The t-distribution is similar to the standard normal distribution (bell-shaped and symmetric around zero), but it has heavier tails. This means it is more prone to producing values that fall far from its mean.</li>
-<li>Degrees of Freedom (df): The shape of the t-distribution depends on the degrees of freedom, which is typically related to the sample size (df = n - 1 for a single sample t-test). As the degrees of freedom increase, the t-distribution approaches the standard normal distribution. For large sample sizes (df &gt; 30), the t-distribution and normal distribution are almost indistinguishable.</li>
-<li>Mean and Variance: The mean of the t-distribution is 0. • The variance is greater than 1 and depends on the degrees of freedom. Specifically, the variance is for df &gt; 2 .</li>
-</ul>
+<p>The <em>t</em>-distribution is similar to the standard normal distribution, but it has heavier tails. This means a higher probability of values further from the mean, especially with a smaller degree of freedom. As degrees of freedom increase, the <em>t</em>-distribution curve will converge toward the standard normal distribution curve.</p>
+<p>The shape of the <em>t</em>-distribution depends on the degrees of freedom <span class="math inline">\nu</span>, which is typically related to the sample size (<span class="math inline">\nu = n - 1</span>). As the degrees of freedom increase, the <em>t</em>-distribution approaches the standard normal distribution. For large sample sizes (<span class="math inline">\nu &gt; 60</span>), the <em>t</em>-distribution and normal distribution are almost indistinguishable.</p>
 </section>
 <section id="common-uses" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="common-uses"><span class="header-section-number">5.3.2</span> Common uses</h3>
 <ul>
-<li>Confidence intervals: The t-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.</li>
-<li>t-test: Used to compare the means of two groups (independent or paired samples) when the sample size is small and the population standard deviation is unknown.
-<ul>
-<li>One-sample t-test: Tests if the mean of a single sample is significantly different from a known value.</li>
-<li>Two-sample t-test: Tests if the means of two independent groups are significantly different.</li>
-<li>Paired t-test: Tests if the means of two related groups (e.g., before and after measurements) are significantly different.</li>
-</ul></li>
-<li>Regression Analysis: In linear regression, t-test are used to determine whether the coefficients of the independent variables are significantly different from zero.</li>
+<li><p>Confidence intervals</p>
+<p>The <em>t</em>-distribution is used to construct confidence intervals for the population mean when the population variance is unknown and the sample size is small.</p></li>
+<li><p><em>t</em>-test: Used to compare the means of two groups when the sample size is small and the population standard deviation is unknown.</p></li>
+<li><p>Regression analysis: In linear regression, <em>t</em>-test are used to determine whether the coefficients of the independent variables are significantly different from zero.</p></li>
 </ul>
-<p>Example:</p>
-<div class="example">
-<strong>Example 2:</strong> 
-<p>Imagine you have a small sample of 15 observations, and you want to test if the mean of this sample is different from a known value, say 50. Since the sample size is small, you would use the t-distribution to conduct this test, accounting for the fact that the true standard deviation of the population is unknown.</p>
-</div>
 </section>
 </section>
-<section id="parameter-estimation" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">5.4</span> Parameter estimation</h2>
-<p>Parameter estimation is a concept in statistics that involves using sample data to estimate the parameters of a population. The sample should be random and large enough to provide an accurate estimate. A parameter is a numerical characteristic of a population, such as a mean, proportion, or standard deviation. There are two types of parameter estimation:</p>
+<section id="estimation-of-population-mean" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="estimation-of-population-mean"><span class="header-section-number">5.4</span> Estimation of population mean</h2>
+<p>Parameter estimation is a concept in statistics that involves using statistic off a sample to estimate parameters of the corresponding population. The sample should be random and large enough to provide an accurate estimate. A parameter is a numerical characteristic about a population, such as a mean, proportion, or standard deviation. Here we just talk about the estimation of population mean.</p>
 <section id="point-estimation" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">5.4.1</span> Point estimation</h3>
-<p>This involves using sample data to calculate a single value that serves as the best guess for a population parameter (e.g., mean, proportion). However, obtaining an exact point estimate of the population parameter from just one random sample is almost unattainable.</p>
-<p>Calculate the sample mean <span class="math inline">\bar{x}</span>: The sample mean is calculated using the formula:</p>
+<p>This involves using sample data to calculate a single value that serves as the best guess for a population mean. However, obtaining an exact point estimate of the population mean from just one random sample is almost unattainable.</p>
+<p>Calculate the sample mean <span class="math inline">\bar{X}</span>: The sample mean is calculated using the formula:</p>
 <p><span class="math display">
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} x_i
 </span></p>
-<p>where <span class="math inline">n</span> is the sample size, and <span class="math inline">x_i</span> are the individual sample values. The sample mean (<span class="math inline">\bar{x}</span>) serves as an estimate of the population mean (<span class="math inline">\mu</span>).</p>
-<p>Hower, a point estimate does not consider the sampling error and cannot tell you how close the estimate is likely to be to the true population mean. Instead of relying on a single point estimate, interval estimation are often used because they provide a range of values within which the true population mean is likely to lie. along with a level of confidence (e.g., 95%).</p>
+<p>where <span class="math inline">n</span> is the sample size, and <span class="math inline">x_i</span> are the individual sample values. The sample mean (<span class="math inline">\bar{X}</span>) serves as an estimate of the population mean (<span class="math inline">\mu</span>).</p>
+<p>However, a point estimate does not consider the sampling error and cannot tell you how close the estimate is likely to be to the true population mean. Instead of relying on a single point estimate, interval estimation are often used because they provide a range of values within which the true population mean is likely to lie along with a confidence level.</p>
 </section>
-<section id="confidence-intervals" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">5.4.2</span> Confidence Intervals</h3>
-<p>A confidence interval (CI) is associated with a confidence level, typically 95%, which indicates the degree of certainty that the true population mean falls in the range. For example, a 95% confidence interval can be calculated as:</p>
+<section id="confidence-interval" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="confidence-interval"><span class="header-section-number">5.4.2</span> Confidence interval</h3>
+<p>The method for calculating the confidence interval of the population mean varies depending on whether the population standard deviation <span class="math inline">\sigma</span> is known and the size of sample <span class="math inline">n</span>. Typically, there are two types of methods: the <em>t</em>-distribution and the <em>z</em>-distribution (also known as the u-distribution). The following will introduce the methods for calculating the confidence interval of a single population mean and the confidence interval of the difference between two population means.</p>
+<p><strong>Single population mean</strong></p>
+<p>Confidence interval (CI) is associated with a confidence level, typically 95%, which indicates the degree of certainty that the true population mean falls in the range. The two-sided <span class="math inline">1-\alpha</span> confidence interval of single population mean can be formulated as:</p>
 <p><span class="math display">
-\text{CI} = \bar{x} \pm z \times \text{SE}
+\text{CI} = \bar{X} \pm t_{\nu,\alpha/2} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \text{CI} = \bar{X} \pm z_{\alpha/2} \cdot \frac{S}{\sqrt{n}}
 </span></p>
-<p>where <span class="math inline">z</span> is the critical value from the standard normal distribution (e.g., 1.96 for 95% confidence); <span class="math inline">\text{SE}</span> denotes standard error of the mean, which indicates how much the sample mean is expected to vary from the true population mean:</p>
+<p>Similarly, the one-sided <span class="math inline">1-\alpha</span> confidence interval for the population mean is given by：</p>
 <p><span class="math display">
-SE = \frac{S}{\sqrt{n}}
+\mu&gt; \bar{X} - t_{\nu,\alpha} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \mu&gt; \bar{X} - z_\alpha \cdot \frac{S}{\sqrt{n}}
 </span></p>
-<p>where <span class="math inline">S</span> is the sample standard deviation, <span class="math inline">n</span> is the sample size.</p>
+<p><span class="math display">
+\mu &lt; \bar{X} + t_{\nu,\alpha} \cdot \frac{S}{\sqrt{n}} \quad \text{or} \quad \mu &lt; \bar{X} + z_\alpha \cdot \frac{S}{\sqrt{n}}
+</span></p>
+<p>where <span class="math inline">t</span> is the critical value from the <em>t</em>-distribution, it depends on the degree of freedom <span class="math inline">\nu</span> and the level of confidence <span class="math inline">\alpha</span>; <span class="math inline">z</span> is the critical value from the standard normal distribution, it depends on the level of confidence <span class="math inline">\alpha</span>.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>A research group randomly selected 20 adult men in a area and measured their red blood cell count. Please calculate the 95% confidence interval for the population mean.</p>
+</div>
+<p><a href="datasets/ex05-02.csv" download="ex05-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p>Since the sample size is small, we would use the <em>t</em>-distribution to estimate the population mean. In practice, you can always use the <em>t</em>-distribution regardless of the size of samples, because as the increase of degrees of freedom , <em>t</em>-distribution approaches the standard normal distribution.</p>
+<p>In this chapter, we write a pair of custom functions based on <em>t</em>-distribution to tackle such problems. They are named as <code>mean_CI()</code> and <code>mean_diff_CI()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mean_CI  <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>){</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  x_bar  <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  s      <span class="ot">&lt;-</span>  <span class="fu">sd</span>(x, <span class="at">na.rm =</span> T)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  n      <span class="ot">&lt;-</span> <span class="fu">length</span>(x)  </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  stderr <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  type  <span class="ot">&lt;-</span> alternative</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span> conf.level</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"two.sided"</span> <span class="sc">~</span> {</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>( </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean       =</span> x_bar,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> x_bar <span class="sc">-</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> x_bar <span class="sc">+</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"greater"</span>   <span class="sc">~</span> {</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean       =</span> x_bar,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> x_bar <span class="sc">+</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> <span class="cn">Inf</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"less"</span>      <span class="sc">~</span> {</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>( </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean       =</span> x_bar,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> <span class="sc">-</span><span class="cn">Inf</span>,</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> x_bar <span class="sc">-</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex05-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean_CI</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 4
+#&gt;    mean lower_ci upper_ci conf_level
+#&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1  5.31     5.04     5.59       0.95</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex05-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  DescTools<span class="sc">::</span><span class="fu">MeanCI</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;     mean   lwr.ci   upr.ci 
+#&gt; 5.312500 5.035249 5.589751</code></pre>
+</div>
+</div>
+<p><strong>Difference between two population means</strong></p>
+<p>The confidence interval for the difference between two population means is used to estimate the range within which the true difference between the means of two populations lies, based on sample data.</p>
+<p>Randomly sample from two normal populations <span class="math inline">N(\mu_1, \sigma^2)</span> and <span class="math inline">N(\mu_2, \sigma^2)</span> with equal population variances but unequal population means. The sample sizes, means, and standard deviations of the two samples are denoted by <span class="math inline">n_1</span>, <span class="math inline">\bar{X}_1</span>, <span class="math inline">S_1</span> and <span class="math inline">n_2</span>, <span class="math inline">\bar{X}_2</span>, <span class="math inline">S_2</span> respectively. If the population variances are unknown and the sample sizes are small, then the two-sided (<span class="math inline">1-\alpha</span>) confidence interval for the difference between the two population means (<span class="math inline">\mu_1 - \mu_2</span>) is given by:</p>
+<p><span class="math display">
+(\bar{X}_1 - \bar{X}2) \pm t_{\alpha/2, \nu} \cdot \sqrt{S_c^2(\frac{1}{n_1} + \frac{1}{n_2})} \ , \quad S_c^2 = \frac{(n_1 -1)S_1^2 + (n_2 -1)S_2^2}{n_1 + n_2 -2}
+</span></p>
+<p>Where <span class="math inline">t_{\alpha/2, \nu}</span> is the <em>t</em>-score with <span class="math inline">\nu = n_1 + n_2 - 2</span> degrees of freedom, <span class="math inline">\alpha</span> is the level of confidence, <span class="math inline">S_c^2</span> is called the pooled variance.</p>
+<p>If thevariances of the two populations mentiond above are unknown and unequal, then the two-sided (<span class="math inline">1-\alpha</span>) confidence interval for the difference between the two population means (<span class="math inline">\mu_1 - \mu_2</span>) is given by:</p>
+<p><span class="math display">
+(\bar{X}_1 - \bar{X}2) \pm t_{\alpha/2, \nu} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}\ , \
+\nu \approx \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
+</span></p>
+<p>If the sample sizes of both samples are large (e.g., both are greater than 60)， the confidence interval for the difference between two population means <span class="math inline">\mu_1 - \mu_2</span> is given by:</p>
+<p><span class="math display">
+(\bar{X}_1 - \bar{X}2) \pm z_{\alpha/2} \cdot \sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}
+</span></p>
+<p>Where <span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means；<span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes. <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span>are the sample variances<em>.</em> <span class="math inline">z_{\alpha/2}</span> is the z-score corresponding to the desired confidence level.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mean_diff_CI <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">var.equal =</span> <span class="cn">FALSE</span>){</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(x)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(y)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  x_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  v1    <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  n1    <span class="ot">&lt;-</span> <span class="fu">length</span>(x)  </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  y_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  v2    <span class="ot">&lt;-</span> <span class="fu">var</span>(y)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  n2    <span class="ot">&lt;-</span> <span class="fu">length</span>(y)  </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  type  <span class="ot">&lt;-</span> alternative</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  alpha <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span> conf.level</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  diff  <span class="ot">&lt;-</span>  x_bar <span class="sc">-</span> y_bar </span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(var.equal) {</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    df     <span class="ot">&lt;-</span> n1 <span class="sc">+</span> n2 <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    var    <span class="ot">&lt;-</span> ((n1 <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> v1 <span class="sc">+</span> (n2 <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> v2) <span class="sc">/</span> df</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    stderr <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">/</span> n1 <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> n2))</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span>{</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    stderr1 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v1<span class="sc">/</span>n1)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    stderr2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v2<span class="sc">/</span>n2)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    stderr  <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(stderr1<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> stderr2<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    df      <span class="ot">&lt;-</span> stderr<span class="sc">^</span><span class="dv">4</span><span class="sc">/</span>(stderr1<span class="sc">^</span><span class="dv">4</span><span class="sc">/</span>(n1 <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> stderr2<span class="sc">^</span><span class="dv">4</span><span class="sc">/</span>(n2 <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">case_when</span>(</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"two.sided"</span> <span class="sc">~</span> {</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, df)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>( </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_x     =</span> x_bar,</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_y     =</span> y_bar,</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_diff  =</span> diff,</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> diff <span class="sc">-</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> diff <span class="sc">+</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"greater"</span>   <span class="sc">~</span> {</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha, df)</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>( </span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_x     =</span> x_bar,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_y     =</span> y_bar,</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_diff  =</span> diff,</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> diff <span class="sc">+</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> <span class="cn">Inf</span>,</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    type <span class="sc">==</span> <span class="st">"less"</span>      <span class="sc">~</span> {</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>      t_stat <span class="ot">&lt;-</span> <span class="fu">qt</span>(alpha, df)</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tibble</span>( </span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_x     =</span> x_bar,</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_y     =</span> y_bar,</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_diff  =</span> diff,</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_ci   =</span> <span class="sc">-</span><span class="cn">Inf</span>,</span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_ci   =</span> diff <span class="sc">-</span> stderr <span class="sc">*</span> t_stat,</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">conf_level =</span> conf.level</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>     )</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>To compare the difference of hemoglobin concentration between people with alpha thalassemia trait and silent carrier, a doctor choose a random sample of 42 patients from a patient database. 22 subjects have alpha thalassemia trait, 20 are silent_carrier. Have a try to analyze the 95% confidence interval of the two populations.</p>
+</div>
+<p><a href="datasets/ex05-03.csv" download="ex05-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex05-03.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">pull</span>(df, <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">pull</span>(df, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_diff_CI</span>(x, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 6
+#&gt;   mean_x mean_y mean_diff lower_ci upper_ci conf_level
+#&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+#&gt; 1   11.0   11.8    -0.715    -1.67    0.239       0.95</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">MeanDiffCI</span>(x, y, <span class="at">na.rm =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;   meandiff     lwr.ci     upr.ci 
+#&gt; -0.7145455 -1.6678398  0.2387489</code></pre>
+</div>
+</div>
 </section>
-<section id="assumptions" class="level3" data-number="5.4.3">
-<h3 data-number="5.4.3" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">5.4.3</span> Assumptions</h3>
-<p>In Statistical Inference there are two assumptions:</p>
-<ul>
-<li>Random sampling: The sample should be randomly selected to avoid bias.</li>
-<li>Independence: Observations in the sample should be independent of each other.</li>
-</ul>
-</section>
-</section>
-<section id="hypothesis-test" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="hypothesis-test"><span class="header-section-number">5.5</span> Hypothesis test</h2>
-<p>Hypothesis test is a formal procedure for comparing sample data against a hypothesis about the population. It involves: Null Hypothesis (H_0): The default assumption, typically that there is no effect or difference. Alternative Hypothesis (H_1): The hypothesis that there is an effect or difference. Test Statistic: A standardized value calculated from sample data, used to assess the strength of evidence against H_0. P-value: The probability of observing the data, or something more extreme, assuming H_0 is true. Decision Rule: Based on the p-value and a significance level (e.g., 0.05), the researcher decides whether to reject H_0.</p>
-<p>Hypothesis test will be in next chapter</p>
-</section>
-<section id="prediction" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="prediction"><span class="header-section-number">5.6</span> Prediction</h2>
-<p>Using sample data to predict future observations or outcomes within the population. Prediction involves estimating the expected value of a dependent variable based on independent variables.</p>
+<section id="interpreting-the-confidence-interval" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="interpreting-the-confidence-interval"><span class="header-section-number">5.4.3</span> Interpreting the confidence interval</h3>
+<p>The results will give you a range that represents the interval within which the true difference between the population means or the true population mean (for single population) is expected to fall, with a certain level of confidence (usually 95%).</p>
+<p>More, if the interval includes 0, this suggests that there may be no significant difference between the two population means. If the interval does not include 0, it suggests that there is a significant difference.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -42,7 +42,6 @@ book:
 
 format:
   html:
-    runtime: shiny
     html-math-method: katex
     
     theme:
@@ -52,7 +51,14 @@ format:
     code-annotations: hover
     smooth-scroll: true
 
+crossref: 
+  custom:
+    - kind: float
+      reference-prefix: "Function"
+      key: fun
+      
 editor: visual
 
 filters:
   - example-numbering.lua
+

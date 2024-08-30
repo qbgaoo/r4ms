@@ -15,15 +15,31 @@ library(tidyverse)
 library(kableExtra)
 ```
 
+## Hypothesis test
+
+Hypothesis test is a formal procedure for comparing sample data against a hypothesis about the population. It involves: Null Hypothesis (H_0): The default assumption, typically that there is no effect or difference. Alternative Hypothesis (H_1): The hypothesis that there is an effect or difference. Test Statistic: A standardized value calculated from sample data, used to assess the strength of evidence against H_0. P-value: The probability of observing the data, or something more extreme, assuming H_0 is true. Decision Rule: Based on the p-value and a significance level (e.g., 0.05), the researcher decides whether to reject H_0.
+
+For a sample mean $\bar{X}$, sample standard deviation $S$ and sample size $n$ , the t-statistic is calculated as:
+
+$$
+t = \frac{\bar{X} - \mu}{S_\bar{X}} = \frac{\bar{X} - \mu}{S / \sqrt{n}}
+$$
+
+Where $\mu$ is the hypothesized population mean.
+
+-   One-sample t-test: Tests if the mean of a single sample is significantly different from a known value.
+-   Two-sample t-test: Tests if the means of two independent groups are significantly different.
+-   Paired t-test: Tests if the means of two related groups (e.g., before and after measurements) are significantly different.
+
 **例3-1** 若某市1999年18岁男生身高服从均数为167.7cm，标准差为5.3cm的正态分布。从该正态分布N(167.7, 5.3^2^)cm总体中随机抽样100次即共抽取样本g=100个，每次样本含量10人，计算得到每个样本的均数及标准差，数据以 `.csv` 格式保存，利用`read_csv()`函数导入R变量 `height_sample` 中。
 
 ```{r}
-height_sample <- read_csv("datasets/ex04-01.csv") 
-
-head(height_sample) |> 
-  kbl(align = "c") |>
-  kable_classic(full_width = F) |> 
-  row_spec(0, bold = T)
+# height_sample <- read_csv("datasets/ex04-01.csv") 
+# 
+# head(height_sample) |> 
+#   kbl(align = "c") |>
+#   kable_classic(full_width = F) |> 
+#   row_spec(0, bold = T)
 ```
 
 ## 标准误和可信区间
