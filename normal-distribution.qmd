@@ -161,7 +161,7 @@ df |>
 ## Normality test
 
 ::: example
-Some researchers used a random sampling method to examine the red blood cell count of 29 normal adults. The measuring results are saved in a `.csv` file. Please analyze its normality.
+A scientist used a random sampling method to examine the red blood cell count of 29 normal adult men. The measuring results are saved in the below file. Please analyze its normality.
 :::
 
 <a href="datasets/ex04-01.csv" download="ex04-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>

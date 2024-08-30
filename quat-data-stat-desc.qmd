@@ -25,7 +25,7 @@ library(tidyverse)
 ```
 
 ::: example
-Some researchers used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a `data` file. Please use the data to create a frequency distribution table.
+A researcher used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a `data` file. Please use the data to create a frequency distribution table.
 :::
 
 <a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
