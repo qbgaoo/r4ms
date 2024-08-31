@@ -158,7 +158,9 @@ df |>
   )
 ```
 
-## Normality test
+## Normality test {#sec-normality-test}
+
+Normality test is used to determine whether a data follows a normal distribution. This is important because many statistical tests, including the t-test, assume that the data follows a normal distribution.
 
 ::: example
 A scientist used a random sampling method to examine the red blood cell count of 29 normal adult men. The measuring results are saved in the below file. Please analyze its normality.
@@ -180,7 +182,7 @@ Test of normality is used to determine if a variable is well-modeled by a normal
 
 Since histogram can sometimes be misleading or ambiguous, it’s a good practice to use it alongside other methods:
 
-### Hypothesis test method
+### Normality test method
 
 Statistical tests can provide a more formal assessment of normality, though they also have limitations and can be sensitive to sample size. Here we only show a few commonly used:
 

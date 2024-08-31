@@ -1,0 +1,97 @@
+# Hypothesis test
+
+Hypothesis test is a statistical method used to make inferences or draw conclusions about a population based on sample data. It involves testing a statement (the hypothesis) about a population parameter, such as the population mean or proportion, by comparing the sample data to what is expected under the null hypothesis.
+
+## Fundamentals of hypothesis test
+
+### The fundamentals
+
+The small probability event method or proof by contradiction using small probability event, is a reasoning approach used in hypothesis test based on the principle of probability theory. The core idea is that if an event is highly unlikely to occur under a certain assumption, and it does occur, then the assumption is likely incorrect.
+
+It start from the opposite assumption ($H_0$) to indirectly assess whether the problem of interest ($H_1$) holds true. This involves assuming that $H_0$ is true, calculating the test statistic, and then using the resulting p-value to determine whether $H_0$ can be upheld.
+
+### Some concepts and notations
+
+Before you learn and insight into more about hypothesis test, some concepts and notations need to be noticed.
+
+**Null hypothesis** ($H_0$)
+
+This is the default assumption that there is no effect or no difference. It is the hypothesis that we seek to test against. For example: The average height of adult men in a certain city is 175 cm. ($H_0$: $\mu = 175$ cm)
+
+**Alternative hypothesis** ($H_1$)
+
+This is what you want to prove. It represents an effect, a difference, or a relationship that contradicts the null hypothesis. The hypothesis is that there is an effect or difference. For example: The average height of adult men in the city is not 175 cm. ($H_1$: $\mu \ne 175$ cm)
+
+**Test statistic**
+
+A standardized value calculated from the sample data that is used to determine whether to reject $H_0$, such as the t-statistic, z-statistic, or chi-square statistic.
+
+**Significance level** ($\alpha$)
+
+The probability threshold for rejecting the null hypothesis. Commonly used values are 0.05, 0.01, or 0.10. $α = 0.05$ means there’s a 5% risk of rejecting the null hypothesis when it is actually true.
+
+**P-value**
+
+The probability of obtaining a test statistic at least as extreme as the one observed, assuming the null hypothesis is true. If the p-value is less than $α$, the null hypothesis is rejected. The smaller the p-value, the stronger the evidence against the null hypothesis. For example, if the p-value is 0.03, there is a 3% chance of observing such a result if H₀ is true.
+
+## Steps of hypothesis test
+
+The process of conducting a hypothesis test involves several key steps. Here’s an outline of the typical procedure:
+
+1.  Define $H_0$ and $H_1$.
+2.  Choose the significance level $\alpha$, typically $0.05$.
+3.  Select the appropriate test.
+4.  Compute the test statistic.
+5.  Determine the p-value.
+6.  Make a decision based on the p-value and significance level.
+    -   Reject $H_0$: If the p-value ≤ $α$.
+    -   Fail to reject $H_0$: If the p-value \> $α$.
+7.  Draw conclusions in the context of the research.
+
+In the subsequet chapters, some typical test method will be introduced.
+
+## Considerations for hypothesis test
+
+### Type I error and type II error
+
+It is known that hypothesis test employs the principle of proof by contradiction through small probability events. The conclusions drawn based on the p-value are probabilistic essentially, meaning that the conclusions may not be entirely correct. Two types of errors can occur.
+
+**Type I error (α) (false positive)**
+
+A type I error occurs when you reject the null hypothesis ($H_0$) when it is actually true. For example, imagine that you are testing a new drug to see if it lowers blood pressure. The null hypothesis states that the drug has no effect. If you conclude that the drug does lower blood pressure when in fact it does not, you have made a type I error.
+
+The probability of making a type I error is denoted by the significance level $α$ .Common choices for $α$ are 0.05 or 0.01, meaning there is a 5% or 1% risk of rejecting $H₀$ when it is true.
+
+**Type II error (β) (false negative)**
+
+A type II error occurs when you fail to reject the null hypothesis ($H_0$) when the alternative hypothesis ($H_1$) is actually true. Continuing with the drug example, if the drug actually does lower blood pressure, but you conclude that it doesn’t, you’ve made a type II error.
+
+The probability of making a type II error is denoted by $\beta$. The power of a test ($1$-$\beta$) represents the probability of correctly rejecting a false null hypothesis when the alternative hypothesis is true. In other words, it’s the likelihood that the test will detect an effect or difference when one actually exists.
+
+For example , in a medical study designed to detect whether a new drug is effective, if the power of the test is 0.9, there is a 90% chance of correctly rejecting $H_0$ (that the drug has no effect) when $H_1$ (that the drug is effective) is true.
+
+Factors that affect $β$ include:.
+
+-   **Sample size**: Larger sample sizes generally increase the power of a test.
+-   **Effect size**: Larger differences or stronger effects are easier to detect, thus increasing power.
+-   **Significance level** ($α$): Increasing $α$ can increase power, but it also increases the risk of a type I error.
+-   **Variance**: Lower variability within the data increases power.
+
+In hypothesis test, there is often a trade-off between the risks of type I and type II errors. Lowering the significance level $α$ reduces the risk of a type I error but increases the risk of a type II error, and vice versa.
+
+## Considerations in hypothesis test
+
+### Study design
+
+Study design is the prerequisite of hypothesis test. The groups to be compared should be balanced and comparable, meaning that aside from the primary factor under investigation (such as a new drug in a clinical trial versus a control drug), other factors (such as age, gender, disease duration, and severity) that could influence the results should be identical or similar between groups. The best way to ensure balance is randomization before treatment.
+
+### Different tests for different types of data
+
+The appropriate test should be selected based on the purpose of the analysis, the type and distribution of the data, the study design, the sample size, and the conditions under which different statistical methods are applicable. For example, paired t-tests should be used for paired design measurement data; for completely randomized design measurement data with small sample sizes (i.e., n ≤ 60) with equal variances, the two-sample t-test should be used. If variances are unequal, an approximate t-test should be used.
+
+
+
+
+
+
+

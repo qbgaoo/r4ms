@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://qbgaoo.github.io/r4ms/ttest.html</loc>
-    <lastmod>2024-08-30T00:50:03.671Z</lastmod>
+    <lastmod>2024-08-31T16:33:31.591Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/index.html</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/normal-distribution.html</loc>
-    <lastmod>2024-08-29T01:44:56.984Z</lastmod>
+    <lastmod>2024-08-31T16:32:12.688Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/basic-stat.html</loc>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/quat-data-stat-desc.html</loc>
-    <lastmod>2024-08-30T06:14:40.331Z</lastmod>
+    <lastmod>2024-08-30T15:13:14.074Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/mean-estimation.html</loc>
@@ -90,6 +90,10 @@
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/statistical-inference.html</loc>
-    <lastmod>2024-08-30T14:40:43.083Z</lastmod>
+    <lastmod>2024-08-31T12:18:31.757Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/hypothesis-test.html</loc>
+    <lastmod>2024-08-31T10:53:18.610Z</lastmod>
   </url>
 </urlset>

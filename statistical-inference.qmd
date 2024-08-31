@@ -26,13 +26,13 @@ The distribution of sample means is a fundamental concept in statistics, describ
 #| eval: false
 
 # This code block is to generate the 100 samples from a normal distribution
-set.seed(150) 
-thrombin_time <- rnorm(10000, mean = 17.5, sd = 1.25) |> 
+set.seed(100) 
+thrombin_time <- rnorm(60000, mean = 17.5, sd = 1.2) |> 
   round(digits = 1)
 
 # Set the number of samples and the sample size for each sample
-n_samples <- 120
-n <- 12
+n_samples <- 100
+n <- 10
 # A list used to store samples
 samples <- vector("list", n_samples)
 
@@ -42,19 +42,18 @@ for (i in 1:n_samples) {
 
 samples |> 
   as_tibble(.name_repair = "universal") |> 
-  rename_with(~ paste0("s", c(1:n_samples))) |> 
-  write_csv("ex05-01.csv")
+  rename_with(~ paste0("s", c(1:n_samples))) 
 ```
 
-::: example
-Assume thrombin time follow the normal distribution of $\mu=17.5$, $\sigma=1.25$. A researcher randomly drew $120$ samples from the population, with each sample containing $n=12$ observations. The data is saved the the data below. The mean $\bar{X}$ and standard deviation $S$ for each sample are shown in @tbl-mean-distribution, please analyze the distribution of the $120$ means.
+::: {#example05-01 .example}
+Assume thrombin time follow the normal distribution of $\mu=17.5$, $\sigma=1.2$. A researcher randomly drew $100$ samples from a population of size $60000$ , with each sample $n=10$ observations. The data is saved the the data below. The mean $\bar{X}$ and standard deviation $S$ for each sample are shown in @tbl-mean-distribution, please analyze the distribution of the $120$ means.
 :::
 
 <a href="datasets/ex05-01.csv" download="ex05-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 ```{r}
 #| label: tbl-mean-distribution
-#| tbl-cap: The n, median, mean and sd of the 120 random samples (s)
+#| tbl-cap: The n, median, mean and sd of the 100 random samples (s)
 df <- read_csv("datasets/ex05-01.csv", show_col_types = F) |> 
   summarise_all(
     list(
@@ -87,7 +86,7 @@ df |>
   hist(
   freq           = T,
   right          = F, 
-  col            = "skyblue", 
+  col            = "lightblue", 
   include.lowest = T,
   main           = " ",
   xlab           = "The average of the thrombin time",
@@ -106,7 +105,7 @@ df |>
     mean = mean(x),
     sd   = sd(x)
   ) |> 
-  round(digits = 1) |> 
+  round(digits = 2) |> 
   knitr::kable(align = "c")
 ```
 
@@ -252,8 +251,9 @@ A research group randomly selected 20 adult men in a area and measured their red
 
 Since the sample size is small, we would use the *t*-distribution to estimate the population mean. In practice, you can always use the *t*-distribution regardless of the size of samples, because as the increase of degrees of freedom , *t*-distribution approaches the standard normal distribution.
 
-In this chapter, we write a pair of custom functions based on *t*-distribution to tackle such problems. They are named as `mean_CI()` and `mean_diff_CI()`.
+In this chapter, we write a function named `mean_CI()` to tackle this problem.
 
+::: {#mean-ci}
 ```{r}
 mean_CI  <- function(x, alternative = "two.sided", conf.level = 0.95){
   x_bar  <- mean(x, na.rm = T)
@@ -297,12 +297,15 @@ mean_CI  <- function(x, alternative = "two.sided", conf.level = 0.95){
   )
 }
 ```
+:::
 
 ```{r}
 read_csv("datasets/ex05-02.csv", show_col_types = F) |> 
   pull() |> 
   mean_CI() 
 ```
+
+Alternatively, you can use a function `MeanCI()` from `DescTools` package.
 
 ```{r}
 read_csv("datasets/ex05-02.csv", show_col_types = F) |> 
@@ -337,6 +340,9 @@ $$
 
 Where $\bar{X}_1$ and $\bar{X}_2$ are the sample means；$n_1$ and $n_2$ are the sample sizes. $S_1^2$ and $S_2^2$are the sample variances*.* $z_{\alpha/2}$ is the z-score corresponding to the desired confidence level.
 
+Here is a custom function named `mean_diff_CI()` to resolve this issue.
+
+::: {#mean-diff-ci}
 ```{r}
 mean_diff_CI <- function(x, y, alternative = "two.sided", conf.level = 0.95, 
                          var.equal = FALSE){
@@ -405,6 +411,7 @@ mean_diff_CI <- function(x, y, alternative = "two.sided", conf.level = 0.95,
   )
 }
 ```
+:::
 
 ::: example
 To compare the difference of hemoglobin concentration between people with alpha thalassemia trait and silent carrier, a doctor choose a random sample of 42 patients from a patient database. 22 subjects have alpha thalassemia trait, 20 are silent_carrier. Have a try to analyze the 95% confidence interval of the two populations.
@@ -416,15 +423,78 @@ To compare the difference of hemoglobin concentration between people with alpha 
 df <- read_csv("datasets/ex05-03.csv", show_col_types = F)
 x <- pull(df, 1)
 y <- pull(df, -1)
-mean_diff_CI(x, y)
+mean_diff_CI(x, y, var.equal = T)
 ```
 
+Samely, you can use the function `MeanDiffCI()` from `DescTools` package, but this function does not have a direct argument to control for whether the variances of the two populations are equal.
+
 ```{r}
-DescTools::MeanDiffCI(x, y, na.rm = T)
+DescTools::MeanDiffCI(x, y, na.rm = T, var.equal = T)
 ```
+
+As you can see, the confidence intervals printed out from `DescTools::MeanDiffCI` and `mean_diff_CI()` have a little difference.
 
 ### Interpreting the confidence interval
 
-The results will give you a range that represents the interval within which the true difference between the population means or the true population mean (for single population) is expected to fall, with a certain level of confidence (usually 95%).
+The confidence interval represents a range within which the true population mean is expected to fall with a certain level of confidence (usually 95%).
 
-More, if the interval includes 0, this suggests that there may be no significant difference between the two population means. If the interval does not include 0, it suggests that there is a significant difference.
+As for the difference between two population means, the truth is the same. Moreover, if the interval of the difference between two population means includes 0, this suggests that there may be no significant difference between the two population means. If the interval does not include 0, it suggests that there is a significant difference.
+
+Consider the 100 samples drawn from normal populations $N(17.5, 1.2)$ (see [Example 1](#example05-01)), we can construct the 95% confidence intervals for them. Look up the results in @tbl-100samples-ci , `flag = TRUE` indicates the confidence interval contain the population mean, and the vise is not true.
+
+```{r}
+#| tbl-cap: The confidence intervals for the 100 samples
+#| label: tbl-100samples-ci
+pop.mean = 17.5
+
+df <- read_csv("datasets/ex05-01.csv", show_col_types = F) |> 
+  summarise_all(
+    list(
+      s.mean = mean,
+      ci     = mean_CI
+    )
+  ) |> 
+  pivot_longer(
+    cols      = everything(),
+    names_to  = c("sample", ".value"),
+    names_sep = "_"
+  ) |> 
+  mutate(
+    lower.ci = ci[[2]],
+    upper.ci = ci[[3]],
+    ci       = NULL
+  ) |>
+  mutate(
+    flag = lower.ci <= pop.mean & upper.ci >= pop.mean,
+    sample = as.factor(c(1:100)),
+    across(c(2:4), ~ round(., digits = 2))
+  )
+df |> 
+  paged_table()
+```
+
+To highlight the confidence intervals that do not contain the population mean with a different color,
+
+To see more clearli, we visualize the confidence intervals for the means of 100 samples as below. The blue verticale line represents the population mean, black dot denotes each sample mean, and the short horizontal lines characterize the confidence intervals. The confidence intervals that do not contain the population mean are highlighted with a red color.
+
+```{r}
+#| fig-height: 8
+#| fig-width: 6
+
+df |> 
+  ggplot(aes(x = s.mean, y = sample)) +
+  geom_point(size = 0.4) +
+  geom_vline(xintercept = pop.mean, linetype = "dashed", color = "blue") +
+  geom_errorbarh(
+    aes(xmin = lower.ci, xmax = upper.ci, color = flag), 
+    height = 0.3,
+    linewidth = 0.4) +
+  xlim(15, 20) +
+  labs(x = "Means of sample and 95% CI", y = "Sample index") +
+  theme_light() +
+  theme(
+    axis.text = element_text(size = 6.5), 
+    legend.position = "none",
+    axis.title  = element_text(size = 10)
+  )
+```

@@ -4,9 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   collapse = F,
   # cache = TRUE,
-  fig.retina = 2,
-  fig.height = 4,
-  fig.asp = 2/3,
+  fig.retina = 5,
   fig.show = "hold"
 )
 

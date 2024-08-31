@@ -21,6 +21,7 @@ book:
         - quat-data-stat-desc.qmd
         - normal-distribution.qmd
         - statistical-inference.qmd
+        - hypothesis-test.qmd
         - ttest.qmd
         - anova.qmd
         - count-data-stat-desc.qmd
@@ -51,12 +52,6 @@ format:
     code-annotations: hover
     smooth-scroll: true
 
-crossref: 
-  custom:
-    - kind: float
-      reference-prefix: "Function"
-      key: fun
-      
 editor: visual
 
 filters:
