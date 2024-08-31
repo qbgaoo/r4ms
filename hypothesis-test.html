@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>17&nbsp; Quarto – R for Medical Statistics</title>
+<title>6&nbsp; Hypothesis test – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -64,8 +30,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./pilot-project.html" rel="next">
-<link href="./stat-anal-report.html" rel="prev">
+<link href="./ttest.html" rel="next">
+<link href="./statistical-inference.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -107,6 +73,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -119,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">Communication</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./hypothesis-test.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -200,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
   </div>
 </li>
@@ -288,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link active">
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
@@ -310,20 +319,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#github-action" id="toc-github-action" class="nav-link active" data-scroll-target="#github-action"><span class="header-section-number">17.1</span> GitHub Action</a>
+  <li><a href="#fundamentals-of-hypothesis-test" id="toc-fundamentals-of-hypothesis-test" class="nav-link active" data-scroll-target="#fundamentals-of-hypothesis-test"><span class="header-section-number">6.1</span> Fundamentals of hypothesis test</a>
   <ul class="collapse">
-  <li><a href="#执行代码" id="toc-执行代码" class="nav-link" data-scroll-target="#执行代码"><span class="header-section-number">17.1.1</span> 执行代码</a></li>
-  <li><a href="#先决条件" id="toc-先决条件" class="nav-link" data-scroll-target="#先决条件"><span class="header-section-number">17.1.2</span> <strong>先决条件</strong></a></li>
+  <li><a href="#the-fundamentals" id="toc-the-fundamentals" class="nav-link" data-scroll-target="#the-fundamentals"><span class="header-section-number">6.1.1</span> The fundamentals</a></li>
+  <li><a href="#some-concepts-and-notations" id="toc-some-concepts-and-notations" class="nav-link" data-scroll-target="#some-concepts-and-notations"><span class="header-section-number">6.1.2</span> Some concepts and notations</a></li>
+  </ul></li>
+  <li><a href="#steps-of-hypothesis-test" id="toc-steps-of-hypothesis-test" class="nav-link" data-scroll-target="#steps-of-hypothesis-test"><span class="header-section-number">6.2</span> Steps of hypothesis test</a></li>
+  <li><a href="#considerations-for-hypothesis-test" id="toc-considerations-for-hypothesis-test" class="nav-link" data-scroll-target="#considerations-for-hypothesis-test"><span class="header-section-number">6.3</span> Considerations for hypothesis test</a>
+  <ul class="collapse">
+  <li><a href="#type-i-error-and-type-ii-error" id="toc-type-i-error-and-type-ii-error" class="nav-link" data-scroll-target="#type-i-error-and-type-ii-error"><span class="header-section-number">6.3.1</span> Type I error and type II error</a></li>
+  </ul></li>
+  <li><a href="#considerations-in-hypothesis-test" id="toc-considerations-in-hypothesis-test" class="nav-link" data-scroll-target="#considerations-in-hypothesis-test"><span class="header-section-number">6.4</span> Considerations in hypothesis test</a>
+  <ul class="collapse">
+  <li><a href="#study-design" id="toc-study-design" class="nav-link" data-scroll-target="#study-design"><span class="header-section-number">6.4.1</span> Study design</a></li>
+  <li><a href="#different-tests-for-different-types-of-data" id="toc-different-tests-for-different-types-of-data" class="nav-link" data-scroll-target="#different-tests-for-different-types-of-data"><span class="header-section-number">6.4.2</span> Different tests for different types of data</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/hypothesis-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./stat-anal-report.html">Communication</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./hypothesis-test.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></h1>
 </div>
 
 
@@ -340,82 +359,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="github-action" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="github-action"><span class="header-section-number">17.1</span> GitHub Action</h2>
-<p>呈现和发布内容有几种不同的方法。下面，我们将提供一个使用 <a href="https://docs.github.com/en/actions">GitHub Actions</a> 和 GitHub Pages 发布内容的指南。</p>
-<section id="执行代码" class="level3" data-number="17.1.1">
-<h3 data-number="17.1.1" class="anchored" data-anchor-id="执行代码"><span class="header-section-number">17.1.1</span> 执行代码</h3>
-<p>如果你愿意，可以配置一个 GitHub Action 来执行 R 代码作为渲染的一部分。这虽然是最好的方法，但当在 GitHub Actions 等 CI 服务中执行代码时，请考虑以下要求:</p>
-<ul>
-<li>你需要在 CI 环境中重新配置所有依赖项（包括 R 以及所需的正确版本的包）。</li>
-<li>如果你的代码需要任何特殊权限（例如访问数据库或网络）， CI 服务器上也需要具备这些权限。</li>
-<li>你的项目可能包含无法轻易执行的文档（例如使用旧版包的几年前的博客文章）。这些文档可能需要单独启用冻结功能，以防止它们在 CI 上执行。</li>
-</ul>
+<p>Hypothesis test is a statistical method used to make inferences or draw conclusions about a population based on sample data. It involves testing a statement (the hypothesis) about a population parameter, such as the population mean or proportion, by comparing the sample data to what is expected under the null hypothesis.</p>
+<section id="fundamentals-of-hypothesis-test" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="fundamentals-of-hypothesis-test"><span class="header-section-number">6.1</span> Fundamentals of hypothesis test</h2>
+<section id="the-fundamentals" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="the-fundamentals"><span class="header-section-number">6.1.1</span> The fundamentals</h3>
+<p>The small probability event method or proof by contradiction using small probability event, is a reasoning approach used in hypothesis test based on the principle of probability theory. The core idea is that if an event is highly unlikely to occur under a certain assumption, and it does occur, then the assumption is likely incorrect.</p>
+<p>It start from the opposite assumption (<span class="math inline">H_0</span>) to indirectly assess whether the problem of interest (<span class="math inline">H_1</span>) holds true. This involves assuming that <span class="math inline">H_0</span> is true, calculating the test statistic, and then using the resulting p-value to determine whether <span class="math inline">H_0</span> can be upheld.</p>
 </section>
-<section id="先决条件" class="level3" data-number="17.1.2">
-<h3 data-number="17.1.2" class="anchored" data-anchor-id="先决条件"><span class="header-section-number">17.1.2</span> <strong>先决条件</strong></h3>
-<p>确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a> 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 <code>renv.lock</code> 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>在 RStudio 左下窗口的 Terminal 选项卡中依次运行以下 Git 命令：</p>
+<section id="some-concepts-and-notations" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="some-concepts-and-notations"><span class="header-section-number">6.1.2</span> Some concepts and notations</h3>
+<p>Before you learn and insight into more about hypothesis test, some concepts and notations need to be noticed.</p>
+<p><strong>Null hypothesis</strong> (<span class="math inline">H_0</span>)</p>
+<p>This is the default assumption that there is no effect or no difference. It is the hypothesis that we seek to test against. For example: The average height of adult men in a certain city is 175 cm. (<span class="math inline">H_0</span>: <span class="math inline">\mu = 175</span> cm)</p>
+<p><strong>Alternative hypothesis</strong> (<span class="math inline">H_1</span>)</p>
+<p>This is what you want to prove. It represents an effect, a difference, or a relationship that contradicts the null hypothesis. The hypothesis is that there is an effect or difference. For example: The average height of adult men in the city is not 175 cm. (<span class="math inline">H_1</span>: <span class="math inline">\mu \ne 175</span> cm)</p>
+<p><strong>Test statistic</strong></p>
+<p>A standardized value calculated from the sample data that is used to determine whether to reject <span class="math inline">H_0</span>, such as the t-statistic, z-statistic, or chi-square statistic.</p>
+<p><strong>Significance level</strong> (<span class="math inline">\alpha</span>)</p>
+<p>The probability threshold for rejecting the null hypothesis. Commonly used values are 0.05, 0.01, or 0.10. <span class="math inline">α = 0.05</span> means there’s a 5% risk of rejecting the null hypothesis when it is actually true.</p>
+<p><strong>P-value</strong></p>
+<p>The probability of obtaining a test statistic at least as extreme as the one observed, assuming the null hypothesis is true. If the p-value is less than <span class="math inline">α</span>, the null hypothesis is rejected. The smaller the p-value, the stronger the evidence against the null hypothesis. For example, if the p-value is 0.03, there is a 3% chance of observing such a result if H₀ is true.</p>
+</section>
+</section>
+<section id="steps-of-hypothesis-test" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="steps-of-hypothesis-test"><span class="header-section-number">6.2</span> Steps of hypothesis test</h2>
+<p>The process of conducting a hypothesis test involves several key steps. Here’s an outline of the typical procedure:</p>
+<ol type="1">
+<li>Define <span class="math inline">H_0</span> and <span class="math inline">H_1</span>.</li>
+<li>Choose the significance level <span class="math inline">\alpha</span>, typically <span class="math inline">0.05</span>.</li>
+<li>Select the appropriate test.</li>
+<li>Compute the test statistic.</li>
+<li>Determine the p-value.</li>
+<li>Make a decision based on the p-value and significance level.
 <ul>
-<li>git remote add origin https://github.com/qbgaoo/r4ms.git</li>
-<li>git branch -M main</li>
-<li>git push -u origin main</li>
+<li>Reject <span class="math inline">H_0</span>: If the p-value ≤ <span class="math inline">α</span>.</li>
+<li>Fail to reject <span class="math inline">H_0</span>: If the p-value &gt; <span class="math inline">α</span>.</li>
+</ul></li>
+<li>Draw conclusions in the context of the research.</li>
+</ol>
+<p>In the subsequet chapters, some typical test method will be introduced.</p>
+</section>
+<section id="considerations-for-hypothesis-test" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="considerations-for-hypothesis-test"><span class="header-section-number">6.3</span> Considerations for hypothesis test</h2>
+<section id="type-i-error-and-type-ii-error" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="type-i-error-and-type-ii-error"><span class="header-section-number">6.3.1</span> Type I error and type II error</h3>
+<p>It is known that hypothesis test employs the principle of proof by contradiction through small probability events. The conclusions drawn based on the p-value are probabilistic essentially, meaning that the conclusions may not be entirely correct. Two types of errors can occur.</p>
+<p><strong>Type I error (α) (false positive)</strong></p>
+<p>A type I error occurs when you reject the null hypothesis (<span class="math inline">H_0</span>) when it is actually true. For example, imagine that you are testing a new drug to see if it lowers blood pressure. The null hypothesis states that the drug has no effect. If you conclude that the drug does lower blood pressure when in fact it does not, you have made a type I error.</p>
+<p>The probability of making a type I error is denoted by the significance level <span class="math inline">α</span> .Common choices for <span class="math inline">α</span> are 0.05 or 0.01, meaning there is a 5% or 1% risk of rejecting <span class="math inline">H₀</span> when it is true.</p>
+<p><strong>Type II error (β) (false negative)</strong></p>
+<p>A type II error occurs when you fail to reject the null hypothesis (<span class="math inline">H_0</span>) when the alternative hypothesis (<span class="math inline">H_1</span>) is actually true. Continuing with the drug example, if the drug actually does lower blood pressure, but you conclude that it doesn’t, you’ve made a type II error.</p>
+<p>The probability of making a type II error is denoted by <span class="math inline">\beta</span>. The power of a test (<span class="math inline">1</span>-<span class="math inline">\beta</span>) represents the probability of correctly rejecting a false null hypothesis when the alternative hypothesis is true. In other words, it’s the likelihood that the test will detect an effect or difference when one actually exists.</p>
+<p>For example , in a medical study designed to detect whether a new drug is effective, if the power of the test is 0.9, there is a 90% chance of correctly rejecting <span class="math inline">H_0</span> (that the drug has no effect) when <span class="math inline">H_1</span> (that the drug is effective) is true.</p>
+<p>Factors that affect <span class="math inline">β</span> include:.</p>
+<ul>
+<li><strong>Sample size</strong>: Larger sample sizes generally increase the power of a test.</li>
+<li><strong>Effect size</strong>: Larger differences or stronger effects are easier to detect, thus increasing power.</li>
+<li><strong>Significance level</strong> (<span class="math inline">α</span>): Increasing <span class="math inline">α</span> can increase power, but it also increases the risk of a type I error.</li>
+<li><strong>Variance</strong>: Lower variability within the data increases power.</li>
 </ul>
-</div>
-</div>
-<p>在 Quarto 项目中新建文本文件，命名为 <code>publish.yml</code>（当然也可以是其他命字），保存路径为 <code>.github/workflows/publish.yml</code>，在文件中添加如下内容：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  # to be able to trigger a manual build</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    # run every day at 11 PM</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">cron</span><span class="kw">:</span><span class="at"> </span><span class="st">'0 23 * * *'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and deploy Book to Github</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build-deploy</span><span class="kw">:</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out repository</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Quarto</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install R</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">r-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'4.4.1'</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install R Dependencies</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-renv@v2</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">cache-version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and Publish</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/publish@v2</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">target</span><span class="kw">:</span><span class="at"> gh-pages</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>这是一个 GitHub Actions 工作流配置文件，保存后将文件提交到 GitHub中，触发文件中的工作流。</p>
+<p>In hypothesis test, there is often a trade-off between the risks of type I and type II errors. Lowering the significance level <span class="math inline">α</span> reduces the risk of a type I error but increases the risk of a type II error, and vice versa.</p>
+</section>
+</section>
+<section id="considerations-in-hypothesis-test" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="considerations-in-hypothesis-test"><span class="header-section-number">6.4</span> Considerations in hypothesis test</h2>
+<section id="study-design" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="study-design"><span class="header-section-number">6.4.1</span> Study design</h3>
+<p>Study design is the prerequisite of hypothesis test. The groups to be compared should be balanced and comparable, meaning that aside from the primary factor under investigation (such as a new drug in a clinical trial versus a control drug), other factors (such as age, gender, disease duration, and severity) that could influence the results should be identical or similar between groups. The best way to ensure balance is randomization before treatment.</p>
+</section>
+<section id="different-tests-for-different-types-of-data" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="different-tests-for-different-types-of-data"><span class="header-section-number">6.4.2</span> Different tests for different types of data</h3>
+<p>The appropriate test should be selected based on the purpose of the analysis, the type and distribution of the data, the study design, the sample size, and the conditions under which different statistical methods are applicable. For example, paired t-tests should be used for paired design measurement data; for completely randomized design measurement data with small sample sizes (i.e., n ≤ 60) with equal variances, the two-sample t-test should be used. If variances are unequal, an approximate t-test should be used.</p>
 
 
 </section>
@@ -1027,13 +1042,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./stat-anal-report.html" class="pagination-link" aria-label="Communication">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Communication</span>
+      <a href="./statistical-inference.html" class="pagination-link" aria-label="Statistical inference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./pilot-project.html" class="pagination-link" aria-label="A case to analyze">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">A case to analyze</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ttest.html" class="pagination-link" aria-label="t-test">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1042,5 +1057,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/hypothesis-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
