@@ -103,8 +103,8 @@ $H_1$: There is a difference between the population means ($\mu_1 \neq \mu_2$).
 
 If the variances are unequal, the Welch *t*-test (which does not assume equal variances) is recommended.
 
-::: example
-To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The model group was given a high-fat diet of 100g/day, while the tetrandrine group was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between the model group and the tetrandrine group?
+::: {#ex07-03 .example}
+To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?
 :::
 
 <a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
@@ -113,12 +113,13 @@ R codes for two-sample *t*-test is:
 
 ```{r}
 read_csv("datasets/ex07-03.csv", show_col_types = F) |> 
+  mutate(grp = factor(grp, labels = c("A", "B"))) |> 
   t.test(x ~ grp, data = _, var.equal = T)                   # <1>
 ```
 
 1.  Use the pipe operator to perform t-test with a group variable and a response variable.
 
-The results show $t = 3.689$ , $\text{p-value} = 0.00243$. At the $\alpha = 0.05$ significance level, reject $H_0$ and accept $H_1$, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between the tetrandrine group and the model group. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in the tetrandrine group than in the model group.
+The results show $t = 3.689$ , $\text{p-value} = 0.00243$. At the $\alpha = 0.05$ significance level, reject $H_0$ and accept $H_1$, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between group A and B. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in group A than in the model group.
 
 ### Welch t-test for unequal population variances
 
@@ -140,7 +141,7 @@ $$
 
 This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch *t*-test. It is generally considered more robust than the combined variance *t*-test in situations where variances differ.
 
-::: example
+::: {#ex07-04 .example}
 To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c (HbA1c) levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.
 :::
 
@@ -165,7 +166,7 @@ For more details about normality test you can see @sec-normality-test .
 
 ## F-test 
 
-The F-test was traditionally used to determine whether the variances of two populations are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations.cHere, only the F-test for comparing the variances of two samples is introduced.
+The F-test was traditionally used to determine whether the variances of two populations are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.
 
 $H_0$: The variances of the two populations are equal ($\sigma_1^2 = \sigma_2^2$).
 
@@ -182,3 +183,47 @@ where $S_1^2$ and $S_2^2$ are the variances of the two samples. By convention, $
 If the calculated F-statistic is is close to 1, the variances are similar. If it is much larger or smaller than 1, there may be a significant difference. If the p-value is less than the chosen significance level (e.g., 0.05), reject the null hypothesis, indicating that the variances are significantly different.
 
 The F-test is sensitive to non-normality. If the data does not follow a normal distribution, the test may give misleading results. In such cases, non-parametric alternatives, such as the Levene’s test, may be more appropriate.
+
+```{r}
+tibble(
+  F_value   = seq(0, 5, length.out = 1000),
+  y1  = df(F_value, 8, 1),
+  y2  = df(F_value, 8, Inf)
+) |> 
+  pivot_longer(
+    cols = contains("y"),
+    names_to = "grp",
+    values_to = "Density"
+  ) |> 
+  ggplot(aes(x = F_value, y = Density, linetype = grp)) + 
+  geom_line(linewidth = 0.5) +
+  geom_text(
+    aes(x = 0.8, y = 0.3, hjust = 0,
+        label = paste("df1 =", 8, ", df2 =", 1))) +
+  geom_text(
+    aes(x = 1, y = 0.8, hjust = 0,
+    label = paste("df1 =", 8, ", df2 =", Inf))) +
+  theme(legend.position = "none")
+```
+
+::: example
+For [Example 3](#ex07-03), use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.
+:::
+
+```{r}
+read_csv("datasets/ex07-03.csv", show_col_types = F) |> 
+  var.test(x ~ grp, data = _)
+```
+
+The results show: $F = 2.299$, $\text{p-value} = 0.2944$, at the significant level of $\alpha = 0.1$, do not reject $H_0$. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, [Example 3](#ex07-03) used a two-sample t-test under the assumption of equal variances.
+
+::: example
+For [Example 4](#ex07-04), Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.
+:::
+
+```{r}
+read_csv("datasets/ex07-04.csv", show_col_types = F) |> 
+  var.test(x ~ grp, data = _)
+```
+
+The results show: $F = 3.5022$, $\text{p-value} = 0.0032$, at the significant level of $\alpha = 0.1$, reject $H_0$, accept $H_1$. The difference is statistically significant. It can be considered that the population variances of total cholesterol levels differ between those with poor and good blood glucose control. Therefore, in [Example 4](#ex07-04), the two-sample t-test for unequal variances was used.

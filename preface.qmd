@@ -62,4 +62,4 @@ R is a free, open-source software for statistical computing and graphics. In thi
 
 ## Colophon
 
-The book is written by Quarto, an online version of it is available at [https://qbgaoo.github.io/r4ms/](#0). It will continue to evolve in between reprints of the physical book. The source of the book is available at <https://qbgaoo.github.io/r4ms/>.
+The book is written by Quarto, an online version of it is available at [https://qbgaoo.github.io/r4ms/](#0).

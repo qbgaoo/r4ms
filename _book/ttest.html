@@ -361,10 +361,11 @@ window.Quarto = {
   <li><a href="#the-t-test-for-equal-population-variances" id="toc-the-t-test-for-equal-population-variances" class="nav-link" data-scroll-target="#the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</a></li>
   <li><a href="#welch-t-test-for-unequal-population-variances" id="toc-welch-t-test-for-unequal-population-variances" class="nav-link" data-scroll-target="#welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</a></li>
   </ul></li>
-  <li><a href="#normality-test-and-f-test-for-comparing-the-variances-of-two-samples" id="toc-normality-test-and-f-test-for-comparing-the-variances-of-two-samples" class="nav-link" data-scroll-target="#normality-test-and-f-test-for-comparing-the-variances-of-two-samples"><span class="header-section-number">7.5</span> Normality test and F-test for comparing the variances of two samples</a>
+  <li><a href="#normality-test-and-f-test" id="toc-normality-test-and-f-test" class="nav-link" data-scroll-target="#normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</a>
   <ul class="collapse">
   <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">7.5.1</span> Normality test</a></li>
   </ul></li>
+  <li><a href="#f-test" id="toc-f-test" class="nav-link" data-scroll-target="#f-test"><span class="header-section-number">7.6</span> F-test</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -485,20 +486,21 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}
 <p><span class="math inline">H_0</span>: There is no difference between the population means (<span class="math inline">\mu_1 = \mu_2</span>).</p>
 <p><span class="math inline">H_1</span>: There is a difference between the population means (<span class="math inline">\mu_1 \neq \mu_2</span>).</p>
 <p>If the variances are unequal, the Welch <em>t</em>-test (which does not assume equal variances) is recommended.</p>
-<div class="example">
+<div id="ex07-03" class="example">
 <strong>Example 3:</strong> 
-<p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The model group was given a high-fat diet of 100g/day, while the tetrandrine group was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between the model group and the tetrandrine group?</p>
+<p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?</p>
 </div>
 <p><a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 <p>R codes for two-sample <em>t</em>-test is:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-2" class="code-annotation-target"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">factor</span>(grp, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="2" data-code-annotation="1">Use the pipe operator to perform t-test with a group variable and a response variable.</span>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Use the pipe operator to perform t-test with a group variable and a response variable.</span>
 </dd>
 </dl>
 </div>
@@ -508,15 +510,15 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}
 #&gt; 
 #&gt; data:  x by grp
 #&gt; t = 3.689, df = 14, p-value = 0.00243
-#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+#&gt; alternative hypothesis: true difference in means between group A and group B is not equal to 0
 #&gt; 95 percent confidence interval:
 #&gt;  0.05494115 0.20755885
 #&gt; sample estimates:
-#&gt; mean in group 1 mean in group 2 
+#&gt; mean in group A mean in group B 
 #&gt;         0.77000         0.63875</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = 3.689</span> , <span class="math inline">\text{p-value} = 0.00243</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between the tetrandrine group and the model group. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in the tetrandrine group than in the model group.</p>
+<p>The results show <span class="math inline">t = 3.689</span> , <span class="math inline">\text{p-value} = 0.00243</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between group A and B. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in group A than in the model group.</p>
 </section>
 <section id="welch-t-test-for-unequal-population-variances" class="level3" data-number="7.4.2">
 <h3 data-number="7.4.2" class="anchored" data-anchor-id="welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</h3>
@@ -531,7 +533,7 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
 \nu = \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
 </span></p>
 <p>This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch <em>t</em>-test. It is generally considered more robust than the combined variance <em>t</em>-test in situations where variances differ.</p>
-<div class="example">
+<div id="ex07-04" class="example">
 <strong>Example 4:</strong> 
 <p>To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c (HbA1c) levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.</p>
 </div>
@@ -557,43 +559,100 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
 <p>The results show <span class="math inline">t = -2.8322</span> , <span class="math inline">\text{p-value} = 0.007465</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. Therefore, we can conclude that the mean total cholesterol levels between those with poor and good blood glucose control are different.</p>
 </section>
 </section>
-<section id="normality-test-and-f-test-for-comparing-the-variances-of-two-samples" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="normality-test-and-f-test-for-comparing-the-variances-of-two-samples"><span class="header-section-number">7.5</span> Normality test and F-test for comparing the variances of two samples</h2>
+<section id="normality-test-and-f-test" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</h2>
 <p>When conducting a two-sample <em>t</em>-test, especially when comparing the means of two small samples, it is required that the corresponding populations follow a normal distribution and that the population variances are equal, known as homogeneity of variance. For paired <em>t</em>-tests, it is only necessary that the distribution of the differences between each pair of data points follows a normal distribution. Therefore, when performing a two-sample <em>t</em>-test with small samples, it is generally advisable to first conduct a homogeneity of variance test, particularly when there is a noticeable disparity between the sample variances. If the variances are homogeneous, a standard <em>t</em>-test is used; if not, an approximate <em>t</em>-test, such as Welch <em>t</em>-test, is applied. Additionally, it may be necessary to perform a normality test, though normality tests are more commonly used to establish medical reference ranges using normal distribution methods.</p>
 <section id="normality-test" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">7.5.1</span> Normality test</h3>
-<p>For details about normality test see <a href="normal-distribution.html#sec-normality-test" class="quarto-xref"><span>Section 4.3</span></a> .</p>
-<p>对<strong>例3-6</strong>的数据，利用<span class="math inline">F</span>检验判断两总体空腹血糖下降值的方差是否相等。这里利用<code>DescTools::LeveneTest()</code>进行方差齐性检验</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tb &lt;- two_sample |&gt; </span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   pivot_longer(</span></span>
-<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     cols = everything(),</span></span>
-<span id="annotated-cell-6-4"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     names_to = "group"</span></span>
-<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   ) |&gt; </span></span>
-<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-7" class="code-annotation-target"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     group = as.factor(group)</span></span>
-<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span>
-<span id="annotated-cell-6-9"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># DescTools::LeveneTest(tb$value, group = tb$group) |&gt; </span></span>
-<span id="annotated-cell-6-10"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   broom::tidy() |&gt; </span></span>
-<span id="annotated-cell-6-11"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   kbl(digits = 3, align = "c") |&gt;</span></span>
-<span id="annotated-cell-6-12"><a href="#annotated-cell-6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   kable_classic(full_width = F) |&gt; </span></span>
-<span id="annotated-cell-6-13"><a href="#annotated-cell-6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   row_spec(0, bold = T)</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="1">将原数据框进行拉长转换，以符合DescTools::LeveneTest()参数的要求</span>
-</dd>
-<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="7" data-code-annotation="2">作为数据分组变量，需转换为因子类型，否则会输出警告</span>
-</dd>
-</dl>
-</div>
-</div>
-
-
+<p>For more details about normality test you can see <a href="normal-distribution.html#sec-normality-test" class="quarto-xref"><span>Section 4.3</span></a> .</p>
 </section>
+</section>
+<section id="f-test" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="f-test"><span class="header-section-number">7.6</span> F-test</h2>
+<p>The F-test was traditionally used to determine whether the variances of two populations are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.</p>
+<p><span class="math inline">H_0</span>: The variances of the two populations are equal (<span class="math inline">\sigma_1^2 = \sigma_2^2</span>).</p>
+<p><span class="math inline">H_1</span>: The variances of the two populations are not equal (<span class="math inline">\sigma_1^2 \neq \sigma_2^2</span>).</p>
+<p>The F-statistic is calculated as the ratio of the two sample variances:</p>
+<p><span class="math display">
+F = \frac{S_1^2}{S_2^2}
+</span></p>
+<p>where <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples. By convention, <span class="math inline">S_1^2</span> should be the larger variance, so the F-statistic is always greater than or equal to 1. The F-distribution depends on two parameters: the degrees of freedom for the numerator (<span class="math inline">\nu_1 = n_1 - 1</span>) and the denominator (<span class="math inline">\nu_2 = n_2 - 1</span>).</p>
+<p>If the calculated F-statistic is is close to 1, the variances are similar. If it is much larger or smaller than 1, there may be a significant difference. If the p-value is less than the chosen significance level (e.g., 0.05), reject the null hypothesis, indicating that the variances are significantly different.</p>
+<p>The F-test is sensitive to non-normality. If the data does not follow a normal distribution, the test may give misleading results. In such cases, non-parametric alternatives, such as the Levene’s test, may be more appropriate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">F_value   =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">1000</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y1  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="dv">1</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y2  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="cn">Inf</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"y"</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"grp"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Density"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_value, <span class="at">y =</span> Density, <span class="at">linetype =</span> grp)) <span class="sc">+</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.8</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="cn">Inf</span>))) <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ttest_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>For <a href="#ex07-03">Example 3</a>, use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  F test to compare two variances
+#&gt; 
+#&gt; data:  x by grp
+#&gt; F = 2.299, num df = 7, denom df = 7, p-value = 0.2944
+#&gt; alternative hypothesis: true ratio of variances is not equal to 1
+#&gt; 95 percent confidence interval:
+#&gt;   0.4602708 11.4833515
+#&gt; sample estimates:
+#&gt; ratio of variances 
+#&gt;           2.299011</code></pre>
+</div>
+</div>
+<p>The results show: <span class="math inline">F = 2.299</span>, <span class="math inline">\text{p-value} = 0.2944</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, do not reject <span class="math inline">H_0</span>. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, <a href="#ex07-03">Example 3</a> used a two-sample t-test under the assumption of equal variances.</p>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>For <a href="#ex07-04">Example 4</a>, Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  F test to compare two variances
+#&gt; 
+#&gt; data:  x by grp
+#&gt; F = 3.5022, num df = 24, denom df = 24, p-value = 0.0032
+#&gt; alternative hypothesis: true ratio of variances is not equal to 1
+#&gt; 95 percent confidence interval:
+#&gt;  1.543310 7.947462
+#&gt; sample estimates:
+#&gt; ratio of variances 
+#&gt;           3.502199</code></pre>
+</div>
+</div>
+<p>The results show: <span class="math inline">F = 3.5022</span>, <span class="math inline">\text{p-value} = 0.0032</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, reject <span class="math inline">H_0</span>, accept <span class="math inline">H_1</span>. The difference is statistically significant. It can be considered that the population variances of total cholesterol levels differ between those with poor and good blood glucose control. Therefore, in <a href="#ex07-04">Example 4</a>, the two-sample t-test for unequal variances was used.</p>
+
+
 </section>
 
 </main> <!-- /main -->
