@@ -1,7 +1,7 @@
 /*-- scss:defaults --*/
 
 // fonts
-$font-size-root: 17px !default;
+$font-size-root: 16.6px !default;
 $h1-font-size: 1.4rem !default;
 $h2-font-size: 1.2rem !default;
 $h3-font-size: 1.1rem !default;
@@ -66,7 +66,8 @@ div.sidebar-item-container .active {
   padding-right: 12px;  
   padding-top: 6px;
   border-radius: 5px;  
-  border: 2px solid yellow;  
+  border: 3px solid yellow;  
+  margin-bottom: 15px;
 }
 
 .example strong {
@@ -83,7 +84,12 @@ div.sidebar-item-container .active {
     font-size: 100% !important;
 }
 
-
+/* Style the output of R chunks */
+pre:not(.r) { 
+  background-color: #666666;  /* Replace with your desired color */
+  padding: 10px;
+  border-radius: 5px;
+}
 
 
 

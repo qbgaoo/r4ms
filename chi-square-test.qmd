@@ -1,1 +1,709 @@
 # Chi-square test
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+The Chi-square test is a statistical test commonly used to determine whether there is a significant association between categorical variables. It can be applied in several different contexts, including testing for goodness-of-fit, independence, and homogeneity.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(rmarkdown)
+library(coin)
+```
+
+## Chi-square test for 2x2 tables
+
+### Chi-square distribution
+
+The Chi-square distribution is a probability distribution commonly used in hypothesis testing and confidence interval estimation for variance and categorical data analysis, particularly in the Chi-square test for independence and goodness-of-fit.
+
+The probability density function of the Chi-square distribution with $k$ degrees of freedom is:
+
+$$
+f(x; k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{(k/2 - 1)} e^{-x/2}
+$$
+
+where $x \geq 0$, $k$ is the degrees of freedom, $\Gamma$ is the Gamma function.
+
+### Visualization
+
+The shape of the Chi-square distribution is determined by its degrees of freedom. The code below will plot Chi-square distributions with different degrees of freedom to demonstrate how the shape of the distribution changes.
+
+```{r}
+#| echo: false
+# Generate data for Chi-square distribution with different degrees of freedom
+df <- tibble(
+  x = seq(0, 20, length.out = 100),
+  y1 = dchisq(x, df = 2),
+  y2 = dchisq(x, df = 5),
+  y3 = dchisq(x, df = 11)
+  ) |> 
+  pivot_longer(
+    cols = starts_with("y"),
+    names_to = "group",
+    values_to = "y"
+  )
+
+# Plot Chi-square distributions for df = 2 and df = 5
+ggplot(df, aes(x, y, linetype = group)) + 
+  geom_line() +
+  labs(x = "Chi-square statistic", y = "Density") +
+  annotate("text", x = 1.1, y = 0.45, label = "df = 2") +
+  annotate("text", x = 3.8, y = 0.17, label = "df = 5") +
+  annotate("text", x = 14, y = 0.08, label = "df = 11")
+```
+
+It is positively skewed for low degrees of freedom but becomes more symmetrical as the degrees of freedom increase. Since it’s a distribution of squared values, the Chi-square statistic is always non-negative, meaning it ranges from 0 to infinity.
+
+### 2x2 contingency table
+
+2x2 contingency table, also known as fourfold table , is a matrix used to display the frequencies of two categorical variables with two levels each (see @tbl-fourfold-table ).
+
+```{r}
+#| echo: false
+#| label: tbl-fourfold-table
+#| tbl-cap: Structure of a 2x2 contingency table
+
+tibble(
+  " "         = c("exposed", "non-exoposed", "total"),
+  "event"     = c("a", "c", "a + c"),
+  "non-event" = c("b", "d", "b + d"),
+  "total"     = c("a + b", "c + d", "N = a + b + c + d")
+) |> 
+  knitr::kable()
+```
+
+where $a$ is the number of events in the exposed group, $b$ is the number of non-events in the exposed group, $c$ is the number of events in the non-exposed group, $d$ is the number of non-events in the non-exposed group.
+
+For example, you might use a fourfold table to study whether a new treatment (exposure) improves the survival rates (event) compared to a standard treatment.
+
+```{r}
+#| echo: false
+#| label: tbl-heart-attack
+#| tbl-cap: Heart attack outcomes by two treatment groups
+
+tibble(
+  " " = c("new treatment", "standard treatment", "total"),
+  "heart attack (survived)" = c("30", "15", "45"),
+  "heart attack (died)"  = c("20", "35", "55"),
+  "total"              = c("50", "50", "100")
+) |> 
+  knitr::kable()
+```
+
+**Chi-square statistic**
+
+The Chi-square statistic for a 2x2 table is calculated using the formula:
+
+$$
+\chi^2 = \frac{N(ad - bc)^2}{(a + b)(c + d)(a + c)(b + d)}
+$$
+
+where $N$ is the total sample size, $N = a + b + c + d$, $ad - bc$ is the product difference between rows and columns.
+
+**Yates’ continuity correction**
+
+Yates’ continuity correction is a statistical adjustment applied to the Chi-square test for 2x2 contingency tables to correct for the fact that the Chi-square test is an approximation of a continuous distribution, but the data in a contingency table are discrete. This correction makes the Chi-square test more conservative, reducing the likelihood of type I errors (false positives) by slightly lowering the Chi-square statistic.
+
+With Yates’ correction, the formula for the Chi-square statistic is:
+
+$$
+\chi^2 = \frac{(|ad - bc| - 0.5N)^2 N}{(a+b)(c+d)(a+c)(b+d)}
+$$
+
+-   When to use Yates’ correction
+    -   It is generally recommended for 2x2 tables with small sample sizes, particularly when any expected frequency is less than 10 but greater than 5. It is automatically applied in `chisq.test()` for 2x2 tables unless specified otherwise.
+    -   When you want to be more conservative and reduce the chance of false positives (finding a significant result when there is none), Yates’ correction can help.
+-   When not to use Yates’ correction
+    -   When the sample size is large, or the expected frequencies in each cell are well above 5, Yates’ correction is not necessary and may be too conservative.
+    -   Yates’ correction is only relevant for 2x2 tables, so it’s ignored for larger contingency tables.
+
+It is generally recommended for small sample sizes but can be unnecessary or even too conservative in larger samples.
+
+### Chi-square test
+
+The Chi-square test for 2x2 tables is commonly used to assess whether there is an association between two categorical variables. In medical research, this test is frequently applied to analyze whether exposure (e.g., treatment, risk factor) to a risk factor is associated with a particular outcome (e.g., disease, recovery).
+
+In R, you can perform a Chi-square test for the 2x2 contingency table using the `chisq.test()` function or `fisher.test()` function.
+
+**When to use `chisq.test()`**
+
+-   Chi-square test works well when the sample size is large enough, typically when the expected frequency in each cell of the contingency table is 5 or more.
+-   Chi-square test provides an approximate result based on the Chi-square distribution. It is not suitable for small sample sizes, but it’s efficient for larger data sets.
+-   Chi-square test assumes the total row and column frequencies can vary. It’s used when you don’t have fixed marginal totals.
+
+**When to use `fisher.test()`**
+
+-   Fisher’s exact test (discussed in @sec-fisher-test )is recommended for small sample sizes, particularly when any expected cell count is less than 5. It calculates the exact p-value without relying on large sample approximations.
+-   Fisher’s exact test assumes that both the row and column totals are fixed. This makes it a more conservative test compared to the Chi-square test.
+-   Fisher’s test is preferred when dealing with sparse data (i.e., a lot of cells with small counts), as it doesn’t rely on assumptions of normality or expected frequencies.
+
+::: example
+To determine if a new treatment for heart attack patients improves survival rates compared to a standard treatment, a total of 100 patients who have suffered heart attacks were randomly divided into two groups: 50 patients receive new treatment, 50 patients receive standard treatment. The outcome of interest is whether the patient survived (recovered or showed significant improvement) or died (passed away due to complications from the heart attack) after the treatment. The observed data is summarized in @tbl-heart-attack . Is there a significant difference in survival rates between patients who received the new treatment and those who received the standard treatment?
+:::
+
+```{r}
+# Create a 2x2 contingency table
+matrix(c(30, 20, 15, 35), nrow = 2, byrow = T) |> 
+  chisq.test(correct = F)
+```
+
+The calculated Chi-square statistic is 9.0909, p-value is 0.002569, less than the significance level 0.05. This indicates a statistically significant difference in survival rates between the two treatments.
+
+## Chi-square test for paired 2x2 tables
+
+Chi-square test for paired 2x2 table is typically used for analyzing paired categorical data, such as when the same subjects are measured before and after an intervention, or when two related groups are compared. In this case, the McNemar’s test is commonly applied for paired data rather than the standard Chi-square test, as it is designed specifically to handle dependent data (paired observations).
+
+### McNemar’s Test
+
+McNemar’s test focuses only on the off-diagonal cells $b$ and $c$, which represent discordant pairs (i.e., patients who switched their outcomes between pre- and post-treatment). The cells $a$ and $d$ (concordant pairs) are ignored in this test because they reflect no change in outcome.
+
+The test statistic without continuity correction:
+
+$$
+\chi^2 = \frac{(b - c)^2}{b + c},
+$$
+
+The test statistic with continuity correction:
+
+$$
+\chi^2 = \frac{(|b - c| - 1)^2}{b + c}
+$$
+
+where $b$ is the number of individuals who succeeded in pre-treatment but failed in post-treatment, $c$ is the number of individuals who failed in pre-treatment but succeeded in post-treatment, $1$ in the formula is a continuity correction applied for small sample sizes.
+
+The continuity correction is especially important when $b + c$ is small (e.g., less than 40). It helps to prevent overestimating the test statistic. For larger sample sizes, the correction has a smaller impact, and some recommend not applying it (i.e., setting `correct = FALSE`), as it can be overly conservative.
+
+::: example
+A study is conducted to evaluate the efficacy of a new vaccine in preventing the flu. The same group of individuals is tested before and after receiving the vaccine to see if they develop flu symptoms. The observed data is summarized in @tbl-vaccine-data . Determine whether the vaccine have a significant effect on reducing flu incidence.
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-vaccine-data
+#| tbl-cap: Paired flu status before and after vaccination
+
+tribble(
+  ~" ",     ~"flu post-vaccine",    ~"no flu post-vaccine",     ~"total",
+  "flue pre-vaccine", "10 (had flu both times)"," 25 (had flu pre, no flu post)", "35",
+  "no flu pre-vaccine", "5 (no flu pre, had flu post)", "60 (no flu both times)", "65",
+  "total", "15",  "85", "100"
+) |> 
+  knitr::kable()
+```
+
+```{r}
+matrix(c(10, 25, 5, 60), nrow = 2, byrow = T) |> 
+  mcnemar.test(correct = T)
+```
+
+If the p-value from the McNemar’s test is less than the significance level (typically $\alpha = 0.05$), you would reject the null hypothesis and conclude that the vaccine had a significant effect on reducing flu incidence. If the p-value is greater than the significance level, the null hypothesis is not rejected, and the data do not provide sufficient evidence to conclude that the vaccine significantly changed flu outcomes. Here the p-value is less than 0.05.
+
+This type of paired data analysis is common in medical research, especially in pre-post studies where the same subjects are followed over time to assess the impact of an intervention (e.g., medication, surgery, or vaccines).
+
+## Fisher’s exact test {#sec-fisher-test}
+
+The Fisher’s exact test is used to determine if there are nonrandom associations between two categorical variables, typically in a 2x2 contingency table (fourfold table). It is commonly applied when sample sizes are small, making the Chi-square test unreliable due to low expected frequencies in one or more cells.
+
+Fisher’s exact test calculates the exact probability of obtaining a table at least as extreme as the one observed, assuming the null hypothesis is true. The probability is calculated based on the hypergeometric distribution, and Fisher’s test uses this distribution to calculate the p-value.
+
+The formula for the probability of observing a given 2x2 table is:
+
+$$
+P = \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!N!}
+$$
+
+where $N = a + b + c + d$ is the total sample size.
+
+::: example
+A clinical trial is conducted to evaluate the effectiveness of a new drug for treating hypertension. Patients are divided into treatment group and control group. After treatment, the number of patients whose blood pressure returned to normal (cured) and those whose blood pressure remained high (not cured) is recorded. The data collected is in . Determine if the new drug shows a statistically significant difference in its effectiveness compared to the control.
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-fisher-test
+#| tbl-cap: Structure of a 2x2 contingency table
+
+tibble(
+  " "         = c("treatment", "control", "total"),
+  "blood pressure normal"     = c("8", "3", "11"),
+  "Blood pressure high" = c("2", "7", "9"),
+  "total"     = c("10", "10d", "20")
+) |> 
+  knitr::kable()
+```
+
+In R, Fisher’s exact test can be performed using the `fisher.test()` function.
+
+```{r}
+matrix(c(8, 2, 3, 7), nrow = 2, byrow = T) |> 
+fisher.test()
+```
+
+The result of Fisher’s Exact Test will give you a p-value. Here p-value is 0.06978, above 0.05, not reject the null hypothesis. This means the data do not provide sufficient evidence to conclude that the new drug shows a better effectiveness compared to control.
+
+## Chi-square test for R×C tables
+
+The Chi-square test for R×C contingency tables is used to assess whether there is an association between two categorical variables where one variable has R categories and the other has C categories. This is also called the Chi-square test of independence.
+
+### Comparison of multiple sample rates
+
+When comparing multiple sample rates, several statistical methods are commonly used, including the Chi-square test and Cochran’s Q test. The choice of method depends on the structure of the data and the research question.
+
+1.  **Chi-Square test for rates**
+
+    The Chi-square test is widely used to compare rates across multiple independent samples. It tests whether the observed differences between sample proportions are statistically significant.
+
+    ::: {#exp-multi-sample-rates .example}
+    Suppose you want to compare recovery rates between three hospitals for a specific disease. The data is in @tbl-hospital-recover . Determine if the recovery rates are significantly different between these hospitals.
+    :::
+
+    ```{r}
+    #| echo: false
+    #| label: tbl-hospital-recover
+    #| tbl-cap: The recovery results of a disease in three hospitals
+    tibble(
+      " " = c("hospital A", "hospital B", "hospital C"),
+      "recovered" = c(50, 55, 65),
+      "not revovered" = c(20, 15, 5)
+    ) |> 
+      knitr::kable()
+    ```
+
+    Here is `chisq.test()` is used to conduct this kind of test. In @sec-comp-multi-prop , we reanalyze this example using function `prop.test()`, which gives the same result.
+
+    ```{r}
+    matrix(c(50, 20, 55, 15, 65, 5), nrow = 3, byrow = T) |> 
+      chisq.test(correct = F)
+    ```
+
+2.  **Cochran’s Q test**
+
+    Cochran’s Q test is an extension of the Chi-Square test, designed for comparing rates across multiple samples in paired or repeated measures settings. It is typically used with binary outcomes (e.g., “yes/no” or “success/failure”).
+
+    ::: example
+    A study is conducted to test the effectiveness of a new drug across three time points (1 month, 3 months, and 6 months) on the same group of patients. The outcome is whether the treatment was successful (1) or not (0), recorded for 10 patients in @tbl-drug-success-rate . Determine if there is a significant difference in success rates across the three time points.
+    :::
+
+    ```{r}
+    #| echo: false
+    #| label: tbl-drug-success-rate
+    #| tbl-cap: The recovery results of a disease in three hospitals
+    tibble(
+      "id" = c(1:10),
+      "1 month"  = c(1, 0, 1, 0, 1, 1, 0, 1, 1, 1),
+      "3 months" = c(0, 0, 1, 1, 1, 0, 1, 1, 0, 1),
+      "6 months" = c(1, 1, 1, 0, 1, 1, 0, 1, 0, 1)
+    ) |>
+      knitr::kable()
+    ```
+
+    ```{r}
+    data.frame(
+      id = factor(1:10),
+      time = factor(rep(c("1 Month", "3 Months", "6 Months"), each = 10)),
+      outcome = c(1,0,1,0,1,1,0,1,1,1, 0,0,1,1,1,0,1,1,0,1, 1,0,0,1,0,1,1,1,0,1)
+    ) |> 
+    symmetry_test(outcome ~ time | id, data = _, teststat = "quadratic")
+    ```
+
+3.  Cochran-Armitage trend test
+
+    If you want to test whether there is a linear trend in the rates across ordered groups, you can use the Cochran-Armitage test for trend. This test is useful for ordered categorical data and examines if there is a significant linear trend in proportions.
+
+    ::: example
+    Suppose you have data from a study on smoking and lung cancer risk. The groups are non-smokers, light smokers, and heavy smokers, and the outcome is the presence of lung cancer (yes/no). The data is listed in @tbl-smoke-cancer . Determine if there’s a linear trend in cancer risk across the ordered smoking categories.
+    :::
+
+    ```{r}
+    #| echo: false
+    #| label: tbl-smoke-cancer
+    #| tbl-cap: The data from a study on smoking and lung cancer risk
+    df <- tibble(
+      "group" = c("noon-smokers", "light smokers", "heavy smokers"),
+      "cancer"  = c(5, 15 ,40),
+      "no cancer" = c(95, 85, 60)
+    )
+    df |> knitr::kable()
+    ```
+
+    ```{r}
+    with(df, prop.trend.test(cancer, cancer + `no cancer`))
+    ```
+
+    It is specifically designed to detect linear trends in rates across ordered groups. This test is particularly useful when you have **binary outcomes** (e.g., success/failure) across different levels of an ordinal independent variable (e.g., increasing doses of a drug). It directly tests for a linear trend in the proportions of success.
+
+### Comparison of multiple sample proportions
+
+::: example
+Suppose you are studying the distribution of a gene variant related to a certain disease in two groups: a healthy control group, and a disease group. You aim to compare the frequencies of the AA, Aa, and aa genotypes between these groups. The data is in @tbl-genetype-disease . Determine whether there is a significant difference in the distribution of genotypes between the healthy and disease groups.
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-genetype-disease
+#| tbl-cap: The distribution of a gene variant in two groups
+
+tibble(
+  group = c("health group", "disease group"),
+  AA = c(40, 30),
+  Aa = c(35, 45),
+  aa = c(25, 25)
+) |> 
+  knitr::kable()
+```
+
+```{r}
+# Create the data matrix
+matrix(c(40, 35, 25, 30, 45, 25), nrow = 2, byrow = T) |> 
+  chisq.test(correct = F)
+```
+
+For smaller sample sizes, Fisher’s Exact Test can be used.
+
+Genotyping is often used to study the distribution of specific genes in different populations, particularly when exploring the relationship between genetic variations and disease risk. For instance, certain gene alleles may be linked to chronic diseases like cardiovascular conditions or cancer. These analyses can help identify associations between specific genotypes and disease susceptibility. For example , comparing the distribution of APOE genotypes (APOE ε2, ε3, ε4) between patients with Alzheimer’s disease and healthy controls; Investigating differences in the INS gene (insulin gene) genotypes between diabetic and non-diabetic patients. Such analysis can help researchers understand the link between genetic variations and disease risk, providing insights into personalized medicine and genetic risk factors.
+
+### Association Analysis of bivariate nominal data
+
+Association analysis of bivariate nominal data involves examining the relationship between two categorical variables. This is typically done using chi-square tests or Fisher’s exact tests to determine if there is a significant association between the two variables.
+
+If the association is significant, and the strength of the relationship needs to be further analyzed, the Pearson contingency coefficient C need to be calculated.
+
+**Pearson’s contingency coefficient**
+
+Pearson’s contingency coefficient is a measure used to assess the strength of association between two categorical variables in a contingency table. It quantifies how strongly two variables are related based on the chi-square statistic. It is calculated using the following formula:
+
+$$
+C = \sqrt{\frac{\chi^2}{\chi^2 + n}}
+$$
+
+where $C$ is the Pearson’s contingency coefficient, $\chi^2$ is the chi-square statistic obtained from a chi-square test, $n$ is the total sample size.
+
+The value of C ranges from $0 \leq C < 1$. Values closer to 1 indicate a stronger association between the variables, while values close to 0 indicate weak or no association. As the size of the contingency table (degrees of freedom) increases, the contingency coefficient tends to decrease.
+
+::: example
+Researchers aim to evaluate the effectiveness of two different antibiotics (A and B) for two types of infections (X and Y). The effectiveness is measured by whether patients recover, categorized as “recovered” or “not recovered.” The data is summarized in @tbl-anti-infec . The goal is to determine if the effectiveness of the antibiotics differs significantly for different infection types.
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-anti-infec
+#| tbl-cap: The results of two different antibiotics for two types of infections
+df <- tibble(
+  antibiotic = c("A", "A", "B", "B"),
+  `infection type` = c("X", "Y", "X", "Y"),
+  recovered = c(35, 25, 40, 30),
+  `not recovered` = c(15, 25, 10, 20)
+) 
+df |> 
+  knitr::kable()
+```
+
+To evaluate whether the effectiveness of antibiotics A and B differs significantly for different infection types (X and Y), you can perform a chi-square test of independence on the contingency table. This will assess if there is a significant association between the type of antibiotic and the recovery status for the two infection types.
+
+```{r}
+# Create data
+data <- matrix(c(35, 15, 25, 25, 40, 10, 30, 20), nrow = 2, byrow = T)
+
+chisq.test(data)
+# Calculate Pearson’s Contingency Coefficient
+DescTools::ContCoef(data)
+```
+
+The p-value is greater than your significance level 0.05, not reject the null hypothesis, indicating that the recovery status is not associated with the antibiotic and infection type.
+
+**A little expansion\*：**
+
+To analyze the interaction between antibiotics (A and B) and infection types (X and Y) on recovery outcomes (recovered or not recovered), a logistic regression model is appropriate. This model will allow you to test the interaction effect between the two categorical variables (antibiotics and infection types) and their influence on recovery.
+
+In this case, you can model the recovery outcome as the dependent variable and include both antibiotics and infection types as independent variables, along with their interaction term.
+
+```{r}
+# Convert data to long format for logistic regression
+df_long <- df |> 
+  janitor::clean_names() |> 
+  pivot_longer(                                            # <1>
+    cols = c(recovered, not_recovered),
+    names_to = "response",
+    values_to = "freq"
+  ) |>                                 
+  mutate(response = if_else(response == "recovered", 1, 0)) # <1>
+  
+df_expanded <- df_long |>                                   # <2>
+  uncount(freq)
+
+model <- glm(
+  response ~ antibiotic * infection_type, 
+  data = df_expanded, 
+  family = binomial(link = "logit")
+) 
+
+summary(model)
+```
+
+1.  Reshape the data to long format suitable for logistic regression
+2.  Replicate rows based on `freq` to get one row per individual (useful for logistic regression)
+
+The logistic regression model is trying to assess the relationship between antibiotic type, infection type, and their interaction on patient recovery. Here’s a breakdown of the key results:
+
+::: callout-tip
+## Interpretation of logistic regression Results
+
+1.  (Intercept): Estimate: 0.8473, p-value: 0.00604 (statistically significant)
+    -   This represents the log-odds of recovery for patients treated with antibiotic A for Infection X (the baseline group).
+    -   A positive coefficient (0.8473) suggests that the odds of recovery are higher for this group.
+    -   To interpret this in terms of odds: $\exp(0.8473) \approx 2.33$ , meaning patients in the baseline group are 2.33 times more likely to recover.
+2.  antibioticB: Estimate: 0.5390, p-value: 0.25075 (not statistically significant)
+    -   This is the difference in log-odds of recovery between antibiotic B and antibiotic A for Infection X.
+    -   Since the p-value is not significant, there is no strong evidence that antibiotic B differs significantly from antibiotic A for Infection X.
+
+<!-- -->
+
+3.  infection_typeY: Estimate: -0.8473, p-value: 0.04296 (statistically significant)
+    -   This is the effect of having Infection Y instead of infection X when treated with antibiotic A.
+    -   The negative coefficient (-0.8473) indicates that patients with Infection Y are less likely to recover compared to those with infection X when treated with antibiotic A.
+    -   In terms of odds: $\exp(-0.8473) \approx 0.43$ , meaning patients with infection Y have about 43% the odds of recovery compared to those with infection X when treated with antibiotic A.
+
+<!-- -->
+
+4.  antibioticB:infection_typeY (Interaction Term): Estimate: -0.1335, p-value: 0.82930 (not statistically significant)
+    -   This term represents the interaction between Antibiotic B and infection Y, meaning how the effect of antibiotic B changes for Infection Y compared to infection X.aThe non-significant p-value indicates that there is no strong evidence of an interaction effect between the type of antibiotic and the type of infection on recovery.
+
+**Summary**:
+
+-   Antibiotic: There is no statistically significant difference in recovery between antibiotic A and antibiotic B (p = 0.25075).
+-   Infection Type: Patients with infection Y are significantly less likely to recover compared to those with infection X (p = 0.04296).
+-   Interaction: The interaction between antibiotic type and infection type is not significant, meaning the effectiveness of the antibiotics does not seem to differ significantly between infection types (p = 0.82930).
+
+**Conclusion**:
+
+-   The type of infection has a significant impact on recovery, with infection X being more favorable for recovery than infection Y.
+-   However, there is no significant difference between antibiotic A and antibiotic B in terms of effectiveness.
+-   There is also no significant interaction between antibiotic type and infection type, meaning the antibiotics perform similarly across infection types.
+:::
+
+To visualize the interaction effect:
+
+```{r}
+#| label: fig-interaction-anti-infec
+#| fig-cap: Interaction of antibiotics and infection types on recovery
+
+# Add predictions to the expanded dataset
+df_expanded  <- df_expanded |> 
+  mutate(predicted = predict(model, type = "response"))
+
+# Plot the interaction between antibiotic and infection type
+ggplot(df_expanded, aes(x = infection_type, y = predicted, color = antibiotic)) +
+  geom_point(position = position_dodge(width = 0.2), size = 1) +
+  geom_line(aes(group = antibiotic), position = position_dodge(width = 0.2)) +
+  labs(x = "Infection type", y = "Predicted probability of recovery") 
+```
+
+### Linear trend test for two-way ordinal data
+
+This test evaluates whether there is a linear trend between the categories in two ordinal variables, typically one variable representing treatment or groups and the other representing ordered outcomes. In this case, both “group” and “outcome” are ordinal variables.
+
+::: example
+Suppose you are studying the effect of different drug dosages on pain relief in patients. Patients are divided into four dosage groups (low dose, low-medium dose, medium-high dose, and high dose), and their pain relief is categorized into four levels (no relief, partial relief, moderate relief, and complete relief). This type of data is referred to as two-way ordinal data, listed in @tbl-dosage-pain . The aim is to assess whether there is a significant linear trend in pain relief as the drug dosage increases. For example, does increasing the dosage lead to a higher likelihood of better pain relief?
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-dosage-pain
+#| tbl-cap: The association between different drug dosage and pain relief 
+tb <- tibble(
+  dosage = c("low dose", "low-medium dose", "medium-high dose", "high dose"),
+  `no relief` = c(30, 20, 15, 10),
+  `partial relief` = c(25, 30, 35, 40),
+  `moderate relief` = c(20, 25, 30, 35),
+  `complete relief` = c(10, 15, 20, 30)
+) 
+
+tb |> 
+  knitr::kable(align = "lcccc")
+```
+
+The Mantel-Haenszel chi-square statistic tests the alternative hypothesis that there is a linear association between the row variable and the column variable. Both variables must lie on an ordinal scale. Here we use the `MHChisqTest()` function in `DescTools` package.
+
+```{r}
+c(30, 25, 20, 10, 20, 30, 25, 15, 15, 35, 30, 20, 10, 40, 35, 30) |> 
+  matrix(nrow = 4, byrow = T) |> 
+  DescTools::MHChisqTest()
+```
+
+The result shows chi-square statistic is 19.458, p-value less than 0.05, we can conclude that there is linear relationship between drug dosage and pain relief.
+
+An alternative method is the logistic regression analysis using a binomial generalized linear model (GLM) with a logit link function.
+
+```{r}
+df <- tb |> 
+  janitor::clean_names() |> 
+  pivot_longer(
+    cols = contains("relief"),
+    names_to = "pain",
+    values_to = "freq"
+  ) |> 
+  mutate(
+   pain = case_when(
+     pain == "no_relief" ~ 1,
+     pain == "partial_relief" ~ 2,
+     pain == "moderate_relief" ~ 3,
+     pain == "complete_relief" ~ 4
+   ),
+   dosage = case_when(
+     dosage == "low dose" ~ 1,
+     dosage == "low-medium dose" ~ 2,
+     dosage == "medium-high dose" ~ 3,
+     dosage == "high dose" ~ 4
+   ),
+   .keep = "unused"
+  ) |> 
+  mutate(
+    dosage = factor(dosage, ordered = T),   # <1>
+    pain = factor(pain, ordered = T)
+  ) |> 
+  uncount(freq)
+  
+glm(pain ~ dosage, data = df, family = binomial(link='logit')) |> 
+  summary()
+```
+
+1.  make sure **dosage** and **pain** are labeled as ordered factors
+
+::: callout-tip
+## Results interpretation
+
+Coefficients:
+
+dosage.L (Linear Contrast): The linear trend (dosage.L) has a positive coefficient (1.27848) and is highly significant (p-value = 5.86e-06), suggesting that as the dosage increases, the likelihood of pain relief also increases significantly in a linear fashion.
+
+Goodness-of-Fit:
+
+Residual deviance (358.21): The deviance with the dosage predictors included. Lower residual deviance suggests a better fit. AIC (366.21): AIC is used for model comparison; lower values indicate a better model fit.
+
+Interpretation:
+
+The significant linear relationship between dosage and pain suggests that increasing the dosage is associated with a reduced likelihood of pain, but there is no evidence of a quadratic or cubic relationship. The model fits the data relatively well as indicated by the reduction in deviance, and dosage.L is the primary driver of the response variable (pain).
+:::
+
+```{r}
+
+```
+
+## Pairwise comparisons of multiple sample proportions {#sec-comp-multi-prop}
+
+When comparing proportions across multiple samples, the goal is to determine whether there are significant differences in the rates or proportions between groups. This is commonly applied in medical research, genetics, or other fields where proportions, such as success rates, are of interest across multiple groups. When conducting multiple comparisons, the risk of a type I error increases.
+
+### Pairwise comparison
+
+The Bonferroni correction is used to adjust the significance level $\alpha$ to control for this risk, ensuring the results are reliable.
+
+::: example
+Conducting pairwise comparisons for the data in [Example 4](#exp-multi-sample-rates) to determine whether the recovery rates are different between any two hospitals.
+:::
+
+Here we use the `prop.test()` function for testing the null that the proportions in several groups are the same.
+
+```{r}
+data <- matrix(c(50, 20, 55, 15, 65, 5), nrow = 3, byrow = T)
+rownames(data) <- c("hospitalA", "hospitalB", "hospitalC")
+
+data |>
+  prop.test(correct = F)
+```
+
+The p-value is less than the significant level 0.05, reject the null hypothesis, indicating the recovery rates in the three hospitals are different. Next, we will make a pairwise comparison between the hospitals.
+
+```{r}
+data |>
+  pairwise.prop.test(p.adjust.method = "bonferroni")
+```
+
+The result shows the p-values of different group pairs. Only the p-value between hospital A and hospital C is less than 0.05 (p-value = 0.006), saying the recovery rate between them is significantly different.
+
+### Comparison with a control group
+
+Here we set the hospital C as the control group.
+
+```{r}
+alpha = 0.05
+k = 3
+alpha_adjusted <- alpha / (2 * ( k- 1))
+
+chisq.test(data)
+
+compare_pairs <- list(
+  c("hospitalA", "hospitalC"),
+  c("hospitalB", "hospitalC")
+)
+
+for (pair in compare_pairs) {
+  sub_data <- data[match(pair, rownames(data)), ]
+  chi_squared_result <- chisq.test(sub_data)
+  print(paste("Comparison between", paste(pair, collapse=" and "), ":"))
+  print(chi_squared_result)
+}
+
+print(paste("The adjusted alpha is:", paste(alpha_adjusted)))
+```
+
+## Chi-square goodness-of-fit test
+
+Chi-square goodness-of-fit test is a statistical test used to determine whether observed frequencies conform to an expected theoretical distribution. This test is commonly used to check if data follows normal, uniform, Poisson, or other theoretical distributions.
+
+The test is applicable in the following scenarios:
+
+-   To test if a sample follows a theoretical distribution (e.g., normal, Poisson, etc.).
+-   To compare observed frequency data with expected frequencies to identify deviations.
+
+The test statistic is calculated as:
+
+$$
+\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
+$$
+
+$O_i$ is the observed frequency for category $i$, $E_i$ is the expected frequency for category $i$, $k$ is the number of categories. The expected frequencies should be sufficiently large, typically at least 5 for each category, to ensure the validity of the chi-square test.
+
+::: example
+To observe the spatial distribution of Keshan disease patients in a certain Keshan disease area, the investigators divided the region into 279 sampling units and recorded the cumulative number of cases in each unit over the years. The data are presented in @tbl-keshan-disease . Does this data follow a Poisson distribution?
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-keshan-disease 
+#| tbl-cap: The cumulative number of Keshan disease patients in each unit
+df <- read.csv("datasets/ex11-01.csv") |> 
+  select(
+  n_observed = X,
+  f_observed = A,
+  ) 
+  
+df |> knitr::kable(align = "c")
+```
+
+The `chisq.test()` function can be used to perform a chi-square goodness-of-fit test.
+
+```{r}
+n_cases <- df[[1]]
+f_observed <- df[[2]]
+# Calculate the weighted average
+lambda <- weighted.mean(n_cases, f_observed)
+
+# Calculated expected probability
+p.expected <- dpois(n_cases, lambda)
+
+# Combine the last three rows 
+f <- c(f_observed[1:6], sum(f_observed[7:9]))
+p <- c(p.expected[1:6], 1 - sum(p.expected[1:6]))
+
+chisq.test(x = f, p = p)
+```
+
+Here p-value is 0.9164, greater than the significant level 0.1. If the p-value is greater than the significant level, fail to reject the null hypothesis, meaning the data might follow the expected distribution. If the calculated p-value is less than the significant level, reject the null hypothesis and conclude that the data does not follow the expected distribution.

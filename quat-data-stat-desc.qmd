@@ -25,12 +25,16 @@ library(tidyverse)
 ```
 
 ::: example
-A researcher used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a `data` file. Please use the data to create a frequency distribution table.
+A researcher used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a data file. Please use the data to create a frequency distribution table.
 :::
+
+<div>
 
 <a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
-Click on the download button above to download as a `.csv` file. Save it in your working directory and import the data file into R using the code below.
+</div>
+
+Click on the download button above to download the data file. Save it in your working directory and import the data file into R using the code below.
 
 ```{r}
 rbc <- read_csv("datasets/ex03-01.csv")

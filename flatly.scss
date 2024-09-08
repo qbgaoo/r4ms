@@ -1,7 +1,7 @@
 /*-- scss:defaults --*/
 
 // fonts
-$font-size-root: 17px !default;
+$font-size-root: 16.6px !default;
 $h1-font-size: 1.4rem !default;
 $h2-font-size: 1.2rem !default;
 $h3-font-size: 1.1rem !default;
@@ -49,30 +49,19 @@ div.sidebar-item-container .active {
   color: #000000 !important;
 }
 
+/* Style the example textbox */
 .example {
   color: #333333;  /* font color */
   padding-left: 12px;  
   padding-right: 12px;  
   padding-top: 6px;
   border-radius: 5px;  /* round corner */
-  border: 2px solid #A0D8DD;  
+  border: 3px solid #A0D8DD;  
+  margin-bottom: 15px;
 }
 
 .example strong {
   font-weight: bold;  /* only Example is bold */
-}
-
-.custom-button {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 17px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.custom-button:hover {
-    background-color: #45a049;
 }
 
 /* For inline formulas */
@@ -83,4 +72,11 @@ div.sidebar-item-container .active {
 /* For block (display) formulas */
 .katex-display {
     font-size: 100% !important;
+}
+
+/* Style the output of R chunks */
+pre:not(.r) { 
+  background-color: #F7F7F7;  /* Replace with your desired color */
+  padding: 10px;
+  border-radius: 5px;
 }

@@ -166,7 +166,11 @@ Normality test is used to determine whether a data follows a normal distribution
 A scientist used a random sampling method to examine the red blood cell count of 29 normal adult men. The measuring results are saved in the below file. Please analyze its normality.
 :::
 
+<div>
+
 <a href="datasets/ex04-01.csv" download="ex04-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 You can click on the download button above to download and the save it in your own folder. Here we import the data file into R and assign to a tibble named `rbc`.
 
@@ -271,7 +275,11 @@ Reference ranges are typically established by testing a large sample of healthy 
 A investigator randomly sampled 180 normal adult males in a region, and measured the fibrinogen levels (g/L) in their venous blood. The data is saved in a file below. Have a try to establish the 95% medical reference range for fibrinogen level of normal adult males in that region.
 :::
 
+<div>
+
 <a href="datasets/ex04-02.csv" download="ex04-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 The code chunk below can print the results directly.
 

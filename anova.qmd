@@ -6,27 +6,453 @@
 source("_common.R")
 ```
 
+Analysis of variance (ANOVA) is commonly used to determine whether there are statistically significant differences between the means of three or more groups. It is particularly useful in clinical trials, observational studies, and experiments where researchers want to compare the effects of different treatments, interventions, or conditions on a continuous outcome variable.
+
 ## Prerequisite
 
 ```{r}
 #| message: false
 
-library(haven)
 library(tidyverse)
+library(rmarkdown)
+library(rstatix)
+library(agricolae)
+library(DescTools)
 ```
 
-## Completely randomized design
+## The basic idea
 
-::: {.callout-tip icon="false"}
-## Example
+The basic idea behind ANOVA is to analyze the variation within the data and partition it into two components: variation between groups and variation within groups. By comparing these two sources of variation, ANOVA can determine if the differences between group means are statistically significant.
 
-To evaluate the efficacy of xanomeline in subjects with mild to moderate Alzheimer’s disease, subjects were randomized equally to placebo, xanomeline low dose, or xanomeline high dose. Subjects applied 2 patches daily and were followed for a total of 26 weeks. Primary efficacy endpoints
+### Total variance
+
+Total variance in the context of ANOVA refers to the overall variability in the data. It represents the sum of the variability due to differences between group means (explained variance) and the variability within each group (unexplained variance or residual variance). The total variance can be decomposed as follows:
+
+The total variance is calculated using the total sum of squares (SST), which quantifies the total variation in the data:
+
+$$
+\text{SST} = \sum_{i=1}^{N} (X_i - \bar{X})^2
+$$
+
+where $X_i$ is an individual observation, $\bar{X}$ is the overall mean of all observations, $N$ is the total number of observations.
+
+-   High total variance: Indicates that the data points are widely spread out from the overall mean, suggesting high variability in the dataset.
+-   Low total variance: Indicates that the data points are closely clustered around the overall mean, suggesting low variability.
+
+### Between-group variance
+
+Between-group variance in ANOVA is a measure of how much the group means differ from the overall mean. It captures the variability that is due to the differences between the groups, rather than within them.
+
+The between-group variance is calculated using the sum of squares between-groups (SSB), which is defined as:
+
+$$
+\text{SSB} = \sum_{j=1}^{k} n_j (\bar{X}_j - \bar{X})^2
+$$
+
+Where $k$ is the number of groups, $n_j$ is the number of observations in group $j$ , $\bar{X}_j$ is the mean of group $j$, $\bar{X}$ is the overall mean of all observations combined.
+
+-   High between-group variance: Indicates that the group means are significantly different from the overall mean, suggesting that the groups are different in a meaningful way.
+-   Low between-group variance: Indicates that the group means are similar to each other and to the overall mean, suggesting that the groups do not differ much.
+
+### Within-group variance
+
+Within-group variance in ANOVA measures the variability within each group. It captures the differences between individual data points and their respective group mean, indicating how spread out the data is within each group.
+
+The within-group variance is calculated using the sum of squares within-groups (SSW), which is defined as:
+
+$$
+\text{SSW} = \sum_{j=1}^{k} \sum_{i=1}^{n_j} (X_{ij} - \bar{X}_j)^2
+$$
+
+Where $k$ is the number of groups, $n_j$ is the number of observations in group $j$, $X_{ij}$ is the $i-th$ observation in group $j$, $\bar{X}_j$ is the mean of group $j$.
+
+-   High within-group variance: Indicates that there is a lot of variability within each group, meaning that individual observations differ significantly from their group mean.
+-   Low within-group variance: Indicates that individual observations within each group are close to their group mean, showing less variability.
+
+The relationship between these components is given by:
+
+$$
+\text{SST} = \text{SSB} + \text{SSW}
+$$
+
+In ANOVA, the degrees of freedom associated with the within-group variance and between-group variance are essential for calculating the F-statistic. The degrees of freedom are calculated as:
+
+$$
+\nu_{\text{between}} = k - 1
+$$
+
+$$
+\nu_{\text{within}} = N - k
+$$
+
+Where $N$ is the total number of observations across all groups, $k$ is the number of groups.
+
+For example, suppose you have 3 groups with a total of 30 observations:
+
+$\nu_{\text{between}} = k - 1 = 3 - 1 = 2$, $\nu_{\text{within}} = N - k = 30 - 3 = 27$.
+
+In the context of ANOVA, the mean square is a measure of variance and is used to compare variances between groups and within groups. It is calculated by dividing the sum of squares (SS) by the corresponding degrees of freedom.
+
+The mean square between-groups (MSB) represents the average variance between the different group means. It is calculated as:
+
+$$
+\text{MSB} = \frac{\text{SSB}}{\nu_{\text{between}}}
+$$
+
+The mean square within-groups (MSW) represents the average variance within each group. It is calculated as:
+
+$$
+\text{MSW} = \frac{\text{SSW}}{\nu_{\text{within}}}
+$$
+
+### F-Statistic
+
+The F-statistic is calculated by dividing the MSB by MSW:
+
+$$
+F = \frac{\text{MSB}}{\text{MSW}}
+$$
+
+The F follows an F-distribution with $\nu_{\text{between}}$ and $\nu_{\text{within}}$ degrees of freedom. It is used to assess the significance of the differences between group means. A larger F-value indicates that the between-group variance is relatively larger compared to the within-group variance, suggesting significant differences between the group means.
+
+### Conditions for ANOVA
+
+-   **Normality**: The data within each group should be approximately normally distributed. If the data significantly deviate from normality, data transformation or non-parametric methods might be necessary.
+-   **Homogeneity of variance**: The variances across the groups should be equal, meaning the spread or variability within each group should be similar. This is a crucial assumption of ANOVA. If the variances are unequal, alternative methods like Welch’s ANOVA may be required.
+-   **Independence**: The observations within each group and between groups should be independent of each other. This means that the measurement of one sample should not influence another.
+-   **Fixed factors**: ANOVA typically assumes that the factors are fixed, meaning the levels of the factors are deliberately chosen and not randomly selected. If the factors are random, mixed-effects models or random-effects models should be considered.
+
+## ANOVA for completely randomized design
+
+In a completely randomized design, subjects are randomly assigned to different groups without any restrictions or blocks. Each patient has an equal chance of being assigned to any of the groups, ensuring that the groups are comparable and that the treatment effects can be attributed to the interventions rather than other factors.
+
+::: example
+To clear the efficacy of three drugs, 120 patients were selected according to a inclusion criteria and evenly divided into three groups using a completely randomized design. How to use R to arrange random group assignments?
 :::
 
+In R, you can use the `sample()` function to perform random group assignments and random drug allocation. Below is an example of how to achieve this:
+
 ```{r}
-# haven::read_dta("datasets/例02-05.dta") |> 
-#   write_csv("datasets/ex02-05.csv")
+set.seed(100)
+
+n <- 120
+k <- 3
+group <- sample(rep(1:k, each = n / k))
+blind_code <- tibble(
+  id = 1:n,
+  group = factor(group, labels = c("A", "B", "C"))
+) 
+
+paged_table(blind_code)
 ```
 
-## 
+In the code above, `set.seed(220)` ensures that the randomization is reproducible. The `sample()` function shuffles the sequence generated by `rep(1:k, each = n/k)` to randomly assign patients to the three groups. The final result is stored in the `blind_code` data frame, which includes patient IDs and their assigned group. This way, each patient is not only assigned to a specific group.
 
+To ensure that the randomization has been done correctly and that each group has the correct number of patients, you can check the distribution:
+
+```{r}
+blind_code |> 
+  group_by(group) |> 
+  summarise(n = n())
+```
+
+::: {#lower-lipid-drug .example}
+To study the clinical efficacy of three lipid-lowering drugs, 120 patients were selected based on uniform inclusion criteria and randomly divided into three groups using a completely randomized design. Each group received one of the drugs in a double-blind trial. The effectiveness was evaluated based on the reduction in triglyceride levels before and after 6 weeks of treatment. To analyze whether there are any differences in the average reduction in triglyceride levels among the three groups.
+:::
+
+<div>
+
+<a href="datasets/ex08-01.csv" download="ex08-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+Import the data into R:
+
+```{r}
+df <- read_csv("datasets/ex08-01.csv", show_col_types = F) |> 
+  mutate(group = factor(group, labels = c("A", "B", "C")))
+```
+
+Before or after ANOVA, you need to check the assumptions of normality and homogeneity of variance. Here is a method of testing normality for multiple samples simultaneously.
+
+```{r}
+with(df, tapply(diff_tri, INDEX = group, FUN = shapiro.test)) 
+```
+
+An alternative method is written below:
+
+```{r}
+df |> 
+  group_by(group) |> 
+  shapiro_test(diff_tri)
+```
+
+The p-values above are all greater than 0.05, it says that the three populations meet the assumption of normal distribution.
+
+In @sec-f-test we have discussed the test of homogeneity of variance using F-test. F-test is suitable for two samples, but here there are three samples. In @sec-multi-sample-comp , we will talk about the comparison of multiple sample variances , and come back to this example again.
+
+Here we use the `aov()` function to perform a one-way ANOVA, where `diff_tri` is your dependent variable and `group` is the independent factor.
+
+```{r}
+df |> 
+  aov(diff_tri ~ group, data = _) |> 
+  summary() 
+```
+
+The results indicate: $\text{F}=12.3$, $p < 0.01$. At the significance level of $\alpha = 0.05$ , reject $H_0$ and accept $H_1$ , indicating that the average reduction of triglyceride levels among patients taking different drugs is not all equal. This suggests that different drugs may have different effects on triglyceride reduction.
+
+## ANOVA for randomized block design
+
+A randomized block design is a type of experimental design in which subjects are divided into blocks based on certain characteristics (e.g., age, gender, baseline measurements) that are expected to influence the response to the treatments. Within each block, subjects are then randomly assigned to different treatment groups. This design helps to control for the variability within blocks, thereby increasing the precision of the experiment.
+
+Randomized block design is particularly useful when there are sources of variation that are not of primary interest but could affect the outcome, allowing the experimenter to control for these factors and focus on the treatment effects.
+
+::: example
+In a study to compare the effectiveness of three different types of pain relief medications (A, B, and C) in postoperative patients, the patients’ baseline pain levels (low, medium, high) may influence their response to the medications. So you want to control for this variable in your study. Patients are first divided into blocks based on their baseline pain levels. Then, within each block, patients are randomly assigned to one of the three pain relief medications (A, B, or C).
+:::
+
+Here’s the R code to achieve the randomized block design:
+
+1.  Let’s assume you have 36 patients, with 12 in each block (low, medium, high baseline pain levels).
+
+```{r}
+set.seed(100)  
+
+n <- 36 # sample size
+treat <- c("drug A", "drug B", "drug C")
+block <- c("low", "medium", "high")
+k <- length(treat)  # number of treatments
+b <- length(block)  # number of blocks
+
+blind_code <- data.frame(
+  id = 1:n,
+  bl_pain = rep(block, each = n / k)
+)
+
+blind_code |> 
+  paged_table()
+```
+
+2.  Now, you can assign the patients within each block to one of the three medications (A, B, or C).
+
+```{r}
+# Randomly assign medications within each block
+blind_code  |> 
+  group_by(bl_pain) |>   
+  mutate(
+    treatment = sample(rep(treat, each = n / (k * b)))
+  ) |> 
+  ungroup() |> 
+  paged_table()
+```
+
+The output will show each patient’s ID, their baseline pain level, and the randomly assigned medication. The assignment will be random within each block, reflecting the randomized block design.
+
+::: example
+In a trial to study the effects of three prenatal nutritional supplements on newborn weight, a randomized block design was used. Pregnant women with similar living locations, ages, and similar family economic status formed 10 blocks, each containing 3 pregnant women. Within each block, Pregnant women were randomly assigned to one of the three nutritional supplements (A, B, or C). Explore whether there is a difference in newborn birth weights among the three prenatal nutritional supplements?
+:::
+
+<div>
+
+<a href="datasets/ex08-02.csv" download="ex08-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+read_csv("datasets/ex08-02.csv", show_col_types = F) |> 
+  mutate(
+    treat = factor(treat, labels = c("A", "B", "C")),
+    block = factor(block)
+  ) |> aov(weight ~ treat + block, data = _) |> 
+  summary()
+```
+
+## ANOVA for latin square design
+
+A Latin square design is used to control the effects of two extraneous variables. When there are three factors, each with the same number of levels, a Latin square design can systematically arrange experimental treatments to minimize confounding between the factors. This design is particularly useful in fields such as agriculture, education, or other research areas where it’s important to control multiple external variables.
+
+### Key points
+
+-   **Structure**: A Latin Square Design is typically represented as an n × n square grid, where each row, column, and diagonal represent different external variables or factors. Each cell within the grid represents a combination of experimental conditions.
+-   **Treatment allocation**: Each treatment appears exactly once in each row and column of the grid, ensuring that all treatments are evenly distributed across the different levels of the two controlled variables.
+-   **Controlled variables**: The design controls two primary extraneous variables (represented by rows and columns), thereby reducing their potential impact on the experimental outcomes. The third factor (usually the treatment) is randomly assigned to each cell in the grid.
+
+```{r}
+# Generate a 3x3 Latin Square Design
+treatments <- c("A", "B", "C", "D", "E", "F")
+latin_square <- design.lsd(trt = treatments, seed = 42) 
+
+# Display the Latin Square Design
+latin_square$sketch 
+```
+
+This code generates a 6x6 Latin dquare design where each treatment (A, B, C, D, E, F) appears exactly once in each row and column.
+
+::: example
+To compare the size of skin blisters caused by six different drugs (A, B, C, D, E, F) after being injected into rabbits. A Latin square design was employed, using six rabbits, with each drug being injected into six different sites on each rabbit. The task is to perform an analysis of variance (ANOVA) to determine if there are any significant differences in the blister sizes caused by these drugs.
+:::
+
+<div>
+
+<a href="datasets/ex08-03.csv" download="ex08-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+read_csv("datasets/ex08-03.csv", show_col_types = F) |> 
+  mutate(
+    rat_id = as.factor(rat_id),
+    part   = as.factor(part),
+    treat  = factor(treat, labels = c("A", "B", "C", "D", "E", "F"))
+  ) |> 
+  aov(herpes_size ~ treat + part + rat_id, data = _) |> 
+  summary()
+```
+
+## Cross-over design
+
+A cross-over design is commonly used in clinical trials where participants receive a sequence of different treatments. Each participant acts as their own control, meaning they receive all the treatments under study, but in a randomized order. This design is particularly useful for comparing the effects of treatments in situations where the response to a treatment is expected to return to baseline before the next treatment is administered.
+
+### Key features
+
+-   **Participants as their own control:** Since each participant receives multiple treatments, variability due to individual differences is minimized.
+-   **Randomization**: The order in which participants receive the treatments is randomized to avoid bias.
+-   **Washout period**: A period of time between treatments is often included to ensure that the effects of the previous treatment do not carry over into the next one.
+-   **Balanced design**: The design is usually balanced, meaning each treatment is administered the same number of times in each sequence.
+
+For example, consider a clinical trial comparing the effects of two drugs, Drug A and Drug B, on blood pressure. In a cross-over design, each participant would receive both drugs in a randomized order. For example, some participants might receive Drug A first, followed by a washout period, and then receive Drug B. Others would receive Drug B first, followed by Drug A after the washout period. By comparing the effects of each drug within the same participants, the design controls for individual variability.
+
+```{r}
+# Number of subjects
+n <- 10
+
+# Generate treatment sequences
+set.seed(200)  # For reproducibility
+treat_seq <- sample(rep(c("A", "B"), each = 5))
+
+# Create a data frame for the study
+cross_over_design <- tibble(
+  subject = 1:n,
+  phase1 = treat_seq,
+  phase2 = if_else(treat_seq == "A", "B", "A")
+)
+
+cross_over_design |> 
+  paged_table()
+```
+
+This example generates a basic 2x2 cross-over design. For more complex designs, the package can accommodate more treatments and periods.
+
+Cross-over designs are powerful tools in clinical research, especially when the treatment effects are short-lived and the sample size is limited.
+
+::: example
+A cross-over trial was conducted to measure 3H-cGMP levels in plasma using two scintillation liquids, A and B. In the first phase, samples from subjects 1, 3, 4, 7, and 9 were measured using liquid A, while samples from subjects 2, 5, 6, 8, and 10 were measured using liquid B. In the second phase, the measurement methods were switched, with subjects 1, 3, 4, 7, and 9 using liquid B and subjects 2, 5, 6, 8, and 10 using liquid A. Perform an analysis of variance (ANOVA) on the results of the cross-over trial.
+:::
+
+<div>
+
+<a href="datasets/ex08-04.csv" download="ex08-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+read_csv("datasets/ex08-04.csv", show_col_types = F) |> 
+  mutate(
+    subject = as.factor(subject),
+    treat = factor(treat, labels = c("A", "B")),
+    phase = factor(phase, labels = c("I", "II")),
+    .keep = "unused"
+  ) |> 
+  aov(response ~ treat + phase + subject, data = _) |> 
+  summary()
+```
+
+## Comparison of multiple sample means {#sec-multi-sample-comp}
+
+After conducting an ANOVA and finding a significant difference between groups, you often need to pinpoint which groups differ. This is often done using post-hoc tests for multiple comparison. Multiple comparison tests control for type I error across the comparisons, meaning they adjust the significance level to prevent too many false positives.
+
+Here are some of the most common post-hoc tests:
+
+-   **Least Significant Difference (LSD) test**: The LSD test is one of the oldest and simplest post-hoc tests, and it is essentially a series of t-tests between pairs of group means.
+-   **Tukey’s honest significant difference (HSD) test**: Compares all possible pairs of means and is particularly effective when group sizes are equal.
+-   **Student-Newman-Keuls (SNK) test**: It is derived from Tukey’s HSD, but is less conservative (finds more differences). Tukey controls the error for all comparisons, where SNK only controls for comparisons under consideration. This makes it more powerful but also more prone to type I error.
+-   **Dunnett’s test**: Compares each treatment group to a control group, useful when you have a control group and several treatments.
+-   **Bonferroni correction**: Adjusts the significance level for the number of comparisons being made. It’s conservative and controls for type I error. Useful when you have a small number of comparisons.
+-   **Scheffé’s Method**: Allows for all possible contrasts, not just pairwise comparisons, making it a flexible but conservative choice.
+
+### When to use which
+
+Choosing the right post-hoc test after an ANOVA depends on several factors, including your study design, the number of groups, your tolerance for type I error (false positive), and the nature of your data. Here’s a guide to help you decide when to select which post-hoc test:
+
+-   Use Tukey’s HSD if you need a balanced approach between controlling type I error and maintaining power, especially for all-pairwise comparisons.
+-   Use SNK if you want more power and are okay with slightly higher type I error risk.
+-   Use LSD if your primary goal is to detect differences, particularly in an exploratory setting, and you are less concerned about type I error.
+-   Use Bonferroni if you have a small number of comparisons and need strong control over type I error.
+-   Use Dunnett’s if your comparisons are focused on multiple treatments against a single control group.
+
+::: example
+In [Example 1](#lower-lipid-drug), after ANOVA rejected the null hypothesis, we still want to know whihc pairs of drugs differ in the mean reduction of triglycerides?
+:::
+
+The `PostHocTest()` function in `DescTools` package is a convenience wrapper for computing post-hoc test after having calculated an ANOVA.
+
+```{r}
+df <- read_csv("datasets/ex08-01.csv", show_col_types = F) |> 
+  mutate(group = factor(group, labels = c("A", "B", "C")))
+
+aov_model <- aov(diff_tri ~ group, data = df)
+aov_model |> summary()
+```
+
+$p<0.05$ indicates the difference between groups is significant. The multiple comparison between groups is conducted using different methods.
+
+```{r}
+c("hsd", "bonferroni", "lsd", "scheffe", "newmankeuls") |> 
+  map(~ PostHocTest(aov_model, method = .)) 
+```
+
+The results of different post-hoc tests are consistent. There is no difference between drug A and drug B, only the overall mean of glycerol reduction between drug C and drug A, drug C and drug B have statistical significance, and the glycerol reduction of drug C is less.
+
+Here is the Dunnett’s test, which can assign the control group.
+
+```{r}
+DunnettTest(diff_tri ~ group, data = df, control = "B")
+```
+
+## Comparison of multiple sample variances
+
+In statistical analysis, comparing multiple sample variances is important to determine whether the variances across different groups are equal. This is often referred to as testing for homogeneity of variances. There are several common statistical tests for this purpose:
+
+::: example
+For data in [Example 1](#lower-lipid-drug), whether the reduction of triglyceride levels in three groups satisfies the assumption of homogeneity of variances?
+:::
+
+### Bartlett’s Test
+
+Bartlett’s test checks whether multiple sample variances are equal under the assumption that the data follow a normal distribution. It is sensitive to departures from normality, so it may not be appropriate for non-normal data.
+
+Here is the R code for Bartlett’s test:
+
+```{r}
+bartlett.test(diff_tri ~ group, data = df) 
+```
+
+### Levene’s Test
+
+Levene’s test is a more robust alternative to Bartlett’s test. It tests for the equality of variances and is less sensitive to deviations from normality, making it suitable for non-normally distributed data.
+
+Here is the R code for this Levene’s test:
+
+```{r}
+LeveneTest(diff_tri ~ group, data = df)
+```
+
+### Fligner-Killeen Test
+
+The Fligner-Killeen test is a non-parametric test that is robust against non-normal data. It uses ranks of the data to test for equality of variances across groups.
+
+Here is the R code for Fligner-Killeen test:
+
+```{r}
+fligner.test(diff_tri ~ group, data = df)
+```

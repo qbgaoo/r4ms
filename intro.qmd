@@ -86,6 +86,12 @@ Number of medications: The number of medications a patient is taking.
 
 Number of occurrences: The number of heartbeats per minute (heart rate).
 
+**Characteristics of count data**
+
+1.  Discrete: The data are non-negative integers, as they represent counts of occurrences.
+2.  Overdispersion: Count data in medical settings often show overdispersion, where the variance exceeds the mean (e.g., some patients may have a high number of hospital visits while others have very few).
+3.  Skewed Distribution: Count data are often positively skewed, with many individuals having low counts (e.g., no hospital visits) and fewer individuals having higher counts.
+
 **2. Continuous Data**
 
 Continuous data can take any value within a given range. These data represent measurements and can have decimal places, meaning they are not restricted to whole numbers.

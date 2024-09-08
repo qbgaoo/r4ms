@@ -49,7 +49,11 @@ samples |>
 Assume thrombin time follow the normal distribution of $\mu=17.5$, $\sigma=1.2$. A researcher randomly drew $100$ samples from a population of size $60000$ , with each sample $n=10$ observations. The data is saved the the data below. The mean $\bar{X}$ and standard deviation $S$ for each sample are shown in @tbl-mean-distribution, please analyze the distribution of the $120$ means.
 :::
 
+<div>
+
 <a href="datasets/ex05-01.csv" download="ex05-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 ```{r}
 #| label: tbl-mean-distribution
@@ -247,7 +251,11 @@ where $t$ is the critical value from the *t*-distribution, it depends on the deg
 A research group randomly selected 20 adult men in a area and measured their red blood cell count. Please calculate the 95% confidence interval for the population mean.
 :::
 
+<div>
+
 <a href="datasets/ex05-02.csv" download="ex05-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 Since the sample size is small, we would use the *t*-distribution to estimate the population mean. In practice, you can always use the *t*-distribution regardless of the size of samples, because as the increase of degrees of freedom , *t*-distribution approaches the standard normal distribution.
 
@@ -417,7 +425,11 @@ mean_diff_CI <- function(x, y, alternative = "two.sided", conf.level = 0.95,
 To compare the difference of hemoglobin concentration between people with alpha thalassemia trait and silent carrier, a doctor choose a random sample of 42 patients from a patient database. 22 subjects have alpha thalassemia trait, 20 are silent_carrier. Have a try to analyze the 95% confidence interval of the two populations.
 :::
 
+<div>
+
 <a href="datasets/ex05-03.csv" download="ex05-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 ```{r}
 df <- read_csv("datasets/ex05-03.csv", show_col_types = F)

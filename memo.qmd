@@ -1,0 +1,17 @@
+# Memo for future programming
+
+Here is a typical example for generating data using `rep()` function and `sample()` function.
+
+```{r}
+#| eval: false
+
+set.seed(123)
+# a data fraome to store the simulation data
+df <- tibble(
+  antibiotic = rep(c("A", "B"), each = 100),
+  infection_type = rep(c("X", "Y"), times = 100),
+  recovered = sample(c(T, F), 200, replace = T, prob = c(0.7, 0.3))
+)
+# create the contingency table
+contingency_table <- table(df$antibiotic, df$infection_type, df$recovered)
+```

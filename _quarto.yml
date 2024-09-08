@@ -25,9 +25,10 @@ book:
         - ttest.qmd
         - anova.qmd
         - count-data-stat-desc.qmd
+        - discrete-data-dist.qmd
         - chi-square-test.qmd
-        - nonparameter-test.qmd
-        - simple-linear-regression.qmd
+        - nonparametric-test.qmd
+        - corr-linear-reg.qmd
         - logistic-regression.qmd
         - cox-regression.qmd
         
@@ -35,11 +36,13 @@ book:
       chapters:
         - multi-factor-anova.qmd
         - repeated-measure.qmd
+        - ordered-cat-data.qmd
         
     - part: stat-anal-report.qmd
       chapters: 
         - quarto.qmd
         - pilot-project.qmd
+        - memo.qmd
 
 format:
   html:

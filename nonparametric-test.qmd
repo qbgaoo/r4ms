@@ -1,0 +1,69 @@
+# Nonparametric Tests
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Nonparametric tests are statistical methods used when the data do not meet the assumptions required for parametric tests, such as normality or equal variances. These tests do not assume a specific distribution for the data, making them suitable for ordinal data, ranks, or non-normally distributed data.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+```
+
+## Wilcoxon signed-rank test
+
+Used for comparing paired samples or a single sample to a known median. Alternative to the paired t-test when data are not normally distributed.
+
+::: example
+In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured, the data can be downloaded below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?
+:::
+
+<div>
+
+<a href="datasets/ex12-01.csv" download="ex12-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex12-01.csv", show_col_types = F) |> 
+  mutate(d = feedA -feedB)
+```
+
+First, test the normality of the difference between the pairs of observations.
+
+```{r}
+with(df, shapiro.test(d))
+```
+
+The p-value is 0.03705, less than 0.05, indicating the difference does not follows a normal distribution. Then the signed-rank test can be conducted using `wilcox.test()` function with argument `paired = TRUE`.
+
+```{r}
+with(df, wilcox.test(x = feedA, y = feedB, paired = T))
+```
+
+## Wilcoxon rank-sum test
+
+Mann-Whitney U test, used to compare two independent groups. Alternative to the two-sample t-test for non-normally distributed data.
+
+Kruskal-Wallis test
+
+Generalization of the Mann-Whitney U test for comparing more than two independent groups. Alternative to one-way ANOVA when normality is not assumed.
+
+Friedman Test
+
+Used to compare repeated measures from three or more related groups. Alternative to repeated measures ANOVA for non-normal data.
+
+Spearman’s rank correlation
+
+Measures the strength and direction of association between two ranked variables. Alternative to Pearson’s correlation when data are not linear or normally distributed.
+
+1.  Chi-Square Test: • Used for categorical data to test the association between two variables in a contingency table. • A nonparametric test that examines frequencies or counts.
+2.  Kolmogorov-Smirnov Test: • Used to compare a sample distribution with a reference probability distribution or to compare two sample distributions. • Often applied to assess goodness-of-fit.
+
+These nonparametric tests provide flexibility in data analysis when the assumptions of parametric tests are violated.

@@ -32,7 +32,11 @@ The one-sample *t*-test is a straightforward but powerful tool for hypothesis te
 A doctor measured the hemoglobin concentration in 36 male workers involved in lead-related jobs. The data can be downloaded below. The question is whether the mean hemoglobin concentration ($\mu$) of male workers involved in lead-related jobs differs from the mean of 140 (g/L) for normal adult males.
 :::
 
+<div>
+
 <a href="datasets/ex07-01.csv" download="ex07-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 R codes for one-sample *t*-test is:
 
@@ -58,7 +62,11 @@ $$t = \frac{\bar{d}}{S_d / \sqrt{n}}$$ Where $\bar{d}$ is the mean of the differ
 To compare whether the results of fat content measurement in lactic acid beverages differ between two methods, 10 samples of lactic acid beverages were randomly selected. The fat content was measured using both the Gerber-Gottlieb method and the fatty acid hydrolysis method. The data can be downloaded below. The question is whether the measurement results from the two methods are different?
 :::
 
+<div>
+
 <a href="datasets/ex07-02.csv" download="ex07-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 R codes for paired *t*-test is:
 
@@ -107,7 +115,11 @@ If the variances are unequal, the Welch *t*-test (which does not assume equal va
 To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?
 :::
 
+<div>
+
 <a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 R codes for two-sample *t*-test is:
 
@@ -142,10 +154,14 @@ $$
 This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch *t*-test. It is generally considered more robust than the combined variance *t*-test in situations where variances differ.
 
 ::: {#ex07-04 .example}
-To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c (HbA1c) levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.
+To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.
 :::
 
+<div>
+
 <a href="datasets/ex07-04.csv" download="ex07-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
 
 R codes for Welch *t*-test is:
 
@@ -162,11 +178,11 @@ When conducting a two-sample *t*-test, especially when comparing the means of tw
 
 ### Normality test
 
-For more details about normality test you can see @sec-normality-test .
+Normality test has been discussed in @sec-normality-test , for more details please move there.
 
-## F-test 
+## F-test {#sec-f-test}
 
-The F-test was traditionally used to determine whether the variances of two populations are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.
+The F-test was traditionally used to determine whether the variances of **two populations** are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.
 
 $H_0$: The variances of the two populations are equal ($\sigma_1^2 = \sigma_2^2$).
 

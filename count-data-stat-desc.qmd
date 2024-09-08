@@ -1,1 +1,97 @@
 # Statistical description of count data
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Count data refers to data that represent the number of occurrences of an event or characteristic, typically as non-negative integer values. It often represent the number of occurrences of specific health-related events, such as the number of hospital visits, the number of disease occurrences, or the number of adverse events. This type of data is widely used in epidemiological studies, clinical trials, and health services research.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+```
+
+Absolute values and relative values are fundamental concepts in statistics, used to describe raw data and the relationships between data points, respectively.
+
+## Absolute value
+
+An absolute value refers to the raw, observed data that quantifies an event or phenomenon directly, it focus on the actual quantity of an event or measurement. For example:
+
+-   A hospital received 500 patients in one year.
+-   In a clinical trial, there were 20 occurrences of heart attacks.
+
+### Characteristics
+
+-   Absolute values are often expressed with specific units, such as people, events, kilograms, etc.
+-   Absolute values represent the measured quantity without any relation to other data points, no comparison involved.
+
+## Relative Value
+
+A relative value expresses the relationship or proportion between two or more data points, often in the form of percentages, ratios, or multiples. For example:
+
+-   The hospital treated 5% of the total population of the region in one year.
+-   The relative risk of heart attacks in the drug group is 1.5 times that of the control group.
+
+### Common forms
+
+1.  **Percentage**: Expressed as a proportion of a part to the whole. For instance, 20% of patients in a clinical trial experienced side effects.
+
+$$
+\text{Percentage} = \left(\frac{\text{part}}{\text{whole}}\right) \times 100%
+$$
+
+2.  **Rate**: This expresses the frequency of an event occurring in relation to a specific quantity of time, population, or other conditions. It is commonly used to measure the occurrence of phenomena over time or within a particular population in fields like epidemiology, demography, and clinical research.
+
+    -   Incidence rate: The number of new cases of a disease occurring in a population during a specific time period, typically expressed as per 1,000 or 100,000 people.
+
+    $$
+    \text{Incidence rate} = \frac{\text{Number of new cases}}{\text{Total population}} \times 1,000 \text{ (or 100,000)}
+    $$
+
+    -   Mortality Rate: The number of deaths in a given population over a specific time, often per 1,000 individuals.
+
+    $$
+    \text{Mortality rate} = \frac{\text{Number of deaths}}{\text{Total population}} \times 1,000
+    $$
+
+    -   Birth Rate: The number of live births per 1,000 people in a population in a given time period.
+
+    $$
+    \text{Birth rate} = \frac{\text{Number of live births}}{\text{Total population}} \times 1,000
+    $$
+
+    -   Survival Rate: The proportion of people who survive a medical condition or treatment for a specific period of time.
+
+    For example, if a study finds that 50 new cases of diabetes occur in a population of 10,000 people during one year, the incidence rate would be:
+
+    $$\frac{50}{10,000} \times 1,000 = 5 \text{ new cases per 1,000 people per year}$$
+
+3.  **Ratio**: A comparison of two quantities, representing the relative frequency or strength of two phenomena. For example, the ratio of male to female visits to a clinic is $3:2$.
+
+$$
+\text{Ratio} = \frac{\text{value A}}{\text{value B}}
+$$
+
+4.  **Multiple**: Expresses how many times one quantity is greater or smaller than another. For example, the effectiveness of a new drug might be twice that of the standard treatment.
+
+$$
+\text{Multiple} = \frac{\text{effectiveness of new drug}}{\text{effectiveness of standard treatment}}
+$$
+
+Relative values are more useful for comparisons, such as comparing disease incidence rates, relative risks of a condition between different groups, or the effectiveness of different treatments. For example:
+
+-   Absolute value: In a study, 150 patients received a specific treatment.
+-   Relative value: The treatment group had an 80% success rate, while the control group had a 50% success rate, giving a relative risk of 1.6.
+
+### Rate and proportion
+
+Rate includes a time element (or a denominator such as population size), indicating how frequently an event happens over time. Proportion is simply a part-to-whole comparison and does not necessarily involve time.
+
+Relative values compare events or measurements, highlighting the proportional or relative differences between groups or phenomena.
+
+
