@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./chi-square-test.html" rel="next">
+<link href="./discrete-data-dist.html" rel="next">
 <link href="./anova.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -73,6 +107,49 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,32 +267,38 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nonparameter-test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./simple-linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Correlation and Simple Linear Regression</span></span></a>
+  <a href="./corr-linear-reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,13 +315,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -255,13 +344,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,8 +366,23 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">9.1</span> Prerequisite</a></li>
+  <li><a href="#absolute-value" id="toc-absolute-value" class="nav-link" data-scroll-target="#absolute-value"><span class="header-section-number">9.2</span> Absolute value</a>
+  <ul class="collapse">
+  <li><a href="#characteristics" id="toc-characteristics" class="nav-link" data-scroll-target="#characteristics"><span class="header-section-number">9.2.1</span> Characteristics</a></li>
+  </ul></li>
+  <li><a href="#relative-value" id="toc-relative-value" class="nav-link" data-scroll-target="#relative-value"><span class="header-section-number">9.3</span> Relative Value</a>
+  <ul class="collapse">
+  <li><a href="#common-forms" id="toc-common-forms" class="nav-link" data-scroll-target="#common-forms"><span class="header-section-number">9.3.1</span> Common forms</a></li>
+  <li><a href="#rate-and-proportion" id="toc-rate-and-proportion" class="nav-link" data-scroll-target="#rate-and-proportion"><span class="header-section-number">9.3.2</span> Rate and proportion</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/count-data-stat-desc.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -296,8 +406,94 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>Count data refers to data that represent the number of occurrences of an event or characteristic, typically as non-negative integer values. It often represent the number of occurrences of specific health-related events, such as the number of hospital visits, the number of disease occurrences, or the number of adverse events. This type of data is widely used in epidemiological studies, clinical trials, and health services research.</p>
+<section id="prerequisite" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">9.1</span> Prerequisite</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Absolute values and relative values are fundamental concepts in statistics, used to describe raw data and the relationships between data points, respectively.</p>
+</section>
+<section id="absolute-value" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="absolute-value"><span class="header-section-number">9.2</span> Absolute value</h2>
+<p>An absolute value refers to the raw, observed data that quantifies an event or phenomenon directly, it focus on the actual quantity of an event or measurement. For example:</p>
+<ul>
+<li>A hospital received 500 patients in one year.</li>
+<li>In a clinical trial, there were 20 occurrences of heart attacks.</li>
+</ul>
+<section id="characteristics" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="characteristics"><span class="header-section-number">9.2.1</span> Characteristics</h3>
+<ul>
+<li>Absolute values are often expressed with specific units, such as people, events, kilograms, etc.</li>
+<li>Absolute values represent the measured quantity without any relation to other data points, no comparison involved.</li>
+</ul>
+</section>
+</section>
+<section id="relative-value" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="relative-value"><span class="header-section-number">9.3</span> Relative Value</h2>
+<p>A relative value expresses the relationship or proportion between two or more data points, often in the form of percentages, ratios, or multiples. For example:</p>
+<ul>
+<li>The hospital treated 5% of the total population of the region in one year.</li>
+<li>The relative risk of heart attacks in the drug group is 1.5 times that of the control group.</li>
+</ul>
+<section id="common-forms" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="common-forms"><span class="header-section-number">9.3.1</span> Common forms</h3>
+<ol type="1">
+<li><strong>Percentage</strong>: Expressed as a proportion of a part to the whole. For instance, 20% of patients in a clinical trial experienced side effects.</li>
+</ol>
+<p><span class="math display">
+\text{Percentage} = \left(\frac{\text{part}}{\text{whole}}\right) \times 100%
+</span></p>
+<ol start="2" type="1">
+<li><p><strong>Rate</strong>: This expresses the frequency of an event occurring in relation to a specific quantity of time, population, or other conditions. It is commonly used to measure the occurrence of phenomena over time or within a particular population in fields like epidemiology, demography, and clinical research.</p>
+<ul>
+<li>Incidence rate: The number of new cases of a disease occurring in a population during a specific time period, typically expressed as per 1,000 or 100,000 people.</li>
+</ul>
+<p><span class="math display">
+\text{Incidence rate} = \frac{\text{Number of new cases}}{\text{Total population}} \times 1,000 \text{ (or 100,000)}
+</span></p>
+<ul>
+<li>Mortality Rate: The number of deaths in a given population over a specific time, often per 1,000 individuals.</li>
+</ul>
+<p><span class="math display">
+\text{Mortality rate} = \frac{\text{Number of deaths}}{\text{Total population}} \times 1,000
+</span></p>
+<ul>
+<li>Birth Rate: The number of live births per 1,000 people in a population in a given time period.</li>
+</ul>
+<p><span class="math display">
+\text{Birth rate} = \frac{\text{Number of live births}}{\text{Total population}} \times 1,000
+</span></p>
+<ul>
+<li>Survival Rate: The proportion of people who survive a medical condition or treatment for a specific period of time.</li>
+</ul>
+<p>For example, if a study finds that 50 new cases of diabetes occur in a population of 10,000 people during one year, the incidence rate would be:</p>
+<p><span class="math display">\frac{50}{10,000} \times 1,000 = 5 \text{ new cases per 1,000 people per year}</span></p></li>
+<li><p><strong>Ratio</strong>: A comparison of two quantities, representing the relative frequency or strength of two phenomena. For example, the ratio of male to female visits to a clinic is <span class="math inline">3:2</span>.</p></li>
+</ol>
+<p><span class="math display">
+\text{Ratio} = \frac{\text{value A}}{\text{value B}}
+</span></p>
+<ol start="4" type="1">
+<li><strong>Multiple</strong>: Expresses how many times one quantity is greater or smaller than another. For example, the effectiveness of a new drug might be twice that of the standard treatment.</li>
+</ol>
+<p><span class="math display">
+\text{Multiple} = \frac{\text{effectiveness of new drug}}{\text{effectiveness of standard treatment}}
+</span></p>
+<p>Relative values are more useful for comparisons, such as comparing disease incidence rates, relative risks of a condition between different groups, or the effectiveness of different treatments. For example:</p>
+<ul>
+<li>Absolute value: In a study, 150 patients received a specific treatment.</li>
+<li>Relative value: The treatment group had an 80% success rate, while the control group had a 50% success rate, giving a relative risk of 1.6.</li>
+</ul>
+</section>
+<section id="rate-and-proportion" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="rate-and-proportion"><span class="header-section-number">9.3.2</span> Rate and proportion</h3>
+<p>Rate includes a time element (or a denominator such as population size), indicating how frequently an event happens over time. Proportion is simply a part-to-whole comparison and does not necessarily involve time.</p>
+<p>Relative values compare events or measurements, highlighting the proportional or relative differences between groups or phenomena.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -910,8 +1106,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./chi-square-test.html" class="pagination-link" aria-label="Chi-square test">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chi-square test</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discrete-data-dist.html" class="pagination-link" aria-label="Distributions of discrete variables">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -920,5 +1116,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/count-data-stat-desc.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/count-data-stat-desc.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
