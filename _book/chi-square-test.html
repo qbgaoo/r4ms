@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R for Medical Statistics - 11&nbsp; Chi-square test</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./nonparametric-test.html" rel="next">
+<link href="./discrete-data-dist.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./chi-square-test.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Medical Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">11.1</span> Prerequisite</a></li>
+  <li><a href="#chi-square-test-for-2x2-tables" id="toc-chi-square-test-for-2x2-tables" class="nav-link" data-scroll-target="#chi-square-test-for-2x2-tables"><span class="header-section-number">11.2</span> Chi-square test for 2x2 tables</a>
+  <ul class="collapse">
+  <li><a href="#chi-square-distribution" id="toc-chi-square-distribution" class="nav-link" data-scroll-target="#chi-square-distribution"><span class="header-section-number">11.2.1</span> Chi-square distribution</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">11.2.2</span> Visualization</a></li>
+  <li><a href="#x2-contingency-table" id="toc-x2-contingency-table" class="nav-link" data-scroll-target="#x2-contingency-table"><span class="header-section-number">11.2.3</span> 2x2 contingency table</a></li>
+  <li><a href="#chi-square-test" id="toc-chi-square-test" class="nav-link" data-scroll-target="#chi-square-test"><span class="header-section-number">11.2.4</span> Chi-square test</a></li>
+  </ul></li>
+  <li><a href="#chi-square-test-for-paired-2x2-tables" id="toc-chi-square-test-for-paired-2x2-tables" class="nav-link" data-scroll-target="#chi-square-test-for-paired-2x2-tables"><span class="header-section-number">11.3</span> Chi-square test for paired 2x2 tables</a>
+  <ul class="collapse">
+  <li><a href="#mcnemars-test" id="toc-mcnemars-test" class="nav-link" data-scroll-target="#mcnemars-test"><span class="header-section-number">11.3.1</span> McNemar’s Test</a></li>
+  </ul></li>
+  <li><a href="#sec-fisher-test" id="toc-sec-fisher-test" class="nav-link" data-scroll-target="#sec-fisher-test"><span class="header-section-number">11.4</span> Fisher’s exact test</a></li>
+  <li><a href="#chi-square-test-for-rc-tables" id="toc-chi-square-test-for-rc-tables" class="nav-link" data-scroll-target="#chi-square-test-for-rc-tables"><span class="header-section-number">11.5</span> Chi-square test for R×C tables</a>
+  <ul class="collapse">
+  <li><a href="#comparison-of-multiple-sample-rates" id="toc-comparison-of-multiple-sample-rates" class="nav-link" data-scroll-target="#comparison-of-multiple-sample-rates"><span class="header-section-number">11.5.1</span> Comparison of multiple sample rates</a></li>
+  <li><a href="#comparison-of-multiple-sample-proportions" id="toc-comparison-of-multiple-sample-proportions" class="nav-link" data-scroll-target="#comparison-of-multiple-sample-proportions"><span class="header-section-number">11.5.2</span> Comparison of multiple sample proportions</a></li>
+  <li><a href="#association-analysis-of-bivariate-nominal-data" id="toc-association-analysis-of-bivariate-nominal-data" class="nav-link" data-scroll-target="#association-analysis-of-bivariate-nominal-data"><span class="header-section-number">11.5.3</span> Association Analysis of bivariate nominal data</a></li>
+  <li><a href="#linear-trend-test-for-two-way-ordinal-data" id="toc-linear-trend-test-for-two-way-ordinal-data" class="nav-link" data-scroll-target="#linear-trend-test-for-two-way-ordinal-data"><span class="header-section-number">11.5.4</span> Linear trend test for two-way ordinal data</a></li>
+  </ul></li>
+  <li><a href="#sec-comp-multi-prop" id="toc-sec-comp-multi-prop" class="nav-link" data-scroll-target="#sec-comp-multi-prop"><span class="header-section-number">11.6</span> Pairwise comparisons of multiple sample proportions</a>
+  <ul class="collapse">
+  <li><a href="#pairwise-comparison" id="toc-pairwise-comparison" class="nav-link" data-scroll-target="#pairwise-comparison"><span class="header-section-number">11.6.1</span> Pairwise comparison</a></li>
+  <li><a href="#comparison-with-a-control-group" id="toc-comparison-with-a-control-group" class="nav-link" data-scroll-target="#comparison-with-a-control-group"><span class="header-section-number">11.6.2</span> Comparison with a control group</a></li>
+  </ul></li>
+  <li><a href="#chi-square-goodness-of-fit-test" id="toc-chi-square-goodness-of-fit-test" class="nav-link" data-scroll-target="#chi-square-goodness-of-fit-test"><span class="header-section-number">11.7</span> Chi-square goodness-of-fit test</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/chi-square-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./chi-square-test.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The Chi-square test is a statistical test commonly used to determine whether there is a significant association between categorical variables. It can be applied in several different contexts, including testing for goodness-of-fit, independence, and homogeneity.</p>
+<section id="prerequisite" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">11.1</span> Prerequisite</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coin)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="chi-square-test-for-2x2-tables" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="chi-square-test-for-2x2-tables"><span class="header-section-number">11.2</span> Chi-square test for 2x2 tables</h2>
+<section id="chi-square-distribution" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="chi-square-distribution"><span class="header-section-number">11.2.1</span> Chi-square distribution</h3>
+<p>The Chi-square distribution is a probability distribution commonly used in hypothesis testing and confidence interval estimation for variance and categorical data analysis, particularly in the Chi-square test for independence and goodness-of-fit.</p>
+<p>The probability density function of the Chi-square distribution with <span class="math inline">k</span> degrees of freedom is:</p>
+<p><span class="math display">
+f(x; k) = \frac{1}{2^{k/2} \Gamma(k/2)} x^{(k/2 - 1)} e^{-x/2}
+</span></p>
+<p>where <span class="math inline">x \geq 0</span>, <span class="math inline">k</span> is the degrees of freedom, <span class="math inline">\Gamma</span> is the Gamma function.</p>
+</section>
+<section id="visualization" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="visualization"><span class="header-section-number">11.2.2</span> Visualization</h3>
+<p>The shape of the Chi-square distribution is determined by its degrees of freedom. The code below will plot Chi-square distributions with different degrees of freedom to demonstrate how the shape of the distribution changes.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chi-square-test_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is positively skewed for low degrees of freedom but becomes more symmetrical as the degrees of freedom increase. Since it’s a distribution of squared values, the Chi-square statistic is always non-negative, meaning it ranges from 0 to infinity.</p>
+</section>
+<section id="x2-contingency-table" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="x2-contingency-table"><span class="header-section-number">11.2.3</span> 2x2 contingency table</h3>
+<p>2x2 contingency table, also known as fourfold table , is a matrix used to display the frequencies of two categorical variables with two levels each (see <a href="#tbl-fourfold-table" class="quarto-xref">Table&nbsp;<span>11.1</span></a> ).</p>
+<div class="cell">
+<div id="tbl-fourfold-table" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fourfold-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.1: Structure of a 2x2 contingency table
+</figcaption>
+<div aria-describedby="tbl-fourfold-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">event</th>
+<th style="text-align: left;">non-event</th>
+<th style="text-align: left;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">exposed</td>
+<td style="text-align: left;">a</td>
+<td style="text-align: left;">b</td>
+<td style="text-align: left;">a + b</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">non-exoposed</td>
+<td style="text-align: left;">c</td>
+<td style="text-align: left;">d</td>
+<td style="text-align: left;">c + d</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total</td>
+<td style="text-align: left;">a + c</td>
+<td style="text-align: left;">b + d</td>
+<td style="text-align: left;">N = a + b + c + d</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>where <span class="math inline">a</span> is the number of events in the exposed group, <span class="math inline">b</span> is the number of non-events in the exposed group, <span class="math inline">c</span> is the number of events in the non-exposed group, <span class="math inline">d</span> is the number of non-events in the non-exposed group.</p>
+<p>For example, you might use a fourfold table to study whether a new treatment (exposure) improves the survival rates (event) compared to a standard treatment.</p>
+<div class="cell">
+<div id="tbl-heart-attack" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-heart-attack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.2: Heart attack outcomes by two treatment groups
+</figcaption>
+<div aria-describedby="tbl-heart-attack-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 34%">
+<col style="width: 28%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">heart attack (survived)</th>
+<th style="text-align: left;">heart attack (died)</th>
+<th style="text-align: left;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">new treatment</td>
+<td style="text-align: left;">30</td>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">standard treatment</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">35</td>
+<td style="text-align: left;">50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total</td>
+<td style="text-align: left;">45</td>
+<td style="text-align: left;">55</td>
+<td style="text-align: left;">100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong>Chi-square statistic</strong></p>
+<p>The Chi-square statistic for a 2x2 table is calculated using the formula:</p>
+<p><span class="math display">
+\chi^2 = \frac{N(ad - bc)^2}{(a + b)(c + d)(a + c)(b + d)}
+</span></p>
+<p>where <span class="math inline">N</span> is the total sample size, <span class="math inline">N = a + b + c + d</span>, <span class="math inline">ad - bc</span> is the product difference between rows and columns.</p>
+<p><strong>Yates’ continuity correction</strong></p>
+<p>Yates’ continuity correction is a statistical adjustment applied to the Chi-square test for 2x2 contingency tables to correct for the fact that the Chi-square test is an approximation of a continuous distribution, but the data in a contingency table are discrete. This correction makes the Chi-square test more conservative, reducing the likelihood of type I errors (false positives) by slightly lowering the Chi-square statistic.</p>
+<p>With Yates’ correction, the formula for the Chi-square statistic is:</p>
+<p><span class="math display">
+\chi^2 = \frac{(|ad - bc| - 0.5N)^2 N}{(a+b)(c+d)(a+c)(b+d)}
+</span></p>
+<ul>
+<li>When to use Yates’ correction
+<ul>
+<li>It is generally recommended for 2x2 tables with small sample sizes, particularly when any expected frequency is less than 10 but greater than 5. It is automatically applied in <code>chisq.test()</code> for 2x2 tables unless specified otherwise.</li>
+<li>When you want to be more conservative and reduce the chance of false positives (finding a significant result when there is none), Yates’ correction can help.</li>
+</ul></li>
+<li>When not to use Yates’ correction
+<ul>
+<li>When the sample size is large, or the expected frequencies in each cell are well above 5, Yates’ correction is not necessary and may be too conservative.</li>
+<li>Yates’ correction is only relevant for 2x2 tables, so it’s ignored for larger contingency tables.</li>
+</ul></li>
+</ul>
+<p>It is generally recommended for small sample sizes but can be unnecessary or even too conservative in larger samples.</p>
+</section>
+<section id="chi-square-test" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="chi-square-test"><span class="header-section-number">11.2.4</span> Chi-square test</h3>
+<p>The Chi-square test for 2x2 tables is commonly used to assess whether there is an association between two categorical variables. In medical research, this test is frequently applied to analyze whether exposure (e.g., treatment, risk factor) to a risk factor is associated with a particular outcome (e.g., disease, recovery).</p>
+<p>In R, you can perform a Chi-square test for the 2x2 contingency table using the <code>chisq.test()</code> function or <code>fisher.test()</code> function.</p>
+<p><strong>When to use <code>chisq.test()</code></strong></p>
+<ul>
+<li>Chi-square test works well when the sample size is large enough, typically when the expected frequency in each cell of the contingency table is 5 or more.</li>
+<li>Chi-square test provides an approximate result based on the Chi-square distribution. It is not suitable for small sample sizes, but it’s efficient for larger data sets.</li>
+<li>Chi-square test assumes the total row and column frequencies can vary. It’s used when you don’t have fixed marginal totals.</li>
+</ul>
+<p><strong>When to use <code>fisher.test()</code></strong></p>
+<ul>
+<li>Fisher’s exact test (discussed in <a href="#sec-fisher-test" class="quarto-xref"><span>Section 11.4</span></a> )is recommended for small sample sizes, particularly when any expected cell count is less than 5. It calculates the exact p-value without relying on large sample approximations.</li>
+<li>Fisher’s exact test assumes that both the row and column totals are fixed. This makes it a more conservative test compared to the Chi-square test.</li>
+<li>Fisher’s test is preferred when dealing with sparse data (i.e., a lot of cells with small counts), as it doesn’t rely on assumptions of normality or expected frequencies.</li>
+</ul>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>To determine if a new treatment for heart attack patients improves survival rates compared to a standard treatment, a total of 100 patients who have suffered heart attacks were randomly divided into two groups: 50 patients receive new treatment, 50 patients receive standard treatment. The outcome of interest is whether the patient survived (recovered or showed significant improvement) or died (passed away due to complications from the heart attack) after the treatment. The observed data is summarized in <a href="#tbl-heart-attack" class="quarto-xref">Table&nbsp;<span>11.2</span></a> . Is there a significant difference in survival rates between patients who received the new treatment and those who received the standard treatment?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 2x2 contingency table</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">35</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">chisq.test</span>(<span class="at">correct =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  matrix(c(30, 20, 15, 35), nrow = 2, byrow = T)
+#&gt; X-squared = 9.0909, df = 1, p-value = 0.002569</code></pre>
+</div>
+</div>
+<p>The calculated Chi-square statistic is 9.0909, p-value is 0.002569, less than the significance level 0.05. This indicates a statistically significant difference in survival rates between the two treatments.</p>
+</section>
+</section>
+<section id="chi-square-test-for-paired-2x2-tables" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="chi-square-test-for-paired-2x2-tables"><span class="header-section-number">11.3</span> Chi-square test for paired 2x2 tables</h2>
+<p>Chi-square test for paired 2x2 table is typically used for analyzing paired categorical data, such as when the same subjects are measured before and after an intervention, or when two related groups are compared. In this case, the McNemar’s test is commonly applied for paired data rather than the standard Chi-square test, as it is designed specifically to handle dependent data (paired observations).</p>
+<section id="mcnemars-test" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="mcnemars-test"><span class="header-section-number">11.3.1</span> McNemar’s Test</h3>
+<p>McNemar’s test focuses only on the off-diagonal cells <span class="math inline">b</span> and <span class="math inline">c</span>, which represent discordant pairs (i.e., patients who switched their outcomes between pre- and post-treatment). The cells <span class="math inline">a</span> and <span class="math inline">d</span> (concordant pairs) are ignored in this test because they reflect no change in outcome.</p>
+<p>The test statistic without continuity correction:</p>
+<p><span class="math display">
+\chi^2 = \frac{(b - c)^2}{b + c},
+</span></p>
+<p>The test statistic with continuity correction:</p>
+<p><span class="math display">
+\chi^2 = \frac{(|b - c| - 1)^2}{b + c}
+</span></p>
+<p>where <span class="math inline">b</span> is the number of individuals who succeeded in pre-treatment but failed in post-treatment, <span class="math inline">c</span> is the number of individuals who failed in pre-treatment but succeeded in post-treatment, <span class="math inline">1</span> in the formula is a continuity correction applied for small sample sizes.</p>
+<p>The continuity correction is especially important when <span class="math inline">b + c</span> is small (e.g., less than 40). It helps to prevent overestimating the test statistic. For larger sample sizes, the correction has a smaller impact, and some recommend not applying it (i.e., setting <code>correct = FALSE</code>), as it can be overly conservative.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>A study is conducted to evaluate the efficacy of a new vaccine in preventing the flu. The same group of individuals is tested before and after receiving the vaccine to see if they develop flu symptoms. The observed data is summarized in <a href="#tbl-vaccine-data" class="quarto-xref">Table&nbsp;<span>11.3</span></a> . Determine whether the vaccine have a significant effect on reducing flu incidence.</p>
+</div>
+<div class="cell">
+<div id="tbl-vaccine-data" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vaccine-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.3: Paired flu status before and after vaccination
+</figcaption>
+<div aria-describedby="tbl-vaccine-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 34%">
+<col style="width: 35%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">flu post-vaccine</th>
+<th style="text-align: left;">no flu post-vaccine</th>
+<th style="text-align: left;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">flue pre-vaccine</td>
+<td style="text-align: left;">10 (had flu both times)</td>
+<td style="text-align: left;">25 (had flu pre, no flu post)</td>
+<td style="text-align: left;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no flu pre-vaccine</td>
+<td style="text-align: left;">5 (no flu pre, had flu post)</td>
+<td style="text-align: left;">60 (no flu both times)</td>
+<td style="text-align: left;">65</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">85</td>
+<td style="text-align: left;">100</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">60</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mcnemar.test</span>(<span class="at">correct =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  McNemar's Chi-squared test with continuity correction
+#&gt; 
+#&gt; data:  matrix(c(10, 25, 5, 60), nrow = 2, byrow = T)
+#&gt; McNemar's chi-squared = 12.033, df = 1, p-value = 0.0005226</code></pre>
+</div>
+</div>
+<p>If the p-value from the McNemar’s test is less than the significance level (typically <span class="math inline">\alpha = 0.05</span>), you would reject the null hypothesis and conclude that the vaccine had a significant effect on reducing flu incidence. If the p-value is greater than the significance level, the null hypothesis is not rejected, and the data do not provide sufficient evidence to conclude that the vaccine significantly changed flu outcomes. Here the p-value is less than 0.05.</p>
+<p>This type of paired data analysis is common in medical research, especially in pre-post studies where the same subjects are followed over time to assess the impact of an intervention (e.g., medication, surgery, or vaccines).</p>
+</section>
+</section>
+<section id="sec-fisher-test" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-fisher-test"><span class="header-section-number">11.4</span> Fisher’s exact test</h2>
+<p>The Fisher’s exact test is used to determine if there are nonrandom associations between two categorical variables, typically in a 2x2 contingency table (fourfold table). It is commonly applied when sample sizes are small, making the Chi-square test unreliable due to low expected frequencies in one or more cells.</p>
+<p>Fisher’s exact test calculates the exact probability of obtaining a table at least as extreme as the one observed, assuming the null hypothesis is true. The probability is calculated based on the hypergeometric distribution, and Fisher’s test uses this distribution to calculate the p-value.</p>
+<p>The formula for the probability of observing a given 2x2 table is:</p>
+<p><span class="math display">
+P = \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!N!}
+</span></p>
+<p>where <span class="math inline">N = a + b + c + d</span> is the total sample size.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>A clinical trial is conducted to evaluate the effectiveness of a new drug for treating hypertension. Patients are divided into treatment group and control group. After treatment, the number of patients whose blood pressure returned to normal (cured) and those whose blood pressure remained high (not cured) is recorded. The data collected is in . Determine if the new drug shows a statistically significant difference in its effectiveness compared to the control.</p>
+</div>
+<div class="cell">
+<div id="tbl-fisher-test" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-fisher-test-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.4: Structure of a 2x2 contingency table
+</figcaption>
+<div aria-describedby="tbl-fisher-test-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">blood pressure normal</th>
+<th style="text-align: left;">Blood pressure high</th>
+<th style="text-align: left;">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">treatment</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">control</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">10d</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">20</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>In R, Fisher’s exact test can be performed using the <code>fisher.test()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">7</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Fisher's Exact Test for Count Data
+#&gt; 
+#&gt; data:  matrix(c(8, 2, 3, 7), nrow = 2, byrow = T)
+#&gt; p-value = 0.06978
+#&gt; alternative hypothesis: true odds ratio is not equal to 1
+#&gt; 95 percent confidence interval:
+#&gt;    0.8821175 127.0558418
+#&gt; sample estimates:
+#&gt; odds ratio 
+#&gt;   8.153063</code></pre>
+</div>
+</div>
+<p>The result of Fisher’s Exact Test will give you a p-value. Here p-value is 0.06978, above 0.05, not reject the null hypothesis. This means the data do not provide sufficient evidence to conclude that the new drug shows a better effectiveness compared to control.</p>
+</section>
+<section id="chi-square-test-for-rc-tables" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="chi-square-test-for-rc-tables"><span class="header-section-number">11.5</span> Chi-square test for R×C tables</h2>
+<p>The Chi-square test for R×C contingency tables is used to assess whether there is an association between two categorical variables where one variable has R categories and the other has C categories. This is also called the Chi-square test of independence.</p>
+<section id="comparison-of-multiple-sample-rates" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="comparison-of-multiple-sample-rates"><span class="header-section-number">11.5.1</span> Comparison of multiple sample rates</h3>
+<p>When comparing multiple sample rates, several statistical methods are commonly used, including the Chi-square test and Cochran’s Q test. The choice of method depends on the structure of the data and the research question.</p>
+<ol type="1">
+<li><p><strong>Chi-Square test for rates</strong></p>
+<p>The Chi-square test is widely used to compare rates across multiple independent samples. It tests whether the observed differences between sample proportions are statistically significant.</p>
+<div id="exp-multi-sample-rates" class="example">
+<strong>Example 4:</strong> 
+<p>Suppose you want to compare recovery rates between three hospitals for a specific disease. The data is in <a href="#tbl-hospital-recover" class="quarto-xref">Table&nbsp;<span>11.5</span></a> . Determine if the recovery rates are significantly different between these hospitals.</p>
+</div>
+<div class="cell">
+<div id="tbl-hospital-recover" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hospital-recover-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.5: The recovery results of a disease in three hospitals
+</figcaption>
+<div aria-describedby="tbl-hospital-recover-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">recovered</th>
+<th style="text-align: right;">not revovered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">hospital A</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hospital B</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hospital C</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Here is <code>chisq.test()</code> is used to conduct this kind of test. In <a href="#sec-comp-multi-prop" class="quarto-xref"><span>Section 11.6</span></a> , we reanalyze this example using function <code>prop.test()</code>, which gives the same result.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">55</span>, <span class="dv">15</span>, <span class="dv">65</span>, <span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">chisq.test</span>(<span class="at">correct =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  matrix(c(50, 20, 55, 15, 65, 5), nrow = 3, byrow = T)
+#&gt; X-squared = 10.809, df = 2, p-value = 0.004497</code></pre>
+</div>
+</div></li>
+<li><p><strong>Cochran’s Q test</strong></p>
+<p>Cochran’s Q test is an extension of the Chi-Square test, designed for comparing rates across multiple samples in paired or repeated measures settings. It is typically used with binary outcomes (e.g., “yes/no” or “success/failure”).</p>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>A study is conducted to test the effectiveness of a new drug across three time points (1 month, 3 months, and 6 months) on the same group of patients. The outcome is whether the treatment was successful (1) or not (0), recorded for 10 patients in <a href="#tbl-drug-success-rate" class="quarto-xref">Table&nbsp;<span>11.6</span></a> . Determine if there is a significant difference in success rates across the three time points.</p>
+</div>
+<div class="cell">
+<div id="tbl-drug-success-rate" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-drug-success-rate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.6: The recovery results of a disease in three hospitals
+</figcaption>
+<div aria-describedby="tbl-drug-success-rate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">id</th>
+<th style="text-align: right;">1 month</th>
+<th style="text-align: right;">3 months</th>
+<th style="text-align: right;">6 months</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"1 Month"</span>, <span class="st">"3 Months"</span>, <span class="st">"6 Months"</span>), <span class="at">each =</span> <span class="dv">10</span>)),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>, <span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">symmetry_test</span>(outcome <span class="sc">~</span> time <span class="sc">|</span> id, <span class="at">data =</span> _, <span class="at">teststat =</span> <span class="st">"quadratic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Asymptotic General Symmetry Test
+#&gt; 
+#&gt; data:  outcome by
+#&gt;   time (1 Month, 3 Months, 6 Months) 
+#&gt;   stratified by id
+#&gt; chi-squared = 0.28571, df = 2, p-value = 0.8669</code></pre>
+</div>
+</div></li>
+<li><p>Cochran-Armitage trend test</p>
+<p>If you want to test whether there is a linear trend in the rates across ordered groups, you can use the Cochran-Armitage test for trend. This test is useful for ordered categorical data and examines if there is a significant linear trend in proportions.</p>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>Suppose you have data from a study on smoking and lung cancer risk. The groups are non-smokers, light smokers, and heavy smokers, and the outcome is the presence of lung cancer (yes/no). The data is listed in <a href="#tbl-smoke-cancer" class="quarto-xref">Table&nbsp;<span>11.7</span></a> . Determine if there’s a linear trend in cancer risk across the ordered smoking categories.</p>
+</div>
+<div class="cell">
+<div id="tbl-smoke-cancer" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-smoke-cancer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.7: The data from a study on smoking and lung cancer risk
+</figcaption>
+<div aria-describedby="tbl-smoke-cancer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: right;">cancer</th>
+<th style="text-align: right;">no cancer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">noon-smokers</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">95</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">light smokers</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">85</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">heavy smokers</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">60</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">prop.trend.test</span>(cancer, cancer <span class="sc">+</span> <span class="st">`</span><span class="at">no cancer</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Chi-squared Test for Trend in Proportions
+#&gt; 
+#&gt; data:  cancer out of cancer + `no cancer` ,
+#&gt;  using scores: 1 2 3
+#&gt; X-squared = 38.281, df = 1, p-value = 6.125e-10</code></pre>
+</div>
+</div>
+<p>It is specifically designed to detect linear trends in rates across ordered groups. This test is particularly useful when you have <strong>binary outcomes</strong> (e.g., success/failure) across different levels of an ordinal independent variable (e.g., increasing doses of a drug). It directly tests for a linear trend in the proportions of success.</p></li>
+</ol>
+</section>
+<section id="comparison-of-multiple-sample-proportions" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="comparison-of-multiple-sample-proportions"><span class="header-section-number">11.5.2</span> Comparison of multiple sample proportions</h3>
+<div class="example">
+<strong>Example 7:</strong> 
+<p>Suppose you are studying the distribution of a gene variant related to a certain disease in two groups: a healthy control group, and a disease group. You aim to compare the frequencies of the AA, Aa, and aa genotypes between these groups. The data is in <a href="#tbl-genetype-disease" class="quarto-xref">Table&nbsp;<span>11.8</span></a> . Determine whether there is a significant difference in the distribution of genotypes between the healthy and disease groups.</p>
+</div>
+<div class="cell">
+<div id="tbl-genetype-disease" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-genetype-disease-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.8: The distribution of a gene variant in two groups
+</figcaption>
+<div aria-describedby="tbl-genetype-disease-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: right;">AA</th>
+<th style="text-align: right;">Aa</th>
+<th style="text-align: right;">aa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">health group</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">disease group</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">25</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the data matrix</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">45</span>, <span class="dv">25</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">chisq.test</span>(<span class="at">correct =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  matrix(c(40, 35, 25, 30, 45, 25), nrow = 2, byrow = T)
+#&gt; X-squared = 2.6786, df = 2, p-value = 0.262</code></pre>
+</div>
+</div>
+<p>For smaller sample sizes, Fisher’s Exact Test can be used.</p>
+<p>Genotyping is often used to study the distribution of specific genes in different populations, particularly when exploring the relationship between genetic variations and disease risk. For instance, certain gene alleles may be linked to chronic diseases like cardiovascular conditions or cancer. These analyses can help identify associations between specific genotypes and disease susceptibility. For example , comparing the distribution of APOE genotypes (APOE ε2, ε3, ε4) between patients with Alzheimer’s disease and healthy controls; Investigating differences in the INS gene (insulin gene) genotypes between diabetic and non-diabetic patients. Such analysis can help researchers understand the link between genetic variations and disease risk, providing insights into personalized medicine and genetic risk factors.</p>
+</section>
+<section id="association-analysis-of-bivariate-nominal-data" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="association-analysis-of-bivariate-nominal-data"><span class="header-section-number">11.5.3</span> Association Analysis of bivariate nominal data</h3>
+<p>Association analysis of bivariate nominal data involves examining the relationship between two categorical variables. This is typically done using chi-square tests or Fisher’s exact tests to determine if there is a significant association between the two variables.</p>
+<p>If the association is significant, and the strength of the relationship needs to be further analyzed, the Pearson contingency coefficient C need to be calculated.</p>
+<p><strong>Pearson’s contingency coefficient</strong></p>
+<p>Pearson’s contingency coefficient is a measure used to assess the strength of association between two categorical variables in a contingency table. It quantifies how strongly two variables are related based on the chi-square statistic. It is calculated using the following formula:</p>
+<p><span class="math display">
+C = \sqrt{\frac{\chi^2}{\chi^2 + n}}
+</span></p>
+<p>where <span class="math inline">C</span> is the Pearson’s contingency coefficient, <span class="math inline">\chi^2</span> is the chi-square statistic obtained from a chi-square test, <span class="math inline">n</span> is the total sample size.</p>
+<p>The value of C ranges from <span class="math inline">0 \leq C &lt; 1</span>. Values closer to 1 indicate a stronger association between the variables, while values close to 0 indicate weak or no association. As the size of the contingency table (degrees of freedom) increases, the contingency coefficient tends to decrease.</p>
+<div class="example">
+<strong>Example 8:</strong> 
+<p>Researchers aim to evaluate the effectiveness of two different antibiotics (A and B) for two types of infections (X and Y). The effectiveness is measured by whether patients recover, categorized as “recovered” or “not recovered.” The data is summarized in <a href="#tbl-anti-infec" class="quarto-xref">Table&nbsp;<span>11.9</span></a> . The goal is to determine if the effectiveness of the antibiotics differs significantly for different infection types.</p>
+</div>
+<div class="cell">
+<div id="tbl-anti-infec" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anti-infec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.9: The results of two different antibiotics for two types of infections
+</figcaption>
+<div aria-describedby="tbl-anti-infec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">antibiotic</th>
+<th style="text-align: left;">infection type</th>
+<th style="text-align: right;">recovered</th>
+<th style="text-align: right;">not recovered</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">X</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Y</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">X</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Y</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">20</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>To evaluate whether the effectiveness of antibiotics A and B differs significantly for different infection types (X and Y), you can perform a chi-square test of independence on the contingency table. This will assess if there is a significant association between the type of antibiotic and the recovery status for the two infection types.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">20</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  data
+#&gt; X-squared = 2.3434, df = 3, p-value = 0.5043</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Pearson’s Contingency Coefficient</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">ContCoef</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1076172</code></pre>
+</div>
+</div>
+<p>The p-value is greater than your significance level 0.05, not reject the null hypothesis, indicating that the recovery status is not associated with the antibiotic and infection type.</p>
+<p><strong>A little expansion*：</strong></p>
+<p>To analyze the interaction between antibiotics (A and B) and infection types (X and Y) on recovery outcomes (recovered or not recovered), a logistic regression model is appropriate. This model will allow you to test the interaction effect between the two categorical variables (antibiotics and infection types) and their influence on recovery.</p>
+<p>In this case, you can model the recovery outcome as the dependent variable and include both antibiotics and infection types as independent variables, along with their interaction term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert data to long format for logistic regression</span></span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-8-3"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-4" class="code-annotation-target"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="annotated-cell-8-5"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(recovered, not_recovered),</span>
+<span id="annotated-cell-8-6"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"response"</span>,</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"freq"</span></span>
+<span id="annotated-cell-8-8"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span>                                 </span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">if_else</span>(response <span class="sc">==</span> <span class="st">"recovered"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-11" class="code-annotation-target"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>df_expanded <span class="ot">&lt;-</span> df_long <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq)</span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a>  response <span class="sc">~</span> antibiotic <span class="sc">*</span> infection_type, </span>
+<span id="annotated-cell-8-16"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df_expanded, </span>
+<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="annotated-cell-8-19"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-8-20"><a href="#annotated-cell-8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="4,9" data-code-annotation="1">Reshape the data to long format suitable for logistic regression</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-8" data-code-lines="11" data-code-annotation="2">Replicate rows based on <code>freq</code> to get one row per individual (useful for logistic regression)</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; glm(formula = response ~ antibiotic * infection_type, family = binomial(link = "logit"), 
+#&gt;     data = df_expanded)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                             Estimate Std. Error z value Pr(&gt;|z|)   
+#&gt; (Intercept)                   0.8473     0.3086   2.746  0.00604 **
+#&gt; antibioticB                   0.5390     0.4693   1.149  0.25075   
+#&gt; infection_typeY              -0.8473     0.4186  -2.024  0.04296 * 
+#&gt; antibioticB:infection_typeY  -0.1335     0.6193  -0.216  0.82930   
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; (Dispersion parameter for binomial family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 258.98  on 199  degrees of freedom
+#&gt; Residual deviance: 247.74  on 196  degrees of freedom
+#&gt; AIC: 255.74
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>The logistic regression model is trying to assess the relationship between antibiotic type, infection type, and their interaction on patient recovery. Here’s a breakdown of the key results:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation of logistic regression Results
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>(Intercept): Estimate: 0.8473, p-value: 0.00604 (statistically significant)
+<ul>
+<li>This represents the log-odds of recovery for patients treated with antibiotic A for Infection X (the baseline group).</li>
+<li>A positive coefficient (0.8473) suggests that the odds of recovery are higher for this group.</li>
+<li>To interpret this in terms of odds: <span class="math inline">\exp(0.8473) \approx 2.33</span> , meaning patients in the baseline group are 2.33 times more likely to recover.</li>
+</ul></li>
+<li>antibioticB: Estimate: 0.5390, p-value: 0.25075 (not statistically significant)
+<ul>
+<li>This is the difference in log-odds of recovery between antibiotic B and antibiotic A for Infection X.</li>
+<li>Since the p-value is not significant, there is no strong evidence that antibiotic B differs significantly from antibiotic A for Infection X.</li>
+</ul></li>
+<li>infection_typeY: Estimate: -0.8473, p-value: 0.04296 (statistically significant)
+<ul>
+<li>This is the effect of having Infection Y instead of infection X when treated with antibiotic A.</li>
+<li>The negative coefficient (-0.8473) indicates that patients with Infection Y are less likely to recover compared to those with infection X when treated with antibiotic A.</li>
+<li>In terms of odds: <span class="math inline">\exp(-0.8473) \approx 0.43</span> , meaning patients with infection Y have about 43% the odds of recovery compared to those with infection X when treated with antibiotic A.</li>
+</ul></li>
+<li>antibioticB:infection_typeY (Interaction Term): Estimate: -0.1335, p-value: 0.82930 (not statistically significant)
+<ul>
+<li>This term represents the interaction between Antibiotic B and infection Y, meaning how the effect of antibiotic B changes for Infection Y compared to infection X.aThe non-significant p-value indicates that there is no strong evidence of an interaction effect between the type of antibiotic and the type of infection on recovery.</li>
+</ul></li>
+</ol>
+<p><strong>Summary</strong>:</p>
+<ul>
+<li>Antibiotic: There is no statistically significant difference in recovery between antibiotic A and antibiotic B (p = 0.25075).</li>
+<li>Infection Type: Patients with infection Y are significantly less likely to recover compared to those with infection X (p = 0.04296).</li>
+<li>Interaction: The interaction between antibiotic type and infection type is not significant, meaning the effectiveness of the antibiotics does not seem to differ significantly between infection types (p = 0.82930).</li>
+</ul>
+<p><strong>Conclusion</strong>:</p>
+<ul>
+<li>The type of infection has a significant impact on recovery, with infection X being more favorable for recovery than infection Y.</li>
+<li>However, there is no significant difference between antibiotic A and antibiotic B in terms of effectiveness.</li>
+<li>There is also no significant interaction between antibiotic type and infection type, meaning the antibiotics perform similarly across infection types.</li>
+</ul>
+</div>
+</div>
+<p>To visualize the interaction effect:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add predictions to the expanded dataset</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df_expanded  <span class="ot">&lt;-</span> df_expanded <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">predicted =</span> <span class="fu">predict</span>(model, <span class="at">type =</span> <span class="st">"response"</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the interaction between antibiotic and infection type</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_expanded, <span class="fu">aes</span>(<span class="at">x =</span> infection_type, <span class="at">y =</span> predicted, <span class="at">color =</span> antibiotic)) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> antibiotic), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Infection type"</span>, <span class="at">y =</span> <span class="st">"Predicted probability of recovery"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-interaction-anti-infec" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-interaction-anti-infec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="chi-square-test_files/figure-html/fig-interaction-anti-infec-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interaction-anti-infec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: Interaction of antibiotics and infection types on recovery
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="linear-trend-test-for-two-way-ordinal-data" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="linear-trend-test-for-two-way-ordinal-data"><span class="header-section-number">11.5.4</span> Linear trend test for two-way ordinal data</h3>
+<p>This test evaluates whether there is a linear trend between the categories in two ordinal variables, typically one variable representing treatment or groups and the other representing ordered outcomes. In this case, both “group” and “outcome” are ordinal variables.</p>
+<div class="example">
+<strong>Example 9:</strong> 
+<p>Suppose you are studying the effect of different drug dosages on pain relief in patients. Patients are divided into four dosage groups (low dose, low-medium dose, medium-high dose, and high dose), and their pain relief is categorized into four levels (no relief, partial relief, moderate relief, and complete relief). This type of data is referred to as two-way ordinal data, listed in <a href="#tbl-dosage-pain" class="quarto-xref">Table&nbsp;<span>11.10</span></a> . The aim is to assess whether there is a significant linear trend in pain relief as the drug dosage increases. For example, does increasing the dosage lead to a higher likelihood of better pain relief?</p>
+</div>
+<div class="cell">
+<div id="tbl-dosage-pain" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dosage-pain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.10: The association between different drug dosage and pain relief
+</figcaption>
+<div aria-describedby="tbl-dosage-pain-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 14%">
+<col style="width: 20%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">dosage</th>
+<th style="text-align: center;">no relief</th>
+<th style="text-align: center;">partial relief</th>
+<th style="text-align: center;">moderate relief</th>
+<th style="text-align: center;">complete relief</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">low dose</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">low-medium dose</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">medium-high dose</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">high dose</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The Mantel-Haenszel chi-square statistic tests the alternative hypothesis that there is a linear association between the row variable and the column variable. Both variables must lie on an ordinal scale. Here we use the <code>MHChisqTest()</code> function in <code>DescTools</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">25</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">35</span>, <span class="dv">30</span>, <span class="dv">20</span>, <span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">30</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> T) <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  DescTools<span class="sc">::</span><span class="fu">MHChisqTest</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Mantel-Haenszel Chi-Square
+#&gt; 
+#&gt; data:  matrix(c(30, 25, 20, 10, 20, 30, 25, 15, 15, 35, 30, 20, 10,     40, 35, 30), nrow = 4, byrow = T)
+#&gt; X-squared = 19.458, df = 1, p-value = 1.029e-05</code></pre>
+</div>
+</div>
+<p>The result shows chi-square statistic is 19.458, p-value less than 0.05, we can conclude that there is linear relationship between drug dosage and pain relief.</p>
+<p>An alternative method is the logistic regression analysis using a binomial generalized linear model (GLM) with a logit link function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> tb <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="annotated-cell-11-4"><a href="#annotated-cell-11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"relief"</span>),</span>
+<span id="annotated-cell-11-5"><a href="#annotated-cell-11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"pain"</span>,</span>
+<span id="annotated-cell-11-6"><a href="#annotated-cell-11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"freq"</span></span>
+<span id="annotated-cell-11-7"><a href="#annotated-cell-11-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-8"><a href="#annotated-cell-11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-11-9"><a href="#annotated-cell-11-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">pain =</span> <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-11-10"><a href="#annotated-cell-11-10" aria-hidden="true" tabindex="-1"></a>     pain <span class="sc">==</span> <span class="st">"no_relief"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-11-11"><a href="#annotated-cell-11-11" aria-hidden="true" tabindex="-1"></a>     pain <span class="sc">==</span> <span class="st">"partial_relief"</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="annotated-cell-11-12"><a href="#annotated-cell-11-12" aria-hidden="true" tabindex="-1"></a>     pain <span class="sc">==</span> <span class="st">"moderate_relief"</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="annotated-cell-11-13"><a href="#annotated-cell-11-13" aria-hidden="true" tabindex="-1"></a>     pain <span class="sc">==</span> <span class="st">"complete_relief"</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="annotated-cell-11-14"><a href="#annotated-cell-11-14" aria-hidden="true" tabindex="-1"></a>   ),</span>
+<span id="annotated-cell-11-15"><a href="#annotated-cell-11-15" aria-hidden="true" tabindex="-1"></a>   <span class="at">dosage =</span> <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-11-16"><a href="#annotated-cell-11-16" aria-hidden="true" tabindex="-1"></a>     dosage <span class="sc">==</span> <span class="st">"low dose"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-11-17"><a href="#annotated-cell-11-17" aria-hidden="true" tabindex="-1"></a>     dosage <span class="sc">==</span> <span class="st">"low-medium dose"</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="annotated-cell-11-18"><a href="#annotated-cell-11-18" aria-hidden="true" tabindex="-1"></a>     dosage <span class="sc">==</span> <span class="st">"medium-high dose"</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="annotated-cell-11-19"><a href="#annotated-cell-11-19" aria-hidden="true" tabindex="-1"></a>     dosage <span class="sc">==</span> <span class="st">"high dose"</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="annotated-cell-11-20"><a href="#annotated-cell-11-20" aria-hidden="true" tabindex="-1"></a>   ),</span>
+<span id="annotated-cell-11-21"><a href="#annotated-cell-11-21" aria-hidden="true" tabindex="-1"></a>   <span class="at">.keep =</span> <span class="st">"unused"</span></span>
+<span id="annotated-cell-11-22"><a href="#annotated-cell-11-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-23"><a href="#annotated-cell-11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-24" class="code-annotation-target"><a href="#annotated-cell-11-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">dosage =</span> <span class="fu">factor</span>(dosage, <span class="at">ordered =</span> T),</span>
+<span id="annotated-cell-11-25"><a href="#annotated-cell-11-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">pain =</span> <span class="fu">factor</span>(pain, <span class="at">ordered =</span> T)</span>
+<span id="annotated-cell-11-26"><a href="#annotated-cell-11-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-27"><a href="#annotated-cell-11-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq)</span>
+<span id="annotated-cell-11-28"><a href="#annotated-cell-11-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="annotated-cell-11-29"><a href="#annotated-cell-11-29" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(pain <span class="sc">~</span> dosage, <span class="at">data =</span> df, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span><span class="st">'logit'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-11-30"><a href="#annotated-cell-11-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="24" data-code-annotation="1">make sure <strong>dosage</strong> and <strong>pain</strong> are labeled as ordered factors</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; glm(formula = pain ~ dosage, family = binomial(link = "logit"), 
+#&gt;     data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; (Intercept)  1.48622    0.13779  10.786  &lt; 2e-16 ***
+#&gt; dosage.L     1.27848    0.28214   4.531 5.86e-06 ***
+#&gt; dosage.Q    -0.01493    0.27557  -0.054    0.957    
+#&gt; dosage.C     0.06702    0.26884   0.249    0.803    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; (Dispersion parameter for binomial family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 381.85  on 389  degrees of freedom
+#&gt; Residual deviance: 358.21  on 386  degrees of freedom
+#&gt; AIC: 366.21
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Results interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Coefficients:</p>
+<p>dosage.L (Linear Contrast): The linear trend (dosage.L) has a positive coefficient (1.27848) and is highly significant (p-value = 5.86e-06), suggesting that as the dosage increases, the likelihood of pain relief also increases significantly in a linear fashion.</p>
+<p>Goodness-of-Fit:</p>
+<p>Residual deviance (358.21): The deviance with the dosage predictors included. Lower residual deviance suggests a better fit. AIC (366.21): AIC is used for model comparison; lower values indicate a better model fit.</p>
+<p>Interpretation:</p>
+<p>The significant linear relationship between dosage and pain suggests that increasing the dosage is associated with a reduced likelihood of pain, but there is no evidence of a quadratic or cubic relationship. The model fits the data relatively well as indicated by the reduction in deviance, and dosage.L is the primary driver of the response variable (pain).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="sec-comp-multi-prop" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="sec-comp-multi-prop"><span class="header-section-number">11.6</span> Pairwise comparisons of multiple sample proportions</h2>
+<p>When comparing proportions across multiple samples, the goal is to determine whether there are significant differences in the rates or proportions between groups. This is commonly applied in medical research, genetics, or other fields where proportions, such as success rates, are of interest across multiple groups. When conducting multiple comparisons, the risk of a type I error increases.</p>
+<section id="pairwise-comparison" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="pairwise-comparison"><span class="header-section-number">11.6.1</span> Pairwise comparison</h3>
+<p>The Bonferroni correction is used to adjust the significance level <span class="math inline">\alpha</span> to control for this risk, ensuring the results are reliable.</p>
+<div class="example">
+<strong>Example 10:</strong> 
+<p>Conducting pairwise comparisons for the data in <a href="#exp-multi-sample-rates">Example 4</a> to determine whether the recovery rates are different between any two hospitals.</p>
+</div>
+<p>Here we use the <code>prop.test()</code> function for testing the null that the proportions in several groups are the same.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">20</span>, <span class="dv">55</span>, <span class="dv">15</span>, <span class="dv">65</span>, <span class="dv">5</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"hospitalA"</span>, <span class="st">"hospitalB"</span>, <span class="st">"hospitalC"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.test</span>(<span class="at">correct =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  3-sample test for equality of proportions without continuity
+#&gt;  correction
+#&gt; 
+#&gt; data:  data
+#&gt; X-squared = 10.809, df = 2, p-value = 0.004497
+#&gt; alternative hypothesis: two.sided
+#&gt; sample estimates:
+#&gt;    prop 1    prop 2    prop 3 
+#&gt; 0.7142857 0.7857143 0.9285714</code></pre>
+</div>
+</div>
+<p>The p-value is less than the significant level 0.05, reject the null hypothesis, indicating the recovery rates in the three hospitals are different. Next, we will make a pairwise comparison between the hospitals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairwise.prop.test</span>(<span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pairwise comparisons using Pairwise comparison of proportions 
+#&gt; 
+#&gt; data:  data 
+#&gt; 
+#&gt;           hospitalA hospitalB
+#&gt; hospitalB 1.000     -        
+#&gt; hospitalC 0.006     0.089    
+#&gt; 
+#&gt; P value adjustment method: bonferroni</code></pre>
+</div>
+</div>
+<p>The result shows the p-values of different group pairs. Only the p-value between hospital A and hospital C is less than 0.05 (p-value = 0.006), saying the recovery rate between them is significantly different.</p>
+</section>
+<section id="comparison-with-a-control-group" class="level3" data-number="11.6.2">
+<h3 data-number="11.6.2" class="anchored" data-anchor-id="comparison-with-a-control-group"><span class="header-section-number">11.6.2</span> Comparison with a control group</h3>
+<p>Here we set the hospital C as the control group.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>alpha_adjusted <span class="ot">&lt;-</span> alpha <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> ( k<span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Pearson's Chi-squared test
+#&gt; 
+#&gt; data:  data
+#&gt; X-squared = 10.809, df = 2, p-value = 0.004497</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>compare_pairs <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"hospitalA"</span>, <span class="st">"hospitalC"</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"hospitalB"</span>, <span class="st">"hospitalC"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (pair <span class="cf">in</span> compare_pairs) {</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  sub_data <span class="ot">&lt;-</span> data[<span class="fu">match</span>(pair, <span class="fu">rownames</span>(data)), ]</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  chi_squared_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(sub_data)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Comparison between"</span>, <span class="fu">paste</span>(pair, <span class="at">collapse=</span><span class="st">" and "</span>), <span class="st">":"</span>))</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(chi_squared_result)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "Comparison between hospitalA and hospitalC :"
+#&gt; 
+#&gt;  Pearson's Chi-squared test with Yates' continuity correction
+#&gt; 
+#&gt; data:  sub_data
+#&gt; X-squared = 9.5443, df = 1, p-value = 0.002006
+#&gt; 
+#&gt; [1] "Comparison between hospitalB and hospitalC :"
+#&gt; 
+#&gt;  Pearson's Chi-squared test with Yates' continuity correction
+#&gt; 
+#&gt; data:  sub_data
+#&gt; X-squared = 4.725, df = 1, p-value = 0.02973</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"The adjusted alpha is:"</span>, <span class="fu">paste</span>(alpha_adjusted)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "The adjusted alpha is: 0.0125"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="chi-square-goodness-of-fit-test" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="chi-square-goodness-of-fit-test"><span class="header-section-number">11.7</span> Chi-square goodness-of-fit test</h2>
+<p>Chi-square goodness-of-fit test is a statistical test used to determine whether observed frequencies conform to an expected theoretical distribution. This test is commonly used to check if data follows normal, uniform, Poisson, or other theoretical distributions.</p>
+<p>The test is applicable in the following scenarios:</p>
+<ul>
+<li>To test if a sample follows a theoretical distribution (e.g., normal, Poisson, etc.).</li>
+<li>To compare observed frequency data with expected frequencies to identify deviations.</li>
+</ul>
+<p>The test statistic is calculated as:</p>
+<p><span class="math display">
+\chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
+</span></p>
+<p><span class="math inline">O_i</span> is the observed frequency for category <span class="math inline">i</span>, <span class="math inline">E_i</span> is the expected frequency for category <span class="math inline">i</span>, <span class="math inline">k</span> is the number of categories. The expected frequencies should be sufficiently large, typically at least 5 for each category, to ensure the validity of the chi-square test.</p>
+<div class="example">
+<strong>Example 11:</strong> 
+<p>To observe the spatial distribution of Keshan disease patients in a certain Keshan disease area, the investigators divided the region into 279 sampling units and recorded the cumulative number of cases in each unit over the years. The data are presented in <a href="#tbl-keshan-disease" class="quarto-xref">Table&nbsp;<span>11.11</span></a> . Does this data follow a Poisson distribution?</p>
+</div>
+<div class="cell">
+<div id="tbl-keshan-disease" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-keshan-disease-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11.11: The cumulative number of Keshan disease patients in each unit
+</figcaption>
+<div aria-describedby="tbl-keshan-disease-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">n_observed</th>
+<th style="text-align: center;">f_observed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The <code>chisq.test()</code> function can be used to perform a chi-square goodness-of-fit test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>n_cases <span class="ot">&lt;-</span> df[[<span class="dv">1</span>]]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>f_observed <span class="ot">&lt;-</span> df[[<span class="dv">2</span>]]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the weighted average</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">weighted.mean</span>(n_cases, f_observed)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculated expected probability</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>p.expected <span class="ot">&lt;-</span> <span class="fu">dpois</span>(n_cases, lambda)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the last three rows </span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">c</span>(f_observed[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="fu">sum</span>(f_observed[<span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>]))</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(p.expected[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>], <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>(p.expected[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]))</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="at">x =</span> f, <span class="at">p =</span> p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Chi-squared test for given probabilities
+#&gt; 
+#&gt; data:  f
+#&gt; X-squared = 2.0355, df = 6, p-value = 0.9164</code></pre>
+</div>
+</div>
+<p>Here p-value is 0.9164, greater than the significant level 0.1. If the p-value is greater than the significant level, fail to reject the null hypothesis, meaning the data might follow the expected distribution. If the calculated p-value is less than the significant level, reject the null hypothesis and conclude that the data does not follow the expected distribution.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./discrete-data-dist.html" class="pagination-link" aria-label="Distributions of discrete variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./nonparametric-test.html" class="pagination-link" aria-label="Nonparametric Tests">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/chi-square-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

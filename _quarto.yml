@@ -28,14 +28,14 @@ book:
         - discrete-data-dist.qmd
         - chi-square-test.qmd
         - nonparametric-test.qmd
-        - corr-linear-reg.qmd
-        - logistic-regression.qmd
-        - cox-regression.qmd
+        - reg-and-corr.qmd
         
     - part: advanced-stat.qmd
       chapters:
         - multi-factor-anova.qmd
         - repeated-measure.qmd
+        - logistic-regression.qmd
+        - cox-regression.qmd
         - ordered-cat-data.qmd
         
     - part: stat-anal-report.qmd

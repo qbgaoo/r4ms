@@ -463,16 +463,10 @@ The logistic regression model is trying to assess the relationship between antib
 2.  antibioticB: Estimate: 0.5390, p-value: 0.25075 (not statistically significant)
     -   This is the difference in log-odds of recovery between antibiotic B and antibiotic A for Infection X.
     -   Since the p-value is not significant, there is no strong evidence that antibiotic B differs significantly from antibiotic A for Infection X.
-
-<!-- -->
-
 3.  infection_typeY: Estimate: -0.8473, p-value: 0.04296 (statistically significant)
     -   This is the effect of having Infection Y instead of infection X when treated with antibiotic A.
     -   The negative coefficient (-0.8473) indicates that patients with Infection Y are less likely to recover compared to those with infection X when treated with antibiotic A.
     -   In terms of odds: $\exp(-0.8473) \approx 0.43$ , meaning patients with infection Y have about 43% the odds of recovery compared to those with infection X when treated with antibiotic A.
-
-<!-- -->
-
 4.  antibioticB:infection_typeY (Interaction Term): Estimate: -0.1335, p-value: 0.82930 (not statistically significant)
     -   This term represents the interaction between Antibiotic B and infection Y, meaning how the effect of antibiotic B changes for Infection Y compared to infection X.aThe non-significant p-value indicates that there is no strong evidence of an interaction effect between the type of antibiotic and the type of infection on recovery.
 

@@ -1,1 +1,35 @@
-# Multiple factor ANOVA
+# Multifactor ANOVA
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Multifactor ANOVA (also known as factorial ANOVA) is a statistical method used to examine the effects of two or more factors (independent variables) on a dependent variable. It allows for the analysis of the main effects of each factor as well as the interaction effects between factors. This method helps in understanding how different factors, together or separately, influence the response variable.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+```
+
+## Factorial design
+
+Factorial design is an experimental setup that involves two or more factors, each with multiple levels, and tests all possible combinations of these factors. This design is widely used in various fields like medicine, biology, and psychology to analyze the simultaneous influence of multiple factors on an outcome.
+
+::: example
+To determine the relationship between a patient’s age and their systolic blood pressure, a researcher gathered data from a sample of patients, including their age and systolic blood pressure readings. The data can be downloaded from the button below, where age is the independent variable ($X$) and systolic blood pressure is the dependent variable ($Y$).
+:::
+
+<div>
+
+<a href="datasets/ex14-01.csv" download="ex14-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+
+```

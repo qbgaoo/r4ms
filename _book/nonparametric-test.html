@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R for Medical Statistics - 12&nbsp; Nonparametric Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./reg-and-corr.html" rel="next">
+<link href="./chi-square-test.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./nonparametric-test.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Medical Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">12.1</span> Prerequisite</a></li>
+  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">12.2</span> Wilcoxon signed-rank test</a>
+  <ul class="collapse">
+  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples"><span class="header-section-number">12.2.1</span> Paired samples</a></li>
+  <li><a href="#one-sample" id="toc-one-sample" class="nav-link" data-scroll-target="#one-sample"><span class="header-section-number">12.2.2</span> One sample</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test"><span class="header-section-number">12.3</span> Wilcoxon rank-sum test</a>
+  <ul class="collapse">
+  <li><a href="#raw-data" id="toc-raw-data" class="nav-link" data-scroll-target="#raw-data"><span class="header-section-number">12.3.1</span> Raw data</a></li>
+  <li><a href="#frequency-table-data-and-ordinal-data" id="toc-frequency-table-data-and-ordinal-data" class="nav-link" data-scroll-target="#frequency-table-data-and-ordinal-data"><span class="header-section-number">12.3.2</span> Frequency table data and ordinal data</a></li>
+  </ul></li>
+  <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">12.4</span> Kruskal-Wallis test</a>
+  <ul class="collapse">
+  <li><a href="#raw-data-1" id="toc-raw-data-1" class="nav-link" data-scroll-target="#raw-data-1"><span class="header-section-number">12.4.1</span> Raw data</a></li>
+  <li><a href="#frequency-table-data-and-ordinal-data-1" id="toc-frequency-table-data-and-ordinal-data-1" class="nav-link" data-scroll-target="#frequency-table-data-and-ordinal-data-1"><span class="header-section-number">12.4.2</span> Frequency table data and ordinal data</a></li>
+  <li><a href="#nemenyi-test" id="toc-nemenyi-test" class="nav-link" data-scroll-target="#nemenyi-test"><span class="header-section-number">12.4.3</span> Nemenyi test</a></li>
+  </ul></li>
+  <li><a href="#friedman-test" id="toc-friedman-test" class="nav-link" data-scroll-target="#friedman-test"><span class="header-section-number">12.5</span> Friedman test</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/nonparametric-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./nonparametric-test.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Nonparametric tests are statistical methods used when the data do not meet the assumptions required for parametric tests, such as normality or equal variances. These tests do not assume a specific distribution for the data, making them suitable for ordinal data, ranks, or non-normally distributed data.</p>
+<section id="prerequisite" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">12.1</span> Prerequisite</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMRplus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="wilcoxon-signed-rank-test" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">12.2</span> Wilcoxon signed-rank test</h2>
+<p>Wilcoxon signed-rank test is often used for comparing paired samples or a single sample to a known median. It is an alternative to the paired t-test when data are not normally distributed. This test can be applied in situations where a before-and-after comparison is needed, such as evaluating the effect of a treatment, intervention, or condition on a specific group.</p>
+<section id="paired-samples" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="paired-samples"><span class="header-section-number">12.2.1</span> Paired samples</h3>
+<p>Comparing the median of paired sample difference to zero is typically used to determine whether there is a significant difference between two related groups. The method most commonly applied is the Wilcoxon signed-rank test.</p>
+<p>This test ranks the absolute differences between the pairs, then checks whether the median of these differences deviates from zero, indicating a statistically significant change between the two paired groups.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured. The data can be downloaded from the button below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-01.csv" download="ex12-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-01.csv"</span>, <span class="at">show_col_types =</span> F) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ feedA: num [1:8] 3.55 2 3 3.95 3.8 3.75 3.45 3.05
+#&gt;  $ feedB: num [1:8] 2.45 2.4 1.8 3.2 3.25 2.7 2.5 1.75
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   feedA = col_double(),
+#&gt;   ..   feedB = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<p>First, test the normality of the difference between the pairs of observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">shapiro.test</span>(feedA <span class="sc">-</span> feedB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Shapiro-Wilk normality test
+#&gt; 
+#&gt; data:  feedA - feedB
+#&gt; W = 0.81051, p-value = 0.03705</code></pre>
+</div>
+</div>
+<p>The p-value is 0.03705, less than 0.05, indicating the difference does not follows a normal distribution. Then the signed-rank test can be conducted using <code>wilcox.test()</code> function with argument <code>paired = TRUE</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">wilcox.test</span>(<span class="at">x =</span> feedA, <span class="at">y =</span> feedB, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon signed rank exact test
+#&gt; 
+#&gt; data:  feedA and feedB
+#&gt; V = 35, p-value = 0.01563
+#&gt; alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="one-sample" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="one-sample"><span class="header-section-number">12.2.2</span> One sample</h3>
+<p>The comparison of a single sample median with the population median is used to assess whether the median of a sample significantly differs from a known or hypothesized population median. A common method for this comparison is the one-sample Wilcoxon signed-rank test (also known as the one-sample median test).</p>
+<p>The test ranks the sample data and compares the sum of positive and negative ranks relative to the hypothesized median, determining whether the sample median is significantly different from the population median.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>It is known that the median urine nitrogen level of healthy individuals in a area is 45.3. A group randomly selected 12 workers from a factory in that area, and measured their fluoride content in urine. The data can be downloaded from the button below. Are the urine nitrogen levels of the factory workers higher than those of the healthy individuals in the area?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-02.csv" download="ex12-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-02.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [12 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ urine_fluorine: num [1:12] 44.2 45.3 46.4 49.5 51 ...
+#&gt;  $ diff          : num [1:12] -1.09 0 1.09 4.17 5.75 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   urine_fluorine = col_double(),
+#&gt;   ..   diff = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">wilcox.test</span>(<span class="at">x =</span> urine_fluorine, <span class="at">mu =</span> <span class="fl">45.3</span>, <span class="at">alter =</span> <span class="st">"greater"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning in wilcox.test.default(x = urine_fluorine, mu = 45.3, alter =
+#&gt; "greater"): cannot compute exact p-value with zeroes</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon signed rank test with continuity correction
+#&gt; 
+#&gt; data:  urine_fluorine
+#&gt; V = 65, p-value = 0.00255
+#&gt; alternative hypothesis: true location is greater than 45.3</code></pre>
+</div>
+</div>
+<p>When you run the code above, a warning message “<em>cannot compute exact p-value with zeroes</em>” is occurring. The warning you’re encountering is because the <code>wilcox.test()</code> function has trouble computing an exact p-value when there are zero differences in the data (or the values themselves are zero), which can occur in certain datasets. To resolve this, you can use the following strategy: Ignore the exact p-value and rely on the asymptotic approximation, which can be computed without zero-value issues. You can do this by setting <code>exact = FALSE</code>.</p>
+</section>
+</section>
+<section id="wilcoxon-rank-sum-test" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="wilcoxon-rank-sum-test"><span class="header-section-number">12.3</span> Wilcoxon rank-sum test</h2>
+<p>The Wilcoxon rank-sum test (also known as the Mann-Whitney U test) is a nonparametric test used to compare two independent groups to assess whether their population distributions differ. It is an alternative to the two-sample t-test when the assumption of normality is not met, making it robust for non-normally distributed data. It compares the ranks of the values rather than the actual data, making it suitable for ordinal and continuous data that is not normally distributed.</p>
+<section id="raw-data" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="raw-data"><span class="header-section-number">12.3.1</span> Raw data</h3>
+<p>Raw data refers to unprocessed or untransformed data that has been collected directly from a source. The data typically consists of observations or measurements in their original form, such as survey responses, experimental results, or sensor readings.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>The right hilar diameter (RD) was measured using X-ray in 10 lung cancer patients and 12 stage 0 silicosis workers. The data can be downloaded from the button below. The question is whether the RDs of lung cancer patients are higher than those of stage 0 silicosis workers?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-03.csv" download="ex12-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-03.csv"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>(), <span class="at">rd =</span> <span class="fu">col_double</span>())</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [22 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group: Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;  $ rd   : num [1:22] 2.78 3.23 4.2 4.87 5.12 6.21 7.18 8.05 8.56 9.6 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   rd = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(rd <span class="sc">~</span> group, <span class="at">data =</span> df, <span class="at">alter =</span> <span class="st">"greater"</span>, <span class="at">exact =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon rank sum test with continuity correction
+#&gt; 
+#&gt; data:  rd by group
+#&gt; W = 86.5, p-value = 0.04318
+#&gt; alternative hypothesis: true location shift is greater than 0</code></pre>
+</div>
+</div>
+</section>
+<section id="frequency-table-data-and-ordinal-data" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="frequency-table-data-and-ordinal-data"><span class="header-section-number">12.3.2</span> Frequency table data and ordinal data</h3>
+<p>Frequency table data refers to data that is summarized in terms of counts or frequencies for different categories. Ordinal data, on the other hand, involves variables that have a clear, ordered ranking but the intervals between ranks are not necessarily equal. Here is an example of ordinal data.</p>
+<div class="example">
+<strong>Example 4:</strong> 
+<p>A hospital treated two types of pediatric pneumonia with a new drug, and the efficacy is shown in. Determine whether the efficacy of the drug differs between the two types of pneumonia patients.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-04.csv" download="ex12-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"datasets/ex12-04.csv"</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">efficacy =</span> <span class="fu">col_integer</span>(), </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group   : Factor w/ 2 levels "1","2": 1 1 1 1 2 2 2 2
+#&gt;  $ efficacy: int [1:8] 1 2 3 4 1 2 3 4
+#&gt;  $ freq    : int [1:8] 65 18 30 13 42 6 23 11
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   efficacy = col_integer(),
+#&gt;   ..   freq = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<p>If you have a frequency table that includes ordinal information, you can perform a rank-sum test with weighted data. First, the data is expanded based on frequencies, and then the rank-sum test is applied. Here we first <strong>expand the data using <code>uncount()</code> function</strong> in the <code>tidyr</code> package, then perform the Wilcoxon rank-sum test with <code>wilcox.test()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox.test</span>(efficacy <span class="sc">~</span> group, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon rank sum test with continuity correction
+#&gt; 
+#&gt; data:  efficacy by group
+#&gt; W = 4954.5, p-value = 0.5883
+#&gt; alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="kruskal-wallis-test" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="kruskal-wallis-test"><span class="header-section-number">12.4</span> Kruskal-Wallis test</h2>
+<p>The Kruskal-Wallis test is a non-parametric method used to compare more than two independent samples to determine if they come from the same distribution. It is an extension of the Mann-Whitney U test (or Wilcoxon rank-sum test) to more than two groups. The Kruskal-Wallis test is useful when the assumptions of one-way ANOVA (such as normality and homogeneity of variance) are not met.</p>
+<p>The Kruskal-Wallis test statistic H is calculated using the following formula:</p>
+<p><span class="math display">
+H = \frac{12}{N(N+1)} \sum_{i=1}^k \frac{R_i^2}{n_i} - 3(N+1)
+</span></p>
+<p>Where <span class="math inline">N</span> is the total number of observations, <span class="math inline">k</span> is the number of groups, <span class="math inline">R_i</span> is the sum of ranks for the <span class="math inline">i-th</span> group, <span class="math inline">n_i</span> is the number of observations in the <span class="math inline">i-th</span> group.</p>
+<section id="raw-data-1" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="raw-data-1"><span class="header-section-number">12.4.1</span> Raw data</h3>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-05.csv" download="ex12-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-05.csv"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">drug =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mortality =</span> <span class="fu">col_double</span>()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [15 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ drug     : Factor w/ 3 levels "1","2","3": 1 1 1 1 1 2 2 2 2 2 ...
+#&gt;  $ mortality: num [1:15] 32.5 35.5 40.5 46 49 16 20.5 22.5 29 36 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   drug = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   mortality = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(mortality <span class="sc">~</span> drug, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  mortality by drug
+#&gt; Kruskal-Wallis chi-squared = 9.74, df = 2, p-value = 0.007673</code></pre>
+</div>
+</div>
+</section>
+<section id="frequency-table-data-and-ordinal-data-1" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="frequency-table-data-and-ordinal-data-1"><span class="header-section-number">12.4.2</span> Frequency table data and ordinal data</h3>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-06.csv" download="ex12-06.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-06.csv"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(), </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> <span class="fu">col_integer</span>(),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [12 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group   : Factor w/ 3 levels "1","2","3": 1 1 1 1 2 2 2 2 3 3 ...
+#&gt;  $ response: int [1:12] 1 2 3 4 1 2 3 4 1 2 ...
+#&gt;  $ freq    : int [1:12] 49 31 5 15 45 9 22 4 15 28 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   response = col_integer(),
+#&gt;   ..   freq = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kruskal.test</span>(response <span class="sc">~</span> group, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  response by group
+#&gt; Kruskal-Wallis chi-squared = 20.458, df = 2, p-value = 3.612e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="nemenyi-test" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="nemenyi-test"><span class="header-section-number">12.4.3</span> Nemenyi test</h3>
+<p>The Nemenyi test is a post-hoc test used to compare multiple groups after a non-parametric test, such as the Kruskal-Wallis test has shown a significant difference among groups. It is specifically designed for multiple comparisons between groups to determine which pairs of groups differ significantly from each other.</p>
+<div class="example">
+<strong>Example 7:</strong> 
+<p>A study is to compare the survival days of mice after being inoculated with three different strains of typhoid bacillus. The data can be downloaded from the button below. The question is whether there is a difference in the survival days of mice inoculated with these three different strains of typhoid bacillus.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-07.csv" download="ex12-07.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-07.csv"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(), </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [30 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group: Factor w/ 3 levels "1","2","3": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;  $ time : int [1:30] 2 2 2 3 4 4 4 5 7 7 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   time = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(time <span class="sc">~</span> group, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  time by group
+#&gt; Kruskal-Wallis chi-squared = 9.9405, df = 2, p-value = 0.006941</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">NemenyiTest</span>(time <span class="sc">~</span> group, <span class="at">data =</span>df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Nemenyi's test of multiple comparisons for independent samples (tukey)  
+#&gt; 
+#&gt;     mean.rank.diff   pval    
+#&gt; 2-1     10.3777778 0.0278 *  
+#&gt; 3-1     10.8727273 0.0131 *  
+#&gt; 3-2      0.4949495 0.9914    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="friedman-test" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="friedman-test"><span class="header-section-number">12.5</span> Friedman test</h2>
+<p>The Friedman test is a non-parametric statistical test used to detect differences in treatments across multiple test attempts. It’s particularly useful for <strong>comparing three or more paired groups</strong> when the data is not normally distributed. The test is an alternative to the repeated measures ANOVA and is often applied in cases where the same subjects are used for each treatment.</p>
+<div class="example">
+<strong>Example 8:</strong> 
+<p>Eight subjects were exposed to four different sound frequencies under the same conditions and their response rates (%) were measured. The data can be downloaded from the button below. Is there a difference in their response rates to the four different sound frequencies?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-08.csv" download="ex12-08.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-08.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ freq_a: num [1:8] 8.4 11.6 9.4 9.8 8.3 8.6 8.9 7.8
+#&gt;  $ freq_b: num [1:8] 9.6 12.7 9.1 8.7 8 9.8 9 8.2
+#&gt;  $ freq_c: num [1:8] 9.8 11.8 10.4 9.9 8.6 9.6 10.6 8.5
+#&gt;  $ freq_d: num [1:8] 11.7 12 9.8 12 8.6 10.6 11.4 10.8
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   freq_a = col_double(),
+#&gt;   ..   freq_b = col_double(),
+#&gt;   ..   freq_c = col_double(),
+#&gt;   ..   freq_d = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<p>First, perform the Friedman test to determine if there are significant differences among groups using <code>friedman.test()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">friedman.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Friedman rank sum test
+#&gt; 
+#&gt; data:  as.matrix(df)
+#&gt; Friedman chi-squared = 15.152, df = 3, p-value = 0.001691</code></pre>
+</div>
+</div>
+<p>Here is an alternative method based on the long format data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subject =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"freq"</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_ptypes =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">factor</span>())</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">friedman.test</span>(response <span class="sc">~</span> group <span class="sc">|</span> subject, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Friedman rank sum test
+#&gt; 
+#&gt; data:  response and group and subject
+#&gt; Friedman chi-squared = 15.152, df = 3, p-value = 0.001691</code></pre>
+</div>
+</div>
+<p>After identifying significant differences with the Friedman test, you can use <code>frdAllPairsNemenyiTest()</code> to conduct pairwise comparisons. The test allows you to determine which pairs of groups are significantly different from each other, with multiple comparison corrections.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subject =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"freq"</span>),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_ptypes =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">factor</span>())</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">frdAllPairsNemenyiTest</span>(response <span class="sc">~</span> group <span class="sc">|</span> subject, <span class="at">data =</span> _) <span class="sc">|&gt;</span> </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pairwise comparisons using Nemenyi-Wilcoxon-Wilcox all-pairs test for a two-way balanced complete block design</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data: response and group and subject</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; P value adjustment method: single-step</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; H0</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      q value  Pr(&gt;|q|)   </span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_b - freq_a == 0   1.369 0.7675424   </span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_c - freq_a == 0   3.423 0.0732221  .</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_a == 0   5.066 0.0019311 **</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_c - freq_b == 0   2.054 0.4666088   </span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_b == 0   3.697 0.0442915  *</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_c == 0   1.643 0.6509544</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./chi-square-test.html" class="pagination-link" aria-label="Chi-square test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./reg-and-corr.html" class="pagination-link" aria-label="Bivariate regression and correlation">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/nonparametric-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

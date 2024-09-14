@@ -14,14 +14,22 @@ Nonparametric tests are statistical methods used when the data do not meet the a
 #| message: false
 
 library(tidyverse)
+library(DescTools)
+library(PMCMRplus)
 ```
 
 ## Wilcoxon signed-rank test
 
-Used for comparing paired samples or a single sample to a known median. Alternative to the paired t-test when data are not normally distributed.
+Wilcoxon signed-rank test is often used for comparing paired samples or a single sample to a known median. It is an alternative to the paired t-test when data are not normally distributed. This test can be applied in situations where a before-and-after comparison is needed, such as evaluating the effect of a treatment, intervention, or condition on a specific group.
+
+### Paired samples
+
+Comparing the median of paired sample difference to zero is typically used to determine whether there is a significant difference between two related groups. The method most commonly applied is the Wilcoxon signed-rank test.
+
+This test ranks the absolute differences between the pairs, then checks whether the median of these differences deviates from zero, indicating a statistically significant change between the two paired groups.
 
 ::: example
-In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured, the data can be downloaded below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?
+In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured. The data can be downloaded from the button below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?
 :::
 
 <div>
@@ -31,14 +39,14 @@ In a paired design, two types of feed were administered to 8 pairs of rats, and 
 </div>
 
 ```{r}
-df <- read_csv("datasets/ex12-01.csv", show_col_types = F) |> 
-  mutate(d = feedA -feedB)
+df <- read_csv("datasets/ex12-01.csv", show_col_types = F) 
+str(df)
 ```
 
 First, test the normality of the difference between the pairs of observations.
 
 ```{r}
-with(df, shapiro.test(d))
+with(df, shapiro.test(feedA - feedB))
 ```
 
 The p-value is 0.03705, less than 0.05, indicating the difference does not follows a normal distribution. Then the signed-rank test can be conducted using `wilcox.test()` function with argument `paired = TRUE`.
@@ -47,23 +55,253 @@ The p-value is 0.03705, less than 0.05, indicating the difference does not follo
 with(df, wilcox.test(x = feedA, y = feedB, paired = T))
 ```
 
+### One sample
+
+The comparison of a single sample median with the population median is used to assess whether the median of a sample significantly differs from a known or hypothesized population median. A common method for this comparison is the one-sample Wilcoxon signed-rank test (also known as the one-sample median test).
+
+The test ranks the sample data and compares the sum of positive and negative ranks relative to the hypothesized median, determining whether the sample median is significantly different from the population median.
+
+::: example
+It is known that the median urine nitrogen level of healthy individuals in a area is 45.3. A group randomly selected 12 workers from a factory in that area, and measured their fluoride content in urine. The data can be downloaded from the button below. Are the urine nitrogen levels of the factory workers higher than those of the healthy individuals in the area?
+:::
+
+<div>
+
+<a href="datasets/ex12-02.csv" download="ex12-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex12-02.csv", show_col_types = F)
+str(df)
+```
+
+```{r}
+with(df, wilcox.test(x = urine_fluorine, mu = 45.3, alter = "greater"))
+```
+
+When you run the code above, a warning message "*cannot compute exact p-value with zeroes*" is occurring. The warning you’re encountering is because the `wilcox.test()` function has trouble computing an exact p-value when there are zero differences in the data (or the values themselves are zero), which can occur in certain datasets. To resolve this, you can use the following strategy: Ignore the exact p-value and rely on the asymptotic approximation, which can be computed without zero-value issues. You can do this by setting `exact = FALSE`.
+
 ## Wilcoxon rank-sum test
 
-Mann-Whitney U test, used to compare two independent groups. Alternative to the two-sample t-test for non-normally distributed data.
+The Wilcoxon rank-sum test (also known as the Mann-Whitney U test) is a nonparametric test used to compare two independent groups to assess whether their population distributions differ. It is an alternative to the two-sample t-test when the assumption of normality is not met, making it robust for non-normally distributed data. It compares the ranks of the values rather than the actual data, making it suitable for ordinal and continuous data that is not normally distributed.
 
-Kruskal-Wallis test
+### Raw data
 
-Generalization of the Mann-Whitney U test for comparing more than two independent groups. Alternative to one-way ANOVA when normality is not assumed.
+Raw data refers to unprocessed or untransformed data that has been collected directly from a source. The data typically consists of observations or measurements in their original form, such as survey responses, experimental results, or sensor readings.
 
-Friedman Test
+::: example
+The right hilar diameter (RD) was measured using X-ray in 10 lung cancer patients and 12 stage 0 silicosis workers. The data can be downloaded from the button below. The question is whether the RDs of lung cancer patients are higher than those of stage 0 silicosis workers?
+:::
 
-Used to compare repeated measures from three or more related groups. Alternative to repeated measures ANOVA for non-normal data.
+<div>
 
-Spearman’s rank correlation
+<a href="datasets/ex12-03.csv" download="ex12-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
-Measures the strength and direction of association between two ranked variables. Alternative to Pearson’s correlation when data are not linear or normally distributed.
+</div>
 
-1.  Chi-Square Test: • Used for categorical data to test the association between two variables in a contingency table. • A nonparametric test that examines frequencies or counts.
-2.  Kolmogorov-Smirnov Test: • Used to compare a sample distribution with a reference probability distribution or to compare two sample distributions. • Often applied to assess goodness-of-fit.
+```{r}
+df <- read_csv(
+  "datasets/ex12-03.csv", 
+  col_types = list(group = col_factor(), rd = col_double())
+)
+str(df)
+```
 
-These nonparametric tests provide flexibility in data analysis when the assumptions of parametric tests are violated.
+```{r}
+wilcox.test(rd ~ group, data = df, alter = "greater", exact = F)
+```
+
+### Frequency table data and ordinal data
+
+Frequency table data refers to data that is summarized in terms of counts or frequencies for different categories. Ordinal data, on the other hand, involves variables that have a clear, ordered ranking but the intervals between ranks are not necessarily equal. Here is an example of ordinal data.
+
+::: example
+A hospital treated two types of pediatric pneumonia with a new drug, and the efficacy is shown in. Determine whether the efficacy of the drug differs between the two types of pneumonia patients.
+:::
+
+<div>
+
+<a href="datasets/ex12-04.csv" download="ex12-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  file = "datasets/ex12-04.csv", 
+  col_types = list(
+    group = col_factor(),
+    efficacy = col_integer(), 
+    freq = col_integer()
+  )
+)
+str(df)
+```
+
+If you have a frequency table that includes ordinal information, you can perform a rank-sum test with weighted data. First, the data is expanded based on frequencies, and then the rank-sum test is applied. Here we first **expand the data using `uncount()` function** in the `tidyr` package, then perform the Wilcoxon rank-sum test with `wilcox.test()`:
+
+```{r}
+df |> 
+  uncount(freq) |> 
+  wilcox.test(efficacy ~ group, data = _)
+```
+
+## Kruskal-Wallis test
+
+The Kruskal-Wallis test is a non-parametric method used to compare more than two independent samples to determine if they come from the same distribution. It is an extension of the Mann-Whitney U test (or Wilcoxon rank-sum test) to more than two groups. The Kruskal-Wallis test is useful when the assumptions of one-way ANOVA (such as normality and homogeneity of variance) are not met.
+
+The Kruskal-Wallis test statistic H is calculated using the following formula:
+
+$$
+H = \frac{12}{N(N+1)} \sum_{i=1}^k \frac{R_i^2}{n_i} - 3(N+1)
+$$
+
+Where $N$ is the total number of observations, $k$ is the number of groups, $R_i$ is the sum of ranks for the $i-th$ group, $n_i$ is the number of observations in the $i-th$ group.
+
+### Raw data
+
+::: example
+Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.
+:::
+
+<div>
+
+<a href="datasets/ex12-05.csv" download="ex12-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  "datasets/ex12-05.csv",
+  col_types = list(
+    drug = col_factor(),
+    mortality = col_double()
+  )
+)
+str(df)
+```
+
+```{r}
+kruskal.test(mortality ~ drug, data = df)
+```
+
+### Frequency table data and ordinal data
+
+::: example
+Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.
+:::
+
+<div>
+
+<a href="datasets/ex12-06.csv" download="ex12-06.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  "datasets/ex12-06.csv",
+  col_types = list(
+    group = col_factor(), 
+    response = col_integer(),
+    freq = col_integer()
+  )
+)
+str(df)
+```
+
+```{r}
+df |> 
+  uncount(freq) |> 
+  kruskal.test(response ~ group, data = _)
+```
+
+### Nemenyi test
+
+The Nemenyi test is a post-hoc test used to compare multiple groups after a non-parametric test, such as the Kruskal-Wallis test has shown a significant difference among groups. It is specifically designed for multiple comparisons between groups to determine which pairs of groups differ significantly from each other.
+
+::: example
+A study is to compare the survival days of mice after being inoculated with three different strains of typhoid bacillus. The data can be downloaded from the button below. The question is whether there is a difference in the survival days of mice inoculated with these three different strains of typhoid bacillus.
+:::
+
+<div>
+
+<a href="datasets/ex12-07.csv" download="ex12-07.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  "datasets/ex12-07.csv",
+  col_types = list(
+    group = col_factor(), 
+    time = col_integer()
+  )
+)
+str(df)
+```
+
+```{r}
+kruskal.test(time ~ group, data = df)
+```
+
+```{r}
+NemenyiTest(time ~ group, data =df)
+```
+
+## Friedman test
+
+The Friedman test is a non-parametric statistical test used to detect differences in treatments across multiple test attempts. It’s particularly useful for **comparing three or more paired groups** when the data is not normally distributed. The test is an alternative to the repeated measures ANOVA and is often applied in cases where the same subjects are used for each treatment.
+
+::: example
+Eight subjects were exposed to four different sound frequencies under the same conditions and their response rates (%) were measured. The data can be downloaded from the button below. Is there a difference in their response rates to the four different sound frequencies?
+:::
+
+<div>
+
+<a href="datasets/ex12-08.csv" download="ex12-08.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex12-08.csv", show_col_types = F)
+str(df)
+```
+
+First, perform the Friedman test to determine if there are significant differences among groups using `friedman.test()` function.
+
+```{r}
+df |> 
+  as.matrix() |> 
+  friedman.test()
+```
+
+Here is an alternative method based on the long format data.
+
+```{r}
+df |> 
+  mutate(subject = c(1:8)) |> 
+  pivot_longer(
+    cols = contains("freq"),
+    names_to = "group",
+    values_to = "response",
+    names_ptypes = list(group = factor())
+  ) |> 
+  friedman.test(response ~ group | subject, data = _)
+```
+
+After identifying significant differences with the Friedman test, you can use `frdAllPairsNemenyiTest()` to conduct pairwise comparisons. The test allows you to determine which pairs of groups are significantly different from each other, with multiple comparison corrections.
+
+```{r}
+#| collapse: true
+
+df |> 
+  mutate(subject = c(1:8)) |> 
+  pivot_longer(
+    cols = contains("freq"),
+    names_to = "group",
+    values_to = "response",
+    names_ptypes = list(group = factor())
+  ) |> 
+  frdAllPairsNemenyiTest(response ~ group | subject, data = _) |> 
+  summary()
+```

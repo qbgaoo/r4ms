@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R for Medical Statistics - 7&nbsp; t-test</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./anova.html" rel="next">
+<link href="./hypothesis-test.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Medical Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./corr-linear-reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">7.1</span> Prerequisites</a></li>
+  <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</a></li>
+  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</a></li>
+  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</a>
+  <ul class="collapse">
+  <li><a href="#the-t-test-for-equal-population-variances" id="toc-the-t-test-for-equal-population-variances" class="nav-link" data-scroll-target="#the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</a></li>
+  <li><a href="#welch-t-test-for-unequal-population-variances" id="toc-welch-t-test-for-unequal-population-variances" class="nav-link" data-scroll-target="#welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</a></li>
+  </ul></li>
+  <li><a href="#normality-test-and-f-test" id="toc-normality-test-and-f-test" class="nav-link" data-scroll-target="#normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</a>
+  <ul class="collapse">
+  <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">7.5.1</span> Normality test</a></li>
+  </ul></li>
+  <li><a href="#sec-f-test" id="toc-sec-f-test" class="nav-link" data-scroll-target="#sec-f-test"><span class="header-section-number">7.6</span> F-test</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A t-test is a statistical test used to compare the means of two groups to determine if they are significantly different from each other. It is commonly used in situations where the sample size is small and the population variance is unknown. There are different types of t-tests depending on the study design and the nature of the data.</p>
+<section id="prerequisites" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">7.1</span> Prerequisites</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="one-sample-t-test" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</h2>
+<p>The one-sample <em>t</em>-test is used to determine whether the mean of a single sample is significantly different from a known or hypothesized population mean. It is commonly used when you have a sample and want to test if its mean differs from a theoretical value or an expected value. Its test statistic t is calculated as follows:</p>
+<p><span class="math display">
+t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
+</span></p>
+<p>where <span class="math inline">\bar{X}</span> si the sample mean , <span class="math inline">S</span> is the sample standard deviation and <span class="math inline">n</span> is the sample size, <span class="math inline">\mu_0</span> is the hypothesized population mean.</p>
+<p>The one-sample <em>t</em>-test is a straightforward but powerful tool for hypothesis testing in many research scenarios.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>A doctor measured the hemoglobin concentration in 36 male workers involved in lead-related jobs. The data can be downloaded below. The question is whether the mean hemoglobin concentration (<span class="math inline">\mu</span>) of male workers involved in lead-related jobs differs from the mean of 140 (g/L) for normal adult males.</p>
+</div>
+<div>
+<p><a href="datasets/ex07-01.csv" download="ex07-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<p>R codes for one-sample <em>t</em>-test is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">140</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  One Sample t-test
+#&gt; 
+#&gt; data:  read_csv("datasets/ex07-01.csv", show_col_types = F)
+#&gt; t = -2.1367, df = 35, p-value = 0.03969
+#&gt; alternative hypothesis: true mean is not equal to 140
+#&gt; 95 percent confidence interval:
+#&gt;  122.1238 139.5428
+#&gt; sample estimates:
+#&gt; mean of x 
+#&gt;  130.8333</code></pre>
+</div>
+</div>
+<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} = 0.03969</span>. At the significance level of <span class="math inline">\alpha = 0.05</span> , reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. In the context of this case, it can be concluded that the average hemoglobin concentration of male workers engaged in lead work is lower than the average hemoglobin concentration of normal adult males.</p>
+</section>
+<section id="paired-t-test" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</h2>
+<p>The paired <em>t</em>-test is used to compare the means of two related groups. This test is typically used when the observations are paired in some meaningful way, such as measurements taken on the same subjects at two different times or under two different conditions.</p>
+<ul>
+<li><span class="math inline">H_0</span> : The mean difference between the paired observations is zero (<span class="math inline">\mu_d = 0</span>).</li>
+<li><span class="math inline">H_1</span> : The mean difference between the paired observations is not zero (<span class="math inline">\mu_d \neq 0</span>).</li>
+</ul>
+<p>The test statistic for the paired t-test is calculated as:</p>
+<p><span class="math display">t = \frac{\bar{d}}{S_d / \sqrt{n}}</span> Where <span class="math inline">\bar{d}</span> is the mean of the differences between the paired observations, <span class="math inline">S_d</span> is the standard deviation of the differences, and <span class="math inline">n</span> is the number of pairs.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>To compare whether the results of fat content measurement in lactic acid beverages differ between two methods, 10 samples of lactic acid beverages were randomly selected. The fat content was measured using both the Gerber-Gottlieb method and the fatty acid hydrolysis method. The data can be downloaded below. The question is whether the measurement results from the two methods are different?</p>
+</div>
+<div>
+<p><a href="datasets/ex07-02.csv" download="ex07-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<p>R codes for paired <em>t</em>-test is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">t.test</span>(x1, x2, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Paired t-test
+#&gt; 
+#&gt; data:  x1 and x2
+#&gt; t = 7.926, df = 9, p-value = 2.384e-05
+#&gt; alternative hypothesis: true mean difference is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.1946542 0.3501458
+#&gt; sample estimates:
+#&gt; mean difference 
+#&gt;          0.2724</code></pre>
+</div>
+</div>
+<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} &lt; 0.001</span>. At the significance level of <span class="math inline">\alpha = 0.05</span>, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the two methods yield different fat content measurements. As mean difference estimation is <span class="math inline">0.2724 &gt; 0</span>, the Gerber-Gottlieb method providing higher results.</p>
+</section>
+<section id="two-sample-t-test" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</h2>
+<p>The two-sample <em>t</em>-test (also known as the independent <em>t</em>-test) is used to determine whether there is a significant difference between the means of two independent groups. It is commonly used in experiments or studies where researchers want to compare the means of two different populations or conditions.</p>
+<p>In medical study it is commonly used to compare the means of two samples in a completely randomized design. In this design, subjects are randomly assigned to two different treatment groups, and the researcher is interested in whether the means of these two samples represent different population means. Additionally, in observational studies, the two-sample <em>t</em>-test can be used to compare the means of two samples obtained through independent random sampling from two different populations.</p>
+<p>When both samples come from normal populations, and the sample sizes are relatively small, such as <span class="math inline">n_1 \leq 60</span> or/and <span class="math inline">n_2 \leq 60</span> , different testing methods should be used depending on whether the population variances are equal.</p>
+<section id="the-t-test-for-equal-population-variances" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</h3>
+<p>The <em>t</em>-test for equal population variances, often referred to as the pooled variance <em>t</em>-test, is used when comparing the means of two independent samples under the assumption that the two populations have the same variance. This assumption allows the variances of the two samples to be combined (or pooled) into a single estimate, which can then be used in the <em>t</em>-test formula.</p>
+<p>Before conducting the combined <em>t</em>-test, it’s common to perform an F-test to check if the variances of the two samples are equal. If the p-value from the F-test is not significant, the pooled <em>t</em>-test can be justified. The pooled variance is calculated as a weighted average of the variances from the two samples:</p>
+<p><span class="math display">
+S_c^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}
+</span></p>
+<p>Here, <span class="math inline">S_c^2</span> is the combined variance, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
+<p>Once the combined variance is calculated, the <em>t</em>-statistic for the two-sample <em>t</em>-test can be computed as:</p>
+<p><span class="math display">
+t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
+</span></p>
+<p><span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes. The degrees of freedom for the pooled variance t-test are calculated as <span class="math inline">n_1 + n_2 - 2</span>. 5.</p>
+<p><span class="math inline">H_0</span>: There is no difference between the population means (<span class="math inline">\mu_1 = \mu_2</span>).</p>
+<p><span class="math inline">H_1</span>: There is a difference between the population means (<span class="math inline">\mu_1 \neq \mu_2</span>).</p>
+<p>If the variances are unequal, the Welch <em>t</em>-test (which does not assume equal variances) is recommended.</p>
+<div id="ex07-03" class="example">
+<strong>Example 3:</strong> 
+<p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?</p>
+</div>
+<div>
+<p><a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<p>R codes for two-sample <em>t</em>-test is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">factor</span>(grp, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Use the pipe operator to perform t-test with a group variable and a response variable.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Two Sample t-test
+#&gt; 
+#&gt; data:  x by grp
+#&gt; t = 3.689, df = 14, p-value = 0.00243
+#&gt; alternative hypothesis: true difference in means between group A and group B is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  0.05494115 0.20755885
+#&gt; sample estimates:
+#&gt; mean in group A mean in group B 
+#&gt;         0.77000         0.63875</code></pre>
+</div>
+</div>
+<p>The results show <span class="math inline">t = 3.689</span> , <span class="math inline">\text{p-value} = 0.00243</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between group A and B. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in group A than in the model group.</p>
+</section>
+<section id="welch-t-test-for-unequal-population-variances" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</h3>
+<p>Unlike the combined variance <em>t</em>-test, the Welch <em>t</em>-test does not assume that the two populations have the same variance. This is particularly useful when you suspect or know that the variances are different, or when the sample sizes are quite different, which makes it more flexible than the combined variance t-test.</p>
+<p>The t-statistic for the Welch t-test is calculated as:</p>
+<p><span class="math display">
+t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
+</span></p>
+<p>Here, <span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
+<p>The degrees of freedom for the Welch <em>t</em>-test are calculated using the Welch-Satterthwaite equation:</p>
+<p><span class="math display">
+\nu = \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
+</span></p>
+<p>This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch <em>t</em>-test. It is generally considered more robust than the combined variance <em>t</em>-test in situations where variances differ.</p>
+<div id="ex07-04" class="example">
+<strong>Example 4:</strong> 
+<p>To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.</p>
+</div>
+<div>
+<p><a href="datasets/ex07-04.csv" download="ex07-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<p>R codes for Welch <em>t</em>-test is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> F)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Welch Two Sample t-test
+#&gt; 
+#&gt; data:  x by grp
+#&gt; t = -2.8322, df = 36.672, p-value = 0.007465
+#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  -1.4177999 -0.2350001
+#&gt; sample estimates:
+#&gt; mean in group 1 mean in group 2 
+#&gt;          4.3176          5.1440</code></pre>
+</div>
+</div>
+<p>The results show <span class="math inline">t = -2.8322</span> , <span class="math inline">\text{p-value} = 0.007465</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. Therefore, we can conclude that the mean total cholesterol levels between those with poor and good blood glucose control are different.</p>
+</section>
+</section>
+<section id="normality-test-and-f-test" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</h2>
+<p>When conducting a two-sample <em>t</em>-test, especially when comparing the means of two small samples, it is required that the corresponding populations follow a normal distribution and that the population variances are equal, known as homogeneity of variance. For paired <em>t</em>-tests, it is only necessary that the distribution of the differences between each pair of data points follows a normal distribution. Therefore, when performing a two-sample <em>t</em>-test with small samples, it is generally advisable to first conduct a homogeneity of variance test, particularly when there is a noticeable disparity between the sample variances. If the variances are homogeneous, a standard <em>t</em>-test is used; if not, an approximate <em>t</em>-test, such as Welch <em>t</em>-test, is applied. Additionally, it may be necessary to perform a normality test, though normality tests are more commonly used to establish medical reference ranges using normal distribution methods.</p>
+<section id="normality-test" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">7.5.1</span> Normality test</h3>
+<p>Normality test has been discussed in <a href="normal-distribution.html#sec-normality-test" class="quarto-xref"><span>Section 4.3</span></a> , for more details please move there.</p>
+</section>
+</section>
+<section id="sec-f-test" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-f-test"><span class="header-section-number">7.6</span> F-test</h2>
+<p>The F-test was traditionally used to determine whether the variances of <strong>two populations</strong> are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.</p>
+<p><span class="math inline">H_0</span>: The variances of the two populations are equal (<span class="math inline">\sigma_1^2 = \sigma_2^2</span>).</p>
+<p><span class="math inline">H_1</span>: The variances of the two populations are not equal (<span class="math inline">\sigma_1^2 \neq \sigma_2^2</span>).</p>
+<p>The F-statistic is calculated as the ratio of the two sample variances:</p>
+<p><span class="math display">
+F = \frac{S_1^2}{S_2^2}
+</span></p>
+<p>where <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples. By convention, <span class="math inline">S_1^2</span> should be the larger variance, so the F-statistic is always greater than or equal to 1. The F-distribution depends on two parameters: the degrees of freedom for the numerator (<span class="math inline">\nu_1 = n_1 - 1</span>) and the denominator (<span class="math inline">\nu_2 = n_2 - 1</span>).</p>
+<p>If the calculated F-statistic is is close to 1, the variances are similar. If it is much larger or smaller than 1, there may be a significant difference. If the p-value is less than the chosen significance level (e.g., 0.05), reject the null hypothesis, indicating that the variances are significantly different.</p>
+<p>The F-test is sensitive to non-normality. If the data does not follow a normal distribution, the test may give misleading results. In such cases, non-parametric alternatives, such as the Levene’s test, may be more appropriate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">F_value   =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">1000</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y1  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="dv">1</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y2  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="cn">Inf</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"y"</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"grp"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Density"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_value, <span class="at">y =</span> Density, <span class="at">linetype =</span> grp)) <span class="sc">+</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="dv">1</span>))) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.8</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="cn">Inf</span>))) <span class="sc">+</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ttest_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>For <a href="#ex07-03">Example 3</a>, use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  F test to compare two variances
+#&gt; 
+#&gt; data:  x by grp
+#&gt; F = 2.299, num df = 7, denom df = 7, p-value = 0.2944
+#&gt; alternative hypothesis: true ratio of variances is not equal to 1
+#&gt; 95 percent confidence interval:
+#&gt;   0.4602708 11.4833515
+#&gt; sample estimates:
+#&gt; ratio of variances 
+#&gt;           2.299011</code></pre>
+</div>
+</div>
+<p>The results show: <span class="math inline">F = 2.299</span>, <span class="math inline">\text{p-value} = 0.2944</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, do not reject <span class="math inline">H_0</span>. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, <a href="#ex07-03">Example 3</a> used a two-sample t-test under the assumption of equal variances.</p>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>For <a href="#ex07-04">Example 4</a>, Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  F test to compare two variances
+#&gt; 
+#&gt; data:  x by grp
+#&gt; F = 3.5022, num df = 24, denom df = 24, p-value = 0.0032
+#&gt; alternative hypothesis: true ratio of variances is not equal to 1
+#&gt; 95 percent confidence interval:
+#&gt;  1.543310 7.947462
+#&gt; sample estimates:
+#&gt; ratio of variances 
+#&gt;           3.502199</code></pre>
+</div>
+</div>
+<p>The results show: <span class="math inline">F = 3.5022</span>, <span class="math inline">\text{p-value} = 0.0032</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, reject <span class="math inline">H_0</span>, accept <span class="math inline">H_1</span>. The difference is statistically significant. It can be considered that the population variances of total cholesterol levels differ between those with poor and good blood glucose control. Therefore, in <a href="#ex07-04">Example 4</a>, the two-sample t-test for unequal variances was used.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./hypothesis-test.html" class="pagination-link" aria-label="Hypothesis test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./anova.html" class="pagination-link" aria-label="Analysis of Variance">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

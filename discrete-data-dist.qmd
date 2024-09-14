@@ -87,8 +87,6 @@ The mean of the proportion of successes is the true success probability $p$. Thi
 You can also plot the binomial distribution. The plot typically uses a bar chart to show the probability for each possible number of successes.
 
 ```{r}
-#| fig-height: 2.5
-#| fig-width: 3.5
 # Define parameters
 n <- 10  # Number of trials
 p <- 0.7  # Probability of success
@@ -109,8 +107,6 @@ With $n = 10$ and $p = 0.7$, the generated plot will show the probability distri
 The shape of the distribution depends on the number of trials $n$ and the probability of success $p$. When $p = 0.5$, the distribution is symmetric; when $p$ is far from $0.5$, the distribution becomes skewed. When $n \to \infty$ , as long as $p$ is not too close to 0 or 1, the binomial distribution approximates a normal distribution.
 
 ```{r}
-#| fig-height: 2.5
-
 n1 <- 5  
 n2 <- 10
 p <- 0.5
@@ -133,8 +129,6 @@ ggplot(df2, aes(x = successes, y = probability)) +
 ```
 
 ```{r}
-#| fig-height: 2.5
-
 n1 <- 10  
 n2 <- 50
 p <- 0.3
@@ -326,16 +320,13 @@ dpois(x = k, lambda = lambda)
 You can plot the Poisson distribution. Here’s an example where we plot the probability mass function (PMF) of the Poisson distribution for different values of $k$ (the number of events), given a specific rate $\lambda$.
 
 ```{r}
-#| fig-height: 2.5
-#| fig-width: 3.5
-
 lambda <- 5
 k_values <- 0:5  # Values from 0 to 10 events
 probabilities <- dpois(k_values, lambda = lambda)
 poisson_data <- tibble(k_values, probabilities)
 
 ggplot(poisson_data, aes(x = k_values, y = probabilities)) +
-  geom_bar(stat = "identity", fill = "lightblue", color = "black") +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
   labs(x = "Number of events (k)", y = "Probability")
 ```
 
@@ -348,8 +339,6 @@ The shape of the Poisson distribution depends on the parameter $\lambda$, which 
 3.  When $\lambda$ becomes large (e.g., $\lambda > 10$), the distribution approximates a normal distribution. The distribution becomes nearly symmetric and bell-shaped, with the mean and variance both close to $\lambda$.
 
 ```{r}
-#| fig-height: 2.5
-
 lambda1 <- 0.5
 lambda2 <- 5
 k_values <- 0:10  # Values from 0 to 10 events
@@ -359,10 +348,10 @@ df1 <- tibble(k_values, probabilities = prob1)
 df2 <- tibble(k_values, probabilities = prob2)
 
 ggplot(df1, aes(x = k_values, y = probabilities)) +
-  geom_bar(stat = "identity", fill = "lightblue", color = "black") +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
   labs(x = "Number of events (k)", y = "Probability") +
 ggplot(df2, aes(x = k_values, y = probabilities)) +
-  geom_bar(stat = "identity", fill = "lightblue", color = "black") +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
   labs(x = "Number of events (k)", y = "Probability")
 ```
 
@@ -441,7 +430,7 @@ The Negative binomial distribution is often used as an alternative to the Poisso
 
 The negative binomial distribution can be used to describe the clustering of organisms and also to compare the differences in the population mean.
 
-1.  Clus
+1.  Clustering of organisms
 
     The negative ninomial distribution is often used in ecological studies and public health to describe the clustering of organisms or events when the data are overdispersed (i.e., the variance is greater than the mean). This distribution is particularly useful in modeling situations where events (such as organisms) tend to cluster or aggregate rather than be randomly distributed.
 
@@ -450,8 +439,6 @@ The negative binomial distribution can be used to describe the clustering of org
     :::
 
     ```{r}
-    #| fig-height: 2.5
-    #| fig-width: 3.5
     # Simulate data for 50 patients using a Negative Binomial distribution
     set.seed(123)
     num_patients <- 50
