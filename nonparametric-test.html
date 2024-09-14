@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./corr-linear-reg.html" rel="next">
+<link href="./reg-and-corr.html" rel="next">
 <link href="./chi-square-test.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -107,6 +107,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -242,20 +285,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./corr-linear-reg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -272,13 +303,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -329,8 +372,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">12.1</span> Prerequisite</a></li>
-  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">12.2</span> Wilcoxon signed-rank test</a></li>
-  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test"><span class="header-section-number">12.3</span> Wilcoxon rank-sum test</a></li>
+  <li><a href="#wilcoxon-signed-rank-test" id="toc-wilcoxon-signed-rank-test" class="nav-link" data-scroll-target="#wilcoxon-signed-rank-test"><span class="header-section-number">12.2</span> Wilcoxon signed-rank test</a>
+  <ul class="collapse">
+  <li><a href="#paired-samples" id="toc-paired-samples" class="nav-link" data-scroll-target="#paired-samples"><span class="header-section-number">12.2.1</span> Paired samples</a></li>
+  <li><a href="#one-sample" id="toc-one-sample" class="nav-link" data-scroll-target="#one-sample"><span class="header-section-number">12.2.2</span> One sample</a></li>
+  </ul></li>
+  <li><a href="#wilcoxon-rank-sum-test" id="toc-wilcoxon-rank-sum-test" class="nav-link" data-scroll-target="#wilcoxon-rank-sum-test"><span class="header-section-number">12.3</span> Wilcoxon rank-sum test</a>
+  <ul class="collapse">
+  <li><a href="#raw-data" id="toc-raw-data" class="nav-link" data-scroll-target="#raw-data"><span class="header-section-number">12.3.1</span> Raw data</a></li>
+  <li><a href="#frequency-table-data-and-ordinal-data" id="toc-frequency-table-data-and-ordinal-data" class="nav-link" data-scroll-target="#frequency-table-data-and-ordinal-data"><span class="header-section-number">12.3.2</span> Frequency table data and ordinal data</a></li>
+  </ul></li>
+  <li><a href="#kruskal-wallis-test" id="toc-kruskal-wallis-test" class="nav-link" data-scroll-target="#kruskal-wallis-test"><span class="header-section-number">12.4</span> Kruskal-Wallis test</a>
+  <ul class="collapse">
+  <li><a href="#raw-data-1" id="toc-raw-data-1" class="nav-link" data-scroll-target="#raw-data-1"><span class="header-section-number">12.4.1</span> Raw data</a></li>
+  <li><a href="#frequency-table-data-and-ordinal-data-1" id="toc-frequency-table-data-and-ordinal-data-1" class="nav-link" data-scroll-target="#frequency-table-data-and-ordinal-data-1"><span class="header-section-number">12.4.2</span> Frequency table data and ordinal data</a></li>
+  <li><a href="#nemenyi-test" id="toc-nemenyi-test" class="nav-link" data-scroll-target="#nemenyi-test"><span class="header-section-number">12.4.3</span> Nemenyi test</a></li>
+  </ul></li>
+  <li><a href="#friedman-test" id="toc-friedman-test" class="nav-link" data-scroll-target="#friedman-test"><span class="header-section-number">12.5</span> Friedman test</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/nonparametric-test.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -360,37 +418,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prerequisite" class="level2" data-number="12.1">
 <h2 data-number="12.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">12.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PMCMRplus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="wilcoxon-signed-rank-test" class="level2" data-number="12.2">
 <h2 data-number="12.2" class="anchored" data-anchor-id="wilcoxon-signed-rank-test"><span class="header-section-number">12.2</span> Wilcoxon signed-rank test</h2>
-<p>Used for comparing paired samples or a single sample to a known median. Alternative to the paired t-test when data are not normally distributed.</p>
+<p>Wilcoxon signed-rank test is often used for comparing paired samples or a single sample to a known median. It is an alternative to the paired t-test when data are not normally distributed. This test can be applied in situations where a before-and-after comparison is needed, such as evaluating the effect of a treatment, intervention, or condition on a specific group.</p>
+<section id="paired-samples" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="paired-samples"><span class="header-section-number">12.2.1</span> Paired samples</h3>
+<p>Comparing the median of paired sample difference to zero is typically used to determine whether there is a significant difference between two related groups. The method most commonly applied is the Wilcoxon signed-rank test.</p>
+<p>This test ranks the absolute differences between the pairs, then checks whether the median of these differences deviates from zero, indicating a statistically significant change between the two paired groups.</p>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured, the data can be downloaded below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?</p>
+<p>In a paired design, two types of feed were administered to 8 pairs of rats, and the vitamin A content in their liver was measured. The data can be downloaded from the button below. Is there a significant difference in the vitamin A content in the livers of rats fed with different types of feed?</p>
 </div>
 <div>
 <p><a href="datasets/ex12-01.csv" download="ex12-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> feedA <span class="sc">-</span>feedB)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-01.csv"</span>, <span class="at">show_col_types =</span> F) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ feedA: num [1:8] 3.55 2 3 3.95 3.8 3.75 3.45 3.05
+#&gt;  $ feedB: num [1:8] 2.45 2.4 1.8 3.2 3.25 2.7 2.5 1.75
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   feedA = col_double(),
+#&gt;   ..   feedB = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
 </div>
 <p>First, test the normality of the difference between the pairs of observations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">shapiro.test</span>(d))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">shapiro.test</span>(feedA <span class="sc">-</span> feedB))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Shapiro-Wilk normality test
 #&gt; 
-#&gt; data:  d
+#&gt; data:  feedA - feedB
 #&gt; W = 0.81051, p-value = 0.03705</code></pre>
 </div>
 </div>
 <p>The p-value is 0.03705, less than 0.05, indicating the difference does not follows a normal distribution. Then the signed-rank test can be conducted using <code>wilcox.test()</code> function with argument <code>paired = TRUE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">wilcox.test</span>(<span class="at">x =</span> feedA, <span class="at">y =</span> feedB, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">wilcox.test</span>(<span class="at">x =</span> feedA, <span class="at">y =</span> feedB, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Wilcoxon signed rank exact test
@@ -401,20 +476,383 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+<section id="one-sample" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="one-sample"><span class="header-section-number">12.2.2</span> One sample</h3>
+<p>The comparison of a single sample median with the population median is used to assess whether the median of a sample significantly differs from a known or hypothesized population median. A common method for this comparison is the one-sample Wilcoxon signed-rank test (also known as the one-sample median test).</p>
+<p>The test ranks the sample data and compares the sum of positive and negative ranks relative to the hypothesized median, determining whether the sample median is significantly different from the population median.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>It is known that the median urine nitrogen level of healthy individuals in a area is 45.3. A group randomly selected 12 workers from a factory in that area, and measured their fluoride content in urine. The data can be downloaded from the button below. Are the urine nitrogen levels of the factory workers higher than those of the healthy individuals in the area?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-02.csv" download="ex12-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-02.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [12 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ urine_fluorine: num [1:12] 44.2 45.3 46.4 49.5 51 ...
+#&gt;  $ diff          : num [1:12] -1.09 0 1.09 4.17 5.75 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   urine_fluorine = col_double(),
+#&gt;   ..   diff = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(df, <span class="fu">wilcox.test</span>(<span class="at">x =</span> urine_fluorine, <span class="at">mu =</span> <span class="fl">45.3</span>, <span class="at">alter =</span> <span class="st">"greater"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning in wilcox.test.default(x = urine_fluorine, mu = 45.3, alter =
+#&gt; "greater"): cannot compute exact p-value with zeroes</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon signed rank test with continuity correction
+#&gt; 
+#&gt; data:  urine_fluorine
+#&gt; V = 65, p-value = 0.00255
+#&gt; alternative hypothesis: true location is greater than 45.3</code></pre>
+</div>
+</div>
+<p>When you run the code above, a warning message “<em>cannot compute exact p-value with zeroes</em>” is occurring. The warning you’re encountering is because the <code>wilcox.test()</code> function has trouble computing an exact p-value when there are zero differences in the data (or the values themselves are zero), which can occur in certain datasets. To resolve this, you can use the following strategy: Ignore the exact p-value and rely on the asymptotic approximation, which can be computed without zero-value issues. You can do this by setting <code>exact = FALSE</code>.</p>
+</section>
+</section>
 <section id="wilcoxon-rank-sum-test" class="level2" data-number="12.3">
 <h2 data-number="12.3" class="anchored" data-anchor-id="wilcoxon-rank-sum-test"><span class="header-section-number">12.3</span> Wilcoxon rank-sum test</h2>
-<p>Mann-Whitney U test, used to compare two independent groups. Alternative to the two-sample t-test for non-normally distributed data.</p>
-<p>Kruskal-Wallis test</p>
-<p>Generalization of the Mann-Whitney U test for comparing more than two independent groups. Alternative to one-way ANOVA when normality is not assumed.</p>
-<p>Friedman Test</p>
-<p>Used to compare repeated measures from three or more related groups. Alternative to repeated measures ANOVA for non-normal data.</p>
-<p>Spearman’s rank correlation</p>
-<p>Measures the strength and direction of association between two ranked variables. Alternative to Pearson’s correlation when data are not linear or normally distributed.</p>
-<ol type="1">
-<li>Chi-Square Test: • Used for categorical data to test the association between two variables in a contingency table. • A nonparametric test that examines frequencies or counts.</li>
-<li>Kolmogorov-Smirnov Test: • Used to compare a sample distribution with a reference probability distribution or to compare two sample distributions. • Often applied to assess goodness-of-fit.</li>
-</ol>
-<p>These nonparametric tests provide flexibility in data analysis when the assumptions of parametric tests are violated.</p>
+<p>The Wilcoxon rank-sum test (also known as the Mann-Whitney U test) is a nonparametric test used to compare two independent groups to assess whether their population distributions differ. It is an alternative to the two-sample t-test when the assumption of normality is not met, making it robust for non-normally distributed data. It compares the ranks of the values rather than the actual data, making it suitable for ordinal and continuous data that is not normally distributed.</p>
+<section id="raw-data" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="raw-data"><span class="header-section-number">12.3.1</span> Raw data</h3>
+<p>Raw data refers to unprocessed or untransformed data that has been collected directly from a source. The data typically consists of observations or measurements in their original form, such as survey responses, experimental results, or sensor readings.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>The right hilar diameter (RD) was measured using X-ray in 10 lung cancer patients and 12 stage 0 silicosis workers. The data can be downloaded from the button below. The question is whether the RDs of lung cancer patients are higher than those of stage 0 silicosis workers?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-03.csv" download="ex12-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-03.csv"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>(), <span class="at">rd =</span> <span class="fu">col_double</span>())</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [22 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group: Factor w/ 2 levels "1","2": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;  $ rd   : num [1:22] 2.78 3.23 4.2 4.87 5.12 6.21 7.18 8.05 8.56 9.6 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   rd = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(rd <span class="sc">~</span> group, <span class="at">data =</span> df, <span class="at">alter =</span> <span class="st">"greater"</span>, <span class="at">exact =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon rank sum test with continuity correction
+#&gt; 
+#&gt; data:  rd by group
+#&gt; W = 86.5, p-value = 0.04318
+#&gt; alternative hypothesis: true location shift is greater than 0</code></pre>
+</div>
+</div>
+</section>
+<section id="frequency-table-data-and-ordinal-data" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="frequency-table-data-and-ordinal-data"><span class="header-section-number">12.3.2</span> Frequency table data and ordinal data</h3>
+<p>Frequency table data refers to data that is summarized in terms of counts or frequencies for different categories. Ordinal data, on the other hand, involves variables that have a clear, ordered ranking but the intervals between ranks are not necessarily equal. Here is an example of ordinal data.</p>
+<div class="example">
+<strong>Example 4:</strong> 
+<p>A hospital treated two types of pediatric pneumonia with a new drug, and the efficacy is shown in. Determine whether the efficacy of the drug differs between the two types of pneumonia patients.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-04.csv" download="ex12-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"datasets/ex12-04.csv"</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">efficacy =</span> <span class="fu">col_integer</span>(), </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group   : Factor w/ 2 levels "1","2": 1 1 1 1 2 2 2 2
+#&gt;  $ efficacy: int [1:8] 1 2 3 4 1 2 3 4
+#&gt;  $ freq    : int [1:8] 65 18 30 13 42 6 23 11
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   efficacy = col_integer(),
+#&gt;   ..   freq = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<p>If you have a frequency table that includes ordinal information, you can perform a rank-sum test with weighted data. First, the data is expanded based on frequencies, and then the rank-sum test is applied. Here we first <strong>expand the data using <code>uncount()</code> function</strong> in the <code>tidyr</code> package, then perform the Wilcoxon rank-sum test with <code>wilcox.test()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wilcox.test</span>(efficacy <span class="sc">~</span> group, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Wilcoxon rank sum test with continuity correction
+#&gt; 
+#&gt; data:  efficacy by group
+#&gt; W = 4954.5, p-value = 0.5883
+#&gt; alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="kruskal-wallis-test" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="kruskal-wallis-test"><span class="header-section-number">12.4</span> Kruskal-Wallis test</h2>
+<p>The Kruskal-Wallis test is a non-parametric method used to compare more than two independent samples to determine if they come from the same distribution. It is an extension of the Mann-Whitney U test (or Wilcoxon rank-sum test) to more than two groups. The Kruskal-Wallis test is useful when the assumptions of one-way ANOVA (such as normality and homogeneity of variance) are not met.</p>
+<p>The Kruskal-Wallis test statistic H is calculated using the following formula:</p>
+<p><span class="math display">
+H = \frac{12}{N(N+1)} \sum_{i=1}^k \frac{R_i^2}{n_i} - 3(N+1)
+</span></p>
+<p>Where <span class="math inline">N</span> is the total number of observations, <span class="math inline">k</span> is the number of groups, <span class="math inline">R_i</span> is the sum of ranks for the <span class="math inline">i-th</span> group, <span class="math inline">n_i</span> is the number of observations in the <span class="math inline">i-th</span> group.</p>
+<section id="raw-data-1" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="raw-data-1"><span class="header-section-number">12.4.1</span> Raw data</h3>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-05.csv" download="ex12-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-05.csv"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">drug =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mortality =</span> <span class="fu">col_double</span>()</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [15 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ drug     : Factor w/ 3 levels "1","2","3": 1 1 1 1 1 2 2 2 2 2 ...
+#&gt;  $ mortality: num [1:15] 32.5 35.5 40.5 46 49 16 20.5 22.5 29 36 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   drug = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   mortality = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(mortality <span class="sc">~</span> drug, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  mortality by drug
+#&gt; Kruskal-Wallis chi-squared = 9.74, df = 2, p-value = 0.007673</code></pre>
+</div>
+</div>
+</section>
+<section id="frequency-table-data-and-ordinal-data-1" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="frequency-table-data-and-ordinal-data-1"><span class="header-section-number">12.4.2</span> Frequency table data and ordinal data</h3>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>Using three types of drugs, A, B, and C, to kill snails, 200 live snails were used for each batch. After applying the drugs, the number of dead snails in each batch was counted, and the mortality rate (%) was calculated. The data file can be downloaded from the button below. Determine if there is a significant difference in the effectiveness of the three drugs in killing snails.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-06.csv" download="ex12-06.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-06.csv"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(), </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">response =</span> <span class="fu">col_integer</span>(),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [12 × 3] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group   : Factor w/ 3 levels "1","2","3": 1 1 1 1 2 2 2 2 3 3 ...
+#&gt;  $ response: int [1:12] 1 2 3 4 1 2 3 4 1 2 ...
+#&gt;  $ freq    : int [1:12] 49 31 5 15 45 9 22 4 15 28 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   response = col_integer(),
+#&gt;   ..   freq = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(freq) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kruskal.test</span>(response <span class="sc">~</span> group, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  response by group
+#&gt; Kruskal-Wallis chi-squared = 20.458, df = 2, p-value = 3.612e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="nemenyi-test" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="nemenyi-test"><span class="header-section-number">12.4.3</span> Nemenyi test</h3>
+<p>The Nemenyi test is a post-hoc test used to compare multiple groups after a non-parametric test, such as the Kruskal-Wallis test has shown a significant difference among groups. It is specifically designed for multiple comparisons between groups to determine which pairs of groups differ significantly from each other.</p>
+<div class="example">
+<strong>Example 7:</strong> 
+<p>A study is to compare the survival days of mice after being inoculated with three different strains of typhoid bacillus. The data can be downloaded from the button below. The question is whether there is a difference in the survival days of mice inoculated with these three different strains of typhoid bacillus.</p>
+</div>
+<div>
+<p><a href="datasets/ex12-07.csv" download="ex12-07.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex12-07.csv"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">col_factor</span>(), </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">col_integer</span>()</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [30 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ group: Factor w/ 3 levels "1","2","3": 1 1 1 1 1 1 1 1 1 1 ...
+#&gt;  $ time : int [1:30] 2 2 2 3 4 4 4 5 7 7 ...
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   group = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+#&gt;   ..   time = col_integer()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(time <span class="sc">~</span> group, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Kruskal-Wallis rank sum test
+#&gt; 
+#&gt; data:  time by group
+#&gt; Kruskal-Wallis chi-squared = 9.9405, df = 2, p-value = 0.006941</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">NemenyiTest</span>(time <span class="sc">~</span> group, <span class="at">data =</span>df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Nemenyi's test of multiple comparisons for independent samples (tukey)  
+#&gt; 
+#&gt;     mean.rank.diff   pval    
+#&gt; 2-1     10.3777778 0.0278 *  
+#&gt; 3-1     10.8727273 0.0131 *  
+#&gt; 3-2      0.4949495 0.9914    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="friedman-test" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="friedman-test"><span class="header-section-number">12.5</span> Friedman test</h2>
+<p>The Friedman test is a non-parametric statistical test used to detect differences in treatments across multiple test attempts. It’s particularly useful for <strong>comparing three or more paired groups</strong> when the data is not normally distributed. The test is an alternative to the repeated measures ANOVA and is often applied in cases where the same subjects are used for each treatment.</p>
+<div class="example">
+<strong>Example 8:</strong> 
+<p>Eight subjects were exposed to four different sound frequencies under the same conditions and their response rates (%) were measured. The data can be downloaded from the button below. Is there a difference in their response rates to the four different sound frequencies?</p>
+</div>
+<div>
+<p><a href="datasets/ex12-08.csv" download="ex12-08.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex12-08.csv"</span>, <span class="at">show_col_types =</span> F)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; spc_tbl_ [8 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+#&gt;  $ freq_a: num [1:8] 8.4 11.6 9.4 9.8 8.3 8.6 8.9 7.8
+#&gt;  $ freq_b: num [1:8] 9.6 12.7 9.1 8.7 8 9.8 9 8.2
+#&gt;  $ freq_c: num [1:8] 9.8 11.8 10.4 9.9 8.6 9.6 10.6 8.5
+#&gt;  $ freq_d: num [1:8] 11.7 12 9.8 12 8.6 10.6 11.4 10.8
+#&gt;  - attr(*, "spec")=
+#&gt;   .. cols(
+#&gt;   ..   freq_a = col_double(),
+#&gt;   ..   freq_b = col_double(),
+#&gt;   ..   freq_c = col_double(),
+#&gt;   ..   freq_d = col_double()
+#&gt;   .. )
+#&gt;  - attr(*, "problems")=&lt;externalptr&gt;</code></pre>
+</div>
+</div>
+<p>First, perform the Friedman test to determine if there are significant differences among groups using <code>friedman.test()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">friedman.test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Friedman rank sum test
+#&gt; 
+#&gt; data:  as.matrix(df)
+#&gt; Friedman chi-squared = 15.152, df = 3, p-value = 0.001691</code></pre>
+</div>
+</div>
+<p>Here is an alternative method based on the long format data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subject =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"freq"</span>),</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_ptypes =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">factor</span>())</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">friedman.test</span>(response <span class="sc">~</span> group <span class="sc">|</span> subject, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;  Friedman rank sum test
+#&gt; 
+#&gt; data:  response and group and subject
+#&gt; Friedman chi-squared = 15.152, df = 3, p-value = 0.001691</code></pre>
+</div>
+</div>
+<p>After identifying significant differences with the Friedman test, you can use <code>frdAllPairsNemenyiTest()</code> to conduct pairwise comparisons. The test allows you to determine which pairs of groups are significantly different from each other, with multiple comparison corrections.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">subject =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"freq"</span>),</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"group"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_ptypes =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">factor</span>())</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">frdAllPairsNemenyiTest</span>(response <span class="sc">~</span> group <span class="sc">|</span> subject, <span class="at">data =</span> _) <span class="sc">|&gt;</span> </span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pairwise comparisons using Nemenyi-Wilcoxon-Wilcox all-pairs test for a two-way balanced complete block design</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data: response and group and subject</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; P value adjustment method: single-step</span></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; H0</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                      q value  Pr(&gt;|q|)   </span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_b - freq_a == 0   1.369 0.7675424   </span></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_c - freq_a == 0   3.423 0.0732221  .</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_a == 0   5.066 0.0019311 **</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_c - freq_b == 0   2.054 0.4666088   </span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_b == 0   3.697 0.0442915  *</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; freq_d - freq_c == 0   1.643 0.6509544</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -1030,8 +1468,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./corr-linear-reg.html" class="pagination-link" aria-label="Correlation and Regression">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./reg-and-corr.html" class="pagination-link" aria-label="Bivariate regression and correlation">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -285,20 +285,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./corr-linear-reg.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -315,13 +303,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -1230,18 +1230,12 @@ Interpretation of logistic regression Results
 <li>This is the difference in log-odds of recovery between antibiotic B and antibiotic A for Infection X.</li>
 <li>Since the p-value is not significant, there is no strong evidence that antibiotic B differs significantly from antibiotic A for Infection X.</li>
 </ul></li>
-</ol>
-<!-- -->
-<ol start="3" type="1">
 <li>infection_typeY: Estimate: -0.8473, p-value: 0.04296 (statistically significant)
 <ul>
 <li>This is the effect of having Infection Y instead of infection X when treated with antibiotic A.</li>
 <li>The negative coefficient (-0.8473) indicates that patients with Infection Y are less likely to recover compared to those with infection X when treated with antibiotic A.</li>
 <li>In terms of odds: <span class="math inline">\exp(-0.8473) \approx 0.43</span> , meaning patients with infection Y have about 43% the odds of recovery compared to those with infection X when treated with antibiotic A.</li>
 </ul></li>
-</ol>
-<!-- -->
-<ol start="4" type="1">
 <li>antibioticB:infection_typeY (Interaction Term): Estimate: -0.1335, p-value: 0.82930 (not statistically significant)
 <ul>
 <li>This term represents the interaction between Antibiotic B and infection Y, meaning how the effect of antibiotic B changes for Infection Y compared to infection X.aThe non-significant p-value indicates that there is no strong evidence of an interaction effect between the type of antibiotic and the type of infection on recovery.</li>
