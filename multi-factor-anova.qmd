@@ -29,7 +29,3 @@ To determine the relationship between a patient’s age and their systolic blood
 <a href="datasets/ex14-01.csv" download="ex14-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
-
-```{r}
-
-```
