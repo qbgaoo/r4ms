@@ -22,7 +22,7 @@ library(ggplot2)
 Factorial design is an experimental setup that involves two or more factors, each with multiple levels, and tests all possible combinations of these factors. This design is widely used in various fields like medicine, biology, and psychology to analyze the simultaneous influence of multiple factors on an outcome.
 
 ::: example
-To determine the relationship between a patient’s age and their systolic blood pressure, a researcher gathered data from a sample of patients, including their age and systolic blood pressure readings. The data can be downloaded from the button below, where age is the independent variable ($X$) and systolic blood pressure is the dependent variable ($Y$).
+A experiment involved randomly dividing 20 rabbits into 4 groups, with 5 rabbits in each group, to perform a suture test after nerve injury. The treatments consisted of a combination of two factors. Factor A was the suture method, which had two levels: a1 and a2. Factor B was the time after suturing, which also had two levels: b1 and b2. The experimental results were the axon transmission rate (%) after nerve suturing for each rabbit, as shown in @tbl-rabbit-suture . To compare the effects of different suture methods and post-suture times on axon transmission rates.
 :::
 
 <div>
@@ -30,3 +30,68 @@ To determine the relationship between a patient’s age and their systolic blood
 <a href="datasets/ex14-01.csv" download="ex14-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
+
+```{r}
+df <- read_csv(
+  file = "datasets/ex14-01.csv",
+  col_types = list(
+    method = col_factor(),
+    time   = col_factor(),
+    response = col_double()
+  )
+) 
+```
+
+```{r}
+#| echo: false
+#| label: tbl-rabbit-suture
+#| tbl-cap: The axon transmission rate (%) after nerve suturing for each rabbit
+
+df |> 
+  pivot_wider(
+    names_from = c(method, time),
+    names_prefix = "a",
+    values_from = response,
+    values_fn = list
+  ) |> 
+  unnest_longer(col = everything()) |> 
+  knitr::kable(align = "c")
+```
+
+```{r}
+model <- aov(response ~ method * time, data = df)
+summary(model)
+```
+
+When analyzing a dataset with two or more independent variables, you often want to understand how each variable independently affects the outcome (main effect) and whether the effect of one variable depends on the level of another (interaction effect).
+
+### Main effect
+
+The main effect refers to the impact of one independent variable on the dependent variable, ignoring the other variables. In a factorial design with multiple independent variables, a main effect is the effect of one factor averaged across the levels of the other factors. It examines the effect of each independent variable in isolation.
+
+-   **method**
+
+    The p-value for method is 0.4499, which is much greater than 0.05. This suggests that the different methods do not have a statistically significant effect on the response variable. The F value of 0.6 further indicates that the variation in the response explained by the method is weak, and there is no significant difference between the methods in terms of their impact on the outcome.
+
+-   **time**
+
+    The p-value for time is 0.0118, which is less than 0.05, indicating that time has a statistically significant effect on the response. The F value of 8.067 supports this conclusion, showing that the response variable changes significantly across different time points.
+
+### Interaction effect
+
+An interaction occurs when the effect of one independent variable depends on the level of another independent variable. This means that the effect of one factor is not consistent across the levels of the other factor. An interaction suggests that the variables are not independent in their effects on the dependent variable.
+
+-   **method : time**
+
+    The p-value for the interaction effect is 0.7995, which is much greater than 0.05, indicating that there is no significant interaction between method and time. This means that the effect of the method on the response does not depend on the time. In other words, the impact of the methods is consistent across different times.
+
+### Visualizing the difference
+
+A common way to visualize main and interaction effects is through interaction plots. If there’s no interaction, the lines for method 1 and method 2 in the graph of axon transmission rate against factor B will be parallel. This means the difference between the methods is the same regardless of factor B. If there is an interaction, the lines will cross or diverge, indicating that the effect of the method differs depending on the time after suturing.
+
+```{r}
+# Draw an interaction plot
+ggplot(df, aes(x = time, y = response, color = method, group = method)) +
+  geom_line(stat = "summary", fun = "mean") +
+  geom_point(stat = "summary", fun = "mean")
+```
