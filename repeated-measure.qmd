@@ -48,6 +48,8 @@ To evaluate whether a new drug significantly affects blood pressure in patients 
 df <- read_csv("datasets/ex15-01.csv", show_col_types = F) 
 ```
 
+Here is the code conducting repeated measures ANOVA:
+
 ```{r}
 tb <- df |> 
   mutate(id = factor(c(1:20))) |> 
@@ -74,41 +76,133 @@ anova(model)
 
 The model results indicate that time has a significant effect on the response variable (p \< .0001), while the main effect of the group is not significant (p = 0.2256). The interaction between group and time is significant (p = 0.0004), which means that the response to the treatment varies depending on the time point being measured.
 
-To further explore the interaction between groups and time points, consider the following steps:
+::: callout-important
+When there is a significant interaction effect, the focus should shift to understanding the interaction rather than interpreting the main effects in isolation, because when an interaction is present, the main effects do not tell the whole story. The interaction suggests that the relationship between the factors is complex, and the effects of each factor depend on the other factor. Visualizing the interaction or conducting simple effects analysis can help you better understand how the factors influence each other.
+:::
 
-1.  Visualize the interaction effect
+1.  **Visualize the interaction effect**
 
     ```{r}
     tb |> 
       ggplot(aes(x = time, y = response, color = group, group = group)) +
       geom_line(stat = "summary", fun = "mean") +
       geom_point(stat = "summary", fun = "mean") +
-      scale_x_discrete(breaks = c("pretest", "posttest")) + 
       labs(x = "Time", y = "Mean of blood pressure")
     ```
 
-```{=html}
-<!-- -->
-```
-2.  Post-hoc test
+2.  **Simple effect analysis**
+
+    The `emmeans` package makes simple effect analysis easier by providing marginal means and allowing you to compare them across different levels of factors.
 
     ```{r}
-    emm <- emmeans(model, ~ group * time)
-    # Perform pairwise comparisons
-    pairs(emm)
+    emmeans(model, ~ group | time) |>        # <1>
+      pairs()
     ```
 
-    Further exploration of the interaction between treatment group and time revealed that the mean blood pressure response differed significantly at specific time points. Post-hoc test indicates that there is no statistical difference in baseline between the treatment and control groups, and the treatment group shows a better effect in blood pressure reduction compared to the control group.
+    1.  Effect of group at each time point
 
-    By conducting these analysis and visualizations, you’ll gain deeper insights into how different groups respond over time, informing your conclusions and potential interventions based on your study’s outcomes.
+    ```{r}
+    emmeans(model, ~ time | group) |>    # <1>
+      pairs()
+    ```
+
+    1.  Effect of time in each group
+
+Further exploration of the interaction between treatment group and time revealed that the mean blood pressure response differed significantly at specific time points. Simple effects analysis indicate that there is no statistical difference in baseline between the treatment and control groups, and the treatment group shows a better effect in blood pressure reduction compared to the control group.
+
+By conducting these analysis and visualizations, you’ll gain deeper insights into how different groups respond over time, informing your conclusions and potential interventions based on your study’s outcomes.
 
 ## IxJ repeated measures
 
+An IxJ repeated measures is a generalization of the 2x2 design, where there are I levels of a between-subjects factor and J levels of a within-subjects factor. This design allows you to investigate how multiple levels of both a between-subjects factor and a within-subjects factor interact over time or different conditions.
+
+::: example
+To evaluate whether a new drug significantly affects blood pressure in patients with mild hypertension, 20 patients were randomly assigned to either the treatment group or the control group. Blood pressure is measured before and after the intervention. Analyze the difference of blood pressure between treatment and control group.
+:::
+
+<div>
+
+<a href="datasets/ex15-02.csv" download="ex15-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex15-02.csv", show_col_types = F) 
+```
+
+Here is an example code conducting repeated measures ANOVA:
+
+```{r}
+tb <- df |>
+  mutate(id = factor(c(1:15))) |> 
+  pivot_longer(
+    cols = contains("T"),
+    names_to = "time",
+    values_to = "response"
+  ) |> 
+  mutate(
+    drug = factor(drug),
+    time = factor(time)
+  )
+
+aov(response ~ drug * time + Error(id/(time)), data = tb) |> 
+  summary()
+```
+
+Here is an alternative method using `anova_test()` function from rstatix package:
+
+```{r}
+rstatix::anova_test(
+  data = tb,           
+  dv = response,
+  wid = id,
+  within = time,
+  between = drug
+) 
+```
+
+An alternative method using mixed-effect model:
+
+```{r}
+model <- lme(response ~ drug * time, random = ~ 1 | id, data = tb) 
+anova(model)
+```
+
+The model results indicate that time has a significant effect on the response variable (p \< .0001), while the main effect of the drug is not significant (p = 0.2256). The interaction between group and time is significant (p \< .0001), which means that the response to the treatment varies depending on the time point being measured.
+
+To further explore the interaction between groups and time points, consider the following steps:
+
+1.  **Visualize the interaction effect**
+
+    ```{r}
+    tb |> 
+      ggplot(aes(x = time, y = response, color = drug, group = drug)) +
+      geom_line(stat = "summary", fun = "mean") +
+      geom_point(stat = "summary", fun = "mean") +
+      labs(x = "Time", y = "Mean of weight")
+    ```
+
+2.  **Simple effect analysis**
+
+    Effect of drug at each time point:
+
+    ```{r}
+    emmeans(model, ~ drug | time) |> 
+      pairs()
+    ```
+
+    Effect of time in each drug:
+
+    ```{r}
+    emmeans(model, ~ time | drug) |> 
+      pairs()
+    ```
+
 Considerations
 
-Sphericity: RM-ANOVA assumes equal variances for the differences between all pairs of repeated measures. If this assumption is violated, corrections like Greenhouse-Geisser or Huynh-Feldt adjustments are applied.
+RM-ANOVA assumes equal variances (sphericity) for the differences between all pairs of repeated measures. If this assumption is violated, corrections like Greenhouse-Geisser or Huynh-Feldt adjustments are applied.
 
-Missing data: Mixed-effects models like those implemented with `lme()` are more robust to missing data than traditional RM-ANOVA.
+Mixed-effects models like those implemented with `lme()` are more robust to missing data than traditional RM-ANOVA.
 
 Conclusion
 
