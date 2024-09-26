@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://mirrors.zju.edu.cn/CRAN"
+        "URL": "https://mirrors.ustc.edu.cn/CRAN"
       }
     ]
   },
