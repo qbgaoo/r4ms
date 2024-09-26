@@ -15,11 +15,17 @@ Multifactor ANOVA (also known as factorial ANOVA) is a statistical method used t
 
 library(tidyverse)
 library(ggplot2)
+library(DoE.base)
+library(nlme)
 ```
 
 ## Factorial design
 
 Factorial design is an experimental setup that involves two or more factors, each with multiple levels, and tests all possible combinations of these factors. This design is widely used in various fields like medicine, biology, and psychology to analyze the simultaneous influence of multiple factors on an outcome.
+
+### 2x2 two-factor factorial design
+
+A 2x2 two-factor factorial design is a type of experimental design where two independent factors are studied, and each factor has two levels. The design tests both the main effects of each factor and the interaction effect between the two factors.
 
 ::: example
 A experiment involved randomly dividing 20 rabbits into 4 groups, with 5 rabbits in each group, to perform a suture test after nerve injury. The treatments consisted of a combination of two factors. Factor A was the suture method, which had two levels: a1 and a2. Factor B was the time after suturing, which also had two levels: b1 and b2. The experimental results were the axon transmission rate (%) after nerve suturing for each rabbit, as shown in @tbl-rabbit-suture . To compare the effects of different suture methods and post-suture times on axon transmission rates.
@@ -58,14 +64,16 @@ df |>
   knitr::kable(align = "c")
 ```
 
+You can use `aov()` function to analyze this design and test the main effects and interaction. The code would look like this:
+
 ```{r}
 model <- aov(response ~ method * time, data = df)
 summary(model)
 ```
 
-When analyzing a dataset with two or more independent variables, you often want to understand how each variable independently affects the outcome (main effect) and whether the effect of one variable depends on the level of another (interaction effect).
+Here, `method * time` tests both the main effects and the interaction effect.
 
-### Main effect
+**Main effect**
 
 The main effect refers to the impact of one independent variable on the dependent variable, ignoring the other variables. In a factorial design with multiple independent variables, a main effect is the effect of one factor averaged across the levels of the other factors. It examines the effect of each independent variable in isolation.
 
@@ -77,7 +85,7 @@ The main effect refers to the impact of one independent variable on the dependen
 
     The p-value for time is 0.0118, which is less than 0.05, indicating that time has a statistically significant effect on the response. The F value of 8.067 supports this conclusion, showing that the response variable changes significantly across different time points.
 
-### Interaction effect
+**Interaction effect**
 
 An interaction occurs when the effect of one independent variable depends on the level of another independent variable. This means that the effect of one factor is not consistent across the levels of the other factor. An interaction suggests that the variables are not independent in their effects on the dependent variable.
 
@@ -85,7 +93,7 @@ An interaction occurs when the effect of one independent variable depends on the
 
     The p-value for the interaction effect is 0.7995, which is much greater than 0.05, indicating that there is no significant interaction between method and time. This means that the effect of the method on the response does not depend on the time. In other words, the impact of the methods is consistent across different times.
 
-### Visualizing the difference
+**Visualizing the difference**
 
 A common way to visualize main and interaction effects is through interaction plots. If there’s no interaction, the lines for method 1 and method 2 in the graph of axon transmission rate against factor B will be parallel. This means the difference between the methods is the same regardless of factor B. If there is an interaction, the lines will cross or diverge, indicating that the effect of the method differs depending on the time after suturing.
 
@@ -95,3 +103,274 @@ ggplot(df, aes(x = time, y = response, color = method, group = method)) +
   geom_line(stat = "summary", fun = "mean") +
   geom_point(stat = "summary", fun = "mean")
 ```
+
+### IxJ two-factor factorial design
+
+In an IxJ two-factor factorial design, we have two factors (independent variables), each with a number of levels: Factor A has I levels (e.g., different treatments, conditions, or groups). Factor B has J levels (e.g., time points, environments, or conditions).
+
+::: example
+To observe the analgesic effect of combining painkillers A and B during childbirth, painkiller A is administered in three different doses: 1.0 mg, 2.5 mg, and 5.0 mg, painkiller B is also administered in three different doses: 5 μg, 15 μg, and 30 μg. A total of 27 women in labor are randomly divided into 9 groups, with 3 women in each group. The analgesic time for each woman during labor is recorded, and the results are shown in @tbl-pain-killer . Analyze the combined analgesic effect of drug A and drug B.
+:::
+
+<div>
+
+<a href="datasets/ex14-02.csv" download="ex14-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  file = "datasets/ex14-02.csv",
+  col_types = list(
+    drugA = col_factor(),
+    drugB = col_factor(),
+    time = col_double()
+  )
+) 
+```
+
+```{r}
+#| echo: false
+#| label: tbl-pain-killer
+#| tbl-cap: The analgesic time for each woman during labor
+
+df |> 
+  pivot_wider(
+    names_from = c(drugB),
+     names_prefix = "drugB",
+    values_from = time,
+    values_fn = list
+  ) |> 
+  unnest_longer(col = everything()) |> 
+  knitr::kable(align = "c")
+```
+
+The ANOVA model would look like this:
+
+```{r}
+model <- aov(time ~ drugA * drugB, data = df)
+summary(model)
+```
+
+This output represents the results of a two-way ANOVA model analyzing the effects of two drugs (A and B) and their interaction on the response variable (in this case, time).
+
+**Main effect of drugA**
+
+The F value is 8.470, p-value is 0.00256. Since this p-value is less than 0.01, the different levels of drug A significantly affect the response variable.
+
+**Main effect of drugB**
+
+The F value is 9.050, p-value is 0.00190. This is also a significant result (p \< 0.01), meaning the different levels of drug B significantly affect the response variable.
+
+**Interaction effect of drugA:drugB**
+
+THe F value is 5.073, p-value is 0.00647. This p-value is significant (p \< 0.01), indicating that there is a significant interaction between drug A and B. The effect of drug A on time depends on the level of drug B and vice versa. This means that the combination of the two drugs affects the outcome in a way that cannot be explained by the main effects alone.
+
+### IxJxK three-factor factorial design
+
+For an IxJxK design, where the factors have I , J , and K levels respectively, performing an ANOVA will help evaluate the significance of the factors and their interactions on the dependent variable.
+
+Suppose we want to investigate the effect of three factors on reducing blood pressure in patients. The three factors are:
+
+-   Medication type (A): 2 levels (drug 1, drug 2)
+-   Exercise regimen (B): 2 levels (low intensity, high intensity)
+-   Diet plan (C): 3 levels (low salt, mediterranean, high fiber)
+
+This gives us a $2 \times 2 \times 3$ factorial design, resulting in 12 treatment combinations. The response is blood pressure reduction after 12 weeks of treatment. You can use the `aov()` or `lm()` functions to conduct a three-way ANOVA.
+
+```{r}
+# Create sample data
+set.seed(200)
+df <- data.frame(
+  a = factor(rep(c("drug 1", "drug 2"), each = 18)),
+  b = factor(rep(rep(c("low", "high"), each = 9), 2)),
+  c = factor(rep(c("low salt", "mediterranean", "high fiber"), times = 6)),
+  y = c(6, 9, 7, 12, 11, 9, 12, 9, 11, 10, 12, 10, 
+        13, 14, 12, 11, 12, 14, 6, 7, 5, 9, 10, 8,
+        11, 12, 10, 10, 11, 9, 12, 13, 11, 13, 12, 11)
+)
+
+# Perform the three-way ANOVA
+aov(y ~  a * b * c, data = df) |> 
+  summary()
+```
+
+```{r}
+lm(y ~  a * b * c, data = df) |> 
+  anova()
+```
+
+## Orthogonal design
+
+Factorial design tests all possible combinations of levels across all factors. It allows for the study of the main effects and interactions between the factors. Orthogonal design is a more efficient form of experimental design that requires fewer experimental runs. It selects specific combinations of factor levels in such a way that each factor’s effect can be estimated independently (orthogonally) from the others, without testing all possible combinations. This reduces the number of experimental runs compared to a full factorial design. It is widely used in quality control, optimization experiments, and clinical research.
+
+Orthogonal designs are often used when:
+
+-   Budget or time constraints make full factorial designs impractical.
+-   The focus is on estimating main effects and selected interactions, not all possible interactions.
+-   Multiple factors need to be studied simultaneously, but a full set of combinations is unnecessary.
+
+### Orthogonal array
+
+Orthogonal array (OA) is a tool used in orthogonal design to arrange factors and their levels in a way that ensures the factors are orthogonal, meaning their effects can be estimated independently.
+
+OAs are typically represented as $L_{n}(k^p)$, where $n$ represents the number of experimental runs (or combinations), $k$ is the number of levels for each factor, $p$ is the number of factors. For example, $L_8(2^7)$ refers to an experiment with 7 factors, each having 2 levels, and requiring 8 experimental runs.
+
+The choice of an appropriate OA depends on the number of factors and their levels. For more complex experiments (i.e., many factors with multiple levels), larger orthogonal arrays like $L_{16}$ or $L_{18}$ might be suitable.
+
+In R, you can use the `DoE.base` package to generate orthogonal arrays. Here’s an example of how to generate an $L_8(2^7)$ array:
+
+```{r}
+oa.design(
+  nruns = 8,
+  nfactors = 7, 
+  nlevels = 2,
+  seed = 200
+)
+```
+
+Or you can use the following code:
+
+```{r}
+
+oa.design(ID = L8.2.7, seed = 200)
+```
+
+### Factor assignment
+
+In an orthogonal design like the $L_8(2^7)$ array, the assignment of factors to specific columns does matter to maintain the orthogonality of the design and ensure balanced and unbiased results.
+
+The $L_8(2^7)$ array consists of 7 columns, but for an experiment with 4 factors, you will only use 4 of these columns to represent the main effects of the factors. The remaining columns can either be used for first-order (two-factor) interactions or left unused.
+
+For an $L_8(2^7)$ orthogonal array, the factors are typically assigned to columns 1, 2, 4, and 7. These columns in the orthogonal array are mutually orthogonal to each other, meaning that they do not introduce confounding effects, which helps you estimate the main effects of each factor independently. Columns 3, 5, and 6 are usually reserved for analyzing interactions, because these columns are designed to accommodate two-factor interactions.
+
+::: example
+To study the optimal conditions for egg-laying in female snails, an orthogonal experiment is designed. The experimental conditions included four factors, each with two levels. The interaction between temperature and oxygen content is considered. Ten female snails of the same age were raised in a 20 cm² mud box. The combinations of each factor and level for the 8 experiments, as well as the experimental results, are shown in @tbl-egg-laying .
+:::
+
+<div>
+
+<a href="datasets/ex14-03.csv" download="ex14-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  "datasets/ex14-03.csv",
+  col_types = list(
+    temp = col_factor(), oxygen = col_factor(),
+    water = col_factor(), ph = col_factor(),
+    n = col_integer())
+)
+```
+
+```{r}
+#| echo: false
+#| label: tbl-egg-laying
+#| tbl-cap: Orthogonal experiment for spawning conditions of snails
+knitr::kable(df, align = "c")
+```
+
+Use the `aov()` function to perform ANOVA on the orthogonal design. You can model main effects and interaction terms if necessary.
+
+```{r}
+aov(n ~ temp * oxygen + water + ph, data = df) |> 
+  summary()
+```
+
+These results suggest that water and the interaction between temperature and oxygen have significant effects on the response variable, the other individual factors might not be as important for this particular response.
+
+## Nested design
+
+A nested design is a type of experimental design where levels of one factor are nested within the levels of another factor. This is useful when the experimental units within a group are not comparable across groups but are comparable within groups. For example, in a medical study, hospitals might be a factor, and patients might be nested within hospitals because patients from different hospitals are not directly comparable.
+
+In a nested design, factors are hierarchical. Below is a two-level nested design:
+
+-   Hospitals (A) as a primary factor.
+-   Doctors (B) nested within each hospital.
+-   Patients’ satisfaction score as the response variable.
+
+::: example
+To study the short-term effects of different protein feeds at different feeding amounts on the growth in body length of rats, a nested design was adopted due to the inconsistent feeding amounts required to achieve the same protein content for each protein feed. The type of feed is treated as the primary experimental factor (a), and the feeding amount as the secondary experimental factor (b) nested within the type of feed. Three rats are fed per trial, and the net increase in rat body length is the response variable. Perform an ANOVA analysis based on this data.
+:::
+
+<div>
+
+<a href="datasets/ex14-04.csv" download="ex14-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex14-04.csv",
+  col_types = list(a = col_factor(), b = col_factor()))
+```
+
+Here’s how you can handle such a nested design and analyze it using ANOVA.
+
+```{r}
+aov(response ~ a + a:b, data = df) |> 
+  summary()
+
+aov(response ~ a/b, data = df) |> 
+  summary()
+```
+
+The results show that different proteins quality diet affects the growth of body length in rats. For the same protein feed, different feeding mice also had an effect on the length growth of rats.
+
+**Visualizing the nested design**
+
+```{r}
+ggplot(df, aes(x = a, y = response, fill = b)) +
+  geom_boxplot() +
+  labs(x = "Protein feeds", y = "Increase in body length") 
+```
+
+## Split-plot design
+
+A split-plot design is used when there are two levels of randomization or when some factors are easier to control than others. This is common in medical studies where some treatments are applied to larger groups (whole plots), and others are applied to subgroups (subplots or split plots) within those larger groups.
+
+For example, if you want to study the effect of two whole-plot factors (e.g., different exercise regimens) on patients, but you also want to study the effect of a subplot factor (e.g., different dosages of a medication) within each exercise regimen. The design would look like:
+
+-   Whole-plot factor: Exercise regimen (e.g., low-intensity vs. high-intensity).
+-   Subplot factor: Medication dosage (e.g., 10 mg vs. 20 mg) applied within each exercise group.
+
+This allows for efficient testing of interactions between exercise regimens and medication dosages while considering the hierarchical structure of the treatments.
+
+::: example
+To study the protective effect of systemic injection of antitoxin on skin damage, 10 rabbits were randomly divided into two groups. One group was injected with antitoxin, while the other group was injected with saline as a control. After grouping, two areas on each rabbit were selected, and low and high concentrations of toxin were randomly injected into these areas. The response variable is the diameter of the skin damage (mm). Perform an ANOVA analysis based on this data.
+:::
+
+<div>
+
+<a href="datasets/ex14-05.csv" download="ex14-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex14-05.csv", show_col_types = F)
+```
+
+By using a mixed-effects model, you can appropriately analyze the hierarchical structure of the data.
+
+```{r}
+tb <- df |> 
+  pivot_longer(
+    cols = c(b1, b2),
+    names_to = "b",
+    names_prefix = "b",
+    values_to = "y"
+  ) |> 
+  mutate(across(c(no, drug, b), factor))
+
+lme(y ~ drug * b, random = ~ 1 | no, data = tb) |>
+  anova() 
+```
+
+Alternative method using `aov()`:
+
+```{r}
+aov(y ~ drug * b + Error(no/b), data = tb) |>      # <1>
+  summary()
+```
+
+1.  here `no` must be a factor.

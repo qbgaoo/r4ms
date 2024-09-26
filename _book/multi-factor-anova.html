@@ -107,6 +107,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -266,7 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -331,10 +374,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">14.1</span> Prerequisite</a></li>
   <li><a href="#factorial-design" id="toc-factorial-design" class="nav-link" data-scroll-target="#factorial-design"><span class="header-section-number">14.2</span> Factorial design</a>
   <ul class="collapse">
-  <li><a href="#main-effect" id="toc-main-effect" class="nav-link" data-scroll-target="#main-effect"><span class="header-section-number">14.2.1</span> Main effect</a></li>
-  <li><a href="#interaction-effect" id="toc-interaction-effect" class="nav-link" data-scroll-target="#interaction-effect"><span class="header-section-number">14.2.2</span> Interaction effect</a></li>
-  <li><a href="#visualizing-the-difference" id="toc-visualizing-the-difference" class="nav-link" data-scroll-target="#visualizing-the-difference"><span class="header-section-number">14.2.3</span> Visualizing the difference</a></li>
+  <li><a href="#x2-two-factor-factorial-design" id="toc-x2-two-factor-factorial-design" class="nav-link" data-scroll-target="#x2-two-factor-factorial-design"><span class="header-section-number">14.2.1</span> 2x2 two-factor factorial design</a></li>
+  <li><a href="#ixj-two-factor-factorial-design" id="toc-ixj-two-factor-factorial-design" class="nav-link" data-scroll-target="#ixj-two-factor-factorial-design"><span class="header-section-number">14.2.2</span> IxJ two-factor factorial design</a></li>
+  <li><a href="#ixjxk-three-factor-factorial-design" id="toc-ixjxk-three-factor-factorial-design" class="nav-link" data-scroll-target="#ixjxk-three-factor-factorial-design"><span class="header-section-number">14.2.3</span> IxJxK three-factor factorial design</a></li>
   </ul></li>
+  <li><a href="#orthogonal-design" id="toc-orthogonal-design" class="nav-link" data-scroll-target="#orthogonal-design"><span class="header-section-number">14.3</span> Orthogonal design</a>
+  <ul class="collapse">
+  <li><a href="#orthogonal-array" id="toc-orthogonal-array" class="nav-link" data-scroll-target="#orthogonal-array"><span class="header-section-number">14.3.1</span> Orthogonal array</a></li>
+  <li><a href="#factor-assignment" id="toc-factor-assignment" class="nav-link" data-scroll-target="#factor-assignment"><span class="header-section-number">14.3.2</span> Factor assignment</a></li>
+  </ul></li>
+  <li><a href="#nested-design" id="toc-nested-design" class="nav-link" data-scroll-target="#nested-design"><span class="header-section-number">14.4</span> Nested design</a></li>
+  <li><a href="#split-plot-design" id="toc-split-plot-design" class="nav-link" data-scroll-target="#split-plot-design"><span class="header-section-number">14.5</span> Split-plot design</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/multi-factor-anova.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -365,12 +415,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="14.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">14.1</span> Prerequisite</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DoE.base)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="factorial-design" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="factorial-design"><span class="header-section-number">14.2</span> Factorial design</h2>
 <p>Factorial design is an experimental setup that involves two or more factors, each with multiple levels, and tests all possible combinations of these factors. This design is widely used in various fields like medicine, biology, and psychology to analyze the simultaneous influence of multiple factors on an outcome.</p>
+<section id="x2-two-factor-factorial-design" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="x2-two-factor-factorial-design"><span class="header-section-number">14.2.1</span> 2x2 two-factor factorial design</h3>
+<p>A 2x2 two-factor factorial design is a type of experimental design where two independent factors are studied, and each factor has two levels. The design tests both the main effects of each factor and the interaction effect between the two factors.</p>
 <div class="example">
 <strong>Example 1:</strong> 
 <p>A experiment involved randomly dividing 20 rabbits into 4 groups, with 5 rabbits in each group, to perform a suture test after nerve injury. The treatments consisted of a combination of two factors. Factor A was the suture method, which had two levels: a1 and a2. Factor B was the time after suturing, which also had two levels: b1 and b2. The experimental results were the axon transmission rate (%) after nerve suturing for each rabbit, as shown in <a href="#tbl-rabbit-suture" class="quarto-xref">Table&nbsp;<span>14.1</span></a> . To compare the effects of different suture methods and post-suture times on axon transmission rates.</p>
@@ -443,6 +498,7 @@ Table&nbsp;14.1: The axon transmission rate (%) after nerve suturing for each ra
 </figure>
 </div>
 </div>
+<p>You can use <code>aov()</code> function to analyze this design and test the main effects and interaction. The code would look like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(response <span class="sc">~</span> method <span class="sc">*</span> time, <span class="at">data =</span> df)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -456,9 +512,8 @@ Table&nbsp;14.1: The axon transmission rate (%) after nerve suturing for each ra
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>When analyzing a dataset with two or more independent variables, you often want to understand how each variable independently affects the outcome (main effect) and whether the effect of one variable depends on the level of another (interaction effect).</p>
-<section id="main-effect" class="level3" data-number="14.2.1">
-<h3 data-number="14.2.1" class="anchored" data-anchor-id="main-effect"><span class="header-section-number">14.2.1</span> Main effect</h3>
+<p>Here, <code>method * time</code> tests both the main effects and the interaction effect.</p>
+<p><strong>Main effect</strong></p>
 <p>The main effect refers to the impact of one independent variable on the dependent variable, ignoring the other variables. In a factorial design with multiple independent variables, a main effect is the effect of one factor averaged across the levels of the other factors. It examines the effect of each independent variable in isolation.</p>
 <ul>
 <li><p><strong>method</strong></p>
@@ -466,17 +521,13 @@ Table&nbsp;14.1: The axon transmission rate (%) after nerve suturing for each ra
 <li><p><strong>time</strong></p>
 <p>The p-value for time is 0.0118, which is less than 0.05, indicating that time has a statistically significant effect on the response. The F value of 8.067 supports this conclusion, showing that the response variable changes significantly across different time points.</p></li>
 </ul>
-</section>
-<section id="interaction-effect" class="level3" data-number="14.2.2">
-<h3 data-number="14.2.2" class="anchored" data-anchor-id="interaction-effect"><span class="header-section-number">14.2.2</span> Interaction effect</h3>
+<p><strong>Interaction effect</strong></p>
 <p>An interaction occurs when the effect of one independent variable depends on the level of another independent variable. This means that the effect of one factor is not consistent across the levels of the other factor. An interaction suggests that the variables are not independent in their effects on the dependent variable.</p>
 <ul>
-<li><p><strong>method:time</strong></p>
+<li><p><strong>method : time</strong></p>
 <p>The p-value for the interaction effect is 0.7995, which is much greater than 0.05, indicating that there is no significant interaction between method and time. This means that the effect of the method on the response does not depend on the time. In other words, the impact of the methods is consistent across different times.</p></li>
 </ul>
-</section>
-<section id="visualizing-the-difference" class="level3" data-number="14.2.3">
-<h3 data-number="14.2.3" class="anchored" data-anchor-id="visualizing-the-difference"><span class="header-section-number">14.2.3</span> Visualizing the difference</h3>
+<p><strong>Visualizing the difference</strong></p>
 <p>A common way to visualize main and interaction effects is through interaction plots. If there’s no interaction, the lines for method 1 and method 2 in the graph of axon transmission rate against factor B will be parallel. This means the difference between the methods is the same regardless of factor B. If there is an interaction, the lines will cross or diverge, indicating that the effect of the method differs depending on the time after suturing.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw an interaction plot</span></span>
@@ -491,9 +542,493 @@ Table&nbsp;14.1: The axon transmission rate (%) after nerve suturing for each ra
 </div>
 </div>
 </div>
-
-
 </section>
+<section id="ixj-two-factor-factorial-design" class="level3" data-number="14.2.2">
+<h3 data-number="14.2.2" class="anchored" data-anchor-id="ixj-two-factor-factorial-design"><span class="header-section-number">14.2.2</span> IxJ two-factor factorial design</h3>
+<p>In an IxJ two-factor factorial design, we have two factors (independent variables), each with a number of levels: Factor A has I levels (e.g., different treatments, conditions, or groups). Factor B has J levels (e.g., time points, environments, or conditions).</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>To observe the analgesic effect of combining painkillers A and B during childbirth, painkiller A is administered in three different doses: 1.0 mg, 2.5 mg, and 5.0 mg, painkiller B is also administered in three different doses: 5 μg, 15 μg, and 30 μg. A total of 27 women in labor are randomly divided into 9 groups, with 3 women in each group. The analgesic time for each woman during labor is recorded, and the results are shown in <a href="#tbl-pain-killer" class="quarto-xref">Table&nbsp;<span>14.2</span></a> . Analyze the combined analgesic effect of drug A and drug B.</p>
+</div>
+<div>
+<p><a href="datasets/ex14-02.csv" download="ex14-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"datasets/ex14-02.csv"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">drugA =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">drugB =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">col_double</span>()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-pain-killer" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pain-killer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;14.2: The analgesic time for each woman during labor
+</figcaption>
+<div aria-describedby="tbl-pain-killer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">drugA</th>
+<th style="text-align: center;">drugB5</th>
+<th style="text-align: center;">drugB15</th>
+<th style="text-align: center;">drugB30</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">105</td>
+<td style="text-align: center;">115</td>
+<td style="text-align: center;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">105</td>
+<td style="text-align: center;">95</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">85</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">125</td>
+<td style="text-align: center;">135</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">115</td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">120</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">90</td>
+<td style="text-align: center;">150</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">85</td>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;">180</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">190</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">125</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">160</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The ANOVA model would look like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(time <span class="sc">~</span> drugA <span class="sc">*</span> drugB, <span class="at">data =</span> df)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+#&gt; drugA        2   6572    3286   8.470 0.00256 **
+#&gt; drugB        2   7022    3511   9.050 0.00190 **
+#&gt; drugA:drugB  4   7872    1968   5.073 0.00647 **
+#&gt; Residuals   18   6983     388                   
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>This output represents the results of a two-way ANOVA model analyzing the effects of two drugs (A and B) and their interaction on the response variable (in this case, time).</p>
+<p><strong>Main effect of drugA</strong></p>
+<p>The F value is 8.470, p-value is 0.00256. Since this p-value is less than 0.01, the different levels of drug A significantly affect the response variable.</p>
+<p><strong>Main effect of drugB</strong></p>
+<p>The F value is 9.050, p-value is 0.00190. This is also a significant result (p &lt; 0.01), meaning the different levels of drug B significantly affect the response variable.</p>
+<p><strong>Interaction effect of drugA:drugB</strong></p>
+<p>THe F value is 5.073, p-value is 0.00647. This p-value is significant (p &lt; 0.01), indicating that there is a significant interaction between drug A and B. The effect of drug A on time depends on the level of drug B and vice versa. This means that the combination of the two drugs affects the outcome in a way that cannot be explained by the main effects alone.</p>
+</section>
+<section id="ixjxk-three-factor-factorial-design" class="level3" data-number="14.2.3">
+<h3 data-number="14.2.3" class="anchored" data-anchor-id="ixjxk-three-factor-factorial-design"><span class="header-section-number">14.2.3</span> IxJxK three-factor factorial design</h3>
+<p>For an IxJxK design, where the factors have I , J , and K levels respectively, performing an ANOVA will help evaluate the significance of the factors and their interactions on the dependent variable.</p>
+<p>Suppose we want to investigate the effect of three factors on reducing blood pressure in patients. The three factors are:</p>
+<ul>
+<li>Medication type (A): 2 levels (drug 1, drug 2)</li>
+<li>Exercise regimen (B): 2 levels (low intensity, high intensity)</li>
+<li>Diet plan (C): 3 levels (low salt, mediterranean, high fiber)</li>
+</ul>
+<p>This gives us a <span class="math inline">2 \times 2 \times 3</span> factorial design, resulting in 12 treatment combinations. The response is blood pressure reduction after 12 weeks of treatment. You can use the <code>aov()</code> or <code>lm()</code> functions to conduct a three-way ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">200</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">a =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"drug 1"</span>, <span class="st">"drug 2"</span>), <span class="at">each =</span> <span class="dv">18</span>)),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">b =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>), <span class="at">each =</span> <span class="dv">9</span>), <span class="dv">2</span>)),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">c =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low salt"</span>, <span class="st">"mediterranean"</span>, <span class="st">"high fiber"</span>), <span class="at">times =</span> <span class="dv">6</span>)),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">9</span>, <span class="dv">7</span>, <span class="dv">12</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">10</span>, </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">12</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">8</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">13</span>, <span class="dv">11</span>, <span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">11</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the three-way ANOVA</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(y <span class="sc">~</span>  a <span class="sc">*</span> b <span class="sc">*</span> c, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; a            1   5.44    5.44   1.342 0.257999    
+#&gt; b            1  58.78   58.78  14.493 0.000857 ***
+#&gt; c            2   9.39    4.69   1.158 0.331193    
+#&gt; a:b          1   0.11    0.11   0.027 0.869920    
+#&gt; a:c          2   2.39    1.19   0.295 0.747542    
+#&gt; b:c          2   0.72    0.36   0.089 0.915109    
+#&gt; a:b:c        2   2.39    1.19   0.295 0.747542    
+#&gt; Residuals   24  97.33    4.06                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span>  a <span class="sc">*</span> b <span class="sc">*</span> c, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Analysis of Variance Table
+#&gt; 
+#&gt; Response: y
+#&gt;           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+#&gt; a          1  5.444   5.444  1.3425 0.2579990    
+#&gt; b          1 58.778  58.778 14.4932 0.0008569 ***
+#&gt; c          2  9.389   4.694  1.1575 0.3311928    
+#&gt; a:b        1  0.111   0.111  0.0274 0.8699202    
+#&gt; a:c        2  2.389   1.194  0.2945 0.7475423    
+#&gt; b:c        2  0.722   0.361  0.0890 0.9151087    
+#&gt; a:b:c      2  2.389   1.194  0.2945 0.7475423    
+#&gt; Residuals 24 97.333   4.056                      
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="orthogonal-design" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="orthogonal-design"><span class="header-section-number">14.3</span> Orthogonal design</h2>
+<p>Factorial design tests all possible combinations of levels across all factors. It allows for the study of the main effects and interactions between the factors. Orthogonal design is a more efficient form of experimental design that requires fewer experimental runs. It selects specific combinations of factor levels in such a way that each factor’s effect can be estimated independently (orthogonally) from the others, without testing all possible combinations. This reduces the number of experimental runs compared to a full factorial design. It is widely used in quality control, optimization experiments, and clinical research.</p>
+<p>Orthogonal designs are often used when:</p>
+<ul>
+<li>Budget or time constraints make full factorial designs impractical.</li>
+<li>The focus is on estimating main effects and selected interactions, not all possible interactions.</li>
+<li>Multiple factors need to be studied simultaneously, but a full set of combinations is unnecessary.</li>
+</ul>
+<section id="orthogonal-array" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="orthogonal-array"><span class="header-section-number">14.3.1</span> Orthogonal array</h3>
+<p>Orthogonal array (OA) is a tool used in orthogonal design to arrange factors and their levels in a way that ensures the factors are orthogonal, meaning their effects can be estimated independently.</p>
+<p>OAs are typically represented as <span class="math inline">L_{n}(k^p)</span>, where <span class="math inline">n</span> represents the number of experimental runs (or combinations), <span class="math inline">k</span> is the number of levels for each factor, <span class="math inline">p</span> is the number of factors. For example, <span class="math inline">L_8(2^7)</span> refers to an experiment with 7 factors, each having 2 levels, and requiring 8 experimental runs.</p>
+<p>The choice of an appropriate OA depends on the number of factors and their levels. For more complex experiments (i.e., many factors with multiple levels), larger orthogonal arrays like <span class="math inline">L_{16}</span> or <span class="math inline">L_{18}</span> might be suitable.</p>
+<p>In R, you can use the <code>DoE.base</code> package to generate orthogonal arrays. Here’s an example of how to generate an <span class="math inline">L_8(2^7)</span> array:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oa.design</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">nruns =</span> <span class="dv">8</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">nfactors =</span> <span class="dv">7</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nlevels =</span> <span class="dv">2</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">200</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;   A B C D E F G
+#&gt; 1 2 1 2 1 1 2 2
+#&gt; 2 1 1 2 2 2 1 2
+#&gt; 3 1 2 2 1 2 2 1
+#&gt; 4 2 2 2 2 1 1 1
+#&gt; 5 1 1 1 1 1 1 1
+#&gt; 6 2 2 1 1 2 1 2
+#&gt; 7 1 2 1 2 1 2 2
+#&gt; 8 2 1 1 2 2 2 1
+#&gt; class=design, type= oa</code></pre>
+</div>
+</div>
+<p>Or you can use the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">oa.design</span>(<span class="at">ID =</span> L8.<span class="fl">2.7</span>, <span class="at">seed =</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;   A B C D E F G
+#&gt; 1 2 1 2 1 1 2 2
+#&gt; 2 1 1 2 2 2 1 2
+#&gt; 3 1 2 2 1 2 2 1
+#&gt; 4 2 2 2 2 1 1 1
+#&gt; 5 1 1 1 1 1 1 1
+#&gt; 6 2 2 1 1 2 1 2
+#&gt; 7 1 2 1 2 1 2 2
+#&gt; 8 2 1 1 2 2 2 1
+#&gt; class=design, type= oa</code></pre>
+</div>
+</div>
+</section>
+<section id="factor-assignment" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="factor-assignment"><span class="header-section-number">14.3.2</span> Factor assignment</h3>
+<p>In an orthogonal design like the <span class="math inline">L_8(2^7)</span> array, the assignment of factors to specific columns does matter to maintain the orthogonality of the design and ensure balanced and unbiased results.</p>
+<p>The <span class="math inline">L_8(2^7)</span> array consists of 7 columns, but for an experiment with 4 factors, you will only use 4 of these columns to represent the main effects of the factors. The remaining columns can either be used for first-order (two-factor) interactions or left unused.</p>
+<p>For an <span class="math inline">L_8(2^7)</span> orthogonal array, the factors are typically assigned to columns 1, 2, 4, and 7. These columns in the orthogonal array are mutually orthogonal to each other, meaning that they do not introduce confounding effects, which helps you estimate the main effects of each factor independently. Columns 3, 5, and 6 are usually reserved for analyzing interactions, because these columns are designed to accommodate two-factor interactions.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>To study the optimal conditions for egg-laying in female snails, an orthogonal experiment is designed. The experimental conditions included four factors, each with two levels. The interaction between temperature and oxygen content is considered. Ten female snails of the same age were raised in a 20 cm² mud box. The combinations of each factor and level for the 8 experiments, as well as the experimental results, are shown in <a href="#tbl-egg-laying" class="quarto-xref">Table&nbsp;<span>14.3</span></a> .</p>
+</div>
+<div>
+<p><a href="datasets/ex14-03.csv" download="ex14-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex14-03.csv"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">temp =</span> <span class="fu">col_factor</span>(), <span class="at">oxygen =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">water =</span> <span class="fu">col_factor</span>(), <span class="at">ph =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">col_integer</span>())</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-egg-laying" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-egg-laying-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;14.3: Orthogonal experiment for spawning conditions of snails
+</figcaption>
+<div aria-describedby="tbl-egg-laying-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">temp</th>
+<th style="text-align: center;">oxygen</th>
+<th style="text-align: center;">water</th>
+<th style="text-align: center;">ph</th>
+<th style="text-align: center;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">86</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">95</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">91</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">94</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">91</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">96</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">83</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">88</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Use the <code>aov()</code> function to perform ANOVA on the orthogonal design. You can model main effects and interaction terms if necessary.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(n <span class="sc">~</span> temp <span class="sc">*</span> oxygen <span class="sc">+</span> water <span class="sc">+</span> ph, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+#&gt; temp         1    8.0     8.0     3.2 0.2155  
+#&gt; oxygen       1   18.0    18.0     7.2 0.1153  
+#&gt; water        1   60.5    60.5    24.2 0.0389 *
+#&gt; ph           1    4.5     4.5     1.8 0.3118  
+#&gt; temp:oxygen  1   50.0    50.0    20.0 0.0465 *
+#&gt; Residuals    2    5.0     2.5                 
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>These results suggest that water and the interaction between temperature and oxygen have significant effects on the response variable, the other individual factors might not be as important for this particular response.</p>
+</section>
+</section>
+<section id="nested-design" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="nested-design"><span class="header-section-number">14.4</span> Nested design</h2>
+<p>A nested design is a type of experimental design where levels of one factor are nested within the levels of another factor. This is useful when the experimental units within a group are not comparable across groups but are comparable within groups. For example, in a medical study, hospitals might be a factor, and patients might be nested within hospitals because patients from different hospitals are not directly comparable.</p>
+<p>In a nested design, factors are hierarchical. Below is a two-level nested design:</p>
+<ul>
+<li>Hospitals (A) as a primary factor.</li>
+<li>Doctors (B) nested within each hospital.</li>
+<li>Patients’ satisfaction score as the response variable.</li>
+</ul>
+<div class="example">
+<strong>Example 4:</strong> 
+<p>To study the short-term effects of different protein feeds at different feeding amounts on the growth in body length of rats, a nested design was adopted due to the inconsistent feeding amounts required to achieve the same protein content for each protein feed. The type of feed is treated as the primary experimental factor (a), and the feeding amount as the secondary experimental factor (b) nested within the type of feed. Three rats are fed per trial, and the net increase in rat body length is the response variable. Perform an ANOVA analysis based on this data.</p>
+</div>
+<div>
+<p><a href="datasets/ex14-04.csv" download="ex14-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex14-04.csv"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">col_factor</span>(), <span class="at">b =</span> <span class="fu">col_factor</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s how you can handle such a nested design and analyze it using ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(response <span class="sc">~</span> a <span class="sc">+</span> a<span class="sc">:</span>b, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; a            2 27.630  13.815  96.405 2.41e-10 ***
+#&gt; a:b          6  4.107   0.684   4.776  0.00445 ** 
+#&gt; Residuals   18  2.579   0.143                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(response <span class="sc">~</span> a<span class="sc">/</span>b, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; a            2 27.630  13.815  96.405 2.41e-10 ***
+#&gt; a:b          6  4.107   0.684   4.776  0.00445 ** 
+#&gt; Residuals   18  2.579   0.143                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The results show that different proteins quality diet affects the growth of body length in rats. For the same protein feed, different feeding mice also had an effect on the length growth of rats.</p>
+<p><strong>Visualizing the nested design</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> a, <span class="at">y =</span> response, <span class="at">fill =</span> b)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Protein feeds"</span>, <span class="at">y =</span> <span class="st">"Increase in body length"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="multi-factor-anova_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="split-plot-design" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="split-plot-design"><span class="header-section-number">14.5</span> Split-plot design</h2>
+<p>A split-plot design is used when there are two levels of randomization or when some factors are easier to control than others. This is common in medical studies where some treatments are applied to larger groups (whole plots), and others are applied to subgroups (subplots or split plots) within those larger groups.</p>
+<p>For example, if you want to study the effect of two whole-plot factors (e.g., different exercise regimens) on patients, but you also want to study the effect of a subplot factor (e.g., different dosages of a medication) within each exercise regimen. The design would look like:</p>
+<ul>
+<li>Whole-plot factor: Exercise regimen (e.g., low-intensity vs.&nbsp;high-intensity).</li>
+<li>Subplot factor: Medication dosage (e.g., 10 mg vs.&nbsp;20 mg) applied within each exercise group.</li>
+</ul>
+<p>This allows for efficient testing of interactions between exercise regimens and medication dosages while considering the hierarchical structure of the treatments.</p>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>To study the protective effect of systemic injection of antitoxin on skin damage, 10 rabbits were randomly divided into two groups. One group was injected with antitoxin, while the other group was injected with saline as a control. After grouping, two areas on each rabbit were selected, and low and high concentrations of toxin were randomly injected into these areas. The response variable is the diameter of the skin damage (mm). Perform an ANOVA analysis based on this data.</p>
+</div>
+<div>
+<p><a href="datasets/ex14-05.csv" download="ex14-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex14-05.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By using a mixed-effects model, you can appropriately analyze the hierarchical structure of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(b1, b2),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"b"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"b"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"y"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(no, drug, b), factor))</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lme</span>(y <span class="sc">~</span> drug <span class="sc">*</span> b, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> no, <span class="at">data =</span> tb) <span class="sc">|&gt;</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anova</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             numDF denDF  F-value p-value
+#&gt; (Intercept)     1     8 3440.953  &lt;.0001
+#&gt; drug            1     8   28.006  0.0007
+#&gt; b               1     8  252.049  &lt;.0001
+#&gt; drug:b          1     8    0.450  0.5212</code></pre>
+</div>
+</div>
+<p>Alternative method using <code>aov()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-19" data-target-annotation="1">1</button><span id="annotated-cell-19-1" class="code-annotation-target"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(y <span class="sc">~</span> drug <span class="sc">*</span> b <span class="sc">+</span> <span class="fu">Error</span>(no<span class="sc">/</span>b), <span class="at">data =</span> tb) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-19" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-19" data-code-lines="1" data-code-annotation="1">here <code>no</code> must be a factor.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Error: no
+#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; drug       1  63.01   63.01   28.01 0.000735 ***
+#&gt; Residuals  8  18.00    2.25                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Error: no:b
+#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; b          1  63.01   63.01  252.05 2.48e-07 ***
+#&gt; drug:b     1   0.11    0.11    0.45    0.521    
+#&gt; Residuals  8   2.00    0.25                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1096,8 +1631,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./repeated-measure.html" class="pagination-link" aria-label="Repeated measurement data">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./repeated-measure.html" class="pagination-link" aria-label="Repeated measures ANOVA">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

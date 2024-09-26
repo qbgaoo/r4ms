@@ -1,1 +1,115 @@
-# Repeated measurement data
+# Repeated measures ANOVA
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Repeated measures is a type of experimental design where the same subjects are observed under multiple conditions or over multiple time points. This approach is commonly used in research to analyze changes within subjects, making it more efficient and powerful compared to between-subject designs, where different subjects are used for each condition.
+
+-   **Advantages of repeated measures**
+    -   Control for individual differences: Since the same subjects are measured multiple times, individual differences (like age, sex, etc.) are accounted for, reducing error variance.
+    -   Efficiency: Fewer subjects are needed compared to between-subject designs because each subject serves as their own control.
+    -   Increased statistical power: By controlling for between-subject variability, repeated measures designs increase the ability to detect effects.
+-   **When to use repeated measures**
+    -   Longitudinal studies: Tracking changes over time (e.g., monitoring patients’ blood pressure at different stages of treatment).
+    -   Crossover designs: Comparing multiple treatments within the same subjects.
+    -   Pretest-posttest designs: Measuring a dependent variable before and after an intervention.
+
+Repeated measures ANOVA (RM-ANOVA) is a statistical test used to compare means when the same subjects are measured under different conditions or multiple time points. It helps to determine if there are significant differences between conditions or time points while accounting for the correlation within subjects.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(ggplot2)
+library(nlme)
+library(emmeans)
+```
+
+## 2x2 repeated measures
+
+A 2x2 repeated measures ANOVA is used when you want to test for the effects of two within-subjects factors, each having two levels, on a dependent variable. It allows you to assess both the main effects of each factor and any interaction effect between them, while accounting for within-subject variability.
+
+::: example
+To evaluate whether a new drug significantly affects blood pressure in patients with mild hypertension, 20 patients were randomly assigned to either the treatment group or the control group. Blood pressure is measured before and after the intervention. Analyze the difference of blood pressure between treatment and control group.
+:::
+
+<div>
+
+<a href="datasets/ex15-01.csv" download="ex15-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex15-01.csv", show_col_types = F) 
+```
+
+```{r}
+tb <- df |> 
+  mutate(id = factor(c(1:20))) |> 
+  pivot_longer(
+    cols = c(pretest, posttest),
+    names_to = "time",
+    values_to = "response"
+  ) |> 
+  mutate(
+    time = factor(time, , levels = c("pretest", "posttest")),
+    group = factor(group, labels = c("trt", "ctl"))
+  )
+
+aov(response ~ group * time + Error(id/(time)), data = tb) |> 
+  summary()
+```
+
+An alternative method using mixed-effect model:
+
+```{r}
+model <- lme(response ~ group * time, random = ~ 1 | id, data = tb) 
+anova(model)
+```
+
+The model results indicate that time has a significant effect on the response variable (p \< .0001), while the main effect of the group is not significant (p = 0.2256). The interaction between group and time is significant (p = 0.0004), which means that the response to the treatment varies depending on the time point being measured.
+
+To further explore the interaction between groups and time points, consider the following steps:
+
+1.  Visualize the interaction effect
+
+    ```{r}
+    tb |> 
+      ggplot(aes(x = time, y = response, color = group, group = group)) +
+      geom_line(stat = "summary", fun = "mean") +
+      geom_point(stat = "summary", fun = "mean") +
+      scale_x_discrete(breaks = c("pretest", "posttest")) + 
+      labs(x = "Time", y = "Mean of blood pressure")
+    ```
+
+```{=html}
+<!-- -->
+```
+2.  Post-hoc test
+
+    ```{r}
+    emm <- emmeans(model, ~ group * time)
+    # Perform pairwise comparisons
+    pairs(emm)
+    ```
+
+    Further exploration of the interaction between treatment group and time revealed that the mean blood pressure response differed significantly at specific time points. Post-hoc test indicates that there is no statistical difference in baseline between the treatment and control groups, and the treatment group shows a better effect in blood pressure reduction compared to the control group.
+
+    By conducting these analysis and visualizations, you’ll gain deeper insights into how different groups respond over time, informing your conclusions and potential interventions based on your study’s outcomes.
+
+## 2xJ repeated measures
+
+Considerations
+
+Sphericity: RM-ANOVA assumes equal variances for the differences between all pairs of repeated measures. If this assumption is violated, corrections like Greenhouse-Geisser or Huynh-Feldt adjustments are applied.
+
+Missing data: Mixed-effects models like those implemented with `lme()` are more robust to missing data than traditional RM-ANOVA.
+
+Conclusion
+
+Repeated measures designs are useful for analyzing within-subject changes over time or under different conditions. By reducing variability between subjects, they provide more statistical power. RM-ANOVA and mixed-effects models are commonly used to analyze repeated measures data, each offering different benefits based on the assumptions of the data.
