@@ -77,7 +77,7 @@ anova(model)
 The model results indicate that time has a significant effect on the response variable (p \< .0001), while the main effect of the group is not significant (p = 0.2256). The interaction between group and time is significant (p = 0.0004), which means that the response to the treatment varies depending on the time point being measured.
 
 ::: callout-important
-When there is a significant interaction effect, the focus should shift to understanding the interaction rather than interpreting the main effects in isolation, because when an interaction is present, the main effects do not tell the whole story. The interaction suggests that the relationship between the factors is complex, and the effects of each factor depend on the other factor. Visualizing the interaction or conducting simple effects analysis can help you better understand how the factors influence each other.
+When there is a significant interaction effect, the focus should shift to understanding the interaction rather than interpreting the main effects in isolation, because when an interaction is present, the main effects do not tell the whole story. The interaction suggests that the relationship between the factors is complex, and the effects of each factor depend on the other factor. Visualizing the interaction or conducting post-hoc analysis can help you better understand how the factors influence each other.
 :::
 
 1.  **Visualize the interaction effect**
@@ -90,7 +90,7 @@ When there is a significant interaction effect, the focus should shift to unders
       labs(x = "Time", y = "Mean of blood pressure")
     ```
 
-2.  **Simple effect analysis**
+2.  **Post-hoc analysis (simple effects)**
 
     The `emmeans` package makes simple effect analysis easier by providing marginal means and allowing you to compare them across different levels of factors.
 
@@ -139,12 +139,7 @@ tb <- df |>
     cols = contains("T"),
     names_to = "time",
     values_to = "response"
-  ) |> 
-  mutate(
-    drug = factor(drug),
-    time = factor(time)
-  )
-
+  ) 
 aov(response ~ drug * time + Error(id/(time)), data = tb) |> 
   summary()
 ```
@@ -182,7 +177,7 @@ To further explore the interaction between groups and time points, consider the 
       labs(x = "Time", y = "Mean of weight")
     ```
 
-2.  **Simple effect analysis**
+2.  **Post-hoc analysis (simple effects)**
 
     Effect of drug at each time point:
 
@@ -195,15 +190,32 @@ To further explore the interaction between groups and time points, consider the 
 
     ```{r}
     emmeans(model, ~ time | drug) |> 
+      contrast(method = "dunnett")
+    ```
+
+    Comparing time trends
+
+    ```{r}
+    df |>
+      mutate(id = factor(c(1:15))) |> 
+      pivot_longer(
+        cols = contains("T"),
+        names_to = "time",
+        names_prefix = "T",
+        values_to = "response"
+      ) |> 
+      mutate(time = as.numeric(time)) |> 
+      lme(response ~ drug * time, random = ~ 1 | id, data = _) |> 
+      emtrends(specs = ~ drug, var = "time") |> 
       pairs()
     ```
 
-Considerations
+    Comparing time trends in repeated measures designs allows you to understand the dynamic response of subjects over time and how different experimental conditions (e.g., treatment vs. control) affect these trends. It’s essential for determining whether certain groups experience more significant changes over time, providing insights into the time-dependent effectiveness of interventions.
+
+## Considerations
+
+Repeated measures designs are useful for analyzing within-subject changes over time or under different conditions. By reducing variability between subjects, they provide more statistical power. RM-ANOVA and mixed-effects models are commonly used to analyze repeated measures data, each offering different benefits based on the assumptions of the data.
 
 RM-ANOVA assumes equal variances (sphericity) for the differences between all pairs of repeated measures. If this assumption is violated, corrections like Greenhouse-Geisser or Huynh-Feldt adjustments are applied.
 
 Mixed-effects models like those implemented with `lme()` are more robust to missing data than traditional RM-ANOVA.
-
-Conclusion
-
-Repeated measures designs are useful for analyzing within-subject changes over time or under different conditions. By reducing variability between subjects, they provide more statistical power. RM-ANOVA and mixed-effects models are commonly used to analyze repeated measures data, each offering different benefits based on the assumptions of the data.
