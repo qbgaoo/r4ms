@@ -102,7 +102,7 @@ To further explore the interaction between groups and time points, consider the 
 
     By conducting these analysis and visualizations, you’ll gain deeper insights into how different groups respond over time, informing your conclusions and potential interventions based on your study’s outcomes.
 
-## 2xJ repeated measures
+## IxJ repeated measures
 
 Considerations
 
