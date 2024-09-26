@@ -1,0 +1,15 @@
+# General linear model
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+```
