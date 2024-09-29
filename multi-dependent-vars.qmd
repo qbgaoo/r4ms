@@ -285,11 +285,10 @@ The children with chronic gastritis were randomly divided into 3 groups, with gr
 </div>
 
 ```{r}
-df <- read_csv("datasets/ex17-04.csv", show_col_types = F) |> 
-  mutate(
-    group = factor(group),
-    group = relevel(group, ref = 2)
-  )
+df <- read_csv("datasets/ex17-04.csv", col_types = list(group = col_factor()))
+df |> 
+  group_by(group)|> 
+  summarise_all(.funs = list(mean = mean))
 ```
 
 Use the `manova()` function to test whether the treatment drugs have a significant effect on T-cell immune function.
@@ -306,7 +305,7 @@ The MANOVA results indicate the following:
 3.  Degrees of Freedom (num Df = 6, den Df = 14): num Df refers to the numerator degrees of freedom, associated with the number of dependent variables and groups. den Df refers to the denominator degrees of freedom, related to the residuals or error in the model.
 4.  P-value: This is the most critical value for interpreting the test. A p-value of 0.004104 indicates that there is a statistically significant difference in the combined T-cell immune function measurements (T3, T4, and T8 cell percentages) between the groups at the 0.05 significance level.
 
-Since the p-value is significant (0.004104), we can reject the null hypothesis and conclude that the treatments have a significant impact on the T-cell immune function across the groups. To determine which specific variables (T3, T4, or T8) are driving these differences, you can run follow-up univariate ANOVAs for each dependent variable or perform post-hoc tests.
+Since the p-value is significant (0.004104), we can reject the null hypothesis and conclude that the treatments have a significant impact on the T-cell immune function across the groups. To determine which specific variables (T3, T4, or T8) are driving these differences, you can run follow-up univariate ANOVAs for each dependent variable.
 
 ```{r}
 # Univariate ANOVA
@@ -316,24 +315,63 @@ df |>
   map(summary)
 ```
 
-You can directly use `summary.aov()` to extract the univariate ANOVAs for each dependent variable.
+Another convenient tool is `summary.aov()`, which can extract the univariate ANOVAs directly from the model for each dependent variable.
 
 ```{r}
 summary.aov(model)
 ```
 
-This will give you the individual ANOVA tables for each dependent variable. If any of these ANOVAs are significant, you should conduct post-hoc pairwise comparisons.
-
-```{r}
-emmeans(model, ~ group) 
-  contrast("dunnett")
-```
+This will give you the individual ANOVA tables for each dependent variable. If any of these ANOVAs are significant, you should conduct post-hoc pairwise comparisons to see which two groups are significantly different.
 
 ```{r}
 df |> 
-  group_by(group)|> 
-  summarise_all(
-    .funs = list(mean = mean) 
-  )
+  select(t3, t4, t8) |> 
+  lapply(\(x) aov(x ~ group, data = df)) |> 
+  map(~ TukeyHSD(.))
+```
+
+This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.
+
+Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named `pairs.hotellings.T2.test()` to perform pairwise comparisons of the multivariate means between groups.
+
+```{r}
+# Define the pairwise_hotelling function
+pairs.hotellings.T2.test <- function(formula, data, p.adjust.method = p.adjust.methods) {
+  vars <- all.vars(formula[[2]])  # Get the response variables
+  g <- all.vars(formula[[3]])  # Get the group variable 
+  p.adjust.method <- match.arg(p.adjust.method)
   
+  group <- unique(data[[g]])  # Get unique groups
+  n_group <- length(group)
+  pairwise_table <- c()
+  METHOD <- "Pairwise comparison using Hotelling's two sample T2-test"
+  
+  # Loop through all unique pairwise combinations of groups
+  for (i in 1:(n_group - 1)) {
+    for (j in (i + 1):n_group) {
+      x <- data[data[[g]] == group[i], vars]
+      y <- data[data[[g]] == group[j], vars]
+      
+      # Perform Hotelling's T² test
+      htest <- HotellingsT2Test(x, y)
+      tb <- tibble(
+        pairs = paste0(group[i], "~", group[j]),
+        T.2 = htest$statistic,
+        df1 = htest$parameter[1],
+        df2 = htest$parameter[2],
+        p_value = htest$p.value
+      )
+      # Store the result in a list with descriptive names
+      pairwise_table <- rbind(pairwise_table, tb)
+    }
+  }
+  pairwise_table <- pairwise_table |> 
+    mutate(p_value = p.adjust(p_value, method = p.adjust.method))
+  
+  list(tbl = pairwise_table, method = METHOD, p.adjust.method=p.adjust.method)
+}
+```
+
+```{r}
+pairs.hotellings.T2.test(cbind(t3, t4, t8) ~ group, data = df) 
 ```

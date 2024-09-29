@@ -397,6 +397,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#hotellings-t²-test-one-sample" id="toc-hotellings-t²-test-one-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-one-sample"><span class="header-section-number">17.3.1</span> Hotelling’s T² test: one-sample</a></li>
   <li><a href="#hotellings-t²-test-two-sample" id="toc-hotellings-t²-test-two-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-two-sample"><span class="header-section-number">17.3.2</span> Hotelling’s T² test: two-sample</a></li>
+  <li><a href="#manova-for-multiple-groups" id="toc-manova-for-multiple-groups" class="nav-link" data-scroll-target="#manova-for-multiple-groups"><span class="header-section-number">17.3.3</span> MANOVA for multiple groups</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/multi-dependent-vars.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -429,7 +430,8 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="common-descriptive-statistics" class="level2" data-number="17.2">
@@ -638,7 +640,7 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-03.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>HotellingsT2Test()</code> function from <code>DescTools</code> package can still be used to perform Hotelling’s T² test for two groups.</p>
+<p>The <code>HotellingsT2Test()</code> function from <code>DescTools</code> package is used to perform Hotelling’s T² test for two groups.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">HotellingsT2Test</span>(<span class="fu">cbind</span>(LVEF, MWT) <span class="sc">~</span> group, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -650,7 +652,228 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 #&gt; alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
 </div>
 </div>
+<p>An alternative method is using the <code>manova()</code> function to perform multivariate ANOVA, just as univariate two-sample mean difference can be tested either by t-test or ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">manova</span>(<span class="fu">cbind</span>(LVEF, MWT) <span class="sc">~</span> group, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-2" class="code-annotation-target"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">test =</span> <span class="st">"Wilks"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="2" data-code-annotation="1">This provides a summary of the MANOVA results using Wilks’ Lambda as the test statistic.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;           Df   Wilks approx F num Df den Df Pr(&gt;F)
+#&gt; group      1 0.86823     1.29      2     17 0.3009
+#&gt; Residuals 18</code></pre>
+</div>
+</div>
 <p>In this case, the p-value is 0.3009, which is higher than the significance level of 0.05, not reject the null hypothesis. There is no significant evidence to suggest that drug A has a effect on improving heart function (as measured by LVEF and 6MWT) when compared to standard treatment alone.</p>
+</section>
+<section id="manova-for-multiple-groups" class="level3" data-number="17.3.3">
+<h3 data-number="17.3.3" class="anchored" data-anchor-id="manova-for-multiple-groups"><span class="header-section-number">17.3.3</span> MANOVA for multiple groups</h3>
+<p>MANOVA (Multivariate analysis of variance) is an extension of ANOVA that allows for comparing the mean vectors of multiple groups across several dependent variables while considering the correlation between them.</p>
+<div class="example">
+<strong>Example 4:</strong> 
+<p>The children with chronic gastritis were randomly divided into 3 groups, with group I and group II as treatment groups, and another group serving as the control. The aim is to compare the effect of the treatment drugs on T-cell immune function (percentages of peripheral blood T3, T4, and T5 cells).</p>
+</div>
+<div>
+<p><a href="datasets/ex17-04.csv" download="ex17-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-04.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>()))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group)<span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="at">.funs =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 4
+#&gt;   group t3_mean t4_mean t8_mean
+#&gt;   &lt;fct&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1 1        62.3    31.8    30.8
+#&gt; 2 2        42.5    20.1    17.4
+#&gt; 3 3        73.2    38.1    33.7</code></pre>
+</div>
+</div>
+<p>Use the <code>manova()</code> function to test whether the treatment drugs have a significant effect on T-cell immune function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(t3, t4, t8) <span class="sc">~</span> group, <span class="at">data =</span> df)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model, <span class="at">test =</span> <span class="st">"Wilks"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;           Df    Wilks approx F num Df den Df   Pr(&gt;F)   
+#&gt; group      2 0.088735   5.4997      6     14 0.004104 **
+#&gt; Residuals  9                                            
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The MANOVA results indicate the following:</p>
+<ol type="1">
+<li>Wilks’ Lambda (0.088735): This is a test statistic used in multivariate analysis of variance. A lower Wilks’ Lambda value indicates that the group differences explain a large portion of the variance in the dependent variables (T3, T4, T8). In this case, the value is relatively low, which suggests that the groups differ significantly in the combined T-cell percentages.</li>
+<li>Approximate F-statistic (5.4997): The F-value is used to determine whether the differences between the groups’ means are statistically significant. A larger F-value typically suggests stronger evidence against the null hypothesis (i.e., no difference between groups).</li>
+<li>Degrees of Freedom (num Df = 6, den Df = 14): num Df refers to the numerator degrees of freedom, associated with the number of dependent variables and groups. den Df refers to the denominator degrees of freedom, related to the residuals or error in the model.</li>
+<li>P-value: This is the most critical value for interpreting the test. A p-value of 0.004104 indicates that there is a statistically significant difference in the combined T-cell immune function measurements (T3, T4, and T8 cell percentages) between the groups at the 0.05 significance level.</li>
+</ol>
+<p>Since the p-value is significant (0.004104), we can reject the null hypothesis and conclude that the treatments have a significant impact on the T-cell immune function across the groups. To determine which specific variables (T3, T4, or T8) are driving these differences, you can run follow-up univariate ANOVAs for each dependent variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Univariate ANOVA</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(t3, t4, t8) <span class="sc">|&gt;</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(x) <span class="fu">aov</span>(x <span class="sc">~</span> group, <span class="at">data =</span> df)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $t3
+#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; group        2 2110.0  1055.0   32.55 7.58e-05 ***
+#&gt; Residuals    9  291.7    32.4                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; $t4
+#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+#&gt; group        2  727.7   363.9    8.72 0.00783 **
+#&gt; Residuals    9  375.5    41.7                   
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; $t8
+#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+#&gt; group        2  638.0   319.0   14.81 0.00142 **
+#&gt; Residuals    9  193.9    21.5                   
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Another convenient tool is <code>summary.aov()</code>, which can extract the univariate ANOVAs directly from the model for each dependent variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;  Response t3 :
+#&gt;             Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+#&gt; group        2 2110.01 1055.00  32.553 7.582e-05 ***
+#&gt; Residuals    9  291.68   32.41                      
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt;  Response t4 :
+#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)   
+#&gt; group        2 727.70  363.85  8.7197 0.007833 **
+#&gt; Residuals    9 375.55   41.73                    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt;  Response t8 :
+#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)   
+#&gt; group        2 638.04  319.02  14.807 0.001425 **
+#&gt; Residuals    9 193.91   21.55                    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>This will give you the individual ANOVA tables for each dependent variable. If any of these ANOVAs are significant, you should conduct post-hoc pairwise comparisons to see which two groups are significantly different.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(t3, t4, t8) <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(x) <span class="fu">aov</span>(x <span class="sc">~</span> group, <span class="at">data =</span> df)) <span class="sc">|&gt;</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">TukeyHSD</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $t3
+#&gt;   Tukey multiple comparisons of means
+#&gt;     95% family-wise confidence level
+#&gt; 
+#&gt; Fit: aov(formula = x ~ group, data = df)
+#&gt; 
+#&gt; $group
+#&gt;          diff         lwr       upr     p adj
+#&gt; 2-1 -19.74167 -31.8813782 -7.601955 0.0036024
+#&gt; 3-1  10.95333  -0.6544511 22.561118 0.0638950
+#&gt; 3-2  30.69500  20.0325691 41.357431 0.0000567
+#&gt; 
+#&gt; 
+#&gt; $t4
+#&gt;   Tukey multiple comparisons of means
+#&gt;     95% family-wise confidence level
+#&gt; 
+#&gt; Fit: aov(formula = x ~ group, data = df)
+#&gt; 
+#&gt; $group
+#&gt;           diff        lwr      upr     p adj
+#&gt; 2-1 -11.708333 -25.483127  2.06646 0.0957183
+#&gt; 3-1   6.306667  -6.864555 19.47789 0.4114644
+#&gt; 3-2  18.015000   5.916460 30.11354 0.0062399
+#&gt; 
+#&gt; 
+#&gt; $t8
+#&gt;   Tukey multiple comparisons of means
+#&gt;     95% family-wise confidence level
+#&gt; 
+#&gt; Fit: aov(formula = x ~ group, data = df)
+#&gt; 
+#&gt; $group
+#&gt;           diff        lwr       upr     p adj
+#&gt; 2-1 -13.458333 -23.356374 -3.560293 0.0106483
+#&gt; 3-1   2.906667  -6.557671 12.371004 0.6787514
+#&gt; 3-2  16.365000   7.671451 25.058549 0.0013602</code></pre>
+</div>
+</div>
+<p>This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.</p>
+<p>Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named <code>pairs.hotellings.T2.test()</code> to perform pairwise comparisons of the multivariate means between groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the pairwise_hotelling function</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pairs.hotellings.T2.test <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, <span class="at">p.adjust.method =</span> p.adjust.methods) {</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  vars <span class="ot">&lt;-</span> <span class="fu">all.vars</span>(formula[[<span class="dv">2</span>]])  <span class="co"># Get the response variables</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  g <span class="ot">&lt;-</span> <span class="fu">all.vars</span>(formula[[<span class="dv">3</span>]])  <span class="co"># Get the group variable </span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  p.adjust.method <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(p.adjust.method)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  group <span class="ot">&lt;-</span> <span class="fu">unique</span>(data[[g]])  <span class="co"># Get unique groups</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  n_group <span class="ot">&lt;-</span> <span class="fu">length</span>(group)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  pairwise_table <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Pairwise comparison using Hotelling's two sample T2-test"</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Loop through all unique pairwise combinations of groups</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n_group <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> (i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_group) {</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>      x <span class="ot">&lt;-</span> data[data[[g]] <span class="sc">==</span> group[i], vars]</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>      y <span class="ot">&lt;-</span> data[data[[g]] <span class="sc">==</span> group[j], vars]</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Perform Hotelling's T² test</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>      htest <span class="ot">&lt;-</span> <span class="fu">HotellingsT2Test</span>(x, y)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>      tb <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">pairs =</span> <span class="fu">paste0</span>(group[i], <span class="st">"-"</span>, group[j]),</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">T.2 =</span> htest<span class="sc">$</span>statistic,</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">df1 =</span> htest<span class="sc">$</span>parameter[<span class="dv">1</span>],</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">df2 =</span> htest<span class="sc">$</span>parameter[<span class="dv">2</span>],</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">p_value =</span> htest<span class="sc">$</span>p.value</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Store the result in a list with descriptive names</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>      pairwise_table <span class="ot">&lt;-</span> <span class="fu">rbind</span>(pairwise_table, tb)</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>  pairwise_table <span class="ot">&lt;-</span> pairwise_table <span class="sc">|&gt;</span> </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p_value =</span> <span class="fu">p.adjust</span>(p_value, <span class="at">method =</span> p.adjust.method))</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tbl =</span> pairwise_table, <span class="at">method =</span> METHOD, <span class="at">p.adjust.method=</span>p.adjust.method)</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.hotellings.T2.test</span>(<span class="fu">cbind</span>(t3, t4, t8) <span class="sc">~</span> group, <span class="at">data =</span> df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $tbl
+#&gt; # A tibble: 3 × 5
+#&gt;   pairs T.2[,1]   df1   df2 p_value
+#&gt;   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1 1-2      3.46     3     3  0.168 
+#&gt; 2 1-3     13.0      3     4  0.0316
+#&gt; 3 2-3     14.0      3     5  0.0218
+#&gt; 
+#&gt; $method
+#&gt; [1] "Pairwise comparison using Hotelling's two sample T2-test"
+#&gt; 
+#&gt; $p.adjust.method
+#&gt; [1] "holm"</code></pre>
+</div>
+</div>
 
 
 </section>
