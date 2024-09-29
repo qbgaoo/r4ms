@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Medical Statistics - 7&nbsp; t-test</title>
+<title>R for Medical Statistics - 17&nbsp; Multivariate data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./anova.html" rel="next">
-<link href="./hypothesis-test.html" rel="prev">
+<link href="./logistic-regression.html" rel="next">
+<link href="./general-linear-model.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./multi-dependent-vars.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -249,7 +249,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ttest.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
   </div>
 </li>
@@ -320,20 +320,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./multi-dependent-vars.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -350,19 +356,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,28 +383,30 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">7.1</span> Prerequisites</a></li>
-  <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</a></li>
-  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</a></li>
-  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</a>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">17.1</span> Prerequisite</a></li>
+  <li><a href="#common-descriptive-statistics" id="toc-common-descriptive-statistics" class="nav-link" data-scroll-target="#common-descriptive-statistics"><span class="header-section-number">17.2</span> Common descriptive statistics</a>
   <ul class="collapse">
-  <li><a href="#the-t-test-for-equal-population-variances" id="toc-the-t-test-for-equal-population-variances" class="nav-link" data-scroll-target="#the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</a></li>
-  <li><a href="#welch-t-test-for-unequal-population-variances" id="toc-welch-t-test-for-unequal-population-variances" class="nav-link" data-scroll-target="#welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</a></li>
+  <li><a href="#mean-vector" id="toc-mean-vector" class="nav-link" data-scroll-target="#mean-vector"><span class="header-section-number">17.2.1</span> Mean vector</a></li>
+  <li><a href="#deviation-matrix" id="toc-deviation-matrix" class="nav-link" data-scroll-target="#deviation-matrix"><span class="header-section-number">17.2.2</span> Deviation matrix</a></li>
+  <li><a href="#covariance-matrix" id="toc-covariance-matrix" class="nav-link" data-scroll-target="#covariance-matrix"><span class="header-section-number">17.2.3</span> Covariance matrix</a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix"><span class="header-section-number">17.2.4</span> Correlation matrix</a></li>
+  <li><a href="#scatterplot-matrix" id="toc-scatterplot-matrix" class="nav-link" data-scroll-target="#scatterplot-matrix"><span class="header-section-number">17.2.5</span> Scatterplot matrix</a></li>
+  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">17.2.6</span> Multivariate normal distribution</a></li>
   </ul></li>
-  <li><a href="#normality-test-and-f-test" id="toc-normality-test-and-f-test" class="nav-link" data-scroll-target="#normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</a>
+  <li><a href="#comparison-of-differences-between-groups" id="toc-comparison-of-differences-between-groups" class="nav-link" data-scroll-target="#comparison-of-differences-between-groups"><span class="header-section-number">17.3</span> Comparison of differences between groups</a>
   <ul class="collapse">
-  <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">7.5.1</span> Normality test</a></li>
+  <li><a href="#hotellings-t²-test-one-sample" id="toc-hotellings-t²-test-one-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-one-sample"><span class="header-section-number">17.3.1</span> Hotelling’s T² test: one-sample</a></li>
+  <li><a href="#hotellings-t²-test-two-sample" id="toc-hotellings-t²-test-two-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-two-sample"><span class="header-section-number">17.3.2</span> Hotelling’s T² test: two-sample</a></li>
   </ul></li>
-  <li><a href="#sec-f-test" id="toc-sec-f-test" class="nav-link" data-scroll-target="#sec-f-test"><span class="header-section-number">7.6</span> F-test</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/multi-dependent-vars.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./multi-dependent-vars.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-t-test" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></h1>
 </div>
 
 
@@ -415,276 +423,237 @@ window.Quarto = {
 </header>
 
 
-<p>A t-test is a statistical test used to compare the means of two groups to determine if they are significantly different from each other. It is commonly used in situations where the sample size is small and the population variance is unknown. There are different types of t-tests depending on the study design and the nature of the data.</p>
-<section id="prerequisites" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">7.1</span> Prerequisites</h2>
+<p>Multivariate data usually refers to data involving more than one variable, but here specially refers to datasets where there are multiple outcome or response variables (also called dependent variables) that are measured simultaneously for each observation or experimental unit. This type of data is common in many fields such as psychology, medicine, biology, and social sciences, where researchers want to study how one or more predictors (independent variables) affect multiple outcomes.</p>
+<section id="prerequisite" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">17.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="one-sample-t-test" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</h2>
-<p>The one-sample <em>t</em>-test is used to determine whether the mean of a single sample is significantly different from a known or hypothesized population mean. It is commonly used when you have a sample and want to test if its mean differs from a theoretical value or an expected value. Its test statistic t is calculated as follows:</p>
+<section id="common-descriptive-statistics" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="common-descriptive-statistics"><span class="header-section-number">17.2</span> Common descriptive statistics</h2>
+<p>Descriptive statistics for multivariate data help summarize the properties of several variables simultaneously. Some key statistics include:</p>
+<section id="mean-vector" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="mean-vector"><span class="header-section-number">17.2.1</span> Mean vector</h3>
+<p>The mean vector is a multivariate extension of the concept of a mean in univariate statistics. It provides the average or central value for each variable in a multivariate dataset. For multiple variables, it is represented as a vector:</p>
+<p><span class="math display">\mu = (\mu_1, \mu_2, \dots, \mu_p)</span></p>
+<p>where <span class="math inline">p</span> is the number of variables.</p>
+</section>
+<section id="deviation-matrix" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="deviation-matrix"><span class="header-section-number">17.2.2</span> Deviation matrix</h3>
+<p>The deviation matrix (also known as the mean deviation matrix or matrix of deviations) is a matrix that represents how much each observation in a dataset deviates from the mean of the corresponding variable. It is often used in multivariate data analysis as a step before calculating other statistics, like the covariance matrix.</p>
+<p>If the dataset is represented by the matrix <span class="math inline">\mathbf{X}</span> with <span class="math inline">n</span> rows (observations) and <span class="math inline">p</span> columns (variables), and <span class="math inline">v</span> is the mean vector of the variables, the deviation matrix <span class="math inline">\mathbf{D}</span> is calculated as:</p>
 <p><span class="math display">
-t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
+\mathbf{D} = \mathbf{X} - \mathbf{1} \mu^T
 </span></p>
-<p>where <span class="math inline">\bar{X}</span> si the sample mean , <span class="math inline">S</span> is the sample standard deviation and <span class="math inline">n</span> is the sample size, <span class="math inline">\mu_0</span> is the hypothesized population mean.</p>
-<p>The one-sample <em>t</em>-test is a straightforward but powerful tool for hypothesis testing in many research scenarios.</p>
+<p>where <span class="math inline">\mathbf{X}</span> is the <span class="math inline">n \times p</span> data matrix, <span class="math inline">\mathbf{1}</span> is an <span class="math inline">n \times 1</span> column vector of ones, <span class="math inline">\mu^T</span> is the <span class="math inline">1 \times p</span> mean vector transposed to match the dimensions, <span class="math inline">\mathbf{D}</span> is the <span class="math inline">n \times p</span> deviation matrix.</p>
+</section>
+<section id="covariance-matrix" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="covariance-matrix"><span class="header-section-number">17.2.3</span> Covariance matrix</h3>
+<p>The covariance matrix describes the relationships between pairs of variables in a dataset. It captures how much two variables change together (covary) and generalizes the concept of variance (which measures how much a single variable varies) to multiple variables. The covariance matrix <span class="math inline">\mathbf{S}</span> contains variances on the diagonal and covariances off-diagonal:</p>
+<p><span class="math display">
+\mathbf{S} = \begin{pmatrix}S_{11} &amp; S_{12} &amp; \cdots &amp; S_{1p} \\S_{21} &amp; S_{22} &amp; \cdots &amp; S_{2p} \\\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\S_{p1} &amp; S_{p2} &amp; \cdots &amp; S_{pp}\end{pmatrix}
+</span></p>
+<p>Where <span class="math inline">S_{ii}</span> is the variance of the <span class="math inline">i</span>-th variable, <span class="math inline">S_{ij}</span> (for <span class="math inline">i \neq j</span>) is the covariance between the <span class="math inline">i</span>-th and <span class="math inline">j</span>-th variables.</p>
+<p>The covariance between <span class="math inline">X_i</span> and <span class="math inline">X_j</span> is calculated as:</p>
+<p><span class="math display">
+S_{ij} = \frac{1}{n-1} \sum_{k=1}^{n} (X_{ik} - \bar{X}_i)(X_{jk} - \bar{X}_j)
+</span></p>
+<p>where <span class="math inline">n</span> is the number of observations, <span class="math inline">X_{ik}</span> and <span class="math inline">X_{jk}</span> are the <span class="math inline">k -th</span> observations of the variables <span class="math inline">X_i</span> and <span class="math inline">X_j</span>, respectively, <span class="math inline">\bar{X}_i</span> and <span class="math inline">\bar{X}_j</span> are the means of the variables <span class="math inline">X_i</span> and <span class="math inline">X_j</span>.</p>
+</section>
+<section id="correlation-matrix" class="level3" data-number="17.2.4">
+<h3 data-number="17.2.4" class="anchored" data-anchor-id="correlation-matrix"><span class="header-section-number">17.2.4</span> Correlation matrix</h3>
+<p>The correlation matrix provides the pairwise correlation coefficients between variables in a dataset. It is a normalized version of the covariance matrix, giving a measure of how strongly variables are linearly related, with values ranging from -1 to 1.</p>
+<p>For a dataset with <span class="math inline">p</span> variables, the correlation matrix is a <span class="math inline">p \times p</span> matrix where each element <span class="math inline">r_{ij}</span> represents the correlation coefficient between the <span class="math inline">i -th</span> and<span class="math inline">j -th</span> variables. The diagonal elements are always 1, as a variable is perfectly correlated with itself.</p>
+<p>Mathematically, the correlation matrix <span class="math inline">R</span> is:</p>
+<p><span class="math display">
+R = \begin{pmatrix}    1 &amp; r_{12} &amp; r_{13} &amp; \dots &amp; r_{1p} \\    r_{21} &amp; 1 &amp; r_{23} &amp; \dots &amp; r_{2p} \\    r_{31} &amp; r_{32} &amp; 1 &amp; \dots &amp; r_{3p} \\    \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\    r_{p1} &amp; r_{p2} &amp; r_{p3} &amp; \dots &amp; 1    \end{pmatrix}
+</span></p>
+<p>where <span class="math inline">r_{ij}</span> is the Pearson correlation coefficient between variable <span class="math inline">i</span> and variable <span class="math inline">j</span>, defined as:</p>
+<p><span class="math display">
+r_{ij} = \frac{\text{Cov}(X_i, X_j)}{\sigma_{X_i} \sigma_{X_j}}
+</span></p>
+<p><span class="math inline">\text{Cov}(X_i, X_j)</span> is the covariance between <span class="math inline">X_i</span> and <span class="math inline">X_j</span>, <span class="math inline">\sigma_{X_i}</span> and<span class="math inline">\sigma_{X_j}</span>are the standard deviations of <span class="math inline">X_i</span> and <span class="math inline">X_j</span>, respectively.</p>
+</section>
+<section id="scatterplot-matrix" class="level3" data-number="17.2.5">
+<h3 data-number="17.2.5" class="anchored" data-anchor-id="scatterplot-matrix"><span class="header-section-number">17.2.5</span> Scatterplot matrix</h3>
+<p>A scatterplot matrix (also called a pairs plot) is a grid of scatterplots that visually represents the relationships between pairs of variables in a multivariate dataset. It is particularly useful for examining potential correlations or patterns among multiple variables simultaneously.</p>
+<p>For a dataset with <span class="math inline">p</span> variables, a scatterplot matrix will contain a <span class="math inline">p \times p</span> grid of plots, where the plot in the <span class="math inline">i -th</span> and <span class="math inline">j -th</span> column displays a scatterplot of the <span class="math inline">i -th</span> variable versus the <span class="math inline">j -th</span> variable. The diagonal often shows the distribution of each variable, typically as a histogram or a density plot. Each off-diagonal plot shows the relationship (scatterplot) between two variables, helping identify patterns like linearity, clusters, or outliers.</p>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>A doctor measured the hemoglobin concentration in 36 male workers involved in lead-related jobs. The data can be downloaded below. The question is whether the mean hemoglobin concentration (<span class="math inline">\mu</span>) of male workers involved in lead-related jobs differs from the mean of 140 (g/L) for normal adult males.</p>
+<p>Pulmonary function measurements were performed on 15 patients with acute lower respiratory tract infections admitted to the respiratory department of a hospital. The measurements included forced vital capacity (FVC), forced expiratory volume in the first second (FEV1), and peak expiratory flow (PEF). Please perform a multivariate description of these three response variables.</p>
 </div>
 <div>
-<p><a href="datasets/ex07-01.csv" download="ex07-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex17-01.csv" download="ex17-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
-<p>R codes for one-sample <em>t</em>-test is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">140</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(FVC, FEV1, PEF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Mean vector:</strong></p>
+<p>You can easily calculate a correlation matrix using the <code>colMeans()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  One Sample t-test
-#&gt; 
-#&gt; data:  read_csv("datasets/ex07-01.csv", show_col_types = F)
-#&gt; t = -2.1367, df = 35, p-value = 0.03969
-#&gt; alternative hypothesis: true mean is not equal to 140
-#&gt; 95 percent confidence interval:
-#&gt;  122.1238 139.5428
-#&gt; sample estimates:
-#&gt; mean of x 
-#&gt;  130.8333</code></pre>
+<pre><code>#&gt;      FVC     FEV1      PEF 
+#&gt; 2.339333 1.690000 3.515333</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} = 0.03969</span>. At the significance level of <span class="math inline">\alpha = 0.05</span> , reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. In the context of this case, it can be concluded that the average hemoglobin concentration of male workers engaged in lead work is lower than the average hemoglobin concentration of normal adult males.</p>
-</section>
-<section id="paired-t-test" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</h2>
-<p>The paired <em>t</em>-test is used to compare the means of two related groups. This test is typically used when the observations are paired in some meaningful way, such as measurements taken on the same subjects at two different times or under two different conditions.</p>
-<ul>
-<li><span class="math inline">H_0</span> : The mean difference between the paired observations is zero (<span class="math inline">\mu_d = 0</span>).</li>
-<li><span class="math inline">H_1</span> : The mean difference between the paired observations is not zero (<span class="math inline">\mu_d \neq 0</span>).</li>
-</ul>
-<p>The test statistic for the paired t-test is calculated as:</p>
-<p><span class="math display">t = \frac{\bar{d}}{S_d / \sqrt{n}}</span> Where <span class="math inline">\bar{d}</span> is the mean of the differences between the paired observations, <span class="math inline">S_d</span> is the standard deviation of the differences, and <span class="math inline">n</span> is the number of pairs.</p>
-<div class="example">
-<strong>Example 2:</strong> 
-<p>To compare whether the results of fat content measurement in lactic acid beverages differ between two methods, 10 samples of lactic acid beverages were randomly selected. The fat content was measured using both the Gerber-Gottlieb method and the fatty acid hydrolysis method. The data can be downloaded below. The question is whether the measurement results from the two methods are different?</p>
-</div>
-<div>
-<p><a href="datasets/ex07-02.csv" download="ex07-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<p>R codes for paired <em>t</em>-test is:</p>
+<p><strong>Covariance matrix:</strong></p>
+<p>You can easily calculate a correlation matrix using the <code>cov()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">t.test</span>(x1, x2, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Paired t-test
-#&gt; 
-#&gt; data:  x1 and x2
-#&gt; t = 7.926, df = 9, p-value = 2.384e-05
-#&gt; alternative hypothesis: true mean difference is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.1946542 0.3501458
-#&gt; sample estimates:
-#&gt; mean difference 
-#&gt;          0.2724</code></pre>
+<pre><code>#&gt;              FVC        FEV1         PEF
+#&gt; FVC  0.003949524 0.001750000 0.010432381
+#&gt; FEV1 0.001750000 0.057557143 0.006414286
+#&gt; PEF  0.010432381 0.006414286 0.139926667</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} &lt; 0.001</span>. At the significance level of <span class="math inline">\alpha = 0.05</span>, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the two methods yield different fat content measurements. As mean difference estimation is <span class="math inline">0.2724 &gt; 0</span>, the Gerber-Gottlieb method providing higher results.</p>
-</section>
-<section id="two-sample-t-test" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</h2>
-<p>The two-sample <em>t</em>-test (also known as the independent <em>t</em>-test) is used to determine whether there is a significant difference between the means of two independent groups. It is commonly used in experiments or studies where researchers want to compare the means of two different populations or conditions.</p>
-<p>In medical study it is commonly used to compare the means of two samples in a completely randomized design. In this design, subjects are randomly assigned to two different treatment groups, and the researcher is interested in whether the means of these two samples represent different population means. Additionally, in observational studies, the two-sample <em>t</em>-test can be used to compare the means of two samples obtained through independent random sampling from two different populations.</p>
-<p>When both samples come from normal populations, and the sample sizes are relatively small, such as <span class="math inline">n_1 \leq 60</span> or/and <span class="math inline">n_2 \leq 60</span> , different testing methods should be used depending on whether the population variances are equal.</p>
-<section id="the-t-test-for-equal-population-variances" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</h3>
-<p>The <em>t</em>-test for equal population variances, often referred to as the pooled variance <em>t</em>-test, is used when comparing the means of two independent samples under the assumption that the two populations have the same variance. This assumption allows the variances of the two samples to be combined (or pooled) into a single estimate, which can then be used in the <em>t</em>-test formula.</p>
-<p>Before conducting the combined <em>t</em>-test, it’s common to perform an F-test to check if the variances of the two samples are equal. If the p-value from the F-test is not significant, the pooled <em>t</em>-test can be justified. The pooled variance is calculated as a weighted average of the variances from the two samples:</p>
-<p><span class="math display">
-S_c^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}
-</span></p>
-<p>Here, <span class="math inline">S_c^2</span> is the combined variance, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
-<p>Once the combined variance is calculated, the <em>t</em>-statistic for the two-sample <em>t</em>-test can be computed as:</p>
-<p><span class="math display">
-t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
-</span></p>
-<p><span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes. The degrees of freedom for the pooled variance t-test are calculated as <span class="math inline">n_1 + n_2 - 2</span>. 5.</p>
-<p><span class="math inline">H_0</span>: There is no difference between the population means (<span class="math inline">\mu_1 = \mu_2</span>).</p>
-<p><span class="math inline">H_1</span>: There is a difference between the population means (<span class="math inline">\mu_1 \neq \mu_2</span>).</p>
-<p>If the variances are unequal, the Welch <em>t</em>-test (which does not assume equal variances) is recommended.</p>
-<div id="ex07-03" class="example">
-<strong>Example 3:</strong> 
-<p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?</p>
-</div>
-<div>
-<p><a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<p>R codes for two-sample <em>t</em>-test is:</p>
+<p><strong>Correlation matrix:</strong></p>
+<p>You can easily calculate a correlation matrix using the <code>cor()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">factor</span>(grp, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Use the pipe operator to perform t-test with a group variable and a response variable.</span>
-</dd>
-</dl>
-</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Two Sample t-test
-#&gt; 
-#&gt; data:  x by grp
-#&gt; t = 3.689, df = 14, p-value = 0.00243
-#&gt; alternative hypothesis: true difference in means between group A and group B is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.05494115 0.20755885
-#&gt; sample estimates:
-#&gt; mean in group A mean in group B 
-#&gt;         0.77000         0.63875</code></pre>
+<pre><code>#&gt;            FVC       FEV1        PEF
+#&gt; FVC  1.0000000 0.11606895 0.44377295
+#&gt; FEV1 0.1160690 1.00000000 0.07147406
+#&gt; PEF  0.4437729 0.07147406 1.00000000</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = 3.689</span> , <span class="math inline">\text{p-value} = 0.00243</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between group A and B. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in group A than in the model group.</p>
-</section>
-<section id="welch-t-test-for-unequal-population-variances" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</h3>
-<p>Unlike the combined variance <em>t</em>-test, the Welch <em>t</em>-test does not assume that the two populations have the same variance. This is particularly useful when you suspect or know that the variances are different, or when the sample sizes are quite different, which makes it more flexible than the combined variance t-test.</p>
-<p>The t-statistic for the Welch t-test is calculated as:</p>
-<p><span class="math display">
-t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
-</span></p>
-<p>Here, <span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
-<p>The degrees of freedom for the Welch <em>t</em>-test are calculated using the Welch-Satterthwaite equation:</p>
-<p><span class="math display">
-\nu = \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
-</span></p>
-<p>This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch <em>t</em>-test. It is generally considered more robust than the combined variance <em>t</em>-test in situations where variances differ.</p>
-<div id="ex07-04" class="example">
-<strong>Example 4:</strong> 
-<p>To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.</p>
-</div>
-<div>
-<p><a href="datasets/ex07-04.csv" download="ex07-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<p>R codes for Welch <em>t</em>-test is:</p>
+<p><strong>Scatterplot matrix</strong></p>
+<p>Tools like <code>pairs()</code> in base R or <code>ggpairs()</code> in GGally can generate scatterplot matrices for visual exploration of data relationships.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> F)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Welch Two Sample t-test
-#&gt; 
-#&gt; data:  x by grp
-#&gt; t = -2.8322, df = 36.672, p-value = 0.007465
-#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  -1.4177999 -0.2350001
-#&gt; sample estimates:
-#&gt; mean in group 1 mean in group 2 
-#&gt;          4.3176          5.1440</code></pre>
-</div>
-</div>
-<p>The results show <span class="math inline">t = -2.8322</span> , <span class="math inline">\text{p-value} = 0.007465</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. Therefore, we can conclude that the mean total cholesterol levels between those with poor and good blood glucose control are different.</p>
-</section>
-</section>
-<section id="normality-test-and-f-test" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</h2>
-<p>When conducting a two-sample <em>t</em>-test, especially when comparing the means of two small samples, it is required that the corresponding populations follow a normal distribution and that the population variances are equal, known as homogeneity of variance. For paired <em>t</em>-tests, it is only necessary that the distribution of the differences between each pair of data points follows a normal distribution. Therefore, when performing a two-sample <em>t</em>-test with small samples, it is generally advisable to first conduct a homogeneity of variance test, particularly when there is a noticeable disparity between the sample variances. If the variances are homogeneous, a standard <em>t</em>-test is used; if not, an approximate <em>t</em>-test, such as Welch <em>t</em>-test, is applied. Additionally, it may be necessary to perform a normality test, though normality tests are more commonly used to establish medical reference ranges using normal distribution methods.</p>
-<section id="normality-test" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">7.5.1</span> Normality test</h3>
-<p>Normality test has been discussed in <a href="normal-distribution.html#sec-normality-test" class="quarto-xref"><span>Section 4.3</span></a> , for more details please move there.</p>
-</section>
-</section>
-<section id="sec-f-test" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="sec-f-test"><span class="header-section-number">7.6</span> F-test</h2>
-<p>The F-test was traditionally used to determine whether the variances of <strong>two populations</strong> are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.</p>
-<p><span class="math inline">H_0</span>: The variances of the two populations are equal (<span class="math inline">\sigma_1^2 = \sigma_2^2</span>).</p>
-<p><span class="math inline">H_1</span>: The variances of the two populations are not equal (<span class="math inline">\sigma_1^2 \neq \sigma_2^2</span>).</p>
-<p>The F-statistic is calculated as the ratio of the two sample variances:</p>
-<p><span class="math display">
-F = \frac{S_1^2}{S_2^2}
-</span></p>
-<p>where <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples. By convention, <span class="math inline">S_1^2</span> should be the larger variance, so the F-statistic is always greater than or equal to 1. The F-distribution depends on two parameters: the degrees of freedom for the numerator (<span class="math inline">\nu_1 = n_1 - 1</span>) and the denominator (<span class="math inline">\nu_2 = n_2 - 1</span>).</p>
-<p>If the calculated F-statistic is is close to 1, the variances are similar. If it is much larger or smaller than 1, there may be a significant difference. If the p-value is less than the chosen significance level (e.g., 0.05), reject the null hypothesis, indicating that the variances are significantly different.</p>
-<p>The F-test is sensitive to non-normality. If the data does not follow a normal distribution, the test may give misleading results. In such cases, non-parametric alternatives, such as the Levene’s test, may be more appropriate.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">F_value   =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">1000</span>),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y1  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="dv">1</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y2  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="cn">Inf</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"y"</span>),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"grp"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Density"</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_value, <span class="at">y =</span> Density, <span class="at">linetype =</span> grp)) <span class="sc">+</span> </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.8</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="cn">Inf</span>))) <span class="sc">+</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(df, <span class="at">main =</span> <span class="st">"Scatterplot matrix with pairs()"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ttest_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="multi-dependent-vars_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(df, <span class="at">title =</span> <span class="st">"Scatterplot matrix with ggpairs()"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="multi-dependent-vars_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multivariate-normal-distribution" class="level3" data-number="17.2.6">
+<h3 data-number="17.2.6" class="anchored" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">17.2.6</span> Multivariate normal distribution</h3>
+<p>Multivariate normal distribution (also known as multivariate Gaussian distribution) is a generalization of the univariate normal distribution to multiple dimensions. It describes a set of <span class="math inline">p</span>-dimensional random variables, where each variable is normally distributed and their joint distribution follows a normal pattern.</p>
+<p>A random vector <span class="math inline">\mathbf{X} = (X_1, X_2, \dots, X_p)^T</span> is said to follow a multivariate normal distribution if every linear combination of its components is normally distributed. It is denoted as:</p>
+<p><span class="math display">
+\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+</span></p>
+<p>where <span class="math inline">\boldsymbol{\mu} = (\mu_1, \mu_2, \dots, \mu_p)^T</span> is the mean vector, representing the expected values of the variables, <span class="math inline">\boldsymbol{\Sigma}</span> is the <span class="math inline">p \times p</span> covariance matrix, representing the variances of and covariances between the variables.</p>
+<p>The probability density function of a multivariate normal distribution is given by:</p>
+<p><span class="math display">
+f(\mathbf{X}) = \frac{1}{(2\pi)^{p/2} |\boldsymbol{\Sigma}|^{1/2}} \exp\left( -\frac{1}{2} (\mathbf{X} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{X} - \boldsymbol{\mu}) \right)
+</span></p>
+<p>where <span class="math inline">\mathbf{X}</span> is the <span class="math inline">p</span>-dimensional vector of variables, <span class="math inline">\boldsymbol{\Sigma}</span> is the determinant of the covariance matrix, <span class="math inline">\boldsymbol{\Sigma}^{-1}</span> is the inverse of the covariance matrix.</p>
+</section>
+</section>
+<section id="comparison-of-differences-between-groups" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="comparison-of-differences-between-groups"><span class="header-section-number">17.3</span> Comparison of differences between groups</h2>
+<p>When comparing differences between groups with multivariate data, we deal with situations where there are multiple dependent variables or outcomes that need to be analyzed simultaneously. Traditional univariate methods (such as t-tests or ANOVA) only test differences for one outcome variable at a time. For multivariate data, we use techniques that account for the interrelationships between the multiple outcomes.</p>
+<p>Here are the common methods for comparing group differences with multivariate data:</p>
+<section id="hotellings-t²-test-one-sample" class="level3" data-number="17.3.1">
+<h3 data-number="17.3.1" class="anchored" data-anchor-id="hotellings-t²-test-one-sample"><span class="header-section-number">17.3.1</span> Hotelling’s T² test: one-sample</h3>
+<p>Hotelling’s T² test is the multivariate extension of the univariate t-test. It can be used in two different contexts: one-sample and two-sample. Both tests are multivariate versions of t-tests, designed for situations where there are multiple dependent variables.</p>
+<p>For one-sample, it tests whether the sample’s mean vector differs from a known mean vector. The hypothesis tested is:</p>
+<ul>
+<li><span class="math inline">H_0</span>: The mean vector of the sample is equal to the known mean vector.</li>
+<li><span class="math inline">H_1</span>: The mean vector of the sample is different from the known mean vector.</li>
+</ul>
+<p>Let <span class="math inline">\mathbf{X}</span> be the sample data matrix of n observations and <span class="math inline">p</span> variables. The mean vector <span class="math inline">\bar{\mathbf{X}}</span> is compared to a hypothesized mean vector <span class="math inline">\mathbf{\mu}_0</span>. The test statistic is given by:</p>
+<p><span class="math display">
+T^2 = n (\bar{\mathbf{X}} - \mathbf{\mu}_0)^{\prime} \mathbf{S}^{-1} (\bar{\mathbf{X}} - \mathbf{\mu}_0)
+</span></p>
+<p>where <span class="math inline">n</span> is the sample size, <span class="math inline">\bar{\mathbf{X}}</span> is the sample mean vector, <span class="math inline">\mathbf{S}</span> is the sample covariance matrix, <span class="math inline">\mathbf{\mu}_0</span> is the hypothesized mean vector.</p>
+<p>Under the null hypothesis, the test statistic <span class="math inline">T^2</span> follows an <span class="math inline">F</span>-distribution after scaling:</p>
+<p><span class="math display">
+F = \frac{(n - p)}{p(n - 1)} T^2 \sim F(p, n - p)
+</span></p>
+<p>where <span class="math inline">p</span> is the number of variables (dimensions) in the data.</p>
 <div class="example">
-<strong>Example 5:</strong> 
-<p>For <a href="#ex07-03">Example 3</a>, use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.</p>
+<strong>Example 2:</strong> 
+<p>In a battery factory, 15 workers engaged in lead-related tasks were randomly selected for measurement of liver function indicators, including alanine aminotransferase (ALT), aspartate aminotransferase (AST), and gamma-glutamyl transferase (GGT). It is known that the mean values for ALT, AST, and GGT in the general population in that area are 23.9 U/L, 25.7 U/L, and 26.7 U/L, respectively. The question is whether the liver function of the lead-exposed workers differs from that of the normal population.</p>
+</div>
+<div>
+<p><a href="datasets/ex17-02.csv" download="ex17-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-02.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To perform a one-sample Hotelling’s T² test, you can use the <code>HotellingsT2Test()</code> function from the <code>DescTools</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>normal_mean <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">23.9</span>, <span class="fl">25.7</span>, <span class="fl">26.7</span>), <span class="at">nrow =</span> <span class="dv">3</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HotellingsT2Test</span>(<span class="at">mu =</span> normal_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt;  F test to compare two variances
+#&gt;  Hotelling's one sample T2-test
 #&gt; 
-#&gt; data:  x by grp
-#&gt; F = 2.299, num df = 7, denom df = 7, p-value = 0.2944
-#&gt; alternative hypothesis: true ratio of variances is not equal to 1
-#&gt; 95 percent confidence interval:
-#&gt;   0.4602708 11.4833515
-#&gt; sample estimates:
-#&gt; ratio of variances 
-#&gt;           2.299011</code></pre>
+#&gt; data:  as.matrix(df)
+#&gt; T.2 = 5.3391, df1 = 3, df2 = 12, p-value = 0.01439
+#&gt; alternative hypothesis: true location is not equal to c(23.9,25.7,26.7)</code></pre>
 </div>
 </div>
-<p>The results show: <span class="math inline">F = 2.299</span>, <span class="math inline">\text{p-value} = 0.2944</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, do not reject <span class="math inline">H_0</span>. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, <a href="#ex07-03">Example 3</a> used a two-sample t-test under the assumption of equal variances.</p>
+<p>The results show that the Hotelling’s T² statistic is 5.3391, p-value is 0.01439, less than 0.05, reject the null hypothesis. This suggest that the liver function (ALT, AST, and GGT) of the lead-exposed workers is different from the normal population values ([23.9, 25.7, 26.7]), implying a potential impact of lead exposure on the workers’ liver function.</p>
+</section>
+<section id="hotellings-t²-test-two-sample" class="level3" data-number="17.3.2">
+<h3 data-number="17.3.2" class="anchored" data-anchor-id="hotellings-t²-test-two-sample"><span class="header-section-number">17.3.2</span> Hotelling’s T² test: two-sample</h3>
+<p>For two groups, it tests whether the mean vectors of two independent samples are equal. The hypothesis tested is:</p>
+<ul>
+<li><span class="math inline">H_0</span>: The mean vectors of the two groups are equal: <span class="math inline">\boldsymbol{\mu}_1 = \boldsymbol{\mu}_2</span>.</li>
+<li><span class="math inline">H_1</span>: The mean vectors of the two groups are not equal: <span class="math inline">\boldsymbol{\mu}_1 \neq \boldsymbol{\mu}_2</span>.</li>
+</ul>
+<p>The test statistic for Hotelling’s <span class="math inline">T^2</span> is computed similarly to a multivariate version of the t-test. When comparing two independent groups with sample sizes <span class="math inline">n_1</span> and <span class="math inline">n_2</span>, and sample mean vectors <span class="math inline">\bar{\mathbf{X}}_1</span> and <span class="math inline">\bar{\mathbf{X}}_2</span>, the test statistic is:</p>
+<p><span class="math display">
+T^2 = \frac{n_1 n_2}{n_1 + n_2} (\bar{\mathbf{X}}_1 - \bar{\mathbf{X}}_2)^{\prime} \mathbf{S}_p^{-1} (\bar{\mathbf{X}}_1 - \bar{\mathbf{X}}_2)
+</span></p>
+<p>where <span class="math inline">\mathbf{S}_p</span> is the pooled covariance matrix.</p>
+<p>Specifically, the Hotelling’s <span class="math inline">T^2</span> statistic can be transformed into an F-statistic as:</p>
+<p><span class="math display">
+F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
+</span></p>
+<p>where <span class="math inline">p</span> is the number of variables.</p>
+<p><span class="math inline">F</span> follows an <span class="math inline">F</span>-distribution with <span class="math inline">p</span> and <span class="math inline">n_1 + n_2 - p - 1</span> degrees of freedom under the null hypothesis.</p>
 <div class="example">
-<strong>Example 6:</strong> 
-<p>For <a href="#ex07-04">Example 4</a>, Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.</p>
+<strong>Example 3:</strong> 
+<p>A hospital conducted a study to investigate the therapeutic effect of drug A on heart failure. 20 heart failure patients were randomly divided into two groups: one group received standard treatment, while the other group received drug A in addition to the standard treatment. The post-treatment heart function indicators, left ventricular ejection fraction (LVEF) and the 6-minute walk test (6MWT) were measured. It is known that lower values of LVEF and 6MWT indicate more severe heart function impairment. The question is whether drug A is effective in treating heart failure.</p>
+</div>
+<div>
+<p><a href="datasets/ex17-03.csv" download="ex17-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-03.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>HotellingsT2Test()</code> function from <code>DescTools</code> package can still be used to perform Hotelling’s T² test for two groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">HotellingsT2Test</span>(<span class="fu">cbind</span>(LVEF, MWT) <span class="sc">~</span> group, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt;  F test to compare two variances
+#&gt;  Hotelling's two sample T2-test
 #&gt; 
-#&gt; data:  x by grp
-#&gt; F = 3.5022, num df = 24, denom df = 24, p-value = 0.0032
-#&gt; alternative hypothesis: true ratio of variances is not equal to 1
-#&gt; 95 percent confidence interval:
-#&gt;  1.543310 7.947462
-#&gt; sample estimates:
-#&gt; ratio of variances 
-#&gt;           3.502199</code></pre>
+#&gt; data:  cbind(LVEF, MWT) by group
+#&gt; T.2 = 1.29, df1 = 2, df2 = 17, p-value = 0.3009
+#&gt; alternative hypothesis: true location difference is not equal to c(0,0)</code></pre>
 </div>
 </div>
-<p>The results show: <span class="math inline">F = 3.5022</span>, <span class="math inline">\text{p-value} = 0.0032</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, reject <span class="math inline">H_0</span>, accept <span class="math inline">H_1</span>. The difference is statistically significant. It can be considered that the population variances of total cholesterol levels differ between those with poor and good blood glucose control. Therefore, in <a href="#ex07-04">Example 4</a>, the two-sample t-test for unequal variances was used.</p>
+<p>In this case, the p-value is 0.3009, which is higher than the significance level of 0.05, not reject the null hypothesis. There is no significant evidence to suggest that drug A has a effect on improving heart function (as measured by LVEF and 6MWT) when compared to standard treatment alone.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1282,13 +1251,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./hypothesis-test.html" class="pagination-link" aria-label="Hypothesis test">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span>
+      <a href="./general-linear-model.html" class="pagination-link" aria-label="General linear model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./anova.html" class="pagination-link" aria-label="Analysis of Variance">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./logistic-regression.html" class="pagination-link" aria-label="Logistic Regression">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1297,5 +1266,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/multi-dependent-vars.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

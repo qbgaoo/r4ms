@@ -1,4 +1,4 @@
-# Analysis of Variance
+# Analysis of Variance {#sec-anova}
 
 ```{r}
 #| echo: false

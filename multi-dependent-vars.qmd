@@ -1,0 +1,339 @@
+# Multivariate data
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Multivariate data usually refers to data involving more than one variable, but here specially refers to datasets where there are multiple outcome or response variables (also called dependent variables) that are measured simultaneously for each observation or experimental unit. This type of data is common in many fields such as psychology, medicine, biology, and social sciences, where researchers want to study how one or more predictors (independent variables) affect multiple outcomes.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(GGally)
+library(DescTools)
+library(emmeans)
+```
+
+## Common descriptive statistics
+
+Descriptive statistics for multivariate data help summarize the properties of several variables simultaneously. Some key statistics include:
+
+### Mean vector
+
+The mean vector is a multivariate extension of the concept of a mean in univariate statistics. It provides the average or central value for each variable in a multivariate dataset. For multiple variables, it is represented as a vector:
+
+$$\mu = (\mu_1, \mu_2, \dots, \mu_p)$$
+
+where $p$ is the number of variables.
+
+### Deviation matrix
+
+The deviation matrix (also known as the mean deviation matrix or matrix of deviations) is a matrix that represents how much each observation in a dataset deviates from the mean of the corresponding variable. It is often used in multivariate data analysis as a step before calculating other statistics, like the covariance matrix.
+
+If the dataset is represented by the matrix $\mathbf{X}$ with $n$ rows (observations) and $p$ columns (variables), and $v$ is the mean vector of the variables, the deviation matrix $\mathbf{D}$ is calculated as:
+
+$$
+\mathbf{D} = \mathbf{X} - \mathbf{1} \mu^T
+$$
+
+where $\mathbf{X}$ is the $n \times p$ data matrix, $\mathbf{1}$ is an $n \times 1$ column vector of ones, $\mu^T$ is the $1 \times p$ mean vector transposed to match the dimensions, $\mathbf{D}$ is the $n \times p$ deviation matrix.
+
+### Covariance matrix
+
+The covariance matrix describes the relationships between pairs of variables in a dataset. It captures how much two variables change together (covary) and generalizes the concept of variance (which measures how much a single variable varies) to multiple variables. The covariance matrix $\mathbf{S}$ contains variances on the diagonal and covariances off-diagonal:
+
+$$
+\mathbf{S} = \begin{pmatrix}S_{11} & S_{12} & \cdots & S_{1p} \\S_{21} & S_{22} & \cdots & S_{2p} \\\vdots & \vdots & \ddots & \vdots \\S_{p1} & S_{p2} & \cdots & S_{pp}\end{pmatrix}
+$$
+
+Where $S_{ii}$ is the variance of the $i$-th variable, $S_{ij}$ (for $i \neq j$) is the covariance between the $i$-th and $j$-th variables.
+
+The covariance between $X_i$ and $X_j$ is calculated as:
+
+$$
+S_{ij} = \frac{1}{n-1} \sum_{k=1}^{n} (X_{ik} - \bar{X}_i)(X_{jk} - \bar{X}_j)
+$$
+
+where $n$ is the number of observations, $X_{ik}$ and $X_{jk}$ are the $k -th$ observations of the variables $X_i$ and $X_j$, respectively, $\bar{X}_i$ and $\bar{X}_j$ are the means of the variables $X_i$ and $X_j$.
+
+### Correlation matrix
+
+The correlation matrix provides the pairwise correlation coefficients between variables in a dataset. It is a normalized version of the covariance matrix, giving a measure of how strongly variables are linearly related, with values ranging from -1 to 1.
+
+For a dataset with $p$ variables, the correlation matrix is a $p \times p$ matrix where each element $r_{ij}$ represents the correlation coefficient between the $i -th$ and$j -th$ variables. The diagonal elements are always 1, as a variable is perfectly correlated with itself.
+
+Mathematically, the correlation matrix $R$ is:
+
+$$
+R = \begin{pmatrix}    1 & r_{12} & r_{13} & \dots & r_{1p} \\    r_{21} & 1 & r_{23} & \dots & r_{2p} \\    r_{31} & r_{32} & 1 & \dots & r_{3p} \\    \vdots & \vdots & \vdots & \ddots & \vdots \\    r_{p1} & r_{p2} & r_{p3} & \dots & 1    \end{pmatrix}
+$$
+
+where $r_{ij}$ is the Pearson correlation coefficient between variable $i$ and variable $j$, defined as:
+
+$$
+r_{ij} = \frac{\text{Cov}(X_i, X_j)}{\sigma_{X_i} \sigma_{X_j}}
+$$
+
+$\text{Cov}(X_i, X_j)$ is the covariance between $X_i$ and $X_j$, $\sigma_{X_i}$ and$\sigma_{X_j}$are the standard deviations of $X_i$ and $X_j$, respectively.
+
+### Scatterplot matrix
+
+A scatterplot matrix (also called a pairs plot) is a grid of scatterplots that visually represents the relationships between pairs of variables in a multivariate dataset. It is particularly useful for examining potential correlations or patterns among multiple variables simultaneously.
+
+For a dataset with $p$ variables, a scatterplot matrix will contain a $p \times p$ grid of plots, where the plot in the $i -th$ and $j -th$ column displays a scatterplot of the $i -th$ variable versus the $j -th$ variable. The diagonal often shows the distribution of each variable, typically as a histogram or a density plot. Each off-diagonal plot shows the relationship (scatterplot) between two variables, helping identify patterns like linearity, clusters, or outliers.
+
+::: example
+Pulmonary function measurements were performed on 15 patients with acute lower respiratory tract infections admitted to the respiratory department of a hospital. The measurements included forced vital capacity (FVC), forced expiratory volume in the first second (FEV1), and peak expiratory flow (PEF). Please perform a multivariate description of these three response variables.
+:::
+
+<div>
+
+<a href="datasets/ex17-01.csv" download="ex17-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-01.csv", show_col_types = F) |> 
+  select(FVC, FEV1, PEF)
+```
+
+**Mean vector:**
+
+You can easily calculate a correlation matrix using the `colMeans()` function:
+
+```{r}
+colMeans(df)
+```
+
+**Covariance matrix:**
+
+You can easily calculate a correlation matrix using the `cov()` function:
+
+```{r}
+cov(df)
+```
+
+**Correlation matrix:**
+
+You can easily calculate a correlation matrix using the `cor()` function:
+
+```{r}
+cor(df) 
+```
+
+**Scatterplot matrix**
+
+Tools like `pairs()` in base R or `ggpairs()` in GGally can generate scatterplot matrices for visual exploration of data relationships.
+
+```{r}
+pairs(df, main = "Scatterplot matrix with pairs()")
+```
+
+```{r}
+ggpairs(df, title = "Scatterplot matrix with ggpairs()")
+```
+
+### Multivariate normal distribution
+
+Multivariate normal distribution (also known as multivariate Gaussian distribution) is a generalization of the univariate normal distribution to multiple dimensions. It describes a set of $p$-dimensional random variables, where each variable is normally distributed and their joint distribution follows a normal pattern.
+
+A random vector $\mathbf{X} = (X_1, X_2, \dots, X_p)^T$ is said to follow a multivariate normal distribution if every linear combination of its components is normally distributed. It is denoted as:
+
+$$
+\mathbf{X} \sim \mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) 
+$$
+
+where $\boldsymbol{\mu} = (\mu_1, \mu_2, \dots, \mu_p)^T$ is the mean vector, representing the expected values of the variables, $\boldsymbol{\Sigma}$ is the $p \times p$ covariance matrix, representing the variances of and covariances between the variables.
+
+The probability density function of a multivariate normal distribution is given by:
+
+$$
+f(\mathbf{X}) = \frac{1}{(2\pi)^{p/2} |\boldsymbol{\Sigma}|^{1/2}} \exp\left( -\frac{1}{2} (\mathbf{X} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{X} - \boldsymbol{\mu}) \right) 
+$$
+
+where $\mathbf{X}$ is the $p$-dimensional vector of variables, $\boldsymbol{\Sigma}$ is the determinant of the covariance matrix, $\boldsymbol{\Sigma}^{-1}$ is the inverse of the covariance matrix.
+
+## Comparison of differences between groups
+
+When comparing differences between groups with multivariate data, we deal with situations where there are multiple dependent variables or outcomes that need to be analyzed simultaneously. Traditional univariate methods (such as t-tests or ANOVA) only test differences for one outcome variable at a time. For multivariate data, we use techniques that account for the interrelationships between the multiple outcomes.
+
+Here are the common methods for comparing group differences with multivariate data:
+
+### Hotelling’s T² test: one-sample
+
+Hotelling’s T² test is the multivariate extension of the univariate t-test. It can be used in two different contexts: one-sample and two-sample. Both tests are multivariate versions of t-tests, designed for situations where there are multiple dependent variables.
+
+For one-sample, it tests whether the sample’s mean vector differs from a known mean vector. The hypothesis tested is:
+
+-   $H_0$: The mean vector of the sample is equal to the known mean vector.
+-   $H_1$: The mean vector of the sample is different from the known mean vector.
+
+Let $\mathbf{X}$ be the sample data matrix of n observations and $p$ variables. The mean vector $\bar{\mathbf{X}}$ is compared to a hypothesized mean vector $\mathbf{\mu}_0$. The test statistic is given by:
+
+$$
+T^2 = n (\bar{\mathbf{X}} - \mathbf{\mu}_0)^{\prime} \mathbf{S}^{-1} (\bar{\mathbf{X}} - \mathbf{\mu}_0)
+$$
+
+where $n$ is the sample size, $\bar{\mathbf{X}}$ is the sample mean vector, $\mathbf{S}$ is the sample covariance matrix, $\mathbf{\mu}_0$ is the hypothesized mean vector.
+
+Under the null hypothesis, the test statistic $T^2$ follows an $F$-distribution after scaling:
+
+$$
+F = \frac{(n - p)}{p(n - 1)} T^2 \sim F(p, n - p)
+$$
+
+where $p$ is the number of variables (dimensions) in the data.
+
+::: example
+In a battery factory, 15 workers engaged in lead-related tasks were randomly selected for measurement of liver function indicators, including alanine aminotransferase (ALT), aspartate aminotransferase (AST), and gamma-glutamyl transferase (GGT). It is known that the mean values for ALT, AST, and GGT in the general population in that area are 23.9 U/L, 25.7 U/L, and 26.7 U/L, respectively. The question is whether the liver function of the lead-exposed workers differs from that of the normal population.
+:::
+
+<div>
+
+<a href="datasets/ex17-02.csv" download="ex17-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-02.csv", show_col_types = F)
+```
+
+To perform a one-sample Hotelling’s T² test, you can use the `HotellingsT2Test()` function from the `DescTools` package.
+
+```{r}
+normal_mean <- matrix(c(23.9, 25.7, 26.7), nrow = 3)
+df |> 
+  as.matrix() |> 
+  HotellingsT2Test(mu = normal_mean)
+```
+
+The results show that the Hotelling’s T² statistic is 5.3391, p-value is 0.01439, less than 0.05, reject the null hypothesis. This suggest that the liver function (ALT, AST, and GGT) of the lead-exposed workers is different from the normal population values (\[23.9, 25.7, 26.7\]), implying a potential impact of lead exposure on the workers’ liver function.
+
+### Hotelling’s T² test: two-sample
+
+For two groups, it tests whether the mean vectors of two independent samples are equal. The hypothesis tested is:
+
+-   $H_0$: The mean vectors of the two groups are equal: $\boldsymbol{\mu}_1 = \boldsymbol{\mu}_2$.
+-   $H_1$: The mean vectors of the two groups are not equal: $\boldsymbol{\mu}_1 \neq \boldsymbol{\mu}_2$.
+
+The test statistic for Hotelling’s $T^2$ is computed similarly to a multivariate version of the t-test. When comparing two independent groups with sample sizes $n_1$ and $n_2$, and sample mean vectors $\bar{\mathbf{X}}_1$ and $\bar{\mathbf{X}}_2$, the test statistic is:
+
+$$
+T^2 = \frac{n_1 n_2}{n_1 + n_2} (\bar{\mathbf{X}}_1 - \bar{\mathbf{X}}_2)^{\prime} \mathbf{S}_p^{-1} (\bar{\mathbf{X}}_1 - \bar{\mathbf{X}}_2)
+$$
+
+where $\mathbf{S}_p$ is the pooled covariance matrix.
+
+Specifically, the Hotelling’s $T^2$ statistic can be transformed into an F-statistic as:
+
+$$
+F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
+$$
+
+where $p$ is the number of variables.
+
+$F$ follows an $F$-distribution with $p$ and $n_1 + n_2 - p - 1$ degrees of freedom under the null hypothesis.
+
+::: example
+A hospital conducted a study to investigate the therapeutic effect of drug A on heart failure. 20 heart failure patients were randomly divided into two groups: one group received standard treatment, while the other group received drug A in addition to the standard treatment. The post-treatment heart function indicators, left ventricular ejection fraction (LVEF) and the 6-minute walk test (6MWT) were measured. It is known that lower values of LVEF and 6MWT indicate more severe heart function impairment. The question is whether drug A is effective in treating heart failure.
+:::
+
+<div>
+
+<a href="datasets/ex17-03.csv" download="ex17-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-03.csv", col_types = list(group = col_factor()))
+```
+
+The `HotellingsT2Test()` function from `DescTools` package is used to perform Hotelling’s T² test for two groups.
+
+```{r}
+HotellingsT2Test(cbind(LVEF, MWT) ~ group, data = df)
+```
+
+An alternative method is using the `manova()` function to perform multivariate ANOVA, just as univariate two-sample mean difference can be tested either by t-test or ANOVA.
+
+```{r}
+manova(cbind(LVEF, MWT) ~ group, data = df) |> 
+  summary(test = "Wilks")      # <1>
+```
+
+1.  This provides a summary of the MANOVA results using Wilks’ Lambda as the test statistic.
+
+In this case, the p-value is 0.3009, which is higher than the significance level of 0.05, not reject the null hypothesis. There is no significant evidence to suggest that drug A has a effect on improving heart function (as measured by LVEF and 6MWT) when compared to standard treatment alone.
+
+### MANOVA for multiple groups
+
+MANOVA (Multivariate analysis of variance) is an extension of ANOVA that allows for comparing the mean vectors of multiple groups across several dependent variables while considering the correlation between them.
+
+::: example
+The children with chronic gastritis were randomly divided into 3 groups, with group I and group II as treatment groups, and another group serving as the control. The aim is to compare the effect of the treatment drugs on T-cell immune function (percentages of peripheral blood T3, T4, and T5 cells).
+:::
+
+<div>
+
+<a href="datasets/ex17-04.csv" download="ex17-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-04.csv", show_col_types = F) |> 
+  mutate(
+    group = factor(group),
+    group = relevel(group, ref = 2)
+  )
+```
+
+Use the `manova()` function to test whether the treatment drugs have a significant effect on T-cell immune function.
+
+```{r}
+model <- manova(cbind(t3, t4, t8) ~ group, data = df)
+summary(model, test = "Wilks")
+```
+
+The MANOVA results indicate the following:
+
+1.  Wilks’ Lambda (0.088735): This is a test statistic used in multivariate analysis of variance. A lower Wilks’ Lambda value indicates that the group differences explain a large portion of the variance in the dependent variables (T3, T4, T8). In this case, the value is relatively low, which suggests that the groups differ significantly in the combined T-cell percentages.
+2.  Approximate F-statistic (5.4997): The F-value is used to determine whether the differences between the groups’ means are statistically significant. A larger F-value typically suggests stronger evidence against the null hypothesis (i.e., no difference between groups).
+3.  Degrees of Freedom (num Df = 6, den Df = 14): num Df refers to the numerator degrees of freedom, associated with the number of dependent variables and groups. den Df refers to the denominator degrees of freedom, related to the residuals or error in the model.
+4.  P-value: This is the most critical value for interpreting the test. A p-value of 0.004104 indicates that there is a statistically significant difference in the combined T-cell immune function measurements (T3, T4, and T8 cell percentages) between the groups at the 0.05 significance level.
+
+Since the p-value is significant (0.004104), we can reject the null hypothesis and conclude that the treatments have a significant impact on the T-cell immune function across the groups. To determine which specific variables (T3, T4, or T8) are driving these differences, you can run follow-up univariate ANOVAs for each dependent variable or perform post-hoc tests.
+
+```{r}
+# Univariate ANOVA
+df |> 
+  select(t3, t4, t8) |> 
+  lapply(\(x) aov(x ~ group, data = df)) |> 
+  map(summary)
+```
+
+You can directly use `summary.aov()` to extract the univariate ANOVAs for each dependent variable.
+
+```{r}
+summary.aov(model)
+```
+
+This will give you the individual ANOVA tables for each dependent variable. If any of these ANOVAs are significant, you should conduct post-hoc pairwise comparisons.
+
+```{r}
+emmeans(model, ~ group) 
+  contrast("dunnett")
+```
+
+```{r}
+df |> 
+  group_by(group)|> 
+  summarise_all(
+    .funs = list(mean = mean) 
+  )
+  
+```

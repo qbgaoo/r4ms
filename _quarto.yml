@@ -35,6 +35,7 @@ book:
         - multi-factor-anova.qmd
         - repeated-measure.qmd
         - general-linear-model.qmd
+        - multi-dependent-vars.qmd
         - logistic-regression.qmd
         - cox-regression.qmd
         - ordered-cat-data.qmd

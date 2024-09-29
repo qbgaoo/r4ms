@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Medical Statistics - 7&nbsp; t-test</title>
+<title>R for Medical Statistics - 16&nbsp; General linear model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./anova.html" rel="next">
-<link href="./hypothesis-test.html" rel="prev">
+<link href="./multi-dependent-vars.html" rel="next">
+<link href="./repeated-measure.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-linear-model.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -249,7 +249,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ttest.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
   </div>
 </li>
@@ -314,26 +314,32 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link">
+  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./multi-dependent-vars.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -350,19 +356,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -377,28 +383,23 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">7.1</span> Prerequisites</a></li>
-  <li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</a></li>
-  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</a></li>
-  <li><a href="#two-sample-t-test" id="toc-two-sample-t-test" class="nav-link" data-scroll-target="#two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</a>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">16.1</span> Prerequisite</a></li>
+  <li><a href="#some-basics" id="toc-some-basics" class="nav-link" data-scroll-target="#some-basics"><span class="header-section-number">16.2</span> Some basics</a></li>
+  <li><a href="#glm-for-comparison-of-two-sample-means" id="toc-glm-for-comparison-of-two-sample-means" class="nav-link" data-scroll-target="#glm-for-comparison-of-two-sample-means"><span class="header-section-number">16.3</span> GLM for comparison of two sample means</a></li>
+  <li><a href="#glm-for-comparison-of-multiple-sample-means" id="toc-glm-for-comparison-of-multiple-sample-means" class="nav-link" data-scroll-target="#glm-for-comparison-of-multiple-sample-means"><span class="header-section-number">16.4</span> GLM for comparison of multiple sample means</a></li>
+  <li><a href="#analysis-of-covariance" id="toc-analysis-of-covariance" class="nav-link" data-scroll-target="#analysis-of-covariance"><span class="header-section-number">16.5</span> Analysis of covariance</a>
   <ul class="collapse">
-  <li><a href="#the-t-test-for-equal-population-variances" id="toc-the-t-test-for-equal-population-variances" class="nav-link" data-scroll-target="#the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</a></li>
-  <li><a href="#welch-t-test-for-unequal-population-variances" id="toc-welch-t-test-for-unequal-population-variances" class="nav-link" data-scroll-target="#welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</a></li>
+  <li><a href="#ancova-assumptions" id="toc-ancova-assumptions" class="nav-link" data-scroll-target="#ancova-assumptions"><span class="header-section-number">16.5.1</span> ANCOVA assumptions</a></li>
   </ul></li>
-  <li><a href="#normality-test-and-f-test" id="toc-normality-test-and-f-test" class="nav-link" data-scroll-target="#normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</a>
-  <ul class="collapse">
-  <li><a href="#normality-test" id="toc-normality-test" class="nav-link" data-scroll-target="#normality-test"><span class="header-section-number">7.5.1</span> Normality test</a></li>
-  </ul></li>
-  <li><a href="#sec-f-test" id="toc-sec-f-test" class="nav-link" data-scroll-target="#sec-f-test"><span class="header-section-number">7.6</span> F-test</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./ttest.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-linear-model.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-t-test" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></h1>
 </div>
 
 
@@ -415,276 +416,316 @@ window.Quarto = {
 </header>
 
 
-<p>A t-test is a statistical test used to compare the means of two groups to determine if they are significantly different from each other. It is commonly used in situations where the sample size is small and the population variance is unknown. There are different types of t-tests depending on the study design and the nature of the data.</p>
-<section id="prerequisites" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">7.1</span> Prerequisites</h2>
+<p>The general linear model (GLM) is a statistical model used to examine the relationship between one or more independent variables (predictors) and a dependent variable (response). It is a broad framework that encompasses various types of regression models, where the dependent variable is continuous, and the independent variables can be continuous, categorical, or a mix of both.</p>
+<section id="prerequisite" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">16.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="one-sample-t-test" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">7.2</span> One-sample t-test</h2>
-<p>The one-sample <em>t</em>-test is used to determine whether the mean of a single sample is significantly different from a known or hypothesized population mean. It is commonly used when you have a sample and want to test if its mean differs from a theoretical value or an expected value. Its test statistic t is calculated as follows:</p>
+<section id="some-basics" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="some-basics"><span class="header-section-number">16.2</span> Some basics</h2>
+<p>The general form of the GLM can be formulated as:</p>
 <p><span class="math display">
-t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
+Y = \beta X + \epsilon
 </span></p>
-<p>where <span class="math inline">\bar{X}</span> si the sample mean , <span class="math inline">S</span> is the sample standard deviation and <span class="math inline">n</span> is the sample size, <span class="math inline">\mu_0</span> is the hypothesized population mean.</p>
-<p>The one-sample <em>t</em>-test is a straightforward but powerful tool for hypothesis testing in many research scenarios.</p>
+<p>where <span class="math inline">Y</span> is the vector of dependent variables (<span class="math inline">n × 1</span>, where <span class="math inline">n</span> is the number of observations); <span class="math inline">X</span> is the matrix of independent variables (called design matrix) <span class="math inline">(n × p</span>, where <span class="math inline">p</span> is the number of predictors); <span class="math inline">\beta</span> is the vector of regression coefficients (<span class="math inline">p × 1</span>), representing the effect of each predictor on the dependent variable; <span class="math inline">\epsilon</span> is the error term (<span class="math inline">n × 1</span>), assumed to be normally distributed with a mean of zero.</p>
+<p>Below are some key types of general linear models:</p>
+<ol type="1">
+<li><strong>Simple linear regression:</strong> Analyzes the linear relationship between a single independent variable (predictor) and a continuous dependent variable (response). For example, examine how age affects systolic blood pressure.</li>
+<li><strong>Multiple linear regression:</strong> Extends simple linear regression to include multiple independent variables. It explores the relationship between several predictors and a continuous dependent variable. For example, analyze how age, weight, and exercise frequency together influence cholesterol levels.</li>
+<li><strong>Analysis of variance (ANOVA):</strong> Compares the means of two or more groups to understand whether there are significant differences between them. For example, compare blood pressure across different treatment groups (e.g., drug A, drug B and control).</li>
+<li><strong>Analysis of covariance (ANCOVA):</strong> Combines ANOVA with regression. It includes both categorical and continuous independent variables to understand their effects on the dependent variable while controlling for the covariates. For example, study how treatment (categorical) affects blood pressure while controlling for weight (continuous).</li>
+<li><strong>Multivariate analysis of variance (MANOVA):</strong> Extendes ANOVA to include multiple dependent variables. It tests whether mean differences exist between groups across more than one outcome variable. For example, investigate the effect of diet on both blood pressure and cholesterol simultaneously.</li>
+<li><strong>Repeated measures ANOVA:</strong> Analyzes data where the same subjects are measured multiple times under different conditions or at different time points. For example, measure blood pressure before and after treatment in the same subjects.</li>
+<li><strong>Generalized linear model:</strong> Extends the GLM to accommodate dependent variables that are not normally distributed, such as binary, count, or categorical outcomes. This includes logistic regression and Poisson regression.</li>
+</ol>
+<p>In summary, the GLM framework encompasses a variety of statistical models depending on the nature of the independent and dependent variables, making it a versatile tool for analyzing different types of data.</p>
+</section>
+<section id="glm-for-comparison-of-two-sample-means" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="glm-for-comparison-of-two-sample-means"><span class="header-section-number">16.3</span> GLM for comparison of two sample means</h2>
+<p>When comparing the means of two independent groups, the GLM approach is typically used. This can be conceptualized as an extension of a two-sample t-test but framed within a regression-based framework.</p>
+<p><strong>Model setup</strong></p>
+<p>The goal is to compare the means of two samples to see if there is a significant difference between them. The model equation can be written as:</p>
+<p><span class="math display">
+Y = \beta_0 + \beta_1 X + \epsilon
+</span></p>
+<p>where <span class="math inline">Y</span> is the outcome (dependent variable), <span class="math inline">X</span> is the binary variable (independent variable) representing group membership (e.g., 1 for group 1 and 2 for group 2), <span class="math inline">\beta_0</span> is the intercept representing the mean of group A, and <span class="math inline">\beta_1</span> is the coefficient, representing the difference in means between group A and group B, <span class="math inline">\epsilon</span> is the error term, accounting for variation in <span class="math inline">Y</span> not explained by <span class="math inline">X</span>.</p>
+<p>In this setup, the GLM compares the means of the two groups via the estimate for <span class="math inline">\beta_1</span>.</p>
+<p><strong>Hypothesis</strong></p>
+<p><span class="math inline">H_0</span>: There is no difference in means between the two groups (<span class="math inline">\beta_1 = 0</span>).</p>
+<p><span class="math inline">H_1</span>: There is a significant difference in means between the two groups (<span class="math inline">\beta_1 \neq 0</span>).</p>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>A doctor measured the hemoglobin concentration in 36 male workers involved in lead-related jobs. The data can be downloaded below. The question is whether the mean hemoglobin concentration (<span class="math inline">\mu</span>) of male workers involved in lead-related jobs differs from the mean of 140 (g/L) for normal adult males.</p>
+<p>Reanalyze the Example 3 in <a href="ttest.html" class="quarto-xref"><span>Chapter 7</span></a> using general linear model approach.</p>
 </div>
 <div>
-<p><a href="datasets/ex07-01.csv" download="ex07-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex16-01.csv" download="ex16-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
-<p>R codes for one-sample <em>t</em>-test is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">mu =</span> <span class="dv">140</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-01.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">grp =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here’s how you can implement this using the <code>lm()</code> function, which fits a linear model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> df) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt;  One Sample t-test
+#&gt; Call:
+#&gt; lm(formula = x ~ grp, data = df)
 #&gt; 
-#&gt; data:  read_csv("datasets/ex07-01.csv", show_col_types = F)
-#&gt; t = -2.1367, df = 35, p-value = 0.03969
-#&gt; alternative hypothesis: true mean is not equal to 140
-#&gt; 95 percent confidence interval:
-#&gt;  122.1238 139.5428
-#&gt; sample estimates:
-#&gt; mean of x 
-#&gt;  130.8333</code></pre>
+#&gt; Residuals:
+#&gt;      Min       1Q   Median       3Q      Max 
+#&gt; -0.11000 -0.05125  0.00000  0.05125  0.11000 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  0.77000    0.02516  30.607 3.16e-14 ***
+#&gt; grp2        -0.13125    0.03558  -3.689  0.00243 ** 
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.07116 on 14 degrees of freedom
+#&gt; Multiple R-squared:  0.4929, Adjusted R-squared:  0.4567 
+#&gt; F-statistic: 13.61 on 1 and 14 DF,  p-value: 0.00243</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} = 0.03969</span>. At the significance level of <span class="math inline">\alpha = 0.05</span> , reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. In the context of this case, it can be concluded that the average hemoglobin concentration of male workers engaged in lead work is lower than the average hemoglobin concentration of normal adult males.</p>
+<p>The mean of group 1 (intercept) is 0.77, the difference between the means of group 1 and group 2 (group coefficient) is -0.13125. The p-value is 0.00243, suggesting that there is a statistically significant difference between the means of the two groups.</p>
+<p>The GLM approach fits a linear regression model to test for differences in means. This approach can be generalized to multiple groups or covariates, allowing more complex analyses. Two-sample t-test is a simpler, direct method for testing the difference between two means. It’s equivalent to the GLM approach when no other covariates are included. Both methods will give the same results, but the GLM approach provides a framework for extending to more complex models.</p>
 </section>
-<section id="paired-t-test" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">7.3</span> Paired t-test</h2>
-<p>The paired <em>t</em>-test is used to compare the means of two related groups. This test is typically used when the observations are paired in some meaningful way, such as measurements taken on the same subjects at two different times or under two different conditions.</p>
-<ul>
-<li><span class="math inline">H_0</span> : The mean difference between the paired observations is zero (<span class="math inline">\mu_d = 0</span>).</li>
-<li><span class="math inline">H_1</span> : The mean difference between the paired observations is not zero (<span class="math inline">\mu_d \neq 0</span>).</li>
-</ul>
-<p>The test statistic for the paired t-test is calculated as:</p>
-<p><span class="math display">t = \frac{\bar{d}}{S_d / \sqrt{n}}</span> Where <span class="math inline">\bar{d}</span> is the mean of the differences between the paired observations, <span class="math inline">S_d</span> is the standard deviation of the differences, and <span class="math inline">n</span> is the number of pairs.</p>
+<section id="glm-for-comparison-of-multiple-sample-means" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="glm-for-comparison-of-multiple-sample-means"><span class="header-section-number">16.4</span> GLM for comparison of multiple sample means</h2>
+<p>ANOVA is a special case of GLM used when the dependent variable is continuous and the independent variables are categorical. GLM provides a flexible framework for comparing multiple sample means. Here we only consider the comparison of three sample means.</p>
+<p><strong>Model setup</strong></p>
+<p>The model equation can be written as:</p>
+<p><span class="math display">
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+</span></p>
+<p>where <span class="math inline">Y</span> is the outcome (dependent variable), <span class="math inline">X_1</span> and <span class="math inline">X_2</span> are dummy variables (also called indicator variables) used to encode the group memberships of the samples. Typically, if there are three groups, you can create two dummy variables to compare the means: The group 1 is the reference group where both <span class="math inline">X_1 = 0</span> and <span class="math inline">X_2 = 0</span>. <span class="math inline">X_1 = 1</span> if the observation is from group 2, and 0 otherwise. <span class="math inline">X_2 = 1</span> if the observation is from group 3, and 0 otherwise. <span class="math inline">\beta_0</span> is the intercept representing the mean of group 1 (reference group), <span class="math inline">\beta_1</span> is the coefficient representing the difference in means between group 1 and group 2, and <span class="math inline">\beta_2</span> is the coefficient representing the difference in means between group 1 and group 3, <span class="math inline">\epsilon</span> is the error term.</p>
+<p>Thus, the GLM compares the mean of the reference group (encoded by the intercept <span class="math inline">\beta_0</span>) with the other two groups through the coefficients <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span>.</p>
+<p><strong>Hypothesis</strong></p>
+<p><span class="math inline">H_0</span>: There is no difference in means among the three groups (<span class="math inline">\beta_1 = \beta_2 = 0</span>).</p>
+<p><span class="math inline">H_1</span>: There is a difference in means among the three groups (At least one of the <span class="math inline">\beta_1</span> or <span class="math inline">\beta_2 \neq 0</span>).</p>
 <div class="example">
 <strong>Example 2:</strong> 
-<p>To compare whether the results of fat content measurement in lactic acid beverages differ between two methods, 10 samples of lactic acid beverages were randomly selected. The fat content was measured using both the Gerber-Gottlieb method and the fatty acid hydrolysis method. The data can be downloaded below. The question is whether the measurement results from the two methods are different?</p>
+<p>Reanalyze the Example 1 in <a href="anova.html" class="quarto-xref"><span>Chapter 8</span></a> using general linear model approach.</p>
 </div>
 <div>
-<p><a href="datasets/ex07-02.csv" download="ex07-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex16-02.csv" download="ex16-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
-<p>R codes for paired <em>t</em>-test is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">t.test</span>(x1, x2, <span class="at">paired =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-02.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> df) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt;  Paired t-test
+#&gt; Call:
+#&gt; lm(formula = diff_tri ~ group, data = df)
 #&gt; 
-#&gt; data:  x1 and x2
-#&gt; t = 7.926, df = 9, p-value = 2.384e-05
-#&gt; alternative hypothesis: true mean difference is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.1946542 0.3501458
-#&gt; sample estimates:
-#&gt; mean difference 
-#&gt;          0.2724</code></pre>
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -1.4002 -0.5206 -0.1021  0.6013  1.7260 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)   2.9602     0.1178  25.134  &lt; 2e-16 ***
+#&gt; group2       -0.0920     0.1666  -0.552    0.582    
+#&gt; group3       -0.7562     0.1666  -4.540 1.37e-05 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.7449 on 117 degrees of freedom
+#&gt; Multiple R-squared:  0.1734, Adjusted R-squared:  0.1593 
+#&gt; F-statistic: 12.27 on 2 and 117 DF,  p-value: 1.449e-05</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = -2.1367</span> , <span class="math inline">\text{p-value} &lt; 0.001</span>. At the significance level of <span class="math inline">\alpha = 0.05</span>, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the two methods yield different fat content measurements. As mean difference estimation is <span class="math inline">0.2724 &gt; 0</span>, the Gerber-Gottlieb method providing higher results.</p>
+<p>The model uses group 1 as the reference category (since it’s not listed), and estimates the differences in diff_tri between groups 2 and 3 compared to group 1.</p>
+<ul>
+<li>Intercept (group 1): The intercept represents the estimated mean of diff_tri for group 1, which is 2.9602. This is the baseline value when group = 1. The very small p-value (&lt; 2e-16) indicates that this estimate is significantly different from zero.</li>
+<li>group 2 coefficient: The estimate for group2 is -0.0920, meaning the average difference between group 2 and group 1 is -0.092. Group 2 has a slightly lower diff_tri compared to group 1. The p-value (0.582) indicates that this difference is not statistically significant, as the value is much greater than typical significance levels (e.g., 0.05).</li>
+<li>group 3 coefficient: The estimate for group3 is -0.7562, indicating that group 3 has a lower average diff_tri by 0.756 units compared to group 1. The p-value (1.37e-05) is highly significant (below 0.001), suggesting that the difference between group 3 and group 1 is statistically significant.</li>
+</ul>
+<p>To compare group 2 and group 3, you can either perform pairwise comparisons with emmeans, or relevel the reference group in the model. Here are the code blocks for the two methods.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $emmeans
+#&gt;  group emmean    SE  df lower.CL upper.CL
+#&gt;  1       2.96 0.118 117     2.73     3.19
+#&gt;  2       2.87 0.118 117     2.63     3.10
+#&gt;  3       2.20 0.118 117     1.97     2.44
+#&gt; 
+#&gt; Confidence level used: 0.95 
+#&gt; 
+#&gt; $contrasts
+#&gt;  contrast        estimate    SE  df t.ratio p.value
+#&gt;  group1 - group2    0.092 0.167 117   0.552  0.8455
+#&gt;  group1 - group3    0.756 0.167 117   4.540  &lt;.0001
+#&gt;  group2 - group3    0.664 0.167 117   3.988  0.0003
+#&gt; 
+#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel the factor so that group 2 is the reference group</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">relevel</span>(group, <span class="at">ref =</span> <span class="st">"2"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> _) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; lm(formula = diff_tri ~ group, data = mutate(df, group = relevel(group, 
+#&gt;     ref = "2")))
+#&gt; 
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -1.4002 -0.5206 -0.1021  0.6013  1.7260 
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)   2.8683     0.1178  24.353  &lt; 2e-16 ***
+#&gt; group1        0.0920     0.1666   0.552 0.581774    
+#&gt; group3       -0.6643     0.1666  -3.988 0.000116 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.7449 on 117 degrees of freedom
+#&gt; Multiple R-squared:  0.1734, Adjusted R-squared:  0.1593 
+#&gt; F-statistic: 12.27 on 2 and 117 DF,  p-value: 1.449e-05</code></pre>
+</div>
+</div>
+<p>These methods will give you the direct difference between the two groups, along with p-values for significance.</p>
 </section>
-<section id="two-sample-t-test" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="two-sample-t-test"><span class="header-section-number">7.4</span> Two-sample t-test</h2>
-<p>The two-sample <em>t</em>-test (also known as the independent <em>t</em>-test) is used to determine whether there is a significant difference between the means of two independent groups. It is commonly used in experiments or studies where researchers want to compare the means of two different populations or conditions.</p>
-<p>In medical study it is commonly used to compare the means of two samples in a completely randomized design. In this design, subjects are randomly assigned to two different treatment groups, and the researcher is interested in whether the means of these two samples represent different population means. Additionally, in observational studies, the two-sample <em>t</em>-test can be used to compare the means of two samples obtained through independent random sampling from two different populations.</p>
-<p>When both samples come from normal populations, and the sample sizes are relatively small, such as <span class="math inline">n_1 \leq 60</span> or/and <span class="math inline">n_2 \leq 60</span> , different testing methods should be used depending on whether the population variances are equal.</p>
-<section id="the-t-test-for-equal-population-variances" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="the-t-test-for-equal-population-variances"><span class="header-section-number">7.4.1</span> The t-test for equal population variances</h3>
-<p>The <em>t</em>-test for equal population variances, often referred to as the pooled variance <em>t</em>-test, is used when comparing the means of two independent samples under the assumption that the two populations have the same variance. This assumption allows the variances of the two samples to be combined (or pooled) into a single estimate, which can then be used in the <em>t</em>-test formula.</p>
-<p>Before conducting the combined <em>t</em>-test, it’s common to perform an F-test to check if the variances of the two samples are equal. If the p-value from the F-test is not significant, the pooled <em>t</em>-test can be justified. The pooled variance is calculated as a weighted average of the variances from the two samples:</p>
+<section id="analysis-of-covariance" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="analysis-of-covariance"><span class="header-section-number">16.5</span> Analysis of covariance</h2>
+<p>Analysis of covariance (ANCOVA) combines both analysis of variance (ANOVA) and linear regression. It is used to compare the means of dependent variables across different groups while controlling for the effects of one or more continuous covariates (independent variables that are not of primary interest but may influence the outcome). By accounting for covariates, ANCOVA reduces the error variance, thus increasing the statistical power of the test.</p>
+<p>The general form of the ANCOVA model is:</p>
 <p><span class="math display">
-S_c^2 = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}
+Y = \mu + \beta X + \tau G + \epsilon
 </span></p>
-<p>Here, <span class="math inline">S_c^2</span> is the combined variance, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
-<p>Once the combined variance is calculated, the <em>t</em>-statistic for the two-sample <em>t</em>-test can be computed as:</p>
-<p><span class="math display">
-t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}\right)}}
-</span></p>
-<p><span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes. The degrees of freedom for the pooled variance t-test are calculated as <span class="math inline">n_1 + n_2 - 2</span>. 5.</p>
-<p><span class="math inline">H_0</span>: There is no difference between the population means (<span class="math inline">\mu_1 = \mu_2</span>).</p>
-<p><span class="math inline">H_1</span>: There is a difference between the population means (<span class="math inline">\mu_1 \neq \mu_2</span>).</p>
-<p>If the variances are unequal, the Welch <em>t</em>-test (which does not assume equal variances) is recommended.</p>
-<div id="ex07-03" class="example">
+<p>where <span class="math inline">Y</span> is the dependent variable (outcome of interest), <span class="math inline">X</span> is the covariate, <span class="math inline">G</span> represents the groups or factors (categorical independent variable), <span class="math inline">\mu</span> is the overall mean, <span class="math inline">\beta</span> is the regression coefficient for the covariate, <span class="math inline">\tau</span> is the effect of the groups on the outcome variable, and <span class="math inline">\epsilon</span> is the residual error.</p>
+<section id="ancova-assumptions" class="level3" data-number="16.5.1">
+<h3 data-number="16.5.1" class="anchored" data-anchor-id="ancova-assumptions"><span class="header-section-number">16.5.1</span> ANCOVA assumptions</h3>
+<p>ANCOVA Assumptions are critical to ensure the validity of the results. These assumptions are similar to those in ANOVA and linear regression but include additional considerations related to covariates. Here are the key assumptions:</p>
+<ol type="1">
+<li><p><strong>Linearity</strong></p>
+<p>The relationship between the covariate(s) and the dependent variable should be linear across all levels of the independent variable (grouping factor). In other words, the effect of the covariate should consistently increase or decrease the dependent variable in a straight-line fashion.</p>
+<p>How to check: Scatterplots of the covariate against the dependent variable, stratified by group, can be used to visually check for linear relationships.</p></li>
+<li><p><strong>Homogeneity of regression slopes</strong></p>
+<p>The slopes of the regression lines (representing the relationship between the covariate and the dependent variable) must be the same for all groups. This ensures that the covariate affects each group in the same way. If this assumption is violated, it indicates an interaction between the covariate and the group factor.</p>
+<p>How to check: Include an interaction term between the covariate and group in the model. If the interaction is significant, the assumption is violated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(outcome <span class="sc">~</span> group <span class="sc">*</span> covariate, <span class="at">data =</span> data)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p><strong>Normality</strong></p>
+<p>The residuals (differences between observed and predicted values) of the dependent variable should be normally distributed. This assumption ensures that the error terms follow a normal distribution across all levels of the independent variable.</p>
+<p>How to check: Use a normal Q-Q plot or conduct the Shapiro-Wilk test to check the normality of residuals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p><strong>Independence of observations</strong></p>
+<p>The observations should be independent of one another. This means that there is no correlation or dependency between the values of the dependent variable within or between groups.</p>
+<p>How to check: Ensure that the data collection process was designed to avoid dependency between observations (e.g., no repeated measures or clustering without proper adjustments).</p></li>
+<li><p>Homogeneity of variance</p>
+<p>The variances of the dependent variable should be equal across all groups. This is similar to the ANOVA assumption of homogeneity of variances.</p>
+<p>How to check: Use Levene’s test or Bartlett’s test for homogeneity of variances.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">levene_test</span>(<span class="at">data =</span> data, outcome <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>Covariate independence of treatment effects</p>
+<p>The covariate should be independent of the group factor, meaning the covariate should not differ significantly across the groups. If the covariate is not balanced across groups, it can introduce bias into the results.</p>
+<p>How to check: Test whether the covariate is significantly different between groups, for example using an ANOVA or t-test depending on the number of groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(covariate <span class="sc">~</span> group, <span class="at">data =</span> data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+</ol>
+<p>Violating these assumptions can lead to biased or invalid results, so it’s important to check each assumption before interpreting the results of ANCOVA.</p>
+<div class="example">
 <strong>Example 3:</strong> 
-<p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?</p>
+<p>A study aims to investigate whether there is a difference in serum cholesterol between adults with normal weight and those who are overweight. During a health examination, 13 individuals from two groups (normal weight and overweight) were randomly selected, and their cholesterol levels were measured. Additionally, cholesterol levels are also related to age. The study data can be accessed from the download button below. Compare the two sample means of the cholesterol level.</p>
 </div>
 <div>
-<p><a href="datasets/ex07-03.csv" download="ex07-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex16-03.csv" download="ex16-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
-<p>R codes for two-sample <em>t</em>-test is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-4"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">grp =</span> <span class="fu">factor</span>(grp, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>))) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-3" class="code-annotation-target"><a href="#annotated-cell-4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> T)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-4" data-code-lines="3" data-code-annotation="1">Use the pipe operator to perform t-test with a group variable and a response variable.</span>
-</dd>
-</dl>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-03.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>You can conduct ANCOVA using the <code>aov()</code> or <code>lm()</code> functions:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(chole <span class="sc">~</span> group <span class="sc">+</span> age, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+#&gt; group        1  18.61  18.615   20.34 0.000158 ***
+#&gt; age          1  24.38  24.380   26.64 3.13e-05 ***
+#&gt; Residuals   23  21.05   0.915                     
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="fu">mean</span>(chole) </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     m
+#&gt;   &lt;fct&gt; &lt;dbl&gt;
+#&gt; 1 0      5.09
+#&gt; 2 1      6.78</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(chole <span class="sc">~</span> group <span class="sc">+</span> age, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt;  Two Sample t-test
+#&gt; Call:
+#&gt; lm(formula = chole ~ group + age, data = df)
 #&gt; 
-#&gt; data:  x by grp
-#&gt; t = 3.689, df = 14, p-value = 0.00243
-#&gt; alternative hypothesis: true difference in means between group A and group B is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  0.05494115 0.20755885
-#&gt; sample estimates:
-#&gt; mean in group A mean in group B 
-#&gt;         0.77000         0.63875</code></pre>
-</div>
-</div>
-<p>The results show <span class="math inline">t = 3.689</span> , <span class="math inline">\text{p-value} = 0.00243</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. It can be concluded that the population means of high-density lipoprotein content in the heart blood are different between group A and B. Considering the sample means in this case, it can be inferred that the population mean of high-density lipoprotein content in the heart blood is higher in group A than in the model group.</p>
-</section>
-<section id="welch-t-test-for-unequal-population-variances" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="welch-t-test-for-unequal-population-variances"><span class="header-section-number">7.4.2</span> Welch t-test for unequal population variances</h3>
-<p>Unlike the combined variance <em>t</em>-test, the Welch <em>t</em>-test does not assume that the two populations have the same variance. This is particularly useful when you suspect or know that the variances are different, or when the sample sizes are quite different, which makes it more flexible than the combined variance t-test.</p>
-<p>The t-statistic for the Welch t-test is calculated as:</p>
-<p><span class="math display">
-t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
-</span></p>
-<p>Here, <span class="math inline">\bar{X}_1</span> and <span class="math inline">\bar{X}_2</span> are the sample means, <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes.</p>
-<p>The degrees of freedom for the Welch <em>t</em>-test are calculated using the Welch-Satterthwaite equation:</p>
-<p><span class="math display">
-\nu = \frac{\left(\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}\right)^2}{\frac{\left(\frac{S_1^2}{n_1}\right)^2}{n_1 - 1} + \frac{\left(\frac{S_2^2}{n_2}\right)^2}{n_2 - 1}}
-</span></p>
-<p>This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch <em>t</em>-test. It is generally considered more robust than the combined variance <em>t</em>-test in situations where variances differ.</p>
-<div id="ex07-04" class="example">
-<strong>Example 4:</strong> 
-<p>To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.</p>
-</div>
-<div>
-<p><a href="datasets/ex07-04.csv" download="ex07-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<p>R codes for Welch <em>t</em>-test is:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _, <span class="at">var.equal =</span> F)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  Welch Two Sample t-test
+#&gt; Residuals:
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -1.7807 -0.4706  0.0270  0.6301  2.0068 
 #&gt; 
-#&gt; data:  x by grp
-#&gt; t = -2.8322, df = 36.672, p-value = 0.007465
-#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
-#&gt; 95 percent confidence interval:
-#&gt;  -1.4177999 -0.2350001
-#&gt; sample estimates:
-#&gt; mean in group 1 mean in group 2 
-#&gt;          4.3176          5.1440</code></pre>
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
+#&gt; (Intercept)  0.76053    0.88016   0.864   0.3965    
+#&gt; group1       0.89549    0.40572   2.207   0.0376 *  
+#&gt; age          0.09417    0.01824   5.162 3.13e-05 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Residual standard error: 0.9566 on 23 degrees of freedom
+#&gt; Multiple R-squared:  0.6714, Adjusted R-squared:  0.6428 
+#&gt; F-statistic: 23.49 on 2 and 23 DF,  p-value: 2.769e-06</code></pre>
 </div>
 </div>
-<p>The results show <span class="math inline">t = -2.8322</span> , <span class="math inline">\text{p-value} = 0.007465</span>. At the <span class="math inline">\alpha = 0.05</span> significance level, reject <span class="math inline">H_0</span> and accept <span class="math inline">H_1</span>, indicating that the difference is statistically significant. Therefore, we can conclude that the mean total cholesterol levels between those with poor and good blood glucose control are different.</p>
-</section>
-</section>
-<section id="normality-test-and-f-test" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="normality-test-and-f-test"><span class="header-section-number">7.5</span> Normality test and F-test</h2>
-<p>When conducting a two-sample <em>t</em>-test, especially when comparing the means of two small samples, it is required that the corresponding populations follow a normal distribution and that the population variances are equal, known as homogeneity of variance. For paired <em>t</em>-tests, it is only necessary that the distribution of the differences between each pair of data points follows a normal distribution. Therefore, when performing a two-sample <em>t</em>-test with small samples, it is generally advisable to first conduct a homogeneity of variance test, particularly when there is a noticeable disparity between the sample variances. If the variances are homogeneous, a standard <em>t</em>-test is used; if not, an approximate <em>t</em>-test, such as Welch <em>t</em>-test, is applied. Additionally, it may be necessary to perform a normality test, though normality tests are more commonly used to establish medical reference ranges using normal distribution methods.</p>
-<section id="normality-test" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="normality-test"><span class="header-section-number">7.5.1</span> Normality test</h3>
-<p>Normality test has been discussed in <a href="normal-distribution.html#sec-normality-test" class="quarto-xref"><span>Section 4.3</span></a> , for more details please move there.</p>
-</section>
-</section>
-<section id="sec-f-test" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="sec-f-test"><span class="header-section-number">7.6</span> F-test</h2>
-<p>The F-test was traditionally used to determine whether the variances of <strong>two populations</strong> are equal. However, this test assumes that the data follow a normal distribution, which is often not the case, especially when variances are unequal. Because of this limitation, the Levene’s test has become more popular in recent years. Levene’s test is more robust and does not rely on the specific distribution of the population. Levene’s test can be used to test the homogeneity of variances for both two populations and multiple populations. Here, only the F-test for comparing the variances of two samples is introduced.</p>
-<p><span class="math inline">H_0</span>: The variances of the two populations are equal (<span class="math inline">\sigma_1^2 = \sigma_2^2</span>).</p>
-<p><span class="math inline">H_1</span>: The variances of the two populations are not equal (<span class="math inline">\sigma_1^2 \neq \sigma_2^2</span>).</p>
-<p>The F-statistic is calculated as the ratio of the two sample variances:</p>
-<p><span class="math display">
-F = \frac{S_1^2}{S_2^2}
-</span></p>
-<p>where <span class="math inline">S_1^2</span> and <span class="math inline">S_2^2</span> are the variances of the two samples. By convention, <span class="math inline">S_1^2</span> should be the larger variance, so the F-statistic is always greater than or equal to 1. The F-distribution depends on two parameters: the degrees of freedom for the numerator (<span class="math inline">\nu_1 = n_1 - 1</span>) and the denominator (<span class="math inline">\nu_2 = n_2 - 1</span>).</p>
-<p>If the calculated F-statistic is is close to 1, the variances are similar. If it is much larger or smaller than 1, there may be a significant difference. If the p-value is less than the chosen significance level (e.g., 0.05), reject the null hypothesis, indicating that the variances are significantly different.</p>
-<p>The F-test is sensitive to non-normality. If the data does not follow a normal distribution, the test may give misleading results. In such cases, non-parametric alternatives, such as the Levene’s test, may be more appropriate.</p>
+<p>The coefficients for the model show the estimated effect of each predictor on cholesterol levels:</p>
+<p>(Intercept): The intercept is estimated at 0.76053, which is the expected cholesterol level when both predictors (group and age) are zero. However, the intercept’s significance is not high (p = 0.3965).</p>
+<p>group1: The coefficient for group1 is 0.89549. This indicates that individuals in group 1 have, on average, a cholesterol level that is 0.89549 mmol/L higher than those in the reference group (the normal weight). The p-value (0.0376) suggests this effect is statistically significant at the 0.05 level, indicating a meaningful difference in cholesterol levels between the groups.</p>
+<p>age: The coefficient for age is 0.09417, suggesting that for each additional year of age, the cholesterol level increases by approximately 0.09417 mmol/L. The p-value for age (3.13e-05) is highly significant, indicating a possible relationship between age and cholesterol levels.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">F_value   =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="at">length.out =</span> <span class="dv">1000</span>),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y1  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="dv">1</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y2  =</span> <span class="fu">df</span>(F_value, <span class="dv">8</span>, <span class="cn">Inf</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"y"</span>),</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"grp"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"Density"</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_value, <span class="at">y =</span> Density, <span class="at">linetype =</span> grp)) <span class="sc">+</span> </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.8</span>, <span class="at">y =</span> <span class="fl">0.3</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="fl">0.8</span>, <span class="at">hjust =</span> <span class="dv">0</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"df1 ="</span>, <span class="dv">8</span>, <span class="st">", df2 ="</span>, <span class="cn">Inf</span>))) <span class="sc">+</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> chole, <span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ttest_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="general-linear-model_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="example">
-<strong>Example 5:</strong> 
-<p>For <a href="#ex07-03">Example 3</a>, use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.</p>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  F test to compare two variances
-#&gt; 
-#&gt; data:  x by grp
-#&gt; F = 2.299, num df = 7, denom df = 7, p-value = 0.2944
-#&gt; alternative hypothesis: true ratio of variances is not equal to 1
-#&gt; 95 percent confidence interval:
-#&gt;   0.4602708 11.4833515
-#&gt; sample estimates:
-#&gt; ratio of variances 
-#&gt;           2.299011</code></pre>
-</div>
-</div>
-<p>The results show: <span class="math inline">F = 2.299</span>, <span class="math inline">\text{p-value} = 0.2944</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, do not reject <span class="math inline">H_0</span>. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, <a href="#ex07-03">Example 3</a> used a two-sample t-test under the assumption of equal variances.</p>
-<div class="example">
-<strong>Example 6:</strong> 
-<p>For <a href="#ex07-04">Example 4</a>, Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.</p>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"datasets/ex07-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var.test</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt;  F test to compare two variances
-#&gt; 
-#&gt; data:  x by grp
-#&gt; F = 3.5022, num df = 24, denom df = 24, p-value = 0.0032
-#&gt; alternative hypothesis: true ratio of variances is not equal to 1
-#&gt; 95 percent confidence interval:
-#&gt;  1.543310 7.947462
-#&gt; sample estimates:
-#&gt; ratio of variances 
-#&gt;           3.502199</code></pre>
-</div>
-</div>
-<p>The results show: <span class="math inline">F = 3.5022</span>, <span class="math inline">\text{p-value} = 0.0032</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, reject <span class="math inline">H_0</span>, accept <span class="math inline">H_1</span>. The difference is statistically significant. It can be considered that the population variances of total cholesterol levels differ between those with poor and good blood glucose control. Therefore, in <a href="#ex07-04">Example 4</a>, the two-sample t-test for unequal variances was used.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1282,13 +1323,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./hypothesis-test.html" class="pagination-link" aria-label="Hypothesis test">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span>
+      <a href="./repeated-measure.html" class="pagination-link" aria-label="Repeated measures ANOVA">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./anova.html" class="pagination-link" aria-label="Analysis of Variance">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./multi-dependent-vars.html" class="pagination-link" aria-label="Multivariate data">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1297,5 +1338,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ttest.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

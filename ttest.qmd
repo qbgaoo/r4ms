@@ -1,4 +1,4 @@
-# t-test
+# t-test {#sec-t-test}
 
 ```{r}
 #| echo: false
