@@ -375,3 +375,7 @@ pairs.hotellings.T2.test <- function(formula, data, p.adjust.method = p.adjust.m
 ```{r}
 pairs.hotellings.T2.test(cbind(t3, t4, t8) ~ group, data = df) 
 ```
+
+The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1-group 3 and group 2-group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.
+
+## Multivariate repeated measures MANOVA
