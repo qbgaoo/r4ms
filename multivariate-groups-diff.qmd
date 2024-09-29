@@ -17,9 +17,10 @@ library(tidyverse)
 library(GGally)
 library(DescTools)
 library(emmeans)
+library(nlme)
 ```
 
-## Common descriptive statistics
+## Descriptive statistics
 
 Descriptive statistics for multivariate data help summarize the properties of several variables simultaneously. Some key statistics include:
 
@@ -208,7 +209,6 @@ To perform a one-sample Hotelling’s T² test, you can use the `HotellingsT2Tes
 ```{r}
 normal_mean <- matrix(c(23.9, 25.7, 26.7), nrow = 3)
 df |> 
-  as.matrix() |> 
   HotellingsT2Test(mu = normal_mean)
 ```
 
@@ -378,4 +378,66 @@ pairs.hotellings.T2.test(cbind(t3, t4, t8) ~ group, data = df)
 
 The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1-group 3 and group 2-group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.
 
-## Multivariate repeated measures MANOVA
+## Repeated measures MANOVA
+
+Repeated measures MANOVA is an extension of MANOVA that accounts for multiple measurements of the same subjects over time. It’s a robust technique used when there are several dependent variables and repeated measurements for each subject, considering the correlations between these repeated measurements.
+
+::: example
+The weight of 10 obese patients was recorded before and during the 1st to 4th weeks of taking weight-loss medication under the guidance of a doctor, following a unified standard. Analyze the effectiveness of the weight-loss medication.
+:::
+
+<div>
+
+<a href="datasets/ex17-05.csv" download="ex17-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-05.csv", col_types = list(no = col_factor()))
+
+tb <- df |> 
+  pivot_longer(
+    contains("t"),
+    names_to = "time",
+    names_prefix = "t",
+    values_to = "weight",
+    names_transform = as.ordered
+  ) 
+```
+
+Since there are multiple time points, a repeated measures ANOVA is suitable. This will test whether there is a significant difference in the weights across time points.
+
+```{r}
+aov(weight ~ time + Error(no/time), data = tb) |> summary()
+```
+
+If you have more complex data, such as if patients drop out at different times, you can use a linear mixed-effects model to account for missing data or individual differences.
+
+```{r}
+lme(weight ~ time, random = ~ 1 | no, data = tb) |> anova()
+```
+
+Specifically, you can treat the measurements at each time point as separate variables (since they represent the same outcome measured at different time points). This is common in repeated measures analysis, but in this case, we will treat the time points as distinct variables for a multivariate analysis.
+
+```{r}
+mean0 <- rep(0, times = 4)
+df |> 
+  mutate(t2 = t2 - t1, t3 = t3 - t1, t4 = t4 - t1, t5 = t5 - t1, .keep = "none") |>
+  HotellingsT2Test(mu = mean0) 
+```
+
+```{r}
+lme(weight ~ time, random = ~ 1 | no, data = tb) |> 
+  emmeans(specs = ~ time) |> 
+  contrast(method = "poly")      # <1>
+```
+
+1.  This type of contrast can be useful for examining trends over ordered factors like time.
+
+```{r}
+tb |> 
+  ggplot(aes(time, weight, color = no, linetype = no, group = no)) +
+  geom_point(size = 1) +
+  geom_line() +
+  labs(color = "", linetype = "")
+```
