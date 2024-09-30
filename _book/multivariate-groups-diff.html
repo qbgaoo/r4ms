@@ -398,6 +398,7 @@ window.Quarto = {
   <li><a href="#hotellings-t²-test-one-sample" id="toc-hotellings-t²-test-one-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-one-sample"><span class="header-section-number">17.3.1</span> Hotelling’s T² test: one-sample</a></li>
   <li><a href="#hotellings-t²-test-two-sample" id="toc-hotellings-t²-test-two-sample" class="nav-link" data-scroll-target="#hotellings-t²-test-two-sample"><span class="header-section-number">17.3.2</span> Hotelling’s T² test: two-sample</a></li>
   <li><a href="#manova-for-multiple-groups" id="toc-manova-for-multiple-groups" class="nav-link" data-scroll-target="#manova-for-multiple-groups"><span class="header-section-number">17.3.3</span> MANOVA for multiple groups</a></li>
+  <li><a href="#multivariate-analysis-vs-univariate-analysis" id="toc-multivariate-analysis-vs-univariate-analysis" class="nav-link" data-scroll-target="#multivariate-analysis-vs-univariate-analysis"><span class="header-section-number">17.3.4</span> Multivariate analysis vs univariate analysis</a></li>
   </ul></li>
   <li><a href="#repeated-measures-manova" id="toc-repeated-measures-manova" class="nav-link" data-scroll-target="#repeated-measures-manova"><span class="header-section-number">17.4</span> Repeated measures MANOVA</a></li>
   </ul>
@@ -777,7 +778,7 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(t3, t4, t8) <span class="sc">|&gt;</span> </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(x) <span class="fu">aov</span>(x <span class="sc">~</span> group, <span class="at">data =</span> df)) <span class="sc">|&gt;</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">TukeyHSD</span>(.))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span> <span class="fu">TukeyHSD</span>(.)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $t3
 #&gt;   Tukey multiple comparisons of means
@@ -818,8 +819,8 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 #&gt; 3-2  16.365000   7.671451 25.058549 0.0013602</code></pre>
 </div>
 </div>
-<p>This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.</p>
-<p>Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named <code>pairs.hotellings.T2.test()</code> to perform pairwise comparisons of the multivariate means between groups.</p>
+<p>The results show that group 1 and group 3 do not show a significant difference in each response variable mean. This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.</p>
+<p>The Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named <code>pairs.hotellings.T2.test()</code> to perform pairwise comparisons of the multivariate means between groups.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the pairwise_hotelling function</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pairs.hotellings.T2.test <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, <span class="at">p.adjust.method =</span> p.adjust.methods) {</span>
@@ -875,34 +876,122 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 #&gt; [1] "holm"</code></pre>
 </div>
 </div>
-<p>The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1-group 3 and group 2-group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.</p>
+<p>The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1 and group 3, group 2 and group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may have noticed that the conclusions made by <code>pairs.hotellings.T2.test()</code> (multivariate test) and by <code>TukeyHSD()</code> (multiple univariate tests) are not consistent.</p>
+</div>
+</div>
+</section>
+<section id="multivariate-analysis-vs-univariate-analysis" class="level3" data-number="17.3.4">
+<h3 data-number="17.3.4" class="anchored" data-anchor-id="multivariate-analysis-vs-univariate-analysis"><span class="header-section-number">17.3.4</span> Multivariate analysis vs univariate analysis</h3>
+<p>The conclusions of a multivariate hypothesis test (MANOVA or Hotelling’s T² test) and performing multiple univariate hypothesis tests (ANOVA or t-test) may differ due to the following key reasons:</p>
+<ol type="1">
+<li><p><strong>Correlations between variables</strong></p>
+<ul>
+<li>Multivariate Tests: Multivariate hypothesis tests take into account the correlations between the m response variables. This means that these tests evaluate the joint distribution of the variables, assessing if there is a significant difference in the combined response vector.</li>
+<li>Univariate Tests: Univariate tests treat each response variable independently. They ignore any relationships or correlations between the variables.</li>
+<li>Impact: If the response variables are correlated, a multivariate test may detect significant differences that individual univariate tests would miss, and vice versa. Ignoring the correlation structure in univariate tests can lead to inaccurate conclusions or lower statistical power.</li>
+</ul></li>
+<li><p><strong>Inflation of type I error</strong></p>
+<ul>
+<li>Multivariate Tests: A multivariate test, such as MANOVA, tests the overall difference across multiple response variables at once, and hence controls for the overall type I error (false positive rate) at the desired significance level.</li>
+<li>Univariate Tests: Performing multiple univariate tests increases the risk of type I error, especially without adjustment. If you perform multiple individual tests, the cumulative probability of making at least one false positive error increases. This problem can be addressed by adjusting the p-values using correction methods, but this reduces the power of the tests.</li>
+<li>Impact: Without correction, univariate tests might show more significant results due to an inflated type I error rate. After correction, the results of multiple univariate tests might be more conservative compared to a multivariate approach.</li>
+</ul></li>
+<li><p><strong>Power of the test</strong></p>
+<ul>
+<li>Multivariate Tests: Multivariate tests tend to have higher statistical power when the variables are correlated, meaning that they are better at detecting differences when response variables are related.</li>
+<li>Univariate Tests: Separate univariate tests can lose power because they do not take advantage of the relationships between variables. Each test only considers one variable at a time, and the overall pattern of change across multiple variables may be missed.</li>
+<li>Impact: Multivariate tests may detect a significant overall difference even when none of the univariate tests do.</li>
+</ul></li>
+</ol>
+<p><strong>Conclusion</strong></p>
+<p>If the response variables are uncorrelated and you adjust for multiple comparisons in the univariate tests, the conclusions from the multivariate test and the separate univariate tests may be similar. If the response variables are correlated, or if no correction is applied to the univariate tests, the conclusions can differ significantly. Multivariate tests provide a more comprehensive picture by accounting for relationships between variables, whereas univariate tests focus on one variable at a time.</p>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>A researcher collected data of birth weight and length for two groups of newborns. Perform univariate and multivariate analysis separately.</p>
+</div>
+<div>
+<p><a href="datasets/ex17-05.csv" download="ex17-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex17-05.csv"</span>, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>(), <span class="at">no =</span> <span class="fu">col_factor</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Univariate analysis</li>
+</ol>
+<p>Conduct two-sample t-tests separately for birth weight and length to compare if there are significant differences between the two groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(weight, height) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(\(x) <span class="fu">t.test</span>(x <span class="sc">~</span> group, <span class="at">data =</span> df)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; $weight
+#&gt; 
+#&gt;  Welch Two Sample t-test
+#&gt; 
+#&gt; data:  x by group
+#&gt; t = -1.6219, df = 13.822, p-value = 0.1274
+#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  -0.53742421  0.07492421
+#&gt; sample estimates:
+#&gt; mean in group 1 mean in group 2 
+#&gt;         3.28750         3.51875 
+#&gt; 
+#&gt; 
+#&gt; $height
+#&gt; 
+#&gt;  Welch Two Sample t-test
+#&gt; 
+#&gt; data:  x by group
+#&gt; t = -0.036693, df = 11.938, p-value = 0.9713
+#&gt; alternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0
+#&gt; 95 percent confidence interval:
+#&gt;  -7.551649  7.301649
+#&gt; sample estimates:
+#&gt; mean in group 1 mean in group 2 
+#&gt;          52.500          52.625</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="repeated-measures-manova" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="repeated-measures-manova"><span class="header-section-number">17.4</span> Repeated measures MANOVA</h2>
 <p>Repeated measures MANOVA is an extension of MANOVA that accounts for multiple measurements of the same subjects over time. It’s a robust technique used when there are several dependent variables and repeated measurements for each subject, considering the correlations between these repeated measurements.</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 6:</strong> 
 <p>The weight of 10 obese patients was recorded before and during the 1st to 4th weeks of taking weight-loss medication under the guidance of a doctor, following a unified standard. Analyze the effectiveness of the weight-loss medication.</p>
 </div>
 <div>
-<p><a href="datasets/ex17-05.csv" download="ex17-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex17-06.csv" download="ex17-06.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-05.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">no =</span> <span class="fu">col_factor</span>()))</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"t"</span>),</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"t"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"weight"</span>,</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> as.ordered</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex17-06.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">no =</span> <span class="fu">col_factor</span>()))</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contains</span>(<span class="st">"t"</span>),</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"t"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"weight"</span>,</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> as.ordered</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Since there are multiple time points, a repeated measures ANOVA is suitable. This will test whether there is a significant difference in the weights across time points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(weight <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(no<span class="sc">/</span>time), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(weight <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(no<span class="sc">/</span>time), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Error: no
@@ -919,7 +1008,7 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 </div>
 <p>If you have more complex data, such as if patients drop out at different times, you can use a linear mixed-effects model to account for missing data or individual differences.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lme</span>(weight <span class="sc">~</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> no, <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">anova</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lme</span>(weight <span class="sc">~</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> no, <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">anova</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;             numDF denDF  F-value p-value
 #&gt; (Intercept)     1    36 639.0199  &lt;.0001
@@ -928,10 +1017,10 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 </div>
 <p>Specifically, you can treat the measurements at each time point as separate variables (since they represent the same outcome measured at different time points). This is common in repeated measures analysis, but in this case, we will treat the time points as distinct variables for a multivariate analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mean0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> <span class="dv">4</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">t2 =</span> t2 <span class="sc">-</span> t1, <span class="at">t3 =</span> t3 <span class="sc">-</span> t1, <span class="at">t4 =</span> t4 <span class="sc">-</span> t1, <span class="at">t5 =</span> t5 <span class="sc">-</span> t1, <span class="at">.keep =</span> <span class="st">"none"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HotellingsT2Test</span>(<span class="at">mu =</span> mean0) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mean0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="at">times =</span> <span class="dv">4</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">t2 =</span> t2 <span class="sc">-</span> t1, <span class="at">t3 =</span> t3 <span class="sc">-</span> t1, <span class="at">t4 =</span> t4 <span class="sc">-</span> t1, <span class="at">t5 =</span> t5 <span class="sc">-</span> t1, <span class="at">.keep =</span> <span class="st">"none"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">HotellingsT2Test</span>(<span class="at">mu =</span> mean0) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Hotelling's one sample T2-test
@@ -942,14 +1031,14 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lme</span>(weight <span class="sc">~</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> no, <span class="at">data =</span> tb) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="sc">~</span> time) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-3" class="code-annotation-target"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrast</span>(<span class="at">method =</span> <span class="st">"poly"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lme</span>(weight <span class="sc">~</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> no, <span class="at">data =</span> tb) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-26-2"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(<span class="at">specs =</span> <span class="sc">~</span> time) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1">1</button><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrast</span>(<span class="at">method =</span> <span class="st">"poly"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="3" data-code-annotation="1">This type of contrast can be useful for examining trends over ordered factors like time.</span>
+<span data-code-cell="annotated-cell-26" data-code-lines="3" data-code-annotation="1">This type of contrast can be useful for examining trends over ordered factors like time.</span>
 </dd>
 </dl>
 </div>
@@ -963,16 +1052,32 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 #&gt; Degrees-of-freedom method: containment</code></pre>
 </div>
 </div>
+<p>The linear trend is significant (p &lt; 0.0001), indicating that there is a significant linear weight reduction over time.</p>
+<p>Finally, to visualize the weight reduction trend, you can plot the average weight over time:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, weight, <span class="at">color =</span> no, <span class="at">linetype =</span> no, <span class="at">group =</span> no)) <span class="sc">+</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">""</span>, <span class="at">linetype =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> weight, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="multivariate-groups-diff_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="multivariate-groups-diff_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If you want to plot individual patient data, you can adjust the code to explicitly set the group, color and linetype aesthetics to <code>no</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, weight, <span class="at">color =</span> no, <span class="at">linetype =</span> no, <span class="at">group =</span> no)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.9</span>) <span class="sc">+</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">""</span>, <span class="at">linetype =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="multivariate-groups-diff_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

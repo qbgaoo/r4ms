@@ -327,12 +327,12 @@ This will give you the individual ANOVA tables for each dependent variable. If a
 df |> 
   select(t3, t4, t8) |> 
   lapply(\(x) aov(x ~ group, data = df)) |> 
-  map(~ TukeyHSD(.))
+  map(~ TukeyHSD(.)) 
 ```
 
-This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.
+The results show that group 1 and group 3 do not show a significant difference in each response variable mean. This method performs pairwise comparisons on each response variable independently, which can be simpler but loses the multivariate aspect.
 
-Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named `pairs.hotellings.T2.test()` to perform pairwise comparisons of the multivariate means between groups.
+The Hotelling’s T² test is a multivariate generalization of the t-test for comparing mean vectors. Here we define a customized function named `pairs.hotellings.T2.test()` to perform pairwise comparisons of the multivariate means between groups.
 
 ```{r}
 # Define the pairwise_hotelling function
@@ -376,7 +376,78 @@ pairs.hotellings.T2.test <- function(formula, data, p.adjust.method = p.adjust.m
 pairs.hotellings.T2.test(cbind(t3, t4, t8) ~ group, data = df) 
 ```
 
-The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1-group 3 and group 2-group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.
+The results show that group 1 and group 2 do not show a significant difference in their mean vectors (p = 0.1676). Both group 1 and group 3, group 2 and group 3 show significant differences (p = 0.0316 and p = 0.0218, respectively), indicating that group 3 is notably different from both group 1 and group 2.
+
+::: callout-caution
+You may have noticed that the conclusions made by `pairs.hotellings.T2.test()` (multivariate test) and by `TukeyHSD()` (multiple univariate tests) are not consistent.
+:::
+
+### Multivariate analysis vs univariate analysis
+
+The conclusions of a multivariate hypothesis test (MANOVA or Hotelling’s T² test) and performing multiple univariate hypothesis tests (ANOVA or t-test) may differ due to the following key reasons:
+
+1.  **Correlations between variables**
+
+    -   Multivariate Tests: Multivariate hypothesis tests take into account the correlations between the m response variables. This means that these tests evaluate the joint distribution of the variables, assessing if there is a significant difference in the combined response vector.
+    -   Univariate Tests: Univariate tests treat each response variable independently. They ignore any relationships or correlations between the variables.
+    -   Impact: If the response variables are correlated, a multivariate test may detect significant differences that individual univariate tests would miss, and vice versa. Ignoring the correlation structure in univariate tests can lead to inaccurate conclusions or lower statistical power.
+
+2.  **Inflation of type I error**
+
+    -   Multivariate Tests: A multivariate test, such as MANOVA, tests the overall difference across multiple response variables at once, and hence controls for the overall type I error (false positive rate) at the desired significance level.
+    -   Univariate Tests: Performing multiple univariate tests increases the risk of type I error, especially without adjustment. If you perform multiple individual tests, the cumulative probability of making at least one false positive error increases. This problem can be addressed by adjusting the p-values using correction methods, but this reduces the power of the tests.
+    -   Impact: Without correction, univariate tests might show more significant results due to an inflated type I error rate. After correction, the results of multiple univariate tests might be more conservative compared to a multivariate approach.
+
+3.  **Power of the test**
+
+    -   Multivariate Tests: Multivariate tests tend to have higher statistical power when the variables are correlated, meaning that they are better at detecting differences when response variables are related.
+    -   Univariate Tests: Separate univariate tests can lose power because they do not take advantage of the relationships between variables. Each test only considers one variable at a time, and the overall pattern of change across multiple variables may be missed.
+    -   Impact: Multivariate tests may detect a significant overall difference even when none of the univariate tests do.
+
+**Conclusion**
+
+If the response variables are uncorrelated and you adjust for multiple comparisons in the univariate tests, the conclusions from the multivariate test and the separate univariate tests may be similar. If the response variables are correlated, or if no correction is applied to the univariate tests, the conclusions can differ significantly. Multivariate tests provide a more comprehensive picture by accounting for relationships between variables, whereas univariate tests focus on one variable at a time.
+
+::: example
+A researcher collected data of birth weight and length for two groups of newborns. Perform univariate and multivariate analysis separately.
+:::
+
+<div>
+
+<a href="datasets/ex17-05.csv" download="ex17-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv(
+  "datasets/ex17-05.csv", 
+  col_types = list(group = col_factor(), no = col_factor()))
+```
+
+1.  **Univariate analysis**
+
+Conduct two-sample t-test separately for birth weight and length to compare if there are significant differences between the two groups.
+
+```{r}
+df |> 
+  select(weight, height) |> 
+  lapply(\(x) t.test(x ~ group, data = df)) 
+```
+
+2.  **Multivariate analysis**
+
+For multivariate analysis, you can use Hotelling’s T² test to simultaneously compare the mean vectors of birth weight and length between the two groups.
+
+```{r}
+HotellingsT2Test(cbind(weight, height) ~ group, data = df)
+```
+
+It is clear that the results of univariate and multivariate analysis are not consistent. The multivariate analysis reveals the difference between groups, while the univariate analysis not. Below is a visualization of difference based on multivariate data.
+
+```{r}
+ggplot(df, aes(height, weight, color = group)) + 
+  geom_point()
+```
 
 ## Repeated measures MANOVA
 
@@ -388,12 +459,12 @@ The weight of 10 obese patients was recorded before and during the 1st to 4th we
 
 <div>
 
-<a href="datasets/ex17-05.csv" download="ex17-05.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex17-06.csv" download="ex17-06.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
 
 ```{r}
-df <- read_csv("datasets/ex17-05.csv", col_types = list(no = col_factor()))
+df <- read_csv("datasets/ex17-06.csv", col_types = list(no = col_factor()))
 
 tb <- df |> 
   pivot_longer(
@@ -434,10 +505,25 @@ lme(weight ~ time, random = ~ 1 | no, data = tb) |>
 
 1.  This type of contrast can be useful for examining trends over ordered factors like time.
 
+The linear trend is significant (p \< 0.0001), indicating that there is a significant linear weight reduction over time.
+
+Finally, to visualize the weight reduction trend, you can plot the average weight over time:
+
+```{r}
+tb |> 
+  ggplot(aes(x = time, y = weight, group = 1)) + 
+  geom_point(stat = "summary", fun = "mean") +
+  geom_line(stat = "summary", fun = "mean") 
+```
+
+If you want to plot individual patient data, you can adjust the code to explicitly set the group, color and linetype aesthetics to `no`:
+
 ```{r}
 tb |> 
   ggplot(aes(time, weight, color = no, linetype = no, group = no)) +
-  geom_point(size = 1) +
+  geom_point(size = 0.9) +
   geom_line() +
   labs(color = "", linetype = "")
 ```
+
+## Profile analysis
