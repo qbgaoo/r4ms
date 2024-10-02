@@ -1026,14 +1026,14 @@ Caution
 </div>
 <p>Since there are multiple time points, a repeated measures ANOVA is suitable. This will test whether there is a significant difference in the weights across time points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(weight <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(no<span class="sc">/</span>time), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(weight <span class="sc">~</span> time <span class="sc">+</span> <span class="fu">Error</span>(no), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Error: no
 #&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)
 #&gt; Residuals  9  11871    1319               
 #&gt; 
-#&gt; Error: no:time
+#&gt; Error: Within
 #&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)    
 #&gt; time       4  403.8     101   101.4 &lt;2e-16 ***
 #&gt; Residuals 36   35.8       1                   
