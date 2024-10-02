@@ -36,6 +36,7 @@ book:
         - repeated-measure.qmd
         - general-linear-model.qmd
         - multivariate-groups-diff.qmd
+        - multiple-linear-reg.qmd
         - logistic-regression.qmd
         - cox-regression.qmd
         - ordered-cat-data.qmd

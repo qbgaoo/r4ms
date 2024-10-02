@@ -18,6 +18,7 @@ library(GGally)
 library(DescTools)
 library(emmeans)
 library(nlme)
+library(profileR)
 ```
 
 ## Descriptive statistics
@@ -510,8 +511,7 @@ The linear trend is significant (p \< 0.0001), indicating that there is a signif
 Finally, to visualize the weight reduction trend, you can plot the average weight over time:
 
 ```{r}
-tb |> 
-  ggplot(aes(x = time, y = weight, group = 1)) + 
+ggplot(tb, aes(x = time, y = weight, group = 1)) + 
   geom_point(stat = "summary", fun = "mean") +
   geom_line(stat = "summary", fun = "mean") 
 ```
@@ -519,11 +519,111 @@ tb |>
 If you want to plot individual patient data, you can adjust the code to explicitly set the group, color and linetype aesthetics to `no`:
 
 ```{r}
-tb |> 
-  ggplot(aes(time, weight, color = no, linetype = no, group = no)) +
+ggplot(tb, aes(time, weight, color = no, linetype = no, group = no)) +
   geom_point(size = 0.9) +
   geom_line() +
   labs(color = "", linetype = "")
 ```
 
 ## Profile analysis
+
+Profile Analysis is a multivariate technique that examines the relationship between two or more groups across multiple related variables. It is commonly used when the same set of measurements (variables) is collected for different groups, and the goal is to assess whether these groups differ in their “profiles” across those variables.
+
+In essence, profile analysis is a multivariate extension of repeated measures ANOVA where each variable is treated as a repeated measure.
+
+Profile analysis typically focuses on three main hypothesis:
+
+1.  **Test of parallelism (interaction between factors of group and variable/time)**
+
+    Do the profiles of the groups (mean values across the variables) have the same shape? If the test is significant, it means that the two or more groups differ in the pattern or trend across the variables.
+
+2.  **Test of levels (main effect of group)**
+
+    Are the overall mean levels of the variables different between groups (i.e., are the profiles at different heights, but still parallel)? A significant result indicates that there is a difference in the average levels of the variables across groups, although their trends are similar.
+
+3.  **Test of flatness (main effect of variables)**
+
+    Is the profile flat, meaning there is no significant difference between the variables? A significant test means that there are significant differences between the variables for each group.
+
+::: example
+A health status survey was conducted on 50 master’s students and 30 doctoral students. The questionnaire included 7 questions, and responses to each question were rated on a 4-point scale from good to poor (scored as 1, 2, 3, and 4, respectively). The question is: are the responses to each question the same between the master’s students and the doctoral students?
+:::
+
+<div>
+
+<a href="datasets/ex17-07.csv" download="ex17-07.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex17-07.csv", col_types = list(group = col_factor()))
+
+tb <- df |> 
+  pivot_longer(
+    cols = contains("x"),
+    names_to = "ques",
+    names_prefix = "x",
+    values_to = "y"
+  )
+```
+
+Plot profiles using ggplot2
+
+```{r}
+df |> 
+  group_by(group) |> 
+  summarise(across(contains("x"), mean)) |> 
+  pivot_longer(                # <1>
+    cols = contains("x"),
+    names_to = "ques",
+    names_prefix = "x",
+    values_to = "y"
+  ) |> 
+  ggplot(aes(x = ques, y = y, group = group, linetype = group, shape = group, color = group)) + 
+  geom_point(size = 2) +
+  geom_line() +
+  labs(x = "Question", y = "Average score") +
+  scale_color_manual(
+    values = c("blue", "red"),
+    labels = c("Master", "Doctor")
+  ) +
+  scale_shape_manual(
+    values = c(1, 5), 
+    labels = c("Master", "Doctor")
+  ) +
+  scale_linetype_manual(
+    values = c(1, 2), 
+    labels = c("Master", "Doctor")
+  ) +
+  ylim(1.5, 2.8) +
+  theme(legend.title = element_blank())
+```
+
+1.  Reshape data to long format for visualization
+
+The `pbg()` function of `profileR` package implements the three hypothesis tests. These tests are whether the profiles are parallel, have equal levels, and are flat across groups defined by the grouping variable. If parallelism is rejected, the other two tests are not necessary. In that case, flatness may be assessed within each group, and various within- and between-group contrasts may be analyzed.
+
+```{r}
+with(df, pbg(cbind(x1, x2, x3 ,x4, x5, x6, x7), group, original.names = T)) |>
+  summary()
+```
+
+The output summarizes the results of three hypothesis tests from a profile analysis, which tests different aspects of the profiles between two groups:
+
+1.  Test of parallelism
+    -   Statistics: Four tests were conducted: Wilks’ Lambda, Pillai’s Trace, Hotelling-Lawley Trace, and Roy’s Largest Root, p-value: 0.8205697 for all four tests.
+    -   Interpretation: Since the p-value is 0.8205697, larger than the typical significance level 0.05, fail to reject the null hypothesis. This means the profiles of the two groups are parallel, indicating that the trend in scores across the seven questions is similar between the groups.
+2.  Test of equal levels
+    -   Statistics: F-value is 0.276, with a p-value of 0.601.
+    -   Interpretation: Since p-value is 0.601, greater than 0.05, fail to reject the null hypothesis. This suggests that the overall levels of the profiles are not significantly different between the two groups, indicating similar average scores.
+3.  Test of flatness
+    -   Statistics: F-value is 10.83958, and the p-value is 1.36e-08.
+    -   Interpretation: The p-value is less than 0.05, so reject the null hypothesis. This means the profiles are not flat, suggesting that the scores vary significantly across the seven questions within each group.
+
+**Conclusion:**
+
+The profiles are parallel, meaning the trends across the variables are similar for both groups.
+
+The overall levels of the profiles are not significantly different, meaning the average scores are comparable between the groups. The profiles are not flat, indicating that within each group, there is significant variation in scores across the variables.
+
+In summary, while both groups show similar trends across the questions, the scores for each question vary within the groups.

@@ -1,0 +1,513 @@
+# Multiple linear regression analysis
+
+```{r}
+#| echo: false
+
+source("_common.R")
+```
+
+Multiple linear regression is a statistical technique used to model the relationship between one dependent (response) variable and two or more independent (predictor) variables. It extends simple linear regression, which only considers one predictor variable, to situations where multiple variables contribute to predicting the outcome.
+
+## Prerequisite
+
+```{r}
+#| message: false
+
+library(tidyverse)
+library(lm.beta)
+library(equatiomatic)
+library(leaps)
+library(glmnet)
+library(MASS)
+library(olsrr)
+library(lmtest)
+library(sandwich)
+```
+
+## Multiple linear regression
+
+### Multiple linear regression model
+
+The general form for multiple linear regression model is:
+
+$$
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_nX_n + \epsilon
+$$
+
+where $Y$ is the dependent variable, $X_1, X_2, …, X_n$ are the independent variables, $\beta_0$ is the intercept (the value of $Y$ when all $X$’s are zero), $\beta_1, \beta_2, …, \beta_n$ are the coefficients for each independent variable, $\epsilon$ is the error term.
+
+Multiple minear regression relies on several key assumptions to produce valid results. If these assumptions are violated, the model’s results may be biased or misleading. Here are the primary assumptions:
+
+1.  The relationship between the dependent and independent variables must be linear.
+2.  Observations should be independent of each other.
+3.  The variance of the residuals should be constant across all levels of the independent variables.
+4.  The residuals (errors) should be normally distributed.
+
+### Estimating regression coefficients
+
+To estimate the regression coefficients $\beta_0, \beta_1, \dots, \beta_n$, use statistical software to fit the model to your data. This process minimizes the sum of the squared differences between the observed and predicted values (ordinary least squares, or OLS). The OLS estimator for $\boldsymbol{\beta}$ is:
+
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{Y}
+$$
+
+This formula minimizes the sum of squared residuals and provides the best linear unbiased estimates of the coefficients under the assumptions of the classical linear regression model.
+
+::: {#ex-18-01 .example}
+Given the measurements of total serum cholesterol (X1), triglycerides (X2), fasting insulin (X3), glycated hemoglobin (X4), and fasting blood glucose (Y) from 27 diabetic patients, establish a multiple linear regression equation for fasting blood glucose with the other indicators.
+:::
+
+<div>
+
+<a href="datasets/ex18-01.csv" download="ex18-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex18-01.csv", show_col_types = F)
+```
+
+You can use `lm()` function to perform the regression analysis, with $Y$ as the dependent variable and $X1$, $X2$, $X3$, $X4$ as the independent variables.
+
+```{r}
+model <- lm(Y ~ X1 + X2 + X3 + X4, data = df)
+coef(model)
+```
+
+The code can also be written as:
+
+```{r}
+model <- lm(Y ~ ., data = df)
+coef(model)
+```
+
+You can use the `coef()` function to extract regression coefficients from the model. The `extract_eq()` function from `equatiomatic` package can extract regression equation from the fitted model:
+
+```{r}
+extract_eq(model, use_coefs = T, coef_digits = 4, font_size = "small")     
+```
+
+### Evaluating the model
+
+In multiple linear regression, hypothesis tests help evaluate the significance of the model and individual predictors, while assumption tests ensure that the model is reliable. The F-test determines if the model is significant overall, t-tests assess the impact of individual predictors, and R² and adjusted R² indicate the model’s explanatory power. Residual analysis further ensures the validity of the model’s assumptions.
+
+1.  **F-test**
+
+-   $H_0$: All regression coefficients are zero, meaning none of the independent variables have a significant effect on the dependent variable.
+-   $H_1$: At least one regression coefficient is not zero, indicating that at least one independent variable has a significant effect.
+
+The F-test evaluates the overall significance of the model. The formula for the F-statistic is:
+
+$$
+F = \frac{MSR}{MSE} = \frac{\text{Mean Square Regression}}{\text{Mean Square Error}}
+$$
+
+If the F-value is large and the p-value is small (typically \< 0.05), reject the null hypothesis, suggesting the model is statistically significant.
+
+2.  **t-test**
+
+-   $H_0$: A particular regression coefficient is zero, indicating that the corresponding independent variable has no significant effect on the dependent variable.
+-   $H_1$: The regression coefficient is not zero, implying the independent variable has a significant effect.
+
+The t-test for each coefficient is used to assess whether each predictor significantly contributes to the model:
+
+$$
+t = \frac{\hat{\beta}_i}{SE(\hat{\beta}_i)}
+$$
+
+where $\hat{\beta}_i$ is the estimated coefficient, and $SE(\hat{\beta}_i)$ is the standard error.
+
+If the t-value is large and the p-value is small (typically \< 0.05), reject the null hypothesis, indicating that the variable has a significant effect on the dependent variable.
+
+3.  **Goodness of fit**
+
+-   $R^2$ (Coefficient of determination)
+
+    This indicates the proportion of variance in the dependent variable explained by the independent variables. It ranges from 0 to 1, with higher values suggesting a better fit. The $R^2$ is defined as:
+
+    $$
+    R^2 = 1 - \frac{SS_{\text{residuals}}}{SS_{\text{total}}}
+    $$
+
+    where $SS_{\text{residuals}}$ denotes the sum of squared residuals (errors), i.e., the unexplained variance, $SS_{\text{total}}$ is the total sum of squares, i.e., the total variance of the dependent variable.
+
+-   Adjusted $R^2$
+
+    It is formulated as:
+
+    $$
+    \text{adjusted } R^2 = 1 - \left( \frac{(1 - R^2)(n - 1)}{n - p - 1} \right)
+    $$
+
+    where $n$ is the number of observations, $p$ is the number of predictors (independent variables). This adjustment penalizes models that include too many predictors that don’t contribute to a better fit. A higher adjusted R² indicates a model with strong explanatory power and parsimony.
+
+-   $R$ (Multiple correlation coefficient)
+
+    This measures the strength of the linear relationship between a set of independent variables (predictors) and a dependent variable in a multiple linear regression model. The $R$ is calculated as:
+
+    $$
+    R = \sqrt{R^2}
+    $$
+
+    where $R^2$ is the coefficient of determination.
+
+Here `summary()` is used to produce result summaries of the results from the model fitting functions.
+
+```{r}
+summary(model)
+```
+
+From the result summaries, we can find that the overall model is statistically significant (F-statistic is 8.278, $p < 0.001$), indicating that at least one of the predictors is related to the fasting blood glucose.
+
+$X1$ ($t=0.390$, $p=0.7006$) and $X2$ ($t=1.721$, $p=0.0993$) are not statistically significant predictors, $X3$ ($t=0-2.229$, $p=0.0363$) and $X4$ ($t=2.623$, $p=0.0155$) are significant in this model.
+
+The $R^2 = 0.6008$, this indicates that approximately 60.08% of the variance in fasting blood glucose is explained by the model, which suggests a moderate fit.
+
+The adjusted $R^2 = 0.5282$, this indicates after adjusting for the number of predictors, the model explains around 52.82% of the variance.
+
+### Standardized partial regression
+
+In multiple linear regression, standardized partial regression coefficients (also known as standardized beta coefficients) are used to compare the relative importance of each predictor variable in the model, as they are measured on the same scale (standard deviations). They are obtained after standardizing both the independent and dependent variables, so that each variable has a mean of zero and a standard deviation of one.
+
+The standardized regression coefficient $\beta_i^*$ is computed as:
+
+$$
+\beta_i^* = \beta_i \times \frac{\sigma_{X_i}}{\sigma_Y}
+$$
+
+where $\beta_i$is the unstandardized regression coefficient for the predictor$X_i$,$\sigma_{X_i}$ is the standard deviation of predictor $X_i$, $\sigma_Y$ is the standard deviation of the dependent variable $Y$.
+
+You can obtain standardized coefficients by using the `scale()` function to standardize the variables before performing the regression. Standardizing ensures that each variable has a mean of 0 and a standard deviation of 1, allowing you to directly interpret the coefficients as standardized coefficients.
+
+```{r}
+scale(df) |> 
+  as_tibble() |> 
+  lm(Y ~ X1 + X2 + X3 + X4, data = _) |> 
+  coefficients()
+```
+
+Alternatively, the `lm.beta` package provides a convenient `lm.beta()` function that takes an ordinary linear model and returns the standardized coefficients directly.
+
+```{r}
+lm.beta(model) |> coef()
+```
+
+In a standardized regression model, the intercept is typically not interpreted because it is not directly comparable to the other variables after standardization. Therefore, it is shown as `NA` in the output of `lm.beta()`. Among the predictors, $X4$ has the strongest positive effect on $Y$, followed by $X2$. $X3$ has a significant negative impact on $Y$, while $X1$ has a relatively small effect.
+
+## Independent variable selection
+
+The selection of independent variables refers to the process of choosing the most significant predictors (independent variables) to construct a model in multiple regression analysis or other predictive models. By selecting independent variables, you can improve the model’s prediction performance, simplify the model, and reduce the risk of overfitting. Common methods for independent variable selection include:
+
+### All-subsets regression
+
+All-subsets regression (also called best subset regression) is a method that evaluates all possible subsets of the predictor variables in order to identify the best model or models. This approach is exhaustive, meaning it fits regression models for every possible combination of predictors and selects the one(s) based on specific criteria like adjusted $R^2$, AIC, BIC, or Mallow’s $C_p$.
+
+-   **Adjusted** $R^2$
+
+    Adjusted $R^2$ is a modified version of the $R^2$ that adjusts for the number of predictors (independent variables) in a regression model. Unlike the regular $R^2$, which always increases when new predictors are added, Adjusted $R^2$ compensates for the model complexity, ensuring that only significant predictors improve the model’s fit.
+
+-   **Akaike information criterion (AIC)**
+
+    AIC is based on information theory and estimates the relative quality of statistical models for a given dataset. It provides a measure of the goodness of fit while penalizing for the number of parameters in the model.
+
+    The formula for AIC is:
+
+    $$
+    AIC = 2k - 2\log(L)
+    $$
+
+    where $k$ is the number of parameters in the model, $L$ is the likelihood of the model (how well the model fits the data). Among competing models, the one with the lowest AIC is preferred.
+
+-   **Bayesian information criterion (BIC)**
+
+    BIC is similar to AIC but includes a stronger penalty for the number of parameters, especially as the sample size increases. BIC is derived from a Bayesian perspective and is more conservative in model selection compared to AIC.
+
+    The formula for BIC is:
+
+    $$
+    BIC = k\log(n) - 2\log(L)
+    $$
+
+    where $k$ is the number of parameters in the model, $n$ is the sample size, $L$ is the likelihood of the model. Like AIC, a lower BIC value indicates a better model.
+
+-   **Mallow’s** $C_p$
+
+    Mallows’ $C_p$ is a statistical criterion used for model selection in regression analysis. It helps identify models that offer a good balance between complexity (number of predictors) and goodness of fit. Specifically, it is used to compare regression models with different numbers of predictors to select the one that is neither underfitting nor overfitting the data.
+
+    Mallows’ $C_p$ is defined as:
+
+    $$
+    C_p = \frac{\text{RSS}_p}{\hat{\sigma}^2} + 2p - n
+    $$
+
+    where $\text{RSS}_p$ is the residual sum of squares for the model, $\hat{\sigma}^2$ is an estimate of the true error variance, $p$ is the number of parameters in the model (including the intercept), $n$ is the number of observations.
+
+    -   If $C_p \approx p$: The model is considered to have an appropriate number of predictors. The $C_p$ value should be close to the number of predictors in the model.
+    -   If $C_p > p$: This suggests that the model is overfitting, meaning it’s too complex and is fitting the noise in the data.
+    -   If $C_p < p$: This suggests that the model is underfitting, meaning it’s too simple and is missing important predictors.
+
+    In practice, the goal is to find the model with the lowest $C_p$ that is close to $p$.
+
+::: example
+Use the all-subsets regression method to select the independent variables of the data in [Example 1](#ex-18-01).
+:::
+
+The `regsubsets()` function from `leaps` package is a tool primarily used for performing best subset selection in regression analysis. It helps identify the best-fitting model with a given number of predictors by comparing all possible subsets of predictors based on specific criteria like Adjusted R-squared, AIC, BIC, *etc*.
+
+```{r}
+model <- regsubsets(Y ~ ., data = df, nbest = 1, method = "exhaustive") 
+summary(model)
+```
+
+Use the `plot()` function to visualize different scale values for the model.
+
+```{r}
+plot(model, scale = "adjr2")   # adjusted R²
+plot(model, scale = "Cp")      # Mallow's Cp
+plot(model, scale = "bic")     # BIC
+```
+
+Find the best model based on a specific criteria:
+
+```{r}
+which.max(summary(model)$adjr2)
+which.min(summary(model)$cp)
+which.min(summary(model)$bic)
+```
+
+Print the selected variables:
+
+```{r}
+# Find the model with the largest adjustment R²
+max_adjr2_index <- which.max(summary(model)$adjr2)
+cat("The model with the maximum adjusted R² is at index:", max_adjr2_index, "\n")
+
+# Gets the variables selected in the model
+selected_vars <- summary(model)$which[max_adjr2_index, ]
+selected_vars
+
+# Print the selected variables
+selected_vars_names <- names(selected_vars)[selected_vars]
+cat("The selected variables in the best model (with maximum adjusted R²):", paste(selected_vars_names, collapse = ", "), "\n")
+```
+
+Although this method is likely to find the best-fitting model, its computational complexity increases sharply with the increase of the number of independent variables, so it is usually only suitable for the case of a small number of independent variables in practical application.
+
+### Stepwise regression
+
+The stepwise regression is a method for selecting the most significant variables in a regression model by adding or removing predictor variables based on specific criteria (e.g., AIC, BIC, p-values). There are three common types of stepwise regression:
+
+1.  **Forward selection**: Starts with no predictors and adds the most significant predictor at each step.
+2.  **Backward elimination**: Starts with all predictors and removes the least significant predictor at each step.
+3.  **Stepwise selection**: A combination of forward selection and backward elimination where predictors can be added or removed at each step based on their significance.
+
+The `step()` function in base R is the most commonly used function for performing stepwise regression based on AIC.
+
+```{r}
+# Fit a full model
+full_model <- lm(Y ~ X1 + X2 + X3 + X4, data = df)
+
+# Perform stepwise regression using AIC (default)
+stepwise_model <- step(full_model, direction = "both")
+
+# View the summary of the final model
+stepwise_model
+```
+
+```{r}
+extract_eq(stepwise_model, use_coefs = T, coef_digits = 4, font_size = "small")  
+```
+
+You can use the `stepAIC()` function from the `MASS` package, which works similarly to `step()` but is more flexible.
+
+```{r}
+stepwise_model <- stepAIC(full_model, direction = "both")
+stepwise_model
+```
+
+```{r}
+extract_eq(stepwise_model, use_coefs = T, coef_digits = 4, font_size = "small")  
+```
+
+If you want to use other model selection criteria, the `olsrr` package provides a more intuitive way to perform stepwise regression, with options to perform forward, backward, and stepwise regression.
+
+```{r}
+stepwise_model <- ols_step_both_adj_r2(full_model)
+stepwise_model |> plot()
+stepwise_model
+```
+
+```{r}
+stepwise_model[["model"]] |> 
+extract_eq(use_coefs = T, coef_digits = 4, font_size = "small")  
+```
+
+## Application of multiple linear regression and some considerations
+
+### Application of multiple linear regression
+
+Multiple linear regression is widely used in medical research for predicting patient outcomes, analyzing the effects of various biological markers on health results, and controlling for confounding variables. Below are several scenarios where MLR is applied in the medical field:
+
+1.  **Disease risk prediction**
+
+    Multiple linear regression can be used to predict disease risk by incorporating multiple biomarkers or clinical variables. For example, factors such as age, weight, cholesterol level, and blood pressure can be used to predict the risk of cardiovascular disease.
+
+    ```{r}
+    #| eval: false
+
+    lm(heart_disease_risk ~ age + cholesterol + blood_pressure + smoking_status, data = patients_data)
+    ```
+
+<!-- -->
+
+2.  **Drug efficacy analysis**
+
+    In clinical trials, multiple linear regression is useful for evaluating the combined effects of multiple factors on drug efficacy. For example, when assessing blood sugar control in diabetic patients, variables such as drug dosage, age, weight, and lifestyle habits can be included to understand their effects on glucose levels.
+
+    ```{r}
+    #| eval: false
+
+    lm(fasting_glucose ~ drug_dose + age + weight + exercise, data = diabetes_data)
+    ```
+
+<!-- -->
+
+3.  **Controlling for confounding variables**
+
+    Confounding factors such as age, gender, or lifestyle can affect the relationships between variables. Multiple linear regression helps control for these confounders by incorporating multiple variables, allowing a more accurate estimation of the primary exposure variable’s effect (e.g., treatment method) on health outcomes.
+
+    ```{r}
+    #| eval: false
+
+    lm(treatment_effect ~ age + gender + treatment_group, data = clinical_data)
+    ```
+
+<!-- -->
+
+4.  **Prognostic model construction**
+
+    Prognostic models are used to predict survival rates or disease outcomes in medical research. Multiple linear regression helps identify significant factors influencing disease progression and uses these factors to build a prognostic model.
+
+    ```{r}
+    #| eval: false
+
+    lm(survival_time ~ tumor_size + age + treatment_type + physical_activity, data = cancer_data)
+    ```
+
+<!-- -->
+
+5.  Correlation Analysis of Physiological Indicators
+
+    Multiple linear regression can analyze the relationship between different physiological indicators. For example, it can examine how weight, cholesterol, and blood pressure affect a health outcome, such as kidney or heart function.
+
+    ```{r}
+    #| eval: false
+
+    lm(kidney_function ~ weight + cholesterol + blood_pressure, data = health_data)
+    ```
+
+### Considerations for multiple linear regression
+
+1.  Multicollinearity: High correlation between independent variables can make the model’s coefficients unstable and inflate standard errors, making it difficult to assess the individual effect of each predictor. Multicollinearity can be assessed using the variance inflation factor (VIF) by `vif()` function from `car` package.
+
+    ```{r}
+    model <-lm(Y ~ X1 + X2 + X3 + X4, data = df)
+    car::vif(model)
+    ```
+
+2.  Normality and independence of residuals: The model assumes that the residuals are independent and normally distributed. Residual plots and tests like the Shapiro-Wilk test can be used to assess this assumption.
+
+    ```{r}
+    residuals(model) |> plot()
+    residuals(model) |> shapiro.test()
+    ```
+
+3.  Homoscedasticity: The model assumes that the variance of the residuals is constant. If the residual variance is not constant (heteroscedasticity), it can impact the efficiency of the estimates. Residual plots or tests like White’s test can detect heteroscedasticity.
+
+    You can use the `bptest()` function from the `lmtest` package to conduct a Breusch-Pagan test, a similar test for heteroscedasticity.
+
+    ```{r}
+    lmtest::bptest(model)  # Breusch-Pagan test for heteroscedasticity
+    ```
+
+    As for White’s test specifically, we defined a custom function named `whites.test()` to perform White’s test.
+
+    ```{r}
+    whites.test <- function(model) {
+      # Extract the independent variables in the model
+      terms <- attr(terms(model), "term.labels")
+      # Extract the data used in the model
+      data <- model$model
+      
+      # Create square and interaction terms
+      squared_terms <- sapply(terms, function(term) paste0("I(", term, "^2)"))
+      interaction_terms <- combn(terms, 2, function(x) paste(x, collapse = ":"))
+      
+      # Construct the formula of auxiliary regression model
+      auxiliary_formula <- as.formula(
+        paste(
+          "e2 ~", 
+          paste(c(terms, squared_terms, interaction_terms), collapse = " + ")))
+      
+      # Calculate the square of the residual
+      e2 <- resid(model)^2
+      
+      # Construct auxiliary regression model
+      auxiliary_model <- lm(auxiliary_formula, data = data)
+      
+      # F-test
+      f_statistic <- summary(auxiliary_model)$fstatistic
+      p_value <- pf(f_statistic[1], f_statistic[2], f_statistic[3], lower.tail = FALSE)
+      
+      result <- list(
+        LM_test_statistic = f_statistic[1],
+        df1 = f_statistic[2],
+        df2 = f_statistic[3],
+        p_value = p_value,
+        auxiliary_model = auxiliary_model
+      )
+      
+      class(result) <- "whites.test"
+      result
+    }
+
+    # Printing results
+    print.whites.test <- function(x, ...) {
+      cat("White's Test for Heteroskedasticity\n")
+      cat("LM test statistic: ", x$LM_test_statistic, "\n")
+      cat("df1: ", x$df1, "\n")
+      cat("df2: ", x$df2, "\n")
+      cat("p-value: ", x$p_value, "\n")
+      if (x$p_value < 0.05) {
+        cat("Heteroskedasticity is present.\n")
+      } else {
+        cat("No significant heteroskedasticity detected.\n")
+      }
+    }
+    ```
+
+    ```{r}
+    model <- lm(Y ~ X1 + X2 + X3 + X4, data = df)
+    whites.test(model) 
+    ```
+
+    If the p-value is small (typically less than 0.05), reject the null hypothesis of homoscedasticity, which means heteroscedasticity is likely present. If White’s test indicates heteroscedasticity, you can use robust standard errors (e.g., `vcovHC()` function from the `sandwich` package) to correct for it:
+
+    ```{r}
+    #| eval: false
+
+    # Use robust standard errors
+    coeftest(model, vcov = vcovHC(model, type = "HC3"))
+    ```
+
+4.  Selection of independent variables: Including too many predictors can lead to overfitting, while excluding important variables can lead to underfitting. Methods like stepwise regression or information criteria (AIC, BIC) can be used to optimize the model.
+
+5.  Outliers and leverage points: The model is sensitive to outliers and high-leverage points, which can disproportionately influence the results. Use diagnostic tools such as standardized residuals and Cook’s distance to identify and handle these points.
+
+6.  Linear relationship assumption: The model assumes a linear relationship between independent variables and the dependent variable. If the relationship is non-linear, transformations or polynomial terms may be needed.
+
+Limitations of Multiple Linear Regression
+
+1.  Causality: Regression analysis only shows association, not causation.
+2.  Model Interpretability: When there are many predictors, the model may become difficult to interpret, requiring careful variable selection and result explanation.
+3.  Extrapolation: The regression model is generally reliable within the range of the data, but predictions outside of this range may be inaccurate.
