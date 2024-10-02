@@ -480,7 +480,7 @@ tb <- df |>
 Since there are multiple time points, a repeated measures ANOVA is suitable. This will test whether there is a significant difference in the weights across time points.
 
 ```{r}
-aov(weight ~ time + Error(no/time), data = tb) |> summary()
+aov(weight ~ time + Error(no), data = tb) |> summary()
 ```
 
 If you have more complex data, such as if patients drop out at different times, you can use a linear mixed-effects model to account for missing data or individual differences.
