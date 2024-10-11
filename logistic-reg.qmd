@@ -16,7 +16,6 @@ library(ggplot2)
 library(glmnet)
 library(survival)
 library(equatiomatic)
-library(StepReg)
 library(rms)
 library(VGAM)
 ```
@@ -270,7 +269,7 @@ extract_eq(
 Alternatively, `stepwise()` function from `StepReg` package is another useful and convenient tool to select a optimal model using various stepwise regression strategies.
 
 ```{r}
-stepwise(
+StepReg::stepwise(
   y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8,
   df,
   type = "logit",
