@@ -1,0 +1,270 @@
+# Generalized linear model
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+A generalized linear model (GLM) is a flexible generalization of ordinary linear regression that allows for response variables that have error distribution models other than a normal distribution. GLMs are widely used in various fields, including medical statistics, economics, and social sciences, as they provide a robust framework to model different types of data and relationships.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+## Components of GLM
+
+A generalized linear model consists of three main components:
+
+1.  **Random component**
+
+    Specifies the probability distribution of the response variable $Y$. Unlike linear regression, where $Y$ is assumed to follow a normal distribution, GLMs allow for different distributions from the exponential family, such as normal distribution, binomial distribution, Poisson distribution, Gamma distribution.
+
+2.  **Systematic component**
+
+    This refers to the linear predictor, which is the linear combination of the explanatory (independent) variables. It is similar to the equation used in linear regression:
+
+    $$
+     \eta = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+    $$where $\eta$ is the linear predictor, $\beta_0, \beta_1, \dots, \beta_p$ are the regression coefficients, $X_1, X_2, \dots, X_p$ are the independent variables.
+
+3.  **Link function**
+
+    The link function connects the linear predictor $\eta$ to the mean of the response variable. This is important because, in many cases, the response variable’s distribution and scale are not appropriate for direct use in a linear equation. The most commonly used link functions are:
+
+    -   Identity link (for normal distribution): $\eta = \mu$
+    -   Logit link (for binomial distribution): $\eta = \log \left( \frac{\mu}{1 - \mu} \right)$
+    -   Log link (for Poisson distribution): $\eta = \log(\mu)$
+    -   Inverse link (for gamma distribution): $\eta = \mu^{-1}, \ \text{where} \ \mu$ is the expected value of $Y$.
+
+    where $\mu$ is the expected value of $Y$.
+
+The general form of a GLM is:
+
+$$
+\text{g}(\mu_i) = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p
+$$
+
+where $g(\mu_i)$ is the link function that relates the expected value $\mu_i$ of the response variable $Y_i$ to the linear predictor.
+
+Below are some common distributions and their link functions:
+
+```{r}
+#| echo: false
+df <- tibble(
+  Distribution = c("Normal distribution", "Binomial distribution", "Poisson distribution", "Gamma distribution", "Inverse Gaussian distribution", "Multinomial distribution"),
+  Dependent_Variable = c("Continuous data", "Binary data", "Count data",  "Positive continuous data", "Positive skewed continuous data", "Categorical data"),
+  Link_Function = c("Identity g($\\mu$) = $\\mu$", "Logit g($\\mu$) = log($\\mu / (1 - \\mu)$)", "Log g($\\mu$) = log($\\mu$)", "Inverse g($\\mu$) = $1 / \\mu$", "Inverse squared g($\\mu$) = $1 / \\mu^2$", "Multinomial Logit g($\\mu$) = log($\\mu_j / \\mu_K$)"),
+  Common_Model = c("Linear regression", "Logistic regression", "Poisson regression", "Gamma regression", "Inverse Gaussian regression", "Multinomial logistic regression")
+)
+
+knitr::kable(df, col.names = c("Distribution", "Dependent variable", "Link function", "Common model"))
+```
+
+The GLMs are used to model relationships between clinical predictors and outcomes, where the response variable can follow different distributions (e.g., binomial, Poisson). The correct specification of the link function and distribution is critical for drawing valid inferences.
+
+## Log-linear model
+
+Log-linear model is often used to describe the relationship between categorical variables in a contingency table by modeling the natural logarithm of the expected cell frequencies as a linear combination of parameters. This model is often applied to multidimensional categorical data and is particularly useful for exploring interactions between categorical variables.
+
+The general form for a 3-way table with variables $X_1$ , $X_2$, and $X_3$ is:
+
+$$
+\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+$$
+
+where $\mu_{ijk}$ is the expected frequency for the combination of category $i$, $j$, and $k$, $\lambda$ is an intercept term (overall mean), $\lambda_{i}^{(X_1)}$, $\lambda_{j}^{(X_2)}$, and $\lambda_{k}^{(X_3)}$are the main effects for each variable,$\lambda_{ij}^{(X_1 X_2)}$, $\lambda_{ik}^{(X_1 X_3)}$*,* and $\lambda_{jk}^{(X_2 X_3)}$ are the interaction effects between pairs of variables, $\lambda_{ijk}^{(X_1 X_2 X_3)}$ is the three-way interaction term among the three variables.
+
+There are several types of log-linear models, depending on the complexity of the relationships they model. These include:
+
+1.  **Independence model**
+
+    This assumes that all variables are independent of each other, meaning no interaction terms are included. For a three-way table, the model looks like:
+
+    $$
+    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
+    $$
+
+    This model assumes no association between variables X_1 , X_2 , and X_3 .
+
+2.  **Interaction model**
+
+    This model includes interactions between two or more variables. For example, a model that includes two-way interactions but excludes higher-order interactions is:
+
+    $$
+    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
+    $$This allows for interaction between pairs of variables but not all three variables together.
+
+3.  **Saturated model**
+
+    This includes all possible main effects and interactions (up to the highest order), fully describing the relationships between the variables:
+
+    $$
+    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+    $$
+
+    This model perfectly fits the observed data but might overfit if the data set is small.
+
+These types of log-linear models allow flexibility in modeling categorical data, from simple independence models to complex interaction models depending on the structure and hypotheses in the data.
+
+Log-linear models have several key applications, particularly in the analysis of categorical data in contingency tables.
+
+1.  **Contingency table analysis**: Log-linear models are commonly used to analyze contingency tables, where they provide a way to model and test for associations between multiple categorical variables.
+2.  **Interaction analysis**: Log-linear models are ideal for identifying interaction effects between multiple categorical variables. For example, they can help understand if a response variable depends on combinations of two or more predictors.
+3.  **Association testing**: Log-linear models allow testing hypothesis about the independence or association between categorical variables in multi-way tables.
+
+Researchers often fit both saturated (fully interactive) and reduced models to identify which interactions and main effects are statistically significant. The interpretation is based on the estimated parameters, which represent the log of the odds ratios. Understanding these parameters is crucial in drawing meaningful conclusions about the relationships between variables.
+
+Log-linear models are powerful tools for exploring multi-way relationships between categorical variables, making them widely applicable across various fields of research.
+
+### Goodness of fit test
+
+The goodness of fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:
+
+1.  **Likelihood ratio test**
+
+    The likelihood ratio test (also called the deviance test) compares the deviance of a fitted log-linear model to the deviance of a saturated model (a model with as many parameters as data points). The deviance $D$ is calculated as:
+
+    $$
+    D = 2 \sum O \cdot \ln \left( \frac{O}{E} \right)
+    $$
+
+    where $O$ are the observed cell frequencies, and $E$ are the expected cell frequencies under the model.
+
+    The deviance follows a chi-square distribution with degrees of freedom equal to the difference in the number of parameters between the two models. If the p-value is small (e.g., less than 0.05), the null hypothesis is rejected, indicating that the model does not fit the data well.
+
+2.  **Pearson chi-square test**
+
+    The Pearson chi-square test is an alternative goodness-of-fit test for log-linear models, which measures the discrepancy between observed and expected frequencies. The test statistic is:
+
+    $$
+    \chi^2 = \sum \frac{(O - E)^2}{E}
+    $$
+
+    Like the deviance test, the Pearson chi-square statistic follows a chi-square distribution with degrees of freedom based on the number of cells and the number of parameters. If the p-value from the chi-square test is significant, the model does not provide a good fit.
+
+### Parameter estimation
+
+The parameters are usually estimated using maximum likelihood estimation (MLE). This method finds the parameter values that maximize the likelihood function $L(\beta)$, which represents the probability of observing the given data under the model. The log-likelihood function is often maximized instead of the likelihood because it is easier to work with sums of logs rather than products. In practice, MLE is often solved using iterative algorithms like iteratively reweighted least squares or Newton-Raphson.
+
+-   **Interpretation of parameters**
+
+    The coefficients $\lambda$ reflect the log odds ratios for the associations between the variables. If the interaction terms are significant, it indicates that there are interactions between the variables.
+
+    A positive parameter estimate for an interaction term (e.g., $\lambda^{XY}$) suggests that the odds of the joint occurrence of $X$ and $Y$ increase relative to the marginal effects. A negative estimate indicates a negative association between the variables.
+
+-   **Testing parameter significance**
+
+    The significance of individual parameters can be tested using Wald tests or likelihood ratio tests. The Wald test assesses whether each estimated coefficient is significantly different from zero:
+
+    $$
+    z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
+    $$
+
+    The test statistic follows a standard normal distribution, and a significant test indicates that the parameter contributes significantly to the model.
+
+::: example
+A study employed a case-control design to investigate the impact of maternal education level on growth and developmental delays in children under the age of 5. A total of 173 cases (children with developmental delays) and 173 controls (children with normal development) were surveyed, including their mothers’ education levels.
+:::
+
+<div>
+
+<a href="datasets/ex20-01.csv" download="ex20-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex20-01.csv", show_col_types = F) |> 
+  mutate(
+    edu = factor(edu),
+    grow = factor(grow),
+    edu = relevel(edu, ref = 3),
+    grow = relevel(grow, ref = 2)
+  )
+```
+
+You can fit log-linear models using the `loglm()` function from the `MASS` package or the `glm()` function with a `Poisson` family specification.
+
+```{r}
+fit <- MASS::loglm(f ~ edu + grow, data = tb)
+fit1 <- update(fit, .~.^2)
+#fit2 <- step(fit1, direction = "backward")  # <1>
+anova(fit, fit1)
+```
+
+1.  The `step()` may not work properly with `loglm()` object when there is only when independent variable left in the model. However, `glm()` object does.
+
+The results show that the p-value for the likelihood ratio test is 0.79511, which is much larger than the typical significance level (0.05). This shows there is no significant improvement in fit by adding the interaction term (`edu:grow`) to the model. Therefore, the simpler *Model 1* without the interaction is sufficient, and there is no strong evidence that the interaction between maternal education and child growth is important for explaining the data.
+
+Thus, the simpler model (main effects only) is preferred because the interaction term does not significantly improve the model fit.
+
+```{r}
+glm_fit <- glm(f ~ edu + grow, family = poisson(link = "log"), data = tb)
+glm_fit1 <- update(glm_fit, .~.^2)
+glm_fit2 <- step(glm_fit1, direction = "backward", trace = 1)
+anova(glm_fit, glm_fit1, glm_fit2)
+```
+
+In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above. The parameters of the final fitting model can be retrieved using the code below:
+
+```{r}
+glm_fit2 |> coef()  
+```
+
+The regression equation is as follows:
+
+```{r}
+equatiomatic::extract_eq(glm_fit2, use_coefs = T, coef_digits = 5)
+```
+
+::: example
+A case-control study was conducted to investigate the role of contraceptives and the allele of clotting factor V-Leiden in the development of venous thrombosis. A total of 324 people were investigated, including 155 cases and 169 controls. Analyze the interaction between contraceptive use and the gene.
+:::
+
+<div>
+
+<a href="datasets/ex20-02.csv" download="ex20-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex20-02.csv", show_col_types = F) |> 
+  mutate(
+    grp = factor(grp),
+    expo = factor(expo),
+    gtype = factor(gtype),
+    grp = relevel(grp, ref = 2),
+    expo = relevel(expo, ref = 2),
+    gtype = relevel(gtype, ref = 2)
+  )
+```
+
+```{r}
+fit <- MASS::loglm(f ~ grp + expo + gtype, data = tb)
+fit1 <- update(fit, .~.^2)
+fit2 <- update(fit, .~.^3)
+fit3 <- step(fit2, direction = "backward", trace = 1)
+anova(fit, fit1, fit2, fit3)
+```
+
+```{r}
+glm_fit <- glm(f ~ grp + expo + gtype, family = poisson(link = "log"), data = tb)
+glm_fit1 <- update(glm_fit, .~.^2)
+glm_fit2 <- update(glm_fit, .~.^3)
+glm_fit3 <- step(glm_fit2, direction = "backward", trace = 1)
+anova(glm_fit, glm_fit1, glm_fit2, glm_fit3)
+```
+
+The regression coefficients of the final fitting model is :
+
+```{r}
+coef(glm_fit3)
+```
+
+The regression equation is as follows:
+
+```{r}
+equatiomatic::extract_eq(glm_fit3, use_coefs = T, coef_digits = 5)
+```

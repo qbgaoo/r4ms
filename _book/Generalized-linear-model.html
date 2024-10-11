@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>16&nbsp; General linear model – R for Medical Statistics</title>
+<title>20&nbsp; Generalized linear model – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./multivariate-groups-diff.html" rel="next">
-<link href="./repeated-measure.html" rel="prev">
+<link href="./cox-regression.html" rel="next">
+<link href="./logistic-reg.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -162,7 +162,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-linear-model.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./generalized-linear-model.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -314,7 +314,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link active">
+  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span></a>
   </div>
 </li>
@@ -338,14 +338,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,19 +368,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -389,23 +395,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">16.1</span> Prerequisite</a></li>
-  <li><a href="#some-basics" id="toc-some-basics" class="nav-link" data-scroll-target="#some-basics"><span class="header-section-number">16.2</span> Some basics</a></li>
-  <li><a href="#glm-for-comparison-of-two-sample-means" id="toc-glm-for-comparison-of-two-sample-means" class="nav-link" data-scroll-target="#glm-for-comparison-of-two-sample-means"><span class="header-section-number">16.3</span> GLM for comparison of two sample means</a></li>
-  <li><a href="#glm-for-comparison-of-multiple-sample-means" id="toc-glm-for-comparison-of-multiple-sample-means" class="nav-link" data-scroll-target="#glm-for-comparison-of-multiple-sample-means"><span class="header-section-number">16.4</span> GLM for comparison of multiple sample means</a></li>
-  <li><a href="#analysis-of-covariance" id="toc-analysis-of-covariance" class="nav-link" data-scroll-target="#analysis-of-covariance"><span class="header-section-number">16.5</span> Analysis of covariance</a>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">20.1</span> Prerequisite</a></li>
+  <li><a href="#components-of-glm" id="toc-components-of-glm" class="nav-link" data-scroll-target="#components-of-glm"><span class="header-section-number">20.2</span> Components of GLM</a></li>
+  <li><a href="#log-linear-model" id="toc-log-linear-model" class="nav-link" data-scroll-target="#log-linear-model"><span class="header-section-number">20.3</span> Log-linear model</a>
   <ul class="collapse">
-  <li><a href="#ancova-assumptions" id="toc-ancova-assumptions" class="nav-link" data-scroll-target="#ancova-assumptions"><span class="header-section-number">16.5.1</span> ANCOVA assumptions</a></li>
+  <li><a href="#goodness-of-fit-test" id="toc-goodness-of-fit-test" class="nav-link" data-scroll-target="#goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness of fit test</a></li>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">20.3.2</span> Parameter estimation</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/generalized-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-linear-model.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./generalized-linear-model.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></h1>
+<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></h1>
 </div>
 
 
@@ -422,311 +427,407 @@ window.Quarto = {
 </header>
 
 
-<p>The general linear model (GLM) is a statistical model used to examine the relationship between one or more independent variables (predictors) and a dependent variable (response). It is a broad framework that encompasses various types of regression models, where the dependent variable is continuous, and the independent variables can be continuous, categorical, or a mix of both.</p>
-<section id="prerequisite" class="level2" data-number="16.1">
-<h2 data-number="16.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">16.1</span> Prerequisite</h2>
+<p>A generalized linear model (GLM) is a flexible generalization of ordinary linear regression that allows for response variables that have error distribution models other than a normal distribution. GLMs are widely used in various fields, including medical statistics, economics, and social sciences, as they provide a robust framework to model different types of data and relationships.</p>
+<section id="prerequisite" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">20.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="some-basics" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="some-basics"><span class="header-section-number">16.2</span> Some basics</h2>
-<p>The general form of the GLM can be formulated as:</p>
-<p><span class="math display">
-Y = \beta X + \epsilon
-</span></p>
-<p>where <span class="math inline">Y</span> is the vector of dependent variables (<span class="math inline">n × 1</span>, where <span class="math inline">n</span> is the number of observations); <span class="math inline">X</span> is the matrix of independent variables (called design matrix) <span class="math inline">(n × p</span>, where <span class="math inline">p</span> is the number of predictors); <span class="math inline">\beta</span> is the vector of regression coefficients (<span class="math inline">p × 1</span>), representing the effect of each predictor on the dependent variable; <span class="math inline">\epsilon</span> is the error term (<span class="math inline">n × 1</span>), assumed to be normally distributed with a mean of zero.</p>
-<p>Below are some key types of general linear models:</p>
+<section id="components-of-glm" class="level2" data-number="20.2">
+<h2 data-number="20.2" class="anchored" data-anchor-id="components-of-glm"><span class="header-section-number">20.2</span> Components of GLM</h2>
+<p>A generalized linear model consists of three main components:</p>
 <ol type="1">
-<li><strong>Simple linear regression:</strong> Analyzes the linear relationship between a single independent variable (predictor) and a continuous dependent variable (response). For example, examine how age affects systolic blood pressure.</li>
-<li><strong>Multiple linear regression:</strong> Extends simple linear regression to include multiple independent variables. It explores the relationship between several predictors and a continuous dependent variable. For example, analyze how age, weight, and exercise frequency together influence cholesterol levels.</li>
-<li><strong>Analysis of variance (ANOVA):</strong> Compares the means of two or more groups to understand whether there are significant differences between them. For example, compare blood pressure across different treatment groups (e.g., drug A, drug B and control).</li>
-<li><strong>Analysis of covariance (ANCOVA):</strong> Combines ANOVA with regression. It includes both categorical and continuous independent variables to understand their effects on the dependent variable while controlling for the covariates. For example, study how treatment (categorical) affects blood pressure while controlling for weight (continuous).</li>
-<li><strong>Multivariate analysis of variance (MANOVA):</strong> Extendes ANOVA to include multiple dependent variables. It tests whether mean differences exist between groups across more than one outcome variable. For example, investigate the effect of diet on both blood pressure and cholesterol simultaneously.</li>
-<li><strong>Repeated measures ANOVA:</strong> Analyzes data where the same subjects are measured multiple times under different conditions or at different time points. For example, measure blood pressure before and after treatment in the same subjects.</li>
-<li><strong>Generalized linear model:</strong> Extends the GLM to accommodate dependent variables that are not normally distributed, such as binary, count, or categorical outcomes. This includes logistic regression and Poisson regression.</li>
-</ol>
-<p>In summary, the GLM framework encompasses a variety of statistical models depending on the nature of the independent and dependent variables, making it a versatile tool for analyzing different types of data.</p>
-</section>
-<section id="glm-for-comparison-of-two-sample-means" class="level2" data-number="16.3">
-<h2 data-number="16.3" class="anchored" data-anchor-id="glm-for-comparison-of-two-sample-means"><span class="header-section-number">16.3</span> GLM for comparison of two sample means</h2>
-<p>When comparing the means of two independent groups, the GLM approach is typically used. This can be conceptualized as an extension of a two-sample t-test but framed within a regression-based framework.</p>
-<p><strong>Model setup</strong></p>
-<p>The goal is to compare the means of two samples to see if there is a significant difference between them. The model equation can be written as:</p>
+<li><p><strong>Random component</strong></p>
+<p>Specifies the probability distribution of the response variable <span class="math inline">Y</span>. Unlike linear regression, where <span class="math inline">Y</span> is assumed to follow a normal distribution, GLMs allow for different distributions from the exponential family, such as normal distribution, binomial distribution, Poisson distribution, Gamma distribution.</p></li>
+<li><p><strong>Systematic component</strong></p>
+<p>This refers to the linear predictor, which is the linear combination of the explanatory (independent) variables. It is similar to the equation used in linear regression:</p>
 <p><span class="math display">
-Y = \beta_0 + \beta_1 X + \epsilon
+\eta = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p
+</span>where <span class="math inline">\eta</span> is the linear predictor, <span class="math inline">\beta_0, \beta_1, \dots, \beta_p</span> are the regression coefficients, <span class="math inline">X_1, X_2, \dots, X_p</span> are the independent variables.</p></li>
+<li><p><strong>Link function</strong></p>
+<p>The link function connects the linear predictor <span class="math inline">\eta</span> to the mean of the response variable. This is important because, in many cases, the response variable’s distribution and scale are not appropriate for direct use in a linear equation. The most commonly used link functions are:</p>
+<ul>
+<li>Identity link (for normal distribution): <span class="math inline">\eta = \mu</span></li>
+<li>Logit link (for binomial distribution): <span class="math inline">\eta = \log \left( \frac{\mu}{1 - \mu} \right)</span></li>
+<li>Log link (for Poisson distribution): <span class="math inline">\eta = \log(\mu)</span></li>
+<li>Inverse link (for gamma distribution): <span class="math inline">\eta = \mu^{-1}, \ \text{where} \ \mu</span> is the expected value of <span class="math inline">Y</span>.</li>
+</ul>
+<p>where <span class="math inline">\mu</span> is the expected value of <span class="math inline">Y</span>.</p></li>
+</ol>
+<p>The general form of a GLM is:</p>
+<p><span class="math display">
+\text{g}(\mu_i) = \beta_0 + \beta_1 X_1 + \dots + \beta_p X_p
 </span></p>
-<p>where <span class="math inline">Y</span> is the outcome (dependent variable), <span class="math inline">X</span> is the binary variable (independent variable) representing group membership (e.g., 1 for group 1 and 2 for group 2), <span class="math inline">\beta_0</span> is the intercept representing the mean of group A, and <span class="math inline">\beta_1</span> is the coefficient, representing the difference in means between group A and group B, <span class="math inline">\epsilon</span> is the error term, accounting for variation in <span class="math inline">Y</span> not explained by <span class="math inline">X</span>.</p>
-<p>In this setup, the GLM compares the means of the two groups via the estimate for <span class="math inline">\beta_1</span>.</p>
-<p><strong>Hypothesis</strong></p>
-<p><span class="math inline">H_0</span>: There is no difference in means between the two groups (<span class="math inline">\beta_1 = 0</span>).</p>
-<p><span class="math inline">H_1</span>: There is a significant difference in means between the two groups (<span class="math inline">\beta_1 \neq 0</span>).</p>
+<p>where <span class="math inline">g(\mu_i)</span> is the link function that relates the expected value <span class="math inline">\mu_i</span> of the response variable <span class="math inline">Y_i</span> to the linear predictor.</p>
+<p>Below are some common distributions and their link functions:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 34%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Distribution</th>
+<th style="text-align: left;">Dependent variable</th>
+<th style="text-align: left;">Link function</th>
+<th style="text-align: left;">Common model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normal distribution</td>
+<td style="text-align: left;">Continuous data</td>
+<td style="text-align: left;">Identity g(<span class="math inline">\mu</span>) = <span class="math inline">\mu</span></td>
+<td style="text-align: left;">Linear regression</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Binomial distribution</td>
+<td style="text-align: left;">Binary data</td>
+<td style="text-align: left;">Logit g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu / (1 - \mu)</span>)</td>
+<td style="text-align: left;">Logistic regression</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poisson distribution</td>
+<td style="text-align: left;">Count data</td>
+<td style="text-align: left;">Log g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu</span>)</td>
+<td style="text-align: left;">Poisson regression</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gamma distribution</td>
+<td style="text-align: left;">Positive continuous data</td>
+<td style="text-align: left;">Inverse g(<span class="math inline">\mu</span>) = <span class="math inline">1 / \mu</span></td>
+<td style="text-align: left;">Gamma regression</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inverse Gaussian distribution</td>
+<td style="text-align: left;">Positive skewed continuous data</td>
+<td style="text-align: left;">Inverse squared g(<span class="math inline">\mu</span>) = <span class="math inline">1 / \mu^2</span></td>
+<td style="text-align: left;">Inverse Gaussian regression</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Multinomial distribution</td>
+<td style="text-align: left;">Categorical data</td>
+<td style="text-align: left;">Multinomial Logit g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu_j / \mu_K</span>)</td>
+<td style="text-align: left;">Multinomial logistic regression</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The GLMs are used to model relationships between clinical predictors and outcomes, where the response variable can follow different distributions (e.g., binomial, Poisson). The correct specification of the link function and distribution is critical for drawing valid inferences.</p>
+</section>
+<section id="log-linear-model" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="log-linear-model"><span class="header-section-number">20.3</span> Log-linear model</h2>
+<p>Log-linear model is often used to describe the relationship between categorical variables in a contingency table by modeling the natural logarithm of the expected cell frequencies as a linear combination of parameters. This model is often applied to multidimensional categorical data and is particularly useful for exploring interactions between categorical variables.</p>
+<p>The general form for a 3-way table with variables <span class="math inline">X_1</span> , <span class="math inline">X_2</span>, and <span class="math inline">X_3</span> is:</p>
+<p><span class="math display">
+\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+</span></p>
+<p>where <span class="math inline">\mu_{ijk}</span> is the expected frequency for the combination of category <span class="math inline">i</span>, <span class="math inline">j</span>, and <span class="math inline">k</span>, <span class="math inline">\lambda</span> is an intercept term (overall mean), <span class="math inline">\lambda_{i}^{(X_1)}</span>, <span class="math inline">\lambda_{j}^{(X_2)}</span>, and <span class="math inline">\lambda_{k}^{(X_3)}</span>are the main effects for each variable,<span class="math inline">\lambda_{ij}^{(X_1 X_2)}</span>, <span class="math inline">\lambda_{ik}^{(X_1 X_3)}</span><em>,</em> and <span class="math inline">\lambda_{jk}^{(X_2 X_3)}</span> are the interaction effects between pairs of variables, <span class="math inline">\lambda_{ijk}^{(X_1 X_2 X_3)}</span> is the three-way interaction term among the three variables.</p>
+<p>There are several types of log-linear models, depending on the complexity of the relationships they model. These include:</p>
+<ol type="1">
+<li><p><strong>Independence model</strong></p>
+<p>This assumes that all variables are independent of each other, meaning no interaction terms are included. For a three-way table, the model looks like:</p>
+<p><span class="math display">
+\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
+</span></p>
+<p>This model assumes no association between variables X_1 , X_2 , and X_3 .</p></li>
+<li><p><strong>Interaction model</strong></p>
+<p>This model includes interactions between two or more variables. For example, a model that includes two-way interactions but excludes higher-order interactions is:</p>
+<p><span class="math display">
+\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
+</span>This allows for interaction between pairs of variables but not all three variables together.</p></li>
+<li><p><strong>Saturated model</strong></p>
+<p>This includes all possible main effects and interactions (up to the highest order), fully describing the relationships between the variables:</p>
+<p><span class="math display">
+\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+</span></p>
+<p>This model perfectly fits the observed data but might overfit if the data set is small.</p></li>
+</ol>
+<p>These types of log-linear models allow flexibility in modeling categorical data, from simple independence models to complex interaction models depending on the structure and hypotheses in the data.</p>
+<p>Log-linear models have several key applications, particularly in the analysis of categorical data in contingency tables.</p>
+<ol type="1">
+<li><strong>Contingency table analysis</strong>: Log-linear models are commonly used to analyze contingency tables, where they provide a way to model and test for associations between multiple categorical variables.</li>
+<li><strong>Interaction analysis</strong>: Log-linear models are ideal for identifying interaction effects between multiple categorical variables. For example, they can help understand if a response variable depends on combinations of two or more predictors.</li>
+<li><strong>Association testing</strong>: Log-linear models allow testing hypothesis about the independence or association between categorical variables in multi-way tables.</li>
+</ol>
+<p>Researchers often fit both saturated (fully interactive) and reduced models to identify which interactions and main effects are statistically significant. The interpretation is based on the estimated parameters, which represent the log of the odds ratios. Understanding these parameters is crucial in drawing meaningful conclusions about the relationships between variables.</p>
+<p>Log-linear models are powerful tools for exploring multi-way relationships between categorical variables, making them widely applicable across various fields of research.</p>
+<section id="goodness-of-fit-test" class="level3" data-number="20.3.1">
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness of fit test</h3>
+<p>The goodness of fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:</p>
+<ol type="1">
+<li><p><strong>Likelihood ratio test</strong></p>
+<p>The likelihood ratio test (also called the deviance test) compares the deviance of a fitted log-linear model to the deviance of a saturated model (a model with as many parameters as data points). The deviance <span class="math inline">D</span> is calculated as:</p>
+<p><span class="math display">
+D = 2 \sum O \cdot \ln \left( \frac{O}{E} \right)
+</span></p>
+<p>where <span class="math inline">O</span> are the observed cell frequencies, and <span class="math inline">E</span> are the expected cell frequencies under the model.</p>
+<p>The deviance follows a chi-square distribution with degrees of freedom equal to the difference in the number of parameters between the two models. If the p-value is small (e.g., less than 0.05), the null hypothesis is rejected, indicating that the model does not fit the data well.</p></li>
+<li><p><strong>Pearson chi-square test</strong></p>
+<p>The Pearson chi-square test is an alternative goodness-of-fit test for log-linear models, which measures the discrepancy between observed and expected frequencies. The test statistic is:</p>
+<p><span class="math display">
+\chi^2 = \sum \frac{(O - E)^2}{E}
+</span></p>
+<p>Like the deviance test, the Pearson chi-square statistic follows a chi-square distribution with degrees of freedom based on the number of cells and the number of parameters. If the p-value from the chi-square test is significant, the model does not provide a good fit.</p></li>
+</ol>
+</section>
+<section id="parameter-estimation" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">20.3.2</span> Parameter estimation</h3>
+<p>The parameters are usually estimated using maximum likelihood estimation (MLE). This method finds the parameter values that maximize the likelihood function <span class="math inline">L(\beta)</span>, which represents the probability of observing the given data under the model. The log-likelihood function is often maximized instead of the likelihood because it is easier to work with sums of logs rather than products. In practice, MLE is often solved using iterative algorithms like iteratively reweighted least squares or Newton-Raphson.</p>
+<ul>
+<li><p><strong>Interpretation of parameters</strong></p>
+<p>The coefficients <span class="math inline">\lambda</span> reflect the log odds ratios for the associations between the variables. If the interaction terms are significant, it indicates that there are interactions between the variables.</p>
+<p>A positive parameter estimate for an interaction term (e.g., <span class="math inline">\lambda^{XY}</span>) suggests that the odds of the joint occurrence of <span class="math inline">X</span> and <span class="math inline">Y</span> increase relative to the marginal effects. A negative estimate indicates a negative association between the variables.</p></li>
+<li><p><strong>Testing parameter significance</strong></p>
+<p>The significance of individual parameters can be tested using Wald tests or likelihood ratio tests. The Wald test assesses whether each estimated coefficient is significantly different from zero:</p>
+<p><span class="math display">
+z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
+</span></p>
+<p>The test statistic follows a standard normal distribution, and a significant test indicates that the parameter contributes significantly to the model.</p></li>
+</ul>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>Reanalyze the Example 3 in <a href="ttest.html" class="quarto-xref"><span>Chapter 7</span></a> using general linear model approach.</p>
+<p>A study employed a case-control design to investigate the impact of maternal education level on growth and developmental delays in children under the age of 5. A total of 173 cases (children with developmental delays) and 173 controls (children with normal development) were surveyed, including their mothers’ education levels.</p>
 </div>
 <div>
-<p><a href="datasets/ex16-01.csv" download="ex16-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex20-01.csv" download="ex20-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-01.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">grp =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex20-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">edu =</span> <span class="fu">factor</span>(edu),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="fu">factor</span>(grow),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">edu =</span> <span class="fu">relevel</span>(edu, <span class="at">ref =</span> <span class="dv">3</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">grow =</span> <span class="fu">relevel</span>(grow, <span class="at">ref =</span> <span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here’s how you can implement this using the <code>lm()</code> function, which fits a linear model.</p>
+<p>You can fit log-linear models using the <code>loglm()</code> function from the <code>MASS</code> package or the <code>glm()</code> function with a <code>Poisson</code> family specification.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(x <span class="sc">~</span> grp, <span class="at">data =</span> df) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">loglm</span>(f <span class="sc">~</span> edu <span class="sc">+</span> grow, <span class="at">data =</span> tb)</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">2</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#fit2 &lt;- step(fit1, direction = "backward")</span></span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit, fit1)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="1">The <code>step()</code> may not work properly with <code>loglm()</code> object when there is only when independent variable left in the model. However, <code>glm()</code> object does.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = x ~ grp, data = df)
+<pre><code>#&gt; LR tests for hierarchical log-linear models
 #&gt; 
-#&gt; Residuals:
-#&gt;      Min       1Q   Median       3Q      Max 
-#&gt; -0.11000 -0.05125  0.00000  0.05125  0.11000 
+#&gt; Model 1:
+#&gt;  f ~ edu + grow 
+#&gt; Model 2:
+#&gt;  f ~ edu + grow + edu:grow 
 #&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  0.77000    0.02516  30.607 3.16e-14 ***
-#&gt; grp2        -0.13125    0.03558  -3.689  0.00243 ** 
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Residual standard error: 0.07116 on 14 degrees of freedom
-#&gt; Multiple R-squared:  0.4929, Adjusted R-squared:  0.4567 
-#&gt; F-statistic: 13.61 on 1 and 14 DF,  p-value: 0.00243</code></pre>
+#&gt;            Deviance df Delta(Dev) Delta(df) P(&gt; Delta(Dev)
+#&gt; Model 1   0.4585613  2                                    
+#&gt; Model 2   0.0000000  0  0.4585613         2        0.79511
+#&gt; Saturated 0.0000000  0  0.0000000         0        1.00000</code></pre>
 </div>
 </div>
-<p>The mean of group 1 (intercept) is 0.77, the difference between the means of group 1 and group 2 (group coefficient) is -0.13125. The p-value is 0.00243, suggesting that there is a statistically significant difference between the means of the two groups.</p>
-<p>The GLM approach fits a linear regression model to test for differences in means. This approach can be generalized to multiple groups or covariates, allowing more complex analyses. Two-sample t-test is a simpler, direct method for testing the difference between two means. It’s equivalent to the GLM approach when no other covariates are included. Both methods will give the same results, but the GLM approach provides a framework for extending to more complex models.</p>
-</section>
-<section id="glm-for-comparison-of-multiple-sample-means" class="level2" data-number="16.4">
-<h2 data-number="16.4" class="anchored" data-anchor-id="glm-for-comparison-of-multiple-sample-means"><span class="header-section-number">16.4</span> GLM for comparison of multiple sample means</h2>
-<p>ANOVA is a special case of GLM used when the dependent variable is continuous and the independent variables are categorical. GLM provides a flexible framework for comparing multiple sample means. Here we only consider the comparison of three sample means.</p>
-<p><strong>Model setup</strong></p>
-<p>The model equation can be written as:</p>
+<p>The results show that the p-value for the likelihood ratio test is 0.79511, which is much larger than the typical significance level (0.05). This shows there is no significant improvement in fit by adding the interaction term (<code>edu:grow</code>) to the model. Therefore, the simpler <em>Model 1</em> without the interaction is sufficient, and there is no strong evidence that the interaction between maternal education and child growth is important for explaining the data.</p>
+<p>Thus, the simpler model (main effects only) is preferred because the interaction term does not significantly improve the model fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(f <span class="sc">~</span> edu <span class="sc">+</span> grow, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>), <span class="at">data =</span> tb)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>glm_fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(glm_fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>glm_fit2 <span class="ot">&lt;-</span> <span class="fu">step</span>(glm_fit1, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">trace =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Start:  AIC=47.08
+#&gt; f ~ edu + grow + edu:grow
+#&gt; 
+#&gt;            Df Deviance    AIC
+#&gt; - edu:grow  2  0.45856 43.536
+#&gt; &lt;none&gt;         0.00000 47.078
+#&gt; 
+#&gt; Step:  AIC=43.54
+#&gt; f ~ edu + grow
+#&gt; 
+#&gt;        Df Deviance    AIC
+#&gt; - grow  1    0.459 41.536
+#&gt; &lt;none&gt;       0.459 43.536
+#&gt; - edu   2   34.927 74.005
+#&gt; 
+#&gt; Step:  AIC=41.54
+#&gt; f ~ edu
+#&gt; 
+#&gt;        Df Deviance    AIC
+#&gt; &lt;none&gt;       0.459 41.536
+#&gt; - edu   2   34.927 72.005</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit, glm_fit1, glm_fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Analysis of Deviance Table
+#&gt; 
+#&gt; Model 1: f ~ edu + grow
+#&gt; Model 2: f ~ edu + grow + edu:grow
+#&gt; Model 3: f ~ edu
+#&gt;   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+#&gt; 1         2    0.45856                     
+#&gt; 2         0    0.00000  2  0.45856   0.7951
+#&gt; 3         3    0.45856 -3 -0.45856   0.9279</code></pre>
+</div>
+</div>
+<p>In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above. The parameters of the final fitting model can be retrieved using the code below:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>glm_fit2 <span class="sc">|&gt;</span> <span class="fu">coef</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; (Intercept)        edu1        edu2 
+#&gt;   3.8918203   0.5330263  -0.1905183</code></pre>
+</div>
+</div>
+<p>The regression equation is as follows:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(glm_fit2, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 <p><span class="math display">
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+\log ({ \widehat{E( \operatorname{f} )} })  = 3.89182 + 0.53303(\operatorname{edu}_{\operatorname{1}}) - 0.19052(\operatorname{edu}_{\operatorname{2}})
 </span></p>
-<p>where <span class="math inline">Y</span> is the outcome (dependent variable), <span class="math inline">X_1</span> and <span class="math inline">X_2</span> are dummy variables (also called indicator variables) used to encode the group memberships of the samples. Typically, if there are three groups, you can create two dummy variables to compare the means: The group 1 is the reference group where both <span class="math inline">X_1 = 0</span> and <span class="math inline">X_2 = 0</span>. <span class="math inline">X_1 = 1</span> if the observation is from group 2, and 0 otherwise. <span class="math inline">X_2 = 1</span> if the observation is from group 3, and 0 otherwise. <span class="math inline">\beta_0</span> is the intercept representing the mean of group 1 (reference group), <span class="math inline">\beta_1</span> is the coefficient representing the difference in means between group 1 and group 2, and <span class="math inline">\beta_2</span> is the coefficient representing the difference in means between group 1 and group 3, <span class="math inline">\epsilon</span> is the error term.</p>
-<p>Thus, the GLM compares the mean of the reference group (encoded by the intercept <span class="math inline">\beta_0</span>) with the other two groups through the coefficients <span class="math inline">\beta_1</span> and <span class="math inline">\beta_2</span>.</p>
-<p><strong>Hypothesis</strong></p>
-<p><span class="math inline">H_0</span>: There is no difference in means among the three groups (<span class="math inline">\beta_1 = \beta_2 = 0</span>).</p>
-<p><span class="math inline">H_1</span>: There is a difference in means among the three groups (At least one of the <span class="math inline">\beta_1</span> or <span class="math inline">\beta_2 \neq 0</span>).</p>
+</div>
+</div>
 <div class="example">
 <strong>Example 2:</strong> 
-<p>Reanalyze the Example 1 in <a href="anova.html" class="quarto-xref"><span>Chapter 8</span></a> using general linear model approach.</p>
+<p>A case-control study was conducted to investigate the role of contraceptives and the allele of clotting factor V-Leiden in the development of venous thrombosis. A total of 324 people were investigated, including 155 cases and 169 controls. Analyze the interaction between contraceptive use and the gene.</p>
 </div>
 <div>
-<p><a href="datasets/ex16-02.csv" download="ex16-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex20-02.csv" download="ex20-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-02.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex20-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">grp =</span> <span class="fu">factor</span>(grp),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">expo =</span> <span class="fu">factor</span>(expo),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">gtype =</span> <span class="fu">factor</span>(gtype),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">grp =</span> <span class="fu">relevel</span>(grp, <span class="at">ref =</span> <span class="dv">2</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">expo =</span> <span class="fu">relevel</span>(expo, <span class="at">ref =</span> <span class="dv">2</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">gtype =</span> <span class="fu">relevel</span>(gtype, <span class="at">ref =</span> <span class="dv">2</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> df) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">loglm</span>(f <span class="sc">~</span> grp <span class="sc">+</span> expo <span class="sc">+</span> gtype, <span class="at">data =</span> tb)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">update</span>(fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">step</span>(fit2, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">trace =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = diff_tri ~ group, data = df)
+<pre><code>#&gt; Start:  AIC=16
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + 
+#&gt;     grp:expo:gtype
 #&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -1.4002 -0.5206 -0.1021  0.6013  1.7260 
+#&gt;                  Df    AIC
+#&gt; - grp:expo:gtype  1 14.096
+#&gt; &lt;none&gt;              16.000
 #&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)   2.9602     0.1178  25.134  &lt; 2e-16 ***
-#&gt; group2       -0.0920     0.1666  -0.552    0.582    
-#&gt; group3       -0.7562     0.1666  -4.540 1.37e-05 ***
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; Step:  AIC=14.1
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype
 #&gt; 
-#&gt; Residual standard error: 0.7449 on 117 degrees of freedom
-#&gt; Multiple R-squared:  0.1734, Adjusted R-squared:  0.1593 
-#&gt; F-statistic: 12.27 on 2 and 117 DF,  p-value: 1.449e-05</code></pre>
+#&gt;              Df    AIC
+#&gt; - expo:gtype  1 12.097
+#&gt; &lt;none&gt;          14.096
+#&gt; - grp:gtype   1 37.909
+#&gt; - grp:expo    1 42.920
+#&gt; 
+#&gt; Step:  AIC=12.1
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype
+#&gt; 
+#&gt;             Df    AIC
+#&gt; &lt;none&gt;         12.097
+#&gt; - grp:gtype  1 38.751
+#&gt; - grp:expo   1 43.762</code></pre>
 </div>
-</div>
-<p>The model uses group 1 as the reference category (since it’s not listed), and estimates the differences in diff_tri between groups 2 and 3 compared to group 1.</p>
-<ul>
-<li>Intercept (group 1): The intercept represents the estimated mean of diff_tri for group 1, which is 2.9602. This is the baseline value when group = 1. The very small p-value (&lt; 2e-16) indicates that this estimate is significantly different from zero.</li>
-<li>group 2 coefficient: The estimate for group2 is -0.0920, meaning the average difference between group 2 and group 1 is -0.092. Group 2 has a slightly lower diff_tri compared to group 1. The p-value (0.582) indicates that this difference is not statistically significant, as the value is much greater than typical significance levels (e.g., 0.05).</li>
-<li>group 3 coefficient: The estimate for group3 is -0.7562, indicating that group 3 has a lower average diff_tri by 0.756 units compared to group 1. The p-value (1.37e-05) is highly significant (below 0.001), suggesting that the difference between group 3 and group 1 is statistically significant.</li>
-</ul>
-<p>To compare group 2 and group 3, you can either perform pairwise comparisons with emmeans, or relevel the reference group in the model. Here are the code blocks for the two methods.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emmeans</span>(pairwise <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit, fit1, fit2, fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; $emmeans
-#&gt;  group emmean    SE  df lower.CL upper.CL
-#&gt;  1       2.96 0.118 117     2.73     3.19
-#&gt;  2       2.87 0.118 117     2.63     3.10
-#&gt;  3       2.20 0.118 117     1.97     2.44
+<pre><code>#&gt; LR tests for hierarchical log-linear models
 #&gt; 
-#&gt; Confidence level used: 0.95 
+#&gt; Model 1:
+#&gt;  f ~ grp + expo + gtype 
+#&gt; Model 2:
+#&gt;  f ~ grp + expo + gtype + grp:expo + grp:gtype 
+#&gt; Model 3:
+#&gt;  f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype 
+#&gt; Model 4:
+#&gt;  f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + grp:expo:gtype 
 #&gt; 
-#&gt; $contrasts
-#&gt;  contrast        estimate    SE  df t.ratio p.value
-#&gt;  group1 - group2    0.092 0.167 117   0.552  0.8455
-#&gt;  group1 - group3    0.756 0.167 117   4.540  &lt;.0001
-#&gt;  group2 - group3    0.664 0.167 117   3.988  0.0003
-#&gt; 
-#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+#&gt;              Deviance df   Delta(Dev) Delta(df) P(&gt; Delta(Dev)
+#&gt; Model 1   62.41639390  4                                      
+#&gt; Model 2    0.09702652  2 6.231937e+01         2        0.00000
+#&gt; Model 3    0.09613097  1 8.955578e-04         1        0.97613
+#&gt; Model 4    0.00000000  0 9.613097e-02         1        0.75652
+#&gt; Saturated  0.00000000  0 0.000000e+00         0        1.00000</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relevel the factor so that group 2 is the reference group</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">relevel</span>(group, <span class="at">ref =</span> <span class="st">"2"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(diff_tri <span class="sc">~</span> group, <span class="at">data =</span> _) <span class="sc">|&gt;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>glm_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(f <span class="sc">~</span> grp <span class="sc">+</span> expo <span class="sc">+</span> gtype, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>), <span class="at">data =</span> tb)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>glm_fit1 <span class="ot">&lt;-</span> <span class="fu">update</span>(glm_fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>glm_fit2 <span class="ot">&lt;-</span> <span class="fu">update</span>(glm_fit, .<span class="sc">~</span>.<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>glm_fit3 <span class="ot">&lt;-</span> <span class="fu">step</span>(glm_fit2, <span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">trace =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = diff_tri ~ group, data = mutate(df, group = relevel(group, 
-#&gt;     ref = "2")))
+<pre><code>#&gt; Start:  AIC=55.23
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + 
+#&gt;     grp:expo:gtype
 #&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -1.4002 -0.5206 -0.1021  0.6013  1.7260 
+#&gt;                  Df Deviance    AIC
+#&gt; - grp:expo:gtype  1 0.096129 53.321
+#&gt; &lt;none&gt;              0.000000 55.225
 #&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)   2.8683     0.1178  24.353  &lt; 2e-16 ***
-#&gt; group1        0.0920     0.1666   0.552 0.581774    
-#&gt; group3       -0.6643     0.1666  -3.988 0.000116 ***
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; Step:  AIC=53.32
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype
 #&gt; 
-#&gt; Residual standard error: 0.7449 on 117 degrees of freedom
-#&gt; Multiple R-squared:  0.1734, Adjusted R-squared:  0.1593 
-#&gt; F-statistic: 12.27 on 2 and 117 DF,  p-value: 1.449e-05</code></pre>
+#&gt;              Df Deviance    AIC
+#&gt; - expo:gtype  1   0.0970 51.322
+#&gt; &lt;none&gt;            0.0961 53.321
+#&gt; - grp:gtype   1  25.9093 77.134
+#&gt; - grp:expo    1  30.9197 82.145
+#&gt; 
+#&gt; Step:  AIC=51.32
+#&gt; f ~ grp + expo + gtype + grp:expo + grp:gtype
+#&gt; 
+#&gt;             Df Deviance    AIC
+#&gt; &lt;none&gt;            0.097 51.322
+#&gt; - grp:gtype  1   28.751 77.977
+#&gt; - grp:expo   1   33.762 82.987</code></pre>
 </div>
-</div>
-<p>These methods will give you the direct difference between the two groups, along with p-values for significance.</p>
-</section>
-<section id="analysis-of-covariance" class="level2" data-number="16.5">
-<h2 data-number="16.5" class="anchored" data-anchor-id="analysis-of-covariance"><span class="header-section-number">16.5</span> Analysis of covariance</h2>
-<p>Analysis of covariance (ANCOVA) combines both analysis of variance (ANOVA) and linear regression. It is used to compare the means of dependent variables across different groups while controlling for the effects of one or more continuous covariates (independent variables that are not of primary interest but may influence the outcome). By accounting for covariates, ANCOVA reduces the error variance, thus increasing the statistical power of the test.</p>
-<p>The general form of the ANCOVA model is:</p>
-<p><span class="math display">
-Y = \mu + \beta X + \tau G + \epsilon
-</span></p>
-<p>where <span class="math inline">Y</span> is the dependent variable (outcome of interest), <span class="math inline">X</span> is the covariate, <span class="math inline">G</span> represents the groups or factors (categorical independent variable), <span class="math inline">\mu</span> is the overall mean, <span class="math inline">\beta</span> is the regression coefficient for the covariate, <span class="math inline">\tau</span> is the effect of the groups on the outcome variable, and <span class="math inline">\epsilon</span> is the residual error.</p>
-<section id="ancova-assumptions" class="level3" data-number="16.5.1">
-<h3 data-number="16.5.1" class="anchored" data-anchor-id="ancova-assumptions"><span class="header-section-number">16.5.1</span> ANCOVA assumptions</h3>
-<p>ANCOVA Assumptions are critical to ensure the validity of the results. These assumptions are similar to those in ANOVA and linear regression but include additional considerations related to covariates. Here are the key assumptions:</p>
-<ol type="1">
-<li><p><strong>Linearity</strong></p>
-<p>The relationship between the covariate(s) and the dependent variable should be linear across all levels of the independent variable (grouping factor). In other words, the effect of the covariate should consistently increase or decrease the dependent variable in a straight-line fashion.</p>
-<p>How to check: Scatterplots of the covariate against the dependent variable, stratified by group, can be used to visually check for linear relationships.</p></li>
-<li><p><strong>Homogeneity of regression slopes</strong></p>
-<p>The slopes of the regression lines (representing the relationship between the covariate and the dependent variable) must be the same for all groups. This ensures that the covariate affects each group in the same way. If this assumption is violated, it indicates an interaction between the covariate and the group factor.</p>
-<p>How to check: Include an interaction term between the covariate and group in the model. If the interaction is significant, the assumption is violated.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(outcome <span class="sc">~</span> group <span class="sc">*</span> covariate, <span class="at">data =</span> data)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-<li><p><strong>Normality</strong></p>
-<p>The residuals (differences between observed and predicted values) of the dependent variable should be normally distributed. This assumption ensures that the error terms follow a normal distribution across all levels of the independent variable.</p>
-<p>How to check: Use a normal Q-Q plot or conduct the Shapiro-Wilk test to check the normality of residuals.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(model))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-<li><p><strong>Independence of observations</strong></p>
-<p>The observations should be independent of one another. This means that there is no correlation or dependency between the values of the dependent variable within or between groups.</p>
-<p>How to check: Ensure that the data collection process was designed to avoid dependency between observations (e.g., no repeated measures or clustering without proper adjustments).</p></li>
-<li><p>Homogeneity of variance</p>
-<p>The variances of the dependent variable should be equal across all groups. This is similar to the ANOVA assumption of homogeneity of variances.</p>
-<p>How to check: Use Levene’s test or Bartlett’s test for homogeneity of variances.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">levene_test</span>(<span class="at">data =</span> data, outcome <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-<li><p>Covariate independence of treatment effects</p>
-<p>The covariate should be independent of the group factor, meaning the covariate should not differ significantly across the groups. If the covariate is not balanced across groups, it can introduce bias into the results.</p>
-<p>How to check: Test whether the covariate is significantly different between groups, for example using an ANOVA or t-test depending on the number of groups.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(covariate <span class="sc">~</span> group, <span class="at">data =</span> data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div></li>
-</ol>
-<p>Violating these assumptions can lead to biased or invalid results, so it’s important to check each assumption before interpreting the results of ANCOVA.</p>
-<div class="example">
-<strong>Example 3:</strong> 
-<p>A study aims to investigate whether there is a difference in serum cholesterol between adults with normal weight and those who are overweight. During a health examination, 13 individuals from two groups (normal weight and overweight) were randomly selected, and their cholesterol levels were measured. Additionally, cholesterol levels are also related to age. The study data can be accessed from the download button below. Compare the two sample means of the cholesterol level.</p>
-</div>
-<div>
-<p><a href="datasets/ex16-03.csv" download="ex16-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex16-03.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>You can conduct ANCOVA using the <code>aov()</code> or <code>lm()</code> functions:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(chole <span class="sc">~</span> group <span class="sc">+</span> age, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit, glm_fit1, glm_fit2, glm_fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-#&gt; group        1  18.61  18.615   20.34 0.000158 ***
-#&gt; age          1  24.38  24.380   26.64 3.13e-05 ***
-#&gt; Residuals   23  21.05   0.915                     
+<pre><code>#&gt; Analysis of Deviance Table
+#&gt; 
+#&gt; Model 1: f ~ grp + expo + gtype
+#&gt; Model 2: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype
+#&gt; Model 3: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + 
+#&gt;     grp:expo:gtype
+#&gt; Model 4: f ~ grp + expo + gtype + grp:expo + grp:gtype
+#&gt;   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
+#&gt; 1         4     62.416                          
+#&gt; 2         1      0.096  3   62.320 1.877e-13 ***
+#&gt; 3         0      0.000  1    0.096    0.7565    
+#&gt; 4         2      0.097 -2   -0.097    0.9526    
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<p>The regression coefficients of the final fitting model is :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m =</span> <span class="fu">mean</span>(chole) </span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(glm_fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; # A tibble: 2 × 2
-#&gt;   group     m
-#&gt;   &lt;fct&gt; &lt;dbl&gt;
-#&gt; 1 0      5.09
-#&gt; 2 1      6.78</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(chole <span class="sc">~</span> group <span class="sc">+</span> age, <span class="at">data =</span> df) <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = chole ~ group + age, data = df)
-#&gt; 
-#&gt; Residuals:
-#&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -1.7807 -0.4706  0.0270  0.6301  2.0068 
-#&gt; 
-#&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept)  0.76053    0.88016   0.864   0.3965    
-#&gt; group1       0.89549    0.40572   2.207   0.0376 *  
-#&gt; age          0.09417    0.01824   5.162 3.13e-05 ***
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Residual standard error: 0.9566 on 23 degrees of freedom
-#&gt; Multiple R-squared:  0.6714, Adjusted R-squared:  0.6428 
-#&gt; F-statistic: 23.49 on 2 and 23 DF,  p-value: 2.769e-06</code></pre>
+<pre><code>#&gt; (Intercept)        grp1       expo1      gtype1  grp1:expo1 grp1:gtype1 
+#&gt;   4.6082424  -1.0355344  -0.4700036  -3.3019907   1.3327101   2.0698471</code></pre>
 </div>
 </div>
-<p>The coefficients for the model show the estimated effect of each predictor on cholesterol levels:</p>
-<p>(Intercept): The intercept is estimated at 0.76053, which is the expected cholesterol level when both predictors (group and age) are zero. However, the intercept’s significance is not high (p = 0.3965).</p>
-<p>group1: The coefficient for group1 is 0.89549. This indicates that individuals in group 1 have, on average, a cholesterol level that is 0.89549 mmol/L higher than those in the reference group (the normal weight). The p-value (0.0376) suggests this effect is statistically significant at the 0.05 level, indicating a meaningful difference in cholesterol levels between the groups.</p>
-<p>age: The coefficient for age is 0.09417, suggesting that for each additional year of age, the cholesterol level increases by approximately 0.09417 mmol/L. The p-value for age (3.13e-05) is highly significant, indicating a possible relationship between age and cholesterol levels.</p>
+<p>The regression equation is as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> chole, <span class="at">shape =</span> group, <span class="at">color =</span> group)) <span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; `geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(glm_fit3, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="general-linear-model_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><span class="math display">
+\log ({ \widehat{E( \operatorname{f} )} })  = 4.60824 - 1.03553(\operatorname{grp}_{\operatorname{1}}) - 0.47(\operatorname{\expo}_{\operatorname{1}}) - 3.30199(\operatorname{gtype}_{\operatorname{1}}) + 1.33271(\operatorname{grp}_{\operatorname{1}} \times \operatorname{\expo}_{\operatorname{1}}) + 2.06985(\operatorname{grp}_{\operatorname{1}} \times \operatorname{gtype}_{\operatorname{1}})
+</span></p>
 </div>
 </div>
 
@@ -1340,13 +1441,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./repeated-measure.html" class="pagination-link" aria-label="Repeated measures ANOVA">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span>
+      <a href="./logistic-reg.html" class="pagination-link" aria-label="Logistic regression analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./multivariate-groups-diff.html" class="pagination-link" aria-label="Multivariate data">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./cox-regression.html" class="pagination-link" aria-label="Cox regression">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1355,5 +1456,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/generalized-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

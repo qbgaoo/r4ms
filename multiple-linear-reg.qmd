@@ -2,7 +2,6 @@
 
 ```{r}
 #| echo: false
-
 source("_common.R")
 ```
 
@@ -12,7 +11,6 @@ Multiple linear regression is a statistical technique used to model the relation
 
 ```{r}
 #| message: false
-
 library(tidyverse)
 library(lm.beta)
 library(equatiomatic)
@@ -358,8 +356,6 @@ Multiple linear regression is widely used in medical research for predicting pat
     lm(heart_disease_risk ~ age + cholesterol + blood_pressure + smoking_status, data = patients_data)
     ```
 
-<!-- -->
-
 2.  **Drug efficacy analysis**
 
     In clinical trials, multiple linear regression is useful for evaluating the combined effects of multiple factors on drug efficacy. For example, when assessing blood sugar control in diabetic patients, variables such as drug dosage, age, weight, and lifestyle habits can be included to understand their effects on glucose levels.
@@ -369,8 +365,6 @@ Multiple linear regression is widely used in medical research for predicting pat
 
     lm(fasting_glucose ~ drug_dose + age + weight + exercise, data = diabetes_data)
     ```
-
-<!-- -->
 
 3.  **Controlling for confounding variables**
 
@@ -382,8 +376,6 @@ Multiple linear regression is widely used in medical research for predicting pat
     lm(treatment_effect ~ age + gender + treatment_group, data = clinical_data)
     ```
 
-<!-- -->
-
 4.  **Prognostic model construction**
 
     Prognostic models are used to predict survival rates or disease outcomes in medical research. Multiple linear regression helps identify significant factors influencing disease progression and uses these factors to build a prognostic model.
@@ -394,9 +386,7 @@ Multiple linear regression is widely used in medical research for predicting pat
     lm(survival_time ~ tumor_size + age + treatment_type + physical_activity, data = cancer_data)
     ```
 
-<!-- -->
-
-5.  Correlation Analysis of Physiological Indicators
+5.  **Correlation analysis of physiological indicators**
 
     Multiple linear regression can analyze the relationship between different physiological indicators. For example, it can examine how weight, cholesterol, and blood pressure affect a health outcome, such as kidney or heart function.
 
@@ -430,7 +420,7 @@ Multiple linear regression is widely used in medical research for predicting pat
     lmtest::bptest(model)  # Breusch-Pagan test for heteroscedasticity
     ```
 
-    As for White’s test specifically, we defined a custom function named `whites.test()` to perform White’s test.
+    As for White’s test specifically, we defined a custom function named `whites.test()`:
 
     ```{r}
     whites.test <- function(model) {

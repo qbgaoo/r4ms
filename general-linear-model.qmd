@@ -267,7 +267,7 @@ group1: The coefficient for group1 is 0.89549. This indicates that individuals i
 age: The coefficient for age is 0.09417, suggesting that for each additional year of age, the cholesterol level increases by approximately 0.09417 mmol/L. The p-value for age (3.13e-05) is highly significant, indicating a possible relationship between age and cholesterol levels.
 
 ```{r}
-ggplot(df, aes(x = age, y = chole, color = group)) +
+ggplot(df, aes(x = age, y = chole, shape = group, color = group)) +
   geom_point() +
   geom_smooth(method = "lm", se = F) 
 ```
