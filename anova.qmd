@@ -2,7 +2,6 @@
 
 ```{r}
 #| echo: false
-
 source("_common.R")
 ```
 
@@ -14,8 +13,8 @@ Analysis of variance (ANOVA) is commonly used to determine whether there are sta
 #| message: false
 
 library(tidyverse)
-library(rmarkdown)
 library(rstatix)
+library(rmarkdown)
 library(agricolae)
 library(DescTools)
 ```
@@ -130,7 +129,7 @@ In a completely randomized design, subjects are randomly assigned to different g
 To clear the efficacy of three drugs, 120 patients were selected according to a inclusion criteria and evenly divided into three groups using a completely randomized design. How to use R to arrange random group assignments?
 :::
 
-In R, you can use the `sample()` function to perform random group assignments and random drug allocation. Below is an example of how to achieve this:
+You can use the `sample()` function to perform random group assignments and random drug allocation. Below is an example of how to achieve this:
 
 ```{r}
 set.seed(100)

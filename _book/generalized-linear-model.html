@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cox-regression.html" rel="next">
+<link href="./survival-analysis.html" rel="next">
 <link href="./logistic-reg.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -344,14 +344,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -368,19 +374,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -399,9 +405,15 @@ window.Quarto = {
   <li><a href="#components-of-glm" id="toc-components-of-glm" class="nav-link" data-scroll-target="#components-of-glm"><span class="header-section-number">20.2</span> Components of GLM</a></li>
   <li><a href="#log-linear-model" id="toc-log-linear-model" class="nav-link" data-scroll-target="#log-linear-model"><span class="header-section-number">20.3</span> Log-linear model</a>
   <ul class="collapse">
-  <li><a href="#goodness-of-fit-test" id="toc-goodness-of-fit-test" class="nav-link" data-scroll-target="#goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness of fit test</a></li>
+  <li><a href="#goodness-of-fit-test" id="toc-goodness-of-fit-test" class="nav-link" data-scroll-target="#goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness-of-fit test</a></li>
   <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">20.3.2</span> Parameter estimation</a></li>
   </ul></li>
+  <li><a href="#poisson-regression" id="toc-poisson-regression" class="nav-link" data-scroll-target="#poisson-regression"><span class="header-section-number">20.4</span> Poisson regression</a>
+  <ul class="collapse">
+  <li><a href="#goodness-of-fit-test-1" id="toc-goodness-of-fit-test-1" class="nav-link" data-scroll-target="#goodness-of-fit-test-1"><span class="header-section-number">20.4.1</span> Goodness-of-fit test</a></li>
+  <li><a href="#parameters-estimation" id="toc-parameters-estimation" class="nav-link" data-scroll-target="#parameters-estimation"><span class="header-section-number">20.4.2</span> Parameters estimation</a></li>
+  </ul></li>
+  <li><a href="#negative-binomial-regression" id="toc-negative-binomial-regression" class="nav-link" data-scroll-target="#negative-binomial-regression"><span class="header-section-number">20.5</span> Negative binomial regression</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/generalized-linear-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -431,7 +443,8 @@ window.Quarto = {
 <section id="prerequisite" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">20.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="components-of-glm" class="level2" data-number="20.2">
@@ -449,8 +462,8 @@ window.Quarto = {
 <p>The link function connects the linear predictor <span class="math inline">\eta</span> to the mean of the response variable. This is important because, in many cases, the response variable’s distribution and scale are not appropriate for direct use in a linear equation. The most commonly used link functions are:</p>
 <ul>
 <li>Identity link (for normal distribution): <span class="math inline">\eta = \mu</span></li>
-<li>Logit link (for binomial distribution): <span class="math inline">\eta = \log \left( \frac{\mu}{1 - \mu} \right)</span></li>
-<li>Log link (for Poisson distribution): <span class="math inline">\eta = \log(\mu)</span></li>
+<li>Logit link (for binomial distribution): <span class="math inline">\eta = \ln \left( \frac{\mu}{1 - \mu} \right)</span></li>
+<li>Log link (for Poisson distribution): <span class="math inline">\eta = \ln(\mu)</span></li>
 <li>Inverse link (for gamma distribution): <span class="math inline">\eta = \mu^{-1}, \ \text{where} \ \mu</span> is the expected value of <span class="math inline">Y</span>.</li>
 </ul>
 <p>where <span class="math inline">\mu</span> is the expected value of <span class="math inline">Y</span>.</p></li>
@@ -488,13 +501,13 @@ window.Quarto = {
 <tr class="even">
 <td style="text-align: left;">Binomial distribution</td>
 <td style="text-align: left;">Binary data</td>
-<td style="text-align: left;">Logit g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu / (1 - \mu)</span>)</td>
+<td style="text-align: left;">Logit g(<span class="math inline">\mu</span>) = ln(<span class="math inline">\mu / (1 - \mu)</span>)</td>
 <td style="text-align: left;">Logistic regression</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Poisson distribution</td>
 <td style="text-align: left;">Count data</td>
-<td style="text-align: left;">Log g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu</span>)</td>
+<td style="text-align: left;">Log g(<span class="math inline">\mu</span>) = ln(<span class="math inline">\mu</span>)</td>
 <td style="text-align: left;">Poisson regression</td>
 </tr>
 <tr class="even">
@@ -512,7 +525,7 @@ window.Quarto = {
 <tr class="even">
 <td style="text-align: left;">Multinomial distribution</td>
 <td style="text-align: left;">Categorical data</td>
-<td style="text-align: left;">Multinomial Logit g(<span class="math inline">\mu</span>) = log(<span class="math inline">\mu_j / \mu_K</span>)</td>
+<td style="text-align: left;">Multinomial Logit g(<span class="math inline">\mu</span>) = ln(<span class="math inline">\mu_j / \mu_K</span>)</td>
 <td style="text-align: left;">Multinomial logistic regression</td>
 </tr>
 </tbody>
@@ -526,7 +539,7 @@ window.Quarto = {
 <p>Log-linear model is often used to describe the relationship between categorical variables in a contingency table by modeling the natural logarithm of the expected cell frequencies as a linear combination of parameters. This model is often applied to multidimensional categorical data and is particularly useful for exploring interactions between categorical variables.</p>
 <p>The general form for a 3-way table with variables <span class="math inline">X_1</span> , <span class="math inline">X_2</span>, and <span class="math inline">X_3</span> is:</p>
 <p><span class="math display">
-\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+\ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
 </span></p>
 <p>where <span class="math inline">\mu_{ijk}</span> is the expected frequency for the combination of category <span class="math inline">i</span>, <span class="math inline">j</span>, and <span class="math inline">k</span>, <span class="math inline">\lambda</span> is an intercept term (overall mean), <span class="math inline">\lambda_{i}^{(X_1)}</span>, <span class="math inline">\lambda_{j}^{(X_2)}</span>, and <span class="math inline">\lambda_{k}^{(X_3)}</span>are the main effects for each variable,<span class="math inline">\lambda_{ij}^{(X_1 X_2)}</span>, <span class="math inline">\lambda_{ik}^{(X_1 X_3)}</span><em>,</em> and <span class="math inline">\lambda_{jk}^{(X_2 X_3)}</span> are the interaction effects between pairs of variables, <span class="math inline">\lambda_{ijk}^{(X_1 X_2 X_3)}</span> is the three-way interaction term among the three variables.</p>
 <p>There are several types of log-linear models, depending on the complexity of the relationships they model. These include:</p>
@@ -534,18 +547,18 @@ window.Quarto = {
 <li><p><strong>Independence model</strong></p>
 <p>This assumes that all variables are independent of each other, meaning no interaction terms are included. For a three-way table, the model looks like:</p>
 <p><span class="math display">
-\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
+\ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
 </span></p>
 <p>This model assumes no association between variables X_1 , X_2 , and X_3 .</p></li>
 <li><p><strong>Interaction model</strong></p>
 <p>This model includes interactions between two or more variables. For example, a model that includes two-way interactions but excludes higher-order interactions is:</p>
 <p><span class="math display">
-\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
+\ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
 </span>This allows for interaction between pairs of variables but not all three variables together.</p></li>
 <li><p><strong>Saturated model</strong></p>
 <p>This includes all possible main effects and interactions (up to the highest order), fully describing the relationships between the variables:</p>
 <p><span class="math display">
-\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+\ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
 </span></p>
 <p>This model perfectly fits the observed data but might overfit if the data set is small.</p></li>
 </ol>
@@ -559,8 +572,8 @@ window.Quarto = {
 <p>Researchers often fit both saturated (fully interactive) and reduced models to identify which interactions and main effects are statistically significant. The interpretation is based on the estimated parameters, which represent the log of the odds ratios. Understanding these parameters is crucial in drawing meaningful conclusions about the relationships between variables.</p>
 <p>Log-linear models are powerful tools for exploring multi-way relationships between categorical variables, making them widely applicable across various fields of research.</p>
 <section id="goodness-of-fit-test" class="level3" data-number="20.3.1">
-<h3 data-number="20.3.1" class="anchored" data-anchor-id="goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness of fit test</h3>
-<p>The goodness of fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:</p>
+<h3 data-number="20.3.1" class="anchored" data-anchor-id="goodness-of-fit-test"><span class="header-section-number">20.3.1</span> Goodness-of-fit test</h3>
+<p>The goodness-of-fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:</p>
 <ol type="1">
 <li><p><strong>Likelihood ratio test</strong></p>
 <p>The likelihood ratio test (also called the deviance test) compares the deviance of a fitted log-linear model to the deviance of a saturated model (a model with as many parameters as data points). The deviance <span class="math inline">D</span> is calculated as:</p>
@@ -664,20 +677,34 @@ z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
 #&gt; &lt;none&gt;       0.459 41.536
 #&gt; - edu   2   34.927 72.005</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit, glm_fit1, glm_fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit2, glm_fit, glm_fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Analysis of Deviance Table
 #&gt; 
-#&gt; Model 1: f ~ edu + grow
-#&gt; Model 2: f ~ edu + grow + edu:grow
-#&gt; Model 3: f ~ edu
+#&gt; Model 1: f ~ edu
+#&gt; Model 2: f ~ edu + grow
+#&gt; Model 3: f ~ edu + grow + edu:grow
 #&gt;   Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
-#&gt; 1         2    0.45856                     
-#&gt; 2         0    0.00000  2  0.45856   0.7951
-#&gt; 3         3    0.45856 -3 -0.45856   0.9279</code></pre>
+#&gt; 1         3    0.45856                     
+#&gt; 2         2    0.45856  1  0.00000         
+#&gt; 3         0    0.00000  2  0.45856   0.7951</code></pre>
 </div>
 </div>
-<p>In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above. The parameters of the final fitting model can be retrieved using the code below:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Results
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is no significant improvement in model fit when adding grow (Model 2) or the interaction term edu:grow (Model 3). Model 1 (with only edu) may be sufficient, as adding more terms does not significantly enhance the fit.</p>
+</div>
+</div>
+<p>In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above.</p>
+<p>The parameters of the final fitting model can be retrieved using the code below:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>glm_fit2 <span class="sc">|&gt;</span> <span class="fu">coef</span>()  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -795,27 +822,46 @@ z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
 #&gt; - grp:gtype  1   28.751 77.977
 #&gt; - grp:expo   1   33.762 82.987</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit, glm_fit1, glm_fit2, glm_fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(glm_fit, glm_fit3, glm_fit1, glm_fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Analysis of Deviance Table
 #&gt; 
 #&gt; Model 1: f ~ grp + expo + gtype
-#&gt; Model 2: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype
-#&gt; Model 3: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + 
+#&gt; Model 2: f ~ grp + expo + gtype + grp:expo + grp:gtype
+#&gt; Model 3: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype
+#&gt; Model 4: f ~ grp + expo + gtype + grp:expo + grp:gtype + expo:gtype + 
 #&gt;     grp:expo:gtype
-#&gt; Model 4: f ~ grp + expo + gtype + grp:expo + grp:gtype
 #&gt;   Resid. Df Resid. Dev Df Deviance  Pr(&gt;Chi)    
 #&gt; 1         4     62.416                          
-#&gt; 2         1      0.096  3   62.320 1.877e-13 ***
-#&gt; 3         0      0.000  1    0.096    0.7565    
-#&gt; 4         2      0.097 -2   -0.097    0.9526    
+#&gt; 2         2      0.097  2   62.319 2.934e-14 ***
+#&gt; 3         1      0.096  1    0.001    0.9761    
+#&gt; 4         0      0.000  1    0.096    0.7565    
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>The regression coefficients of the final fitting model is :</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Results
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Model 2 shows a significant improvement over Model 1, suggesting that the interaction terms grp:expo and grp:gtype significantly improve the model’s fit. Model 3 and Model 4 show no significant improvement over Model 2, with p-values above 0.75, meaning that adding the interaction term expo:gtype or the three-way interaction does not significantly improve the fit.</p>
+<p>Thus, Model 2 is the most appropriate model, as it includes the important two-way interaction terms and significantly improves the fit without overcomplicating the model.</p>
+</div>
+</div>
+<p>The regression coefficients of the final fitting model is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(glm_fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>opt_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  f <span class="sc">~</span> grp <span class="sc">*</span> expo <span class="sc">*</span> gtype, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>), </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb) <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">step</span>(<span class="at">direction =</span> <span class="st">"backward"</span>, <span class="at">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(opt_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; (Intercept)        grp1       expo1      gtype1  grp1:expo1 grp1:gtype1 
 #&gt;   4.6082424  -1.0355344  -0.4700036  -3.3019907   1.3327101   2.0698471</code></pre>
@@ -823,16 +869,553 @@ z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
 </div>
 <p>The regression equation is as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(glm_fit3, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(opt_model, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><span class="math display">
 \log ({ \widehat{E( \operatorname{f} )} })  = 4.60824 - 1.03553(\operatorname{grp}_{\operatorname{1}}) - 0.47(\operatorname{\expo}_{\operatorname{1}}) - 3.30199(\operatorname{gtype}_{\operatorname{1}}) + 1.33271(\operatorname{grp}_{\operatorname{1}} \times \operatorname{\expo}_{\operatorname{1}}) + 2.06985(\operatorname{grp}_{\operatorname{1}} \times \operatorname{gtype}_{\operatorname{1}})
 </span></p>
 </div>
 </div>
-
-
+<p>Residual analysis helps in assessing whether your model fits the data well and whether the assumptions of the model are met. Here’s how you can conduct residual analysis for your generalized linear model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">dev_resid =</span> <span class="fu">residuals</span>(opt_model, <span class="at">type =</span> <span class="st">"deviance"</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fit_value =</span> <span class="fu">fitted.values</span>(opt_model))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot residuals vs fitted values</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(fit_value, dev_resid)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Fitted values"</span>, </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Deviance residuals"</span>,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Residuals plot"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="generalized-linear-model_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Q-Q plot</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">sample =</span> dev_resid)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Theoretical quantiles"</span>, <span class="at">y =</span> <span class="st">"Sample quantiles"</span>, <span class="at">title =</span> <span class="st">"Q-Q plot"</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Leverage plot</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">hat_value =</span> <span class="fu">hatvalues</span>(opt_model),</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">index =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(hat_value))) <span class="sc">|&gt;</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(index, hat_value)) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Index"</span>, <span class="at">y =</span> <span class="st">"Hat_values"</span>, <span class="at">title =</span> <span class="st">"Leverage plot"</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Cook's distance</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">cooks_dis =</span> <span class="fu">cooks.distance</span>(opt_model),</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">index =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cooks_dis))) <span class="sc">|&gt;</span> </span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(index, cooks_dis)) <span class="sc">+</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">4</span><span class="sc">/</span>(<span class="fu">nrow</span>(df)<span class="sc">-</span><span class="fu">length</span>(<span class="fu">coef</span>(opt_model))), <span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Index"</span>, <span class="at">y =</span> <span class="st">"Cook's distance"</span>, <span class="at">title =</span> <span class="st">"Cook's distance"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="generalized-linear-model_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="generalized-linear-model_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="generalized-linear-model_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the residuals are randomly scattered around zero in the Residuals plot, and the Q-Q plot follows a straight line, your model fits well.</p>
+<p>Observations with high leverage or high Cook’s distance might indicate influential points. You may want to examine these data points closely.</p>
+<p>This analysis helps assess the final model’s fit and identify any potential issues such as outliers or non-linearity.</p>
+</div>
+</div>
 </section>
+</section>
+<section id="poisson-regression" class="level2" data-number="20.4">
+<h2 data-number="20.4" class="anchored" data-anchor-id="poisson-regression"><span class="header-section-number">20.4</span> Poisson regression</h2>
+<p>Poisson regression is a type of generalized linear model used for count data. It is particularly useful when the dependent variable represents counts of events that occur independently over a fixed period of time or space. The model assumes that the count data follows a Poisson distribution.</p>
+<p>The natural logarithm is used as the link function, connecting the linear predictor to the expected value of the response variable. This means that the model predicts the logarithm of the expected count. It assumes that the events are independent, and the mean and variance of the counts are equal.</p>
+<p>The general form of a Poisson regression model can be expressed as:</p>
+<p><span class="math display">
+\ln(\lambda_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_k X_{ik}
+</span></p>
+<p>where <span class="math inline">\lambda</span> is the expected count for the <span class="math inline">i</span>-th observation, <span class="math inline">X_{i1}, X_{i2}, \ldots, X_{ik}</span> are the predictor variables, <span class="math inline">\beta_0, \beta_1, \ldots, \beta_k</span> are the coefficients to be estimated.</p>
+<p>A Poisson regression model with an offset is used when the rate of occurrence of events is being modeled, rather than the raw counts. The offset allows the model to account for different exposure times or different sizes of population at risk. In this case, the model becomes:</p>
+<p><span class="math display">
+\ln(\lambda_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_p X_{ik} + \log(t_i)
+</span></p>
+<p>where <span class="math inline">t_i</span> is the offset (often the exposure time or population size for each observation). The offset is added to the linear predictor as <span class="math inline">\log(t_i)</span>, and it is treated as a known value rather than a variable for which a coefficient is estimated.</p>
+<p>This adjustment is essential when the time or population at risk differs across observations.</p>
+<section id="goodness-of-fit-test-1" class="level3" data-number="20.4.1">
+<h3 data-number="20.4.1" class="anchored" data-anchor-id="goodness-of-fit-test-1"><span class="header-section-number">20.4.1</span> Goodness-of-fit test</h3>
+<p>Goodness-of-fit tests are used to assess how well the model fits the data. Here are some common methods to conduct goodness-of-fit tests for Poisson regression.</p>
+<p><strong>Deviance and Pearson tests</strong></p>
+<p>Deviance is the most commonly used goodness-of-fit statistic in Poisson regression. It compares the model’s deviance to its degrees of freedom to assess the fit.</p>
+<p>Pearson test involves calculating the sum of squared Pearson residuals and comparing it to its degrees of freedom.</p>
+<p><strong>Likelihood ratio test</strong></p>
+<p>This test compares the likelihood functions of the full model and a reduced model to determine whether adding significant variables improves the model fit.</p>
+</section>
+<section id="parameters-estimation" class="level3" data-number="20.4.2">
+<h3 data-number="20.4.2" class="anchored" data-anchor-id="parameters-estimation"><span class="header-section-number">20.4.2</span> Parameters estimation</h3>
+<p>The parameters are estimated by maximizing the likelihood function, which for the Poisson distribution is given by:</p>
+<p><span class="math display">
+L(\beta) = \prod_{i=1}^n \frac{e^{-\lambda_i} \lambda_i^{Y_i}}{Y_i!}
+</span></p>
+<p>To simplify the computation, the log-likelihood function is typically used. It is written as:</p>
+<p><span class="math display">
+\log L(\beta) = \sum_{i=1}^{n} \left( Y_i \log(\lambda_i) - \lambda_i - \log(Y_i!) \right)
+</span></p>
+<p>Substituting <span class="math inline">\lambda_i = e^{X_i \beta}</span> into the equation, we get:</p>
+<p><span class="math display">
+\log L(\beta) = \sum_{i=1}^{n} \left( Y_i (X_i \beta) - e^{X_i \beta} - \log(Y_i!) \right)
+</span></p>
+<p>where <span class="math inline">\lambda_i = e^{X_i \beta}</span>, representing the expected count for observation <span class="math inline">i</span>, determined by the independent variables <span class="math inline">X_i</span> and regression coefficients <span class="math inline">\beta</span>, <span class="math inline">Y_i</span> is the observed count for the <span class="math inline">i</span>-th observation.</p>
+<p>By maximizing this log-likelihood function, the regression coefficients <span class="math inline">\beta</span> can be estimated for the Poisson regression model.</p>
+<p>To assess whether a predictor is statistically significant, calculate the <span class="math inline">Z</span> statistic:</p>
+<p><span class="math display">
+Z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
+</span></p>
+<p>where <span class="math inline">\hat{\beta}</span> is the estimated coefficient and <span class="math inline">\text{SE}(\hat{\beta})</span> is the standard error. The p-value is obtained from the standard normal distribution based on the calculated z-value. If the p-value is less than the significance level (commonly 0.05), reject the null hypothesis, indicating that the predictor is statistically significant.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>A researcher conducted a retrospective cohort study to investigate the relationship between arsenic exposure in a smelting plant and deaths due to respiratory diseases among the plant’s employees from 1978 to 2009. The data can be download below. Please analyze this data.</p>
+</div>
+<div>
+<p><a href="datasets/ex20-03.csv" download="ex20-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex20-03.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">AsExpo =</span> <span class="fu">factor</span>(AsExpo, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"As.No"</span>, <span class="st">"As.Yes"</span>)),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ageGroup =</span> <span class="fu">factor</span>(ageGroup, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"40~49"</span>, <span class="st">"50~59"</span>, <span class="st">"60~69"</span>, <span class="st">"&gt;=70"</span>)),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nDeath =</span> <span class="fu">as.integer</span>(nDeath),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">nTotal =</span> <span class="fu">as.integer</span>(<span class="fu">round</span>(nTotal))</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from  =</span> AsExpo,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> <span class="fu">c</span>(nDeath, nTotal)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 22%">
+<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">ageGroup</th>
+<th style="text-align: center;">nDeath_As.Yes</th>
+<th style="text-align: center;">nDeath_As.No</th>
+<th style="text-align: center;">nTotal_As.Yes</th>
+<th style="text-align: center;">nTotal_As.No</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">40~49</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">11026</td>
+<td style="text-align: center;">38337</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">50~59</td>
+<td style="text-align: center;">42</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">10792</td>
+<td style="text-align: center;">31019</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">60~69</td>
+<td style="text-align: center;">59</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">6898</td>
+<td style="text-align: center;">17496</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">&gt;=70</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">41</td>
+<td style="text-align: center;">2581</td>
+<td style="text-align: center;">6842</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>You can use the <code>glm()</code> function to fit a Poisson regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-19"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-19-1"><a href="#annotated-cell-19-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="annotated-cell-19-2"><a href="#annotated-cell-19-2" aria-hidden="true" tabindex="-1"></a>  nDeath <span class="sc">~</span> AsExpo <span class="sc">+</span> ageGroup, </span>
+<span id="annotated-cell-19-3"><a href="#annotated-cell-19-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">"log"</span>),</span>
+<span id="annotated-cell-19-4"><a href="#annotated-cell-19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb, </span>
+<span id="annotated-cell-19-5"><a href="#annotated-cell-19-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">offset =</span> <span class="fu">log</span>(nTotal)</span>
+<span id="annotated-cell-19-6"><a href="#annotated-cell-19-6" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Offset
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The inclusion of the <code>log(nTotal)</code> as an offset allows us to model the mortality rate per person-year rather than just the raw number of deaths.</p>
+<p>Without the offset, the model would compare the total number of deaths, which could lead to misleading conclusions if one age group simply had more number of deaths or more years than another. By using person-years as an offset, we adjust for this variability and focus on the mortality rate, making the comparison more meaningful.</p>
+<p>This method is commonly used in epidemiology to model incidence rates for diseases, infections, or other health outcomes while adjusting for varying follow-up times or population sizes.</p>
+</div>
+</div>
+<p>The <code>coef()</code> function can print the regression coefficients:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;   (Intercept)  AsExpoAs.Yes ageGroup50~59 ageGroup60~69  ageGroup&gt;=70 
+#&gt;    -8.0086462     0.8108583     1.4701581     2.3660912     2.6237690</code></pre>
+</div>
+</div>
+<p>The regression equation is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(model, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><span class="math display">
+\log ({ \widehat{E( \operatorname{nDeath} )} })  = -8.00865 + 0.81086(\operatorname{AsExpo}_{\operatorname{As.Yes}}) + 1.47016(\operatorname{ageGroup}_{\operatorname{50\char`\~59}}) + 2.36609(\operatorname{ageGroup}_{\operatorname{60\char`\~69}}) + 2.62377(\operatorname{ageGroup}_{\operatorname{&gt;=70}}) + \operatorname{(offset)}
+</span></p>
+</div>
+</div>
+<p>Use the <code>summary()</code> function to evaluate the parameter estimates, significance of predictors, and goodness-of-fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; glm(formula = nDeath ~ AsExpo + ageGroup, family = poisson(link = "log"), 
+#&gt;     data = tb, offset = log(nTotal))
+#&gt; 
+#&gt; Coefficients:
+#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; (Intercept)    -8.0086     0.2233 -35.859  &lt; 2e-16 ***
+#&gt; AsExpoAs.Yes    0.8109     0.1210   6.699 2.09e-11 ***
+#&gt; ageGroup50~59   1.4702     0.2453   5.994 2.04e-09 ***
+#&gt; ageGroup60~69   2.3661     0.2372   9.976  &lt; 2e-16 ***
+#&gt; ageGroup&gt;=70    2.6238     0.2548  10.297  &lt; 2e-16 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; (Dispersion parameter for poisson family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 260.9311  on 7  degrees of freedom
+#&gt; Residual deviance:   9.9323  on 3  degrees of freedom
+#&gt; AIC: 61.344
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>This Poisson regression model analyzes the relationship between arsenic exposure (AsExpo), age groups (ageGroup), and the number of deaths from respiratory diseases (nDeath). The model includes an offset (nTotal), which represents the total number of individuals at risk or the total exposure time, to adjust for varying group sizes or follow-up durations.</p>
+<p>Here’s a breakdown of the results:</p>
+<ol type="1">
+<li><p><strong>Coefficients</strong></p>
+<ul>
+<li>(Intercept): -8.0086: The intercept represents the baseline log mortality rate for the reference group, which in this case is those not exposed to arsenic (AsExpo = “No”) and in the &lt;50 age group. The estimate of -8.0086 suggests a very low baseline mortality rate when exponentiated.</li>
+<li>AsExpoYes: 0.8109: The coefficient for arsenic exposure (Yes) indicates that the log mortality rate is increased by 0.8109 units for those exposed to arsenic compared to those not exposed. Exponentiating this value (<span class="math inline">\exp(0.8109) = 2.25</span>) suggests that arsenic exposure increases the mortality rate by about 125% compared to those unexposed.</li>
+<li>ageGroup50~59: 1.4702: For individuals aged 50-59, the log mortality rate increases by 1.4702 units compared to those under 50. Exponentiating this value (<span class="math inline">\exp(1.4702) = 4.35</span>) shows that the mortality rate is approximately 4.35 times higher for this age group compared to those under 50.</li>
+<li>ageGroup60~69: 2.3661: For individuals aged 60-69, the log mortality rate increases by 2.3661 units. Exponentiating this value (<span class="math inline">\exp(2.3661) = 10.65</span>) indicates that the mortality rate is about 10.65 times higher for this age group compared to the &lt;50 group.</li>
+<li>ageGroup&gt;=70: 2.6238: For individuals aged 70 or older, the log mortality rate increases by 2.6238 units. Exponentiating this value (<span class="math inline">\exp(2.6238) = 13.78</span>) indicates that the mortality rate is 13.78 times higher for this age group compared to the reference (&lt;50) group.</li>
+</ul></li>
+<li><p><strong>Statistical significance</strong></p>
+<ul>
+<li>The p-values for all variables are very small (&lt;0.001), indicating that arsenic exposure and all age groups are significantly associated with increased mortality rates.</li>
+</ul></li>
+<li><p><strong>Model fit</strong></p>
+<ul>
+<li>Residual Deviance: 9.9323 on 3 degrees of freedom. This indicates how well the model fits the data. The small residual deviance relative to the degrees of freedom suggests a good fit, meaning the model explains most of the variability in the data.</li>
+<li>Null Deviance: 260.9311 on 7 degrees of freedom. The null deviance represents the deviance of a model with no predictors, just an intercept. A large difference between null and residual deviance indicates that the predictors significantly improve the model fit.</li>
+<li>The AIC (61.344) is a measure of model quality, with lower values indicating a better fit. It’s useful when comparing models to select the best one.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key findings
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Arsenic exposure significantly increases the mortality rate (about 125% increase).</li>
+<li>Age is also a strong predictor, with older age groups showing exponentially higher mortality rates.</li>
+<li>The model fits the data well, as evidenced by the low residual deviance and significant predictors.</li>
+</ul>
+</div>
+</div></li>
+</ol>
+<p>If the residual deviance is significantly larger than the degrees of freedom, it may indicate overdispersion, suggesting that the Poisson model may not be appropriate. In such cases, consider using a negative binomial regression or adjusting the model accordingly.</p>
+</section>
+</section>
+<section id="negative-binomial-regression" class="level2" data-number="20.5">
+<h2 data-number="20.5" class="anchored" data-anchor-id="negative-binomial-regression"><span class="header-section-number">20.5</span> Negative binomial regression</h2>
+<p>In Poisson regression, the assumption is that the mean (<span class="math inline">\lambda</span>) and variance of the dependent variable are equal. When this assumption is violated (i.e., the data is overdispersed), the model may underestimate the standard errors, leading to misleading p-values and confidence intervals.</p>
+<p>Negative binomial regression is an extension of Poisson regression that is used when the data exhibits overdispersion—meaning the variance is larger than the mean. The negative binomial regression introduces an extra parameter, called the dispersion parameter or overdispersion parameter, to account for the excess variability.</p>
+<ul>
+<li>Poisson regression: <span class="math inline">\text{var}(Y) = \mu</span></li>
+<li>Negative binomial regression: <span class="math inline">\text{var}(Y) = \mu + \frac{\mu^2}{\theta}</span>,</li>
+</ul>
+<p>where <span class="math inline">\theta</span> is the dispersion parameter (overdispersion parameter). When <span class="math inline">\theta \to \infty</span>, the negative binomial model reduces to a Poisson model.</p>
+<p>The mean of the response variable <span class="math inline">Y_i</span> is related to the predictors <span class="math inline">X_{i1}, X_{i2}, \dots, X_{ik}</span> through the following log-linear relationship:</p>
+<p><span class="math display">
+\log(\mu_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \dots + \beta_k X_{ik}
+</span></p>
+<p>where <span class="math inline">\mu_i</span> is the expected count (the mean of <span class="math inline">Y_i</span>) for the <span class="math inline">i</span>-th observation, <span class="math inline">X_{i1}, X_{i2}, \dots, X_{ik}</span> are the predictor variables, <span class="math inline">\beta_0, \beta_1, \beta_2, \dots, \beta_k</span> are the coefficients estimated from the data.</p>
+<div class="example">
+<strong>Example 4:</strong> 
+<p>A researcher conducted a study to investigate the relationship between types of residence and the breeding of mosquito larvae by surveying 299 households from different types of residences. The results are shown in <a href="#tbl-mos-larvae" class="quarto-xref">Table&nbsp;<span>20.1</span></a> . Please use an appropriate statistical method to analyze this data.</p>
+</div>
+<div>
+<p><a href="datasets/ex20-04.csv" download="ex20-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex20-04.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">resType =</span> <span class="fu">col_factor</span>())) <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">resType =</span> <span class="fu">factor</span>(resType, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"rural"</span>, <span class="st">"barriada"</span>, <span class="st">"urban"</span>))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-mos-larvae" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mos-larvae-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;20.1: Breeding situation of mosquito larvae in different resident areas
+</figcaption>
+<div aria-describedby="tbl-mos-larvae-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 24%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">nContainer</th>
+<th style="text-align: center;">nFamily.rural</th>
+<th style="text-align: center;">nFamily.barriada</th>
+<th style="text-align: center;">nFamily.urban</th>
+<th style="text-align: center;">nFamily.total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">136</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">241</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Total</td>
+<td style="text-align: center;">179</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">299</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>You can fit a negative binomial regression using the <code>glm.nb()</code> function from the <code>MASS</code> package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>neg.bin_fit <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(nContainer <span class="sc">~</span> resType, <span class="at">data =</span> tb, <span class="at">weights =</span> nFamily)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>poisson_fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(nContainer <span class="sc">~</span> resType, <span class="at">family =</span> poisson, <span class="at">data =</span> tb, <span class="at">weights =</span> nFamily)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(neg.bin_fit, poisson_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;             df      AIC
+#&gt; neg.bin_fit  4 426.2283
+#&gt; poisson_fit  3 505.9154</code></pre>
+</div>
+</div>
+<p>AIC is a measure used for model selection. A lower AIC value indicates a better-fitting model while penalizing for model complexity. In this case, the AIC for <code>neg.bin_fit</code> is 426.2283, which is lower than the AIC for poisson_fit, which is 505.9154. Since a lower AIC value is preferred, the negative binomial regression model fits the data better than the Poisson regression model.</p>
+<p>The regression coefficients is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(neg.bin_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;     (Intercept) resTypebarriada    resTypeurban 
+#&gt;      -0.7100490      -0.6762454      -1.9571792</code></pre>
+</div>
+</div>
+<p>The regression equation is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>equatiomatic<span class="sc">::</span><span class="fu">extract_eq</span>(neg.bin_fit, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">4</span>,<span class="at">font_size =</span> <span class="st">"small"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><span class="math display">
+\small
+\begin{aligned}
+\log ({ \widehat{E( \operatorname{nContainer} )} })  &amp;= -0.71 - 0.6762(\operatorname{resType}_{\operatorname{barriada}}) - 1.9572(\operatorname{resType}_{\operatorname{urban}})
+\end{aligned}
+</span></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(neg.bin_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; MASS::glm.nb(formula = nContainer ~ resType, data = tb, weights = nFamily, 
+#&gt;     init.theta = 0.3002652205, link = log)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                 Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; (Intercept)      -0.7100     0.1731  -4.102  4.1e-05 ***
+#&gt; resTypebarriada  -0.6762     0.4274  -1.582 0.113612    
+#&gt; resTypeurban     -1.9572     0.5256  -3.724 0.000196 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; (Dispersion parameter for Negative Binomial(0.3003) family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 174.95  on 12  degrees of freedom
+#&gt; Residual deviance: 156.37  on 10  degrees of freedom
+#&gt; AIC: 426.23
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 1
+#&gt; 
+#&gt; 
+#&gt;               Theta:  0.3003 
+#&gt;           Std. Err.:  0.0764 
+#&gt; 
+#&gt;  2 x log-likelihood:  -418.2280</code></pre>
+</div>
+</div>
+<p>Here is the interpretation of the results from the negative binomial regression output:</p>
+<ol type="1">
+<li><strong>Coefficients</strong>
+<ul>
+<li>Intercept: -0.7100, which corresponds to the log count of nContainer for the baseline group. p-value: 4.1e-05 (very small), which means the intercept is highly significant.</li>
+<li>resTypebarriada (Effect of “barriada” residences compared to the baseline): -0.6762, indicating that the log count of containers is lower in barriada residences compared to the baseline by about 0.68. p-value = 0.113612, suggesting that the effect is not statistically significant.</li>
+<li>resTypeurban (Effect of “urban” residences compared to the baseline): -1.9572, indicating that the log count of containers is significantly lower in urban residences compared to the baseline by about 1.96. p-value = 0.000196, suggesting this effect is statistically significant.</li>
+</ul></li>
+<li><strong>Model fit</strong>
+<ul>
+<li>Null deviance: 174.95 on 12 degrees of freedom, indicating how well the null model (no predictors) fits the data.</li>
+<li>Residual deviance: 156.37 on 10 degrees of freedom, indicating how well the model with predictors fits the data. The reduction in deviance suggests that the predictors improve the model fit.</li>
+<li>AIC: 426.23, a measure of model quality. Lower values suggest a better model fit, but should only be compared with other models fitted to the same data.</li>
+</ul></li>
+<li><strong>Dispersion parameter</strong>
+<ul>
+<li>Theta: 0.3003, with a standard error of 0.0764. Theta is the overdispersion parameter in the negative binomial model, and this small value indicates overdispersion, meaning the variance is larger than the mean, which justifies the use of negative binomial over Poisson regression.</li>
+</ul></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Conclusion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>The baseline category (likely a reference category like rural) has a significant effect on the number of containers.</li>
+<li>Urban residences have significantly fewer containers compared to the baseline category.</li>
+<li>Barriada residences do not significantly differ from the baseline in terms of the number of containers.</li>
+<li>The significant overdispersion in the data justifies using the negative binomial model over the Poisson model.</li>
+</ul>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -1446,8 +2029,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./cox-regression.html" class="pagination-link" aria-label="Cox regression">
-        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./survival-analysis.html" class="pagination-link" aria-label="Survival analysis">
+        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Survival analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

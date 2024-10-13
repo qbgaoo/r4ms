@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>23&nbsp; Ordered categorical data – R for Medical Statistics</title>
+<title>3&nbsp; Statistical description of quantitative data – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./stat-anal-report.html" rel="next">
-<link href="./cox-regression.html" rel="prev">
+<link href="./normal-distribution.html" rel="next">
+<link href="./basic-stat.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -107,6 +107,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -119,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./ordered-cat-data.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./quat-data-statdesc.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -167,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -182,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+  <a href="./quat-data-statdesc.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
   </div>
 </li>
@@ -218,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+  <a href="./count-data-statdesc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
   </div>
 </li>
@@ -242,7 +285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+  <a href="./regression-correlation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
   </div>
 </li>
@@ -259,13 +302,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
+  <a href="./multifactor-anova.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
+  <a href="./repeated-measurement.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
   </div>
 </li>
@@ -283,13 +326,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multiple-linear-reg.html" class="sidebar-item-text sidebar-link">
+  <a href="./multiple-linear-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multiple linear regression analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistic-reg.html" class="sidebar-item-text sidebar-link">
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></a>
   </div>
 </li>
@@ -313,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link active">
+  <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
@@ -358,16 +401,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">23.1</span> Prerequisites</a></li>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">3.1</span> Prerequisite</a></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">3.2</span> Visualization</a>
+  <ul class="collapse">
+  <li><a href="#frequency-table" id="toc-frequency-table" class="nav-link" data-scroll-target="#frequency-table"><span class="header-section-number">3.2.1</span> Frequency table</a></li>
+  <li><a href="#sec-frequency-histogram" id="toc-sec-frequency-histogram" class="nav-link" data-scroll-target="#sec-frequency-histogram"><span class="header-section-number">3.2.2</span> Frequency histogram</a></li>
+  </ul></li>
+  <li><a href="#measures-of-central-tendency" id="toc-measures-of-central-tendency" class="nav-link" data-scroll-target="#measures-of-central-tendency"><span class="header-section-number">3.3</span> Measures of central tendency</a>
+  <ul class="collapse">
+  <li><a href="#mean" id="toc-mean" class="nav-link" data-scroll-target="#mean"><span class="header-section-number">3.3.1</span> Mean</a></li>
+  <li><a href="#median" id="toc-median" class="nav-link" data-scroll-target="#median"><span class="header-section-number">3.3.2</span> Median</a></li>
+  </ul></li>
+  <li><a href="#measures-of-dispersion" id="toc-measures-of-dispersion" class="nav-link" data-scroll-target="#measures-of-dispersion"><span class="header-section-number">3.4</span> Measures of dispersion</a>
+  <ul class="collapse">
+  <li><a href="#range" id="toc-range" class="nav-link" data-scroll-target="#range"><span class="header-section-number">3.4.1</span> Range</a></li>
+  <li><a href="#interquartile-range" id="toc-interquartile-range" class="nav-link" data-scroll-target="#interquartile-range"><span class="header-section-number">3.4.2</span> Interquartile range</a></li>
+  <li><a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance"><span class="header-section-number">3.4.3</span> Variance</a></li>
+  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation"><span class="header-section-number">3.4.4</span> Standard deviation</a></li>
+  <li><a href="#coefficient-of-variation" id="toc-coefficient-of-variation" class="nav-link" data-scroll-target="#coefficient-of-variation"><span class="header-section-number">3.4.5</span> Coefficient of variation</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ordered-cat-data.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quat-data-statdesc.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./ordered-cat-data.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./quat-data-statdesc.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></h1>
 </div>
 
 
@@ -384,223 +445,385 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="prerequisites" class="level2" data-number="23.1">
-<h2 data-number="23.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">23.1</span> Prerequisites</h2>
+<p>The statistical description of quantitative data involves summarizing and analyzing numerical variable to understand its distribution and characteristics. Key measures include:</p>
+<ul>
+<li>Visualization: frequency table and frequency histogram.</li>
+<li>Measures of central tendency: mean, median.</li>
+<li>Measures of dispersion: range , variance, standard deviation , and interquartile range (IQR).</li>
+</ul>
+<p>Together, these measures help describe the data’s overall distribution, identify outliers, and inform statistical analysis in clinical and epidemiological research.Prerequisites</p>
+<section id="prerequisite" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">3.1</span> Prerequisite</h2>
+<p>Setting up the required R packages.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>A researcher randomly selected 149 patients who used a pain relief pump after gynecological abdominal surgery. The subjects were randomly divided them into a control group and an treatment group, with different postoperative care methods applied. The researcher observed the patients’ pain at five different time points and assessed the pain levels using a numerical rating scale. The question is whether the two methods differ in their effectiveness in relieving the patients’ pain.</p>
+<p>A researcher used a random sampling method to examine the red blood cell counts of 138 normal adult women. The measuring results are saved in a data file. Please use the data to create a frequency distribution table.</p>
 </div>
 <div>
-<p><a href="datasets/ex28-01.csv" download="ex28-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex03-01.csv" download="ex03-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
+<p>Click on the download button above to download the data file. Save it in your working directory and import the data file into R using the code below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex28-01.csv"</span>, , <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex03-01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Rows: 138 Columns: 1
+#&gt; ── Column specification ─────────────────────────────────────────────────────
+#&gt; Delimiter: ","
+#&gt; dbl (1): rbc
+#&gt; 
+#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.
+#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<p>The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.</p>
-<p>The following table shows the results of model:</p>
+</div>
+<p>Here we use the <code>read_csv()</code> function. The first argument is the most important: the path to the file. You can think about the path as the address of the file. The code above will work if you have a <code>ex02-01.csv</code> file in the <code>datasets</code> folder of your project.</p>
+<p>When you run <code>read_csv()</code>, it prints out a message telling you the number of rows and columns of data, the delimiter that was used, and the column specifications (names of columns organized by the type of data the column contains). It also prints out some information about retrieving the full column specification and how to quiet this message.</p>
+<p>The data file has only one column with name <code>rbc</code>. Let’s check if there are some missing values present in it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"t"</span>),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"pain"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"t"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subject =</span> <span class="fu">as.integer</span>(subject),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"ctrl"</span>, <span class="st">"trt"</span>)),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">as.integer</span>(time)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">geeglm</span>(</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  pain <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"ar1"</span>, </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anyNA</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; geeglm(formula = pain ~ time + group + time:group, data = data, 
-#&gt;     id = subject, corstr = "ar1")
-#&gt; 
-#&gt;  Coefficients:
-#&gt;               Estimate  Std.err     Wald Pr(&gt;|W|)    
-#&gt; (Intercept)    2.48042  0.05591 1967.895  &lt; 2e-16 ***
-#&gt; time          -0.47973  0.02232  462.027  &lt; 2e-16 ***
-#&gt; grouptrt      -0.26915  0.09328    8.325  0.00391 ** 
-#&gt; time:grouptrt  0.04365  0.03478    1.575  0.20946    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Correlation structure = ar1 
-#&gt; Estimated Scale Parameters:
-#&gt; 
-#&gt;             Estimate Std.err
-#&gt; (Intercept)   0.4798  0.0302
-#&gt;   Link = identity 
-#&gt; 
-#&gt; Estimated Correlation Parameters:
-#&gt;       Estimate Std.err
-#&gt; alpha   0.5355 0.03477
-#&gt; Number of clusters:   149  Maximum cluster size: 5</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ordgee</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"independence"</span>, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; ordgee(formula = ordered(pain) ~ time + group + time:group, id = subject, 
-#&gt;     data = data, corstr = "independence")
-#&gt; 
-#&gt; Mean Model:
-#&gt;  Mean Link:                 logit 
-#&gt;  Variance to Mean Relation: binomial 
-#&gt; 
-#&gt;  Coefficients:
-#&gt;                 estimate san.se wald p
-#&gt; Inter:0       -4.903e+01      0  Inf 0
-#&gt; Inter:1       -6.340e+01      0  Inf 0
-#&gt; Inter:2       -7.956e+01      0  Inf 0
-#&gt; Inter:3       -4.485e+15      0  Inf 0
-#&gt; time           2.517e+00      0  Inf 0
-#&gt; grouptrt      -1.438e+02      0  Inf 0
-#&gt; time:grouptrt  3.266e+01      0  Inf 0
-#&gt; 
-#&gt; Scale is fixed.
-#&gt; 
-#&gt; Correlation Model:
-#&gt;  Correlation Structure:     independence 
-#&gt; 
-#&gt; Returned Error Value:    0 
-#&gt; Number of clusters:   149   Maximum cluster size: 5</code></pre>
-</div>
-</div>
-<p>The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :</p>
+<p>The output <code>FALSE</code> indicates no missing values is present.</p>
+</section>
+<section id="visualization" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="visualization"><span class="header-section-number">3.2</span> Visualization</h2>
+<section id="frequency-table" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="frequency-table"><span class="header-section-number">3.2.1</span> Frequency table</h3>
+<p>A frequency table mentioned here is a statistical tool that organizes data into intervals and lists the number of frequency in each interval. It helps summarize large dataset by showing how often each value or range of values occurs, making it easier to identify trends and the overall distribution of the data. This table is often used in conjunction with visual tools like histogram to enhance data interpretation.</p>
+<p>Here is the steps for creating a frequency table for continuous variables.</p>
 <ol type="1">
-<li>(Intercept)</li>
+<li>Computing the minimum and maximum of the variable.</li>
 </ol>
-<p>• Estimate: 2.565 • Standard Error: 0.055 • Statistic: 2,182.131 • p-value: 0.000</p>
-<p>Interpretation: The intercept represents the estimated average level of the response variable pain when both time and group are at their reference levels (e.g., at the baseline time point and in the control group). The p-value indicates that this estimate is highly statistically significant, meaning there’s strong evidence that the intercept is different from zero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>min_rbc <span class="ot">&lt;-</span> rbc <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min</span>()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>max_rbc <span class="ot">&lt;-</span> rbc <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ol start="2" type="1">
-<li>time</li>
+<li>Determining the number of intervals. The number of intervals is typically between 10 and 15; here, we adopt <strong>10</strong>. The <code>seq()</code> function is used to obtain upper and lower limits of the intervals.</li>
 </ol>
-<p>• Estimate: -0.480 • Standard Error: 0.023 • Statistic: 422.960 • p-value: 0.000</p>
-<p>Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant (p-value = 0.000).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bins <span class="ot">=</span> <span class="dv">12</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">seq</span>(min_rbc, max_rbc, <span class="at">length.out =</span> bins <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>breaks</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;  [1] 3.070000 3.269167 3.468333 3.667500 3.866667 4.065833 4.265000 4.464167
+#&gt;  [9] 4.663333 4.862500 5.061667 5.260833 5.460000</code></pre>
+</div>
+</div>
 <ol start="3" type="1">
-<li>group</li>
+<li>Using the <code>cut()</code> function to dive each data into their respective intervals.</li>
 </ol>
-<p>• Estimate: -0.304 • Standard Error: 0.090 • Statistic: 11.386 • p-value: 0.001</p>
-<p>Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value = 0.001).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(<span class="fu">pull</span>(rbc), <span class="at">breaks =</span> breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;  [1] [3.87,4.07) [4.07,4.26) [4.26,4.46) [3.47,3.67) [5.06,5.26) [3.87,4.07)
+#&gt;  [7] [4.26,4.46) [3.67,3.87) [4.66,4.86) [4.07,4.26) [4.46,4.66) [4.07,4.26)
+#&gt; [13] [3.67,3.87) [4.07,4.26) [4.26,4.46) [3.07,3.27) [4.86,5.06) [3.87,4.07)
+#&gt; [19] [4.26,4.46) [3.47,3.67) [4.46,4.66) [3.87,4.07) [4.46,4.66) [4.07,4.26)
+#&gt; [25] [4.46,4.66) [3.87,4.07) [4.26,4.46) [3.47,3.67) [4.86,5.06) [3.87,4.07)
+#&gt; [31] [4.26,4.46) [4.07,4.26) [4.66,4.86) [4.07,4.26) [4.46,4.66) [4.07,4.26)
+#&gt; [37] [4.46,4.66) [3.67,3.87) [3.87,4.07) [4.07,4.26)
+#&gt; 12 Levels: [3.07,3.27) [3.27,3.47) [3.47,3.67) [3.67,3.87) ... [5.26,5.46]</code></pre>
+</div>
+</div>
 <ol start="4" type="1">
-<li>time:group</li>
+<li>Generating the frequency table.</li>
 </ol>
-<p>• Estimate: 0.038 • Standard Error: 0.035 • Statistic: 1.181 • p-value: 0.277</p>
-<p>Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.277 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.</p>
-<p>Summary</p>
-<p>• Main Effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. • Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; formula: ordered(pain) ~ time * group
-#&gt; data:    data
-#&gt; 
-#&gt;  link  threshold nobs logLik  AIC     niter max.grad cond.H 
-#&gt;  logit flexible  745  -696.28 1406.57 7(0)  1.24e-08 5.8e+02
-#&gt; 
-#&gt; Coefficients:
-#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; time           -1.4000     0.0929  -15.07   &lt;2e-16 ***
-#&gt; grouptrt       -0.8344     0.2703   -3.09    0.002 ** 
-#&gt; time:grouptrt   0.0953     0.1069    0.89    0.373    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Threshold coefficients:
-#&gt;     Estimate Std. Error z value
-#&gt; 0|1   -5.274      0.292  -18.05
-#&gt; 1|2   -3.755      0.256  -14.67
-#&gt; 2|3    0.209      0.186    1.13
-#&gt; 3|4    3.777      0.593    6.37</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span>(<span class="fu">pull</span>(rbc), <span class="at">breaks =</span> breaks, <span class="at">include.lowest =</span> T, <span class="at">right =</span> F) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">table</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"interval"</span>, <span class="st">"freq"</span>), <span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">interval</th>
+<th style="text-align: center;">freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">[3.07,3.27)</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[3.27,3.47)</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[3.47,3.67)</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[3.67,3.87)</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[3.87,4.07)</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[4.07,4.26)</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[4.26,4.46)</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[4.46,4.66)</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[4.66,4.86)</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[4.86,5.06)</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">[5.06,5.26)</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">[5.26,5.46]</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>The choice between cumulative link mixed models (CLMM) and generalized estimating equations (GEE) depends on the specifics of your data and the goals of your analysis. Both methods are used for analyzing clustered or repeated measures data with ordinal outcomes, but they have different strengths and weaknesses.</p>
+</section>
+<section id="sec-frequency-histogram" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-frequency-histogram"><span class="header-section-number">3.2.2</span> Frequency histogram</h3>
+<p>A frequency histogram is a graphical representation of a frequency table. It displays the distribution of numerical variales by showing the frequency (count) of a value within specific intervals (bins) on the x-axis, with the y-axis representing the frequency. Each bar in the histogram corresponds to an interval, and the height of the bar indicates how many valuess fall within that range. This visual tool is useful for quickly assessing the shape, spread, and central tendency of the data distribution.</p>
+<p>Here we supply two methods to plot a histogram.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">base</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">ggplot2</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clmm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subject), <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x              =</span> <span class="fu">pull</span>(rbc), </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">breaks         =</span> breaks, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">freq           =</span> T,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">right          =</span> F, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">col            =</span> <span class="st">"skyblue"</span>, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">include.lowest =</span> T,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">main           =</span> <span class="st">" "</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab           =</span> <span class="st">"Maximum heart rate"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylab           =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">ylim           =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">32</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels         =</span> T</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quat-data-statdesc_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> rbc)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill   =</span> <span class="st">"skyblue"</span>, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat   =</span> <span class="st">"bin"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color  =</span> <span class="st">"black"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> breaks,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">closed =</span> <span class="st">"left"</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_bin</span>(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom   =</span> <span class="st">"text"</span>, </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">after_stat</span>(count)),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> breaks, </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">closed =</span> <span class="st">"left"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">size   =</span> <span class="dv">4</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">vjust  =</span> <span class="sc">-</span> <span class="fl">0.3</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Maximum heart rate"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x     =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y     =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x      =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),  </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y      =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),        </span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line        =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"black"</span>) </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="quat-data-statdesc_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="measures-of-central-tendency" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="measures-of-central-tendency"><span class="header-section-number">3.3</span> Measures of central tendency</h2>
+<p>Central tendency is a statistical concept that refers to the measure of the center or typical value in a data set. It provides a summary of the data with a single value that represents the middle or average of the data. The most common measures of central tendency are:</p>
+<section id="mean" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="mean"><span class="header-section-number">3.3.1</span> Mean</h3>
+<p>The arithmetic average of all values. It’s calculated by summing all the values and dividing by the number of values.</p>
+<p>For a population:</p>
+<p><span class="math display">
+\mu = \frac{\sum x_i}{N}
+</span></p>
+<p>For a sample:</p>
+<p><span class="math display">
+\bar{X} = \frac{\sum x_i}{n}
+</span></p>
+<p>where <span class="math inline">x_i</span> represents values of a random variable <span class="math inline">X</span>, and <span class="math inline">N</span> and <span class="math inline">n</span> are the sizes of the population and sample, respectively.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; Cumulative Link Mixed Model fitted with the Laplace approximation
-#&gt; 
-#&gt; formula: ordered(pain) ~ time * group + (1 | subject)
-#&gt; data:    data
-#&gt; 
-#&gt;  link  threshold nobs logLik  AIC     niter     max.grad cond.H 
-#&gt;  logit flexible  745  -633.82 1283.64 484(1456) 3.41e-05 3.4e+02
-#&gt; 
-#&gt; Random effects:
-#&gt;  Groups  Name        Variance Std.Dev.
-#&gt;  subject (Intercept) 2.89     1.7     
-#&gt; Number of groups:  subject 149 
-#&gt; 
-#&gt; Coefficients:
-#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; time            -1.970      0.131  -15.03   &lt;2e-16 ***
-#&gt; grouptrt        -1.247      0.417   -2.99   0.0028 ** 
-#&gt; time:grouptrt    0.123      0.122    1.01   0.3135    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Threshold coefficients:
-#&gt;     Estimate Std. Error z value
-#&gt; 0|1   -7.539      0.491  -15.37
-#&gt; 1|2   -5.397      0.420  -12.87
-#&gt; 2|3    0.252      0.295    0.85
-#&gt; 3|4    4.777      0.696    6.87</code></pre>
+<pre><code>#&gt; [1] 4.227029</code></pre>
 </div>
 </div>
-<p>Cumulative Link Mixed Models (CLMM)</p>
-<p>Pros:</p>
-<p>• Random Effects: CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects. • Interpretation: CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns. • Likelihood-Based: CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met.</p>
-<p>Cons:</p>
-<p>• Computationally Intensive: CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects. • Assumptions: CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.</p>
-<p>Generalized Estimating Equations (GEE)</p>
-<p>Pros:</p>
-<p>• Robustness: GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met. • Less Computationally Intensive: GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets. • Flexibility: GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.</p>
-<p>Cons:</p>
-<p>• No Random Effects: GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.</p>
-<p>When to Choose Which:</p>
-<p>• Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable. • Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.</p>
-<p>In summary, if your primary interest is in understanding individual-level variability and you can handle the computational load, CLMM might be the better choice. If you’re more interested in population-level trends and want a more robust approach with less concern for the specific correlation structure, GEE would be a better option.</p>
-<p>ordgee and geeglm are both functions in R used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.</p>
-<p>ordgee (Ordinal Generalized Estimating Equations)</p>
-<p>• Purpose: ordgee is specifically designed for fitting Generalized Estimating Equations (GEE) models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data. • Model: ordgee accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes. • Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes. • Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.</p>
-<p>geeglm (Generalized Estimating Equations for Generalized Linear Models)</p>
-<p>• Purpose: geeglm is a more general function that fits Generalized Estimating Equations (GEE) models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM). • Model: geeglm allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects. • Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data. • Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.</p>
-<p>Key Differences:</p>
-<ol type="1">
-<li>Outcome Type: • ordgee: Specifically for ordinal outcomes. • geeglm: For a wide range of outcome types (continuous, binary, count, etc.).</li>
-<li>Link Functions: • ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). • geeglm: Allows specification of various link functions depending on the distribution of the response variable.</li>
-<li>Flexibility: • ordgee: More specialized, focusing on ordinal outcomes. • geeglm: More flexible, applicable to various types of response variables.</li>
-<li>Interpretation: • ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. • geeglm: Focuses on population-averaged effects across the levels of the outcome.</li>
-</ol>
-<p>When to Use Which:</p>
-<p>• Use ordgee when you have ordinal response data and need to account for repeated measures or clustering. • Use geeglm when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering.</p>
+</section>
+<section id="median" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="median"><span class="header-section-number">3.3.2</span> Median</h3>
+<p>The middle value in a data set when the values are sorted in ascending order. If there is an even number of values, the median is the average of the two middle values. Unlike the mean, the median is not affected by outliers or skewed data, making it a robust indicator of central tendency. To find the median:</p>
+<ul>
+<li>Sort the data set.</li>
+<li>If the number of observations N is odd, the median is the middle value.</li>
+<li>If N is even, the median is the average of the two central values.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">median</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 4.23</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="measures-of-dispersion" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="measures-of-dispersion"><span class="header-section-number">3.4</span> Measures of dispersion</h2>
+<p>Dispersion or variability, describe the spread or dispersion of data points in a data set. They provide insight into how much individual data points differ from the central value (mean, median, etc.). Common measures of dispersion include:</p>
+<section id="range" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="range"><span class="header-section-number">3.4.1</span> Range</h3>
+<p>The difference between the maximum and minimum values in the data set.</p>
+<p><span class="math display">
+\text{range} = \text{max} - \text{min}
+</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(rbc) <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 2.39</code></pre>
+</div>
+</div>
+</section>
+<section id="interquartile-range" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="interquartile-range"><span class="header-section-number">3.4.2</span> Interquartile range</h3>
+<p>Interquartile range (IQR) is the range of the middle 50% of the data, calculated as the difference between the 75th percentile (Q3) and the 25th percentile (Q1).</p>
+<p><span class="math display">
+\text{IQR} = Q3 - Q1
+</span></p>
+<p>You can directly use the <code>IQR()</code> function to get IQR.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">IQR</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.565</code></pre>
+</div>
+</div>
+</section>
+<section id="variance" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="variance"><span class="header-section-number">3.4.3</span> Variance</h3>
+<p>Measures the average squared deviation of each data point from the mean.</p>
+<p>For a population:</p>
+<p><span class="math display">
+\sigma^2 = \frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2
+</span></p>
+<p>For a sample:</p>
+<p><span class="math display">
+S^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{X})^2
+</span></p>
+<p>where <span class="math inline">\mu</span> is the population mean, <span class="math inline">\bar{X}</span> is the sample mean, <span class="math inline">x_i</span> represents each value, and <span class="math inline">N</span> and <span class="math inline">n</span> are are the sizes of the population and sample, respectively.</p>
+<p>You can directly use the <code>var()</code> function to get variance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">var</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.1986751</code></pre>
+</div>
+</div>
+</section>
+<section id="standard-deviation" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="standard-deviation"><span class="header-section-number">3.4.4</span> Standard deviation</h3>
+<p>The square root of the variance, providing a measure of spread in the same units as the data.</p>
+<p>For a population:</p>
+<p><span class="math display">
+\sigma = \sqrt{\frac{1}{N} \sum_{i=1}^N (x_i - \mu)^2}
+</span></p>
+<p>For a sample:</p>
+<p><span class="math display">
+S = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{X})^2}
+</span></p>
+<p>You can directly use the <code>sd()</code> function to get standard deviation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>rbc <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 0.4457298</code></pre>
+</div>
+</div>
+</section>
+<section id="coefficient-of-variation" class="level3" data-number="3.4.5">
+<h3 data-number="3.4.5" class="anchored" data-anchor-id="coefficient-of-variation"><span class="header-section-number">3.4.5</span> Coefficient of variation</h3>
+<p>The ratio of the standard deviation to the mean, expressed as a percentage, useful for comparing variability between variables with different units or scales.</p>
+<p>For a population:</p>
+<p><span class="math display">
+\text{CV} = \frac{\sigma}{\mu} \times 100%
+</span></p>
+<p>where <span class="math inline">\sigma</span> is the standard deviation and <span class="math inline">\mu</span> is the mean of a population.</p>
+<p>For a sample:</p>
+<p><span class="math display">
+\text{CV} = \frac{S}{\bar{X}} \times 100%
+</span></p>
+<p>where <span class="math inline">S</span> is the standard deviation and <span class="math inline">\bar{X}</span> is the mean of a sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mean <span class="ot">&lt;-</span> rbc <span class="sc">|&gt;</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>()</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> rbc <span class="sc">|&gt;</span> </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>()</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>sd <span class="sc">/</span> mean <span class="sc">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 10.54475</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1209,13 +1432,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cox-regression.html" class="pagination-link" aria-label="Cox regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cox regression</span></span>
+      <a href="./basic-stat.html" class="pagination-link" aria-label="Basic methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Basic methods</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./stat-anal-report.html" class="pagination-link" aria-label="Communication">
-        <span class="nav-page-text">Communication</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./normal-distribution.html" class="pagination-link" aria-label="Normal distribution">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1224,5 +1447,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/ordered-cat-data.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quat-data-statdesc.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

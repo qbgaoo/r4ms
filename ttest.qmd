@@ -24,7 +24,7 @@ $$
 t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
 $$
 
-where $\bar{X}$ si the sample mean , $S$ is the sample standard deviation and $n$ is the sample size, $\mu_0$ is the hypothesized population mean.
+where $\bar{X}$ is the sample mean , $S$ is the sample standard deviation and $n$ is the sample size, $\mu_0$ is the hypothesized population mean.
 
 The one-sample *t*-test is a straightforward but powerful tool for hypothesis testing in many research scenarios.
 

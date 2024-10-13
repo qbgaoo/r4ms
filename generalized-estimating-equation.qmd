@@ -2,13 +2,13 @@
 
 ```{r}
 #| echo: false
-
 source("_common.R")
 ```
 
 ## Prerequisites
 
 ```{r}
+#| message: false
 library(tidyverse)
 library(ordinal)
 library(geepack)
@@ -20,19 +20,17 @@ A researcher randomly selected 149 patients who used a pain relief pump after gy
 
 <div>
 
-<a href="datasets/ex21-01.csv" download="ex21-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex28-01.csv" download="ex28-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
 
-R codes for one-sample *t*-test is:
-
 ```{r}
-df <- read_csv("datasets/ex21-01.csv", , show_col_types = F) 
+df <- read_csv("datasets/ex28-01.csv", , show_col_types = F) 
 ```
 
 The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.
 
-下表是模型分析结果：
+The following table shows the results of model:
 
 ```{r}
 data <- df |> 
@@ -67,7 +65,7 @@ ordgee(
   summary()
 ```
 
-模型分析了时间、处理以及时间和处理的交互作用对结果变量（疼痛程度）的影响：
+The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :
 
 1.  (Intercept)
 
@@ -81,13 +79,13 @@ Interpretation: The intercept represents the estimated average level of the resp
 
 Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant (p-value = 0.000).
 
-3.  group (实验组)
+3.  group
 
 • Estimate: -0.304 • Standard Error: 0.090 • Statistic: 11.386 • p-value: 0.001
 
 Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value = 0.001).
 
-4.  time:group (时间和实验组的交互作用)
+4.  time:group
 
 • Estimate: 0.038 • Standard Error: 0.035 • Statistic: 1.181 • p-value: 0.277
 

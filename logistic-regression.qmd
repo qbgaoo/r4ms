@@ -498,8 +498,7 @@ Ordinal logistic regression (also known as proportional odds logistic regression
 
 To test whether this assumption holds, you can perform a parallel lines test. Here are some methods to test the parallel lines assumption in R for an ordinal logistic regression model:
 
-1.  **Brant test**
-    The Brant test is one of the most commonly used tests to check the proportional odds assumption. The `brant` package provides the `brant()` function for this test.
+1.  **Brant test** The Brant test is one of the most commonly used tests to check the proportional odds assumption. The `brant` package provides the `brant()` function for this test.
 
     ```{r}
     library(brant)
@@ -508,8 +507,7 @@ To test whether this assumption holds, you can perform a parallel lines test. He
 
     If the results show that some predictor variables have p-values less than the significance level, it indicates that these variables violate the parallel lines assumption.
 
-2.  **Likelihood ratio test**
-    Another approach is to compare the ordinal logistic regression model (which assumes parallel lines) to a multinomial logistic regression model (which does not make this assumption). This comparison can be done using a likelihood ratio test. Here we define a function named `likelihood_ratio_test()` to perform this test:
+2.  **Likelihood ratio test** Another approach is to compare the ordinal logistic regression model (which assumes parallel lines) to a multinomial logistic regression model (which does not make this assumption). This comparison can be done using a likelihood ratio test. Here we define a function named `likelihood_ratio_test()` to perform this test:
 
     ```{r}
     likelihood_ratio_test <- function(x, y) {

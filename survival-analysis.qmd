@@ -1,0 +1,68 @@
+# Survival analysis
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+In the medical field, survival analysis is widely used to study the time from a starting point to the occurrence of an important event, such as death, disease recurrence, or remission. It plays a critical role in analyzing time-to-event data, understanding the relationship between time and event occurrence, especially when some subjects do not experience the event during the study period, resulting in censored data. The core of survival analysis lies in properly handling censored data and time-related event occurrences, in order to effectively estimate survival probabilities and analyze risk factors.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(ggplot2)
+```
+
+## Basic concepts
+
+Survival data has several distinctive characteristics that differentiate it from other types of data, which make specialized methods necessary for analysis. The key characteristics of survival data include time-to-event data, censored data, non-normal distribution, and multiple covariates that influence survival time. Here is an example used to illustrate these features and related concepts.
+
+::: example
+To estimate the survival time of patients who are HIV-positive, a researcher conducted a clinical follow-up study. The subjects were individuals diagnosed with HIV in a certain city between January 1, 2002, and December 31, 2004. These subjects were followed until they died of AIDS or its complications (with status = 1 for death, and 0 for censored cases). The study cutoff date was December 31, 2008. Additionally, the gender (sex = 1 for male, 0 for female), age (in years), and medication status (drug = 1 for on medication, 0 for not on medication) of each subject were recorded. The results are shown in Table 18-1.
+:::
+
+<div>
+
+<a href="datasets/ex21-01.csv" download="ex21-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex21-01.csv", show_col_types = F)
+```
+
+```{r}
+df |> 
+  mutate(
+    startdate = as.Date(startdate),
+    enddate = as.Date(enddate)
+  ) |> 
+  head() |> 
+  knitr::kable(align = "c")
+```
+
+### Time-to-event
+
+Time-to-event, also known as survival time, refers to the duration from a specified starting point (such as the onset of a condition, diagnosis, or treatment initiation) to the occurrence of a specific event of interest (such as death, disease progression, or recovery).
+
+Survival analysis revolves around time-to-event data, and focuses on estimating the probability that an event has not yet occurred at a certain point in time and identifying factors influencing this time.
+
+The survival times are often non-normally distributed and typically show a skewed distribution. Standard statistical techniques that assume normality are not appropriate for survival data, so specialized models like the Cox proportional hazards model or accelerated failure time models are used instead.
+
+Moreover, survival data typically exhibits heterogeneity, meaning that the time to the event is influenced by multiple factors, such as age, gender, disease stage, or treatment. Covariates need to be incorporated into survival models (e.g., Cox models) to analyze these factors’ impact on survival time.
+
+### Censoring
+
+The analysis of time-to-event data often involves censoring, where the exact time of the event is unknown for some individuals., which occurs when the event of interest has not happened for some individuals by the end of the study or they are lost to follow-up. This means we only know that the individual survived up to a certain point, but not the exact time of the event. The common types of censoring includes:
+
+**Right censoring**: The most common type. It happens when an individual has not experienced the event by the end of the study. For example, a patient participates in a five-year study but is still alive at the end.
+
+**Left censoring**: When the event has occurred before the observation, but the exact time is unknown. For example, a patient is diagnosed with a disease but the precise time of infection is unknown.
+
+**Interval censoring**: The event occurs within a known time interval, but the exact time is unknown. For example, a patient is diagnosed with a disease between two follow-up visits.
+
+### Survival rate
+
+The survival rate typically refers to the percentage of individuals who remain alive after a defined time period following the onset of a disease or the beginning of treatment.

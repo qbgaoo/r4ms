@@ -12,6 +12,7 @@ A generalized linear model (GLM) is a flexible generalization of ordinary linear
 ```{r}
 #| message: false
 library(tidyverse)
+library(ggplot2)
 ```
 
 ## Components of GLM
@@ -35,8 +36,8 @@ A generalized linear model consists of three main components:
     The link function connects the linear predictor $\eta$ to the mean of the response variable. This is important because, in many cases, the response variable’s distribution and scale are not appropriate for direct use in a linear equation. The most commonly used link functions are:
 
     -   Identity link (for normal distribution): $\eta = \mu$
-    -   Logit link (for binomial distribution): $\eta = \log \left( \frac{\mu}{1 - \mu} \right)$
-    -   Log link (for Poisson distribution): $\eta = \log(\mu)$
+    -   Logit link (for binomial distribution): $\eta = \ln \left( \frac{\mu}{1 - \mu} \right)$
+    -   Log link (for Poisson distribution): $\eta = \ln(\mu)$
     -   Inverse link (for gamma distribution): $\eta = \mu^{-1}, \ \text{where} \ \mu$ is the expected value of $Y$.
 
     where $\mu$ is the expected value of $Y$.
@@ -56,7 +57,7 @@ Below are some common distributions and their link functions:
 df <- tibble(
   Distribution = c("Normal distribution", "Binomial distribution", "Poisson distribution", "Gamma distribution", "Inverse Gaussian distribution", "Multinomial distribution"),
   Dependent_Variable = c("Continuous data", "Binary data", "Count data",  "Positive continuous data", "Positive skewed continuous data", "Categorical data"),
-  Link_Function = c("Identity g($\\mu$) = $\\mu$", "Logit g($\\mu$) = log($\\mu / (1 - \\mu)$)", "Log g($\\mu$) = log($\\mu$)", "Inverse g($\\mu$) = $1 / \\mu$", "Inverse squared g($\\mu$) = $1 / \\mu^2$", "Multinomial Logit g($\\mu$) = log($\\mu_j / \\mu_K$)"),
+  Link_Function = c("Identity g($\\mu$) = $\\mu$", "Logit g($\\mu$) = ln($\\mu / (1 - \\mu)$)", "Log g($\\mu$) = ln($\\mu$)", "Inverse g($\\mu$) = $1 / \\mu$", "Inverse squared g($\\mu$) = $1 / \\mu^2$", "Multinomial Logit g($\\mu$) = ln($\\mu_j / \\mu_K$)"),
   Common_Model = c("Linear regression", "Logistic regression", "Poisson regression", "Gamma regression", "Inverse Gaussian regression", "Multinomial logistic regression")
 )
 
@@ -72,7 +73,7 @@ Log-linear model is often used to describe the relationship between categorical 
 The general form for a 3-way table with variables $X_1$ , $X_2$, and $X_3$ is:
 
 $$
-\log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+\ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
 $$
 
 where $\mu_{ijk}$ is the expected frequency for the combination of category $i$, $j$, and $k$, $\lambda$ is an intercept term (overall mean), $\lambda_{i}^{(X_1)}$, $\lambda_{j}^{(X_2)}$, and $\lambda_{k}^{(X_3)}$are the main effects for each variable,$\lambda_{ij}^{(X_1 X_2)}$, $\lambda_{ik}^{(X_1 X_3)}$*,* and $\lambda_{jk}^{(X_2 X_3)}$ are the interaction effects between pairs of variables, $\lambda_{ijk}^{(X_1 X_2 X_3)}$ is the three-way interaction term among the three variables.
@@ -84,7 +85,7 @@ There are several types of log-linear models, depending on the complexity of the
     This assumes that all variables are independent of each other, meaning no interaction terms are included. For a three-way table, the model looks like:
 
     $$
-    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
+    \ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)}
     $$
 
     This model assumes no association between variables X_1 , X_2 , and X_3 .
@@ -94,7 +95,7 @@ There are several types of log-linear models, depending on the complexity of the
     This model includes interactions between two or more variables. For example, a model that includes two-way interactions but excludes higher-order interactions is:
 
     $$
-    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
+    \ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)}
     $$This allows for interaction between pairs of variables but not all three variables together.
 
 3.  **Saturated model**
@@ -102,7 +103,7 @@ There are several types of log-linear models, depending on the complexity of the
     This includes all possible main effects and interactions (up to the highest order), fully describing the relationships between the variables:
 
     $$
-    \log(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
+    \ln(\mu_{ijk}) = \lambda + \lambda_{i}^{(X_1)} + \lambda_{j}^{(X_2)} + \lambda_{k}^{(X_3)} + \lambda_{ij}^{(X_1 X_2)} + \lambda_{ik}^{(X_1 X_3)} + \lambda_{jk}^{(X_2 X_3)} + \lambda_{ijk}^{(X_1 X_2 X_3)}
     $$
 
     This model perfectly fits the observed data but might overfit if the data set is small.
@@ -119,9 +120,9 @@ Researchers often fit both saturated (fully interactive) and reduced models to i
 
 Log-linear models are powerful tools for exploring multi-way relationships between categorical variables, making them widely applicable across various fields of research.
 
-### Goodness of fit test
+### Goodness-of-fit test
 
-The goodness of fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:
+The goodness-of-fit test in log-linear model is used to assess how well the model fits the observed data. Two main tests are typically used for this purpose:
 
 1.  **Likelihood ratio test**
 
@@ -204,10 +205,18 @@ Thus, the simpler model (main effects only) is preferred because the interaction
 glm_fit <- glm(f ~ edu + grow, family = poisson(link = "log"), data = tb)
 glm_fit1 <- update(glm_fit, .~.^2)
 glm_fit2 <- step(glm_fit1, direction = "backward", trace = 1)
-anova(glm_fit, glm_fit1, glm_fit2)
+anova(glm_fit2, glm_fit, glm_fit1)
 ```
 
-In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above. The parameters of the final fitting model can be retrieved using the code below:
+::: callout-tip
+## Results
+
+There is no significant improvement in model fit when adding grow (Model 2) or the interaction term edu:grow (Model 3). Model 1 (with only edu) may be sufficient, as adding more terms does not significantly enhance the fit.
+:::
+
+In this context, the p-value is 0.7951, same to that from the likelihood ratio test made above.
+
+The parameters of the final fitting model can be retrieved using the code below:
 
 ```{r}
 glm_fit2 |> coef()  
@@ -254,17 +263,357 @@ glm_fit <- glm(f ~ grp + expo + gtype, family = poisson(link = "log"), data = tb
 glm_fit1 <- update(glm_fit, .~.^2)
 glm_fit2 <- update(glm_fit, .~.^3)
 glm_fit3 <- step(glm_fit2, direction = "backward", trace = 1)
-anova(glm_fit, glm_fit1, glm_fit2, glm_fit3)
+anova(glm_fit, glm_fit3, glm_fit1, glm_fit2)
 ```
 
-The regression coefficients of the final fitting model is :
+::: callout-tip
+## Results
+
+Model 2 shows a significant improvement over Model 1, suggesting that the interaction terms grp:expo and grp:gtype significantly improve the model’s fit. Model 3 and Model 4 show no significant improvement over Model 2, with p-values above 0.75, meaning that adding the interaction term expo:gtype or the three-way interaction does not significantly improve the fit.
+
+Thus, Model 2 is the most appropriate model, as it includes the important two-way interaction terms and significantly improves the fit without overcomplicating the model.
+:::
+
+The regression coefficients of the final fitting model is:
 
 ```{r}
-coef(glm_fit3)
+opt_model <- glm(
+  f ~ grp * expo * gtype, 
+  family = poisson(link = "log"), 
+  data = tb) |> 
+  step(direction = "backward", trace = 0)
+coef(opt_model)
 ```
 
 The regression equation is as follows:
 
 ```{r}
-equatiomatic::extract_eq(glm_fit3, use_coefs = T, coef_digits = 5)
+equatiomatic::extract_eq(opt_model, use_coefs = T, coef_digits = 5)
 ```
+
+Residual analysis helps in assessing whether your model fits the data well and whether the assumptions of the model are met. Here’s how you can conduct residual analysis for your generalized linear model:
+
+```{r}
+df <- tibble(
+  dev_resid = residuals(opt_model, type = "deviance"),
+  fit_value = fitted.values(opt_model))
+
+# Plot residuals vs fitted values
+ggplot(df, aes(fit_value, dev_resid)) +
+  geom_point(shape = 1, size = 2) +
+  geom_hline(yintercept = 0, col = "red")+
+  labs(
+    x = "Fitted values", 
+    y = "Deviance residuals",
+    title = "Residuals plot"
+  )
+```
+
+```{r}
+# Q-Q plot
+ggplot(df, aes(sample = dev_resid)) +
+  geom_qq(shape = 1, size = 2) +
+  geom_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample quantiles", title = "Q-Q plot")
+
+# Leverage plot
+tibble(
+  hat_value = hatvalues(opt_model),
+  index = c(1:length(hat_value))) |> 
+  ggplot(aes(index, hat_value)) +
+  geom_point(shape = 1, size = 2) +
+  labs(x = "Index", y = "Hat_values", title = "Leverage plot")
+
+# Cook's distance
+tibble(
+  cooks_dis = cooks.distance(opt_model),
+  index = c(1:length(cooks_dis))) |> 
+  ggplot(aes(index, cooks_dis)) +
+  geom_point(shape = 1, size = 2) +
+  geom_hline(yintercept = 4/(nrow(df)-length(coef(opt_model))), col = "red") +
+  labs(x = "Index", y = "Cook's distance", title = "Cook's distance")
+```
+
+::: callout-tip
+## Interpretation
+
+If the residuals are randomly scattered around zero in the Residuals plot, and the Q-Q plot follows a straight line, your model fits well.
+
+Observations with high leverage or high Cook’s distance might indicate influential points. You may want to examine these data points closely.
+
+This analysis helps assess the final model’s fit and identify any potential issues such as outliers or non-linearity.
+:::
+
+## Poisson regression
+
+Poisson regression is a type of generalized linear model used for count data. It is particularly useful when the dependent variable represents counts of events that occur independently over a fixed period of time or space. The model assumes that the count data follows a Poisson distribution.
+
+The natural logarithm is used as the link function, connecting the linear predictor to the expected value of the response variable. This means that the model predicts the logarithm of the expected count. It assumes that the events are independent, and the mean and variance of the counts are equal.
+
+The general form of a Poisson regression model can be expressed as:
+
+$$
+\ln(\lambda_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_k X_{ik}
+$$
+
+where $\lambda$ is the expected count for the $i$-th observation, $X_{i1}, X_{i2}, \ldots, X_{ik}$ are the predictor variables, $\beta_0, \beta_1, \ldots, \beta_k$ are the coefficients to be estimated.
+
+A Poisson regression model with an offset is used when the rate of occurrence of events is being modeled, rather than the raw counts. The offset allows the model to account for different exposure times or different sizes of population at risk. In this case, the model becomes:
+
+$$
+\ln(\lambda_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_p X_{ik} + \log(t_i)
+$$
+
+where $t_i$ is the offset (often the exposure time or population size for each observation). The offset is added to the linear predictor as $\log(t_i)$, and it is treated as a known value rather than a variable for which a coefficient is estimated.
+
+This adjustment is essential when the time or population at risk differs across observations.
+
+### Goodness-of-fit test
+
+Goodness-of-fit tests are used to assess how well the model fits the data. Here are some common methods to conduct goodness-of-fit tests for Poisson regression.
+
+**Deviance and Pearson tests**
+
+Deviance is the most commonly used goodness-of-fit statistic in Poisson regression. It compares the model’s deviance to its degrees of freedom to assess the fit.
+
+Pearson test involves calculating the sum of squared Pearson residuals and comparing it to its degrees of freedom.
+
+**Likelihood ratio test**
+
+This test compares the likelihood functions of the full model and a reduced model to determine whether adding significant variables improves the model fit.
+
+### Parameters estimation
+
+The parameters are estimated by maximizing the likelihood function, which for the Poisson distribution is given by:
+
+$$
+L(\beta) = \prod_{i=1}^n \frac{e^{-\lambda_i} \lambda_i^{Y_i}}{Y_i!}
+$$
+
+To simplify the computation, the log-likelihood function is typically used. It is written as:
+
+$$
+\log L(\beta) = \sum_{i=1}^{n} \left( Y_i \log(\lambda_i) - \lambda_i - \log(Y_i!) \right)
+$$
+
+Substituting $\lambda_i = e^{X_i \beta}$ into the equation, we get:
+
+$$
+\log L(\beta) = \sum_{i=1}^{n} \left( Y_i (X_i \beta) - e^{X_i \beta} - \log(Y_i!) \right)
+$$
+
+where $\lambda_i = e^{X_i \beta}$, representing the expected count for observation $i$, determined by the independent variables $X_i$ and regression coefficients $\beta$, $Y_i$ is the observed count for the $i$-th observation.
+
+By maximizing this log-likelihood function, the regression coefficients $\beta$ can be estimated for the Poisson regression model.
+
+To assess whether a predictor is statistically significant, calculate the $Z$ statistic:
+
+$$
+Z = \frac{\hat{\beta}}{\text{SE}(\hat{\beta})}
+$$
+
+where $\hat{\beta}$ is the estimated coefficient and $\text{SE}(\hat{\beta})$ is the standard error. The p-value is obtained from the standard normal distribution based on the calculated z-value. If the p-value is less than the significance level (commonly 0.05), reject the null hypothesis, indicating that the predictor is statistically significant.
+
+::: example
+A researcher conducted a retrospective cohort study to investigate the relationship between arsenic exposure in a smelting plant and deaths due to respiratory diseases among the plant’s employees from 1978 to 2009. The data can be download below. Please analyze this data.
+:::
+
+<div>
+
+<a href="datasets/ex20-03.csv" download="ex20-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex20-03.csv", show_col_types = F) |> 
+  mutate(
+    AsExpo = factor(AsExpo, labels = c("As.No", "As.Yes")),
+    ageGroup = factor(ageGroup, labels = c("40~49", "50~59", "60~69", ">=70")),
+    nDeath = as.integer(nDeath),
+    nTotal = as.integer(round(nTotal))
+  ) 
+```
+
+```{r}
+tb |> 
+  pivot_wider(
+    names_from  = AsExpo,
+    values_from = c(nDeath, nTotal)
+  ) |> 
+  knitr::kable(align = "c") 
+```
+
+You can use the `glm()` function to fit a Poisson regression model.
+
+```{r}
+model <- glm(
+  nDeath ~ AsExpo + ageGroup, 
+  family = poisson(link = "log"),
+  data = tb, 
+  offset = log(nTotal)               # <1>
+) 
+```
+
+::: callout-important
+## Offset
+
+The inclusion of the `log(nTotal)` as an offset allows us to model the mortality rate per person-year rather than just the raw number of deaths.
+
+Without the offset, the model would compare the total number of deaths, which could lead to misleading conclusions if one age group simply had more number of deaths or more years than another. By using person-years as an offset, we adjust for this variability and focus on the mortality rate, making the comparison more meaningful.
+
+This method is commonly used in epidemiology to model incidence rates for diseases, infections, or other health outcomes while adjusting for varying follow-up times or population sizes.
+:::
+
+The `coef()` function can print the regression coefficients:
+
+```{r}
+coef(model)
+```
+
+The regression equation is:
+
+```{r}
+equatiomatic::extract_eq(model, use_coefs = T, coef_digits = 5)
+```
+
+Use the `summary()` function to evaluate the parameter estimates, significance of predictors, and goodness-of-fit.
+
+```{r}
+summary(model)
+```
+
+This Poisson regression model analyzes the relationship between arsenic exposure (AsExpo), age groups (ageGroup), and the number of deaths from respiratory diseases (nDeath). The model includes an offset (nTotal), which represents the total number of individuals at risk or the total exposure time, to adjust for varying group sizes or follow-up durations.
+
+Here’s a breakdown of the results:
+
+1.  **Coefficients**
+
+    -   (Intercept): -8.0086: The intercept represents the baseline log mortality rate for the reference group, which in this case is those not exposed to arsenic (AsExpo = “No”) and in the \<50 age group. The estimate of -8.0086 suggests a very low baseline mortality rate when exponentiated.
+    -   AsExpoYes: 0.8109: The coefficient for arsenic exposure (Yes) indicates that the log mortality rate is increased by 0.8109 units for those exposed to arsenic compared to those not exposed. Exponentiating this value ($\exp(0.8109) = 2.25$) suggests that arsenic exposure increases the mortality rate by about 125% compared to those unexposed.
+    -   ageGroup50\~59: 1.4702: For individuals aged 50-59, the log mortality rate increases by 1.4702 units compared to those under 50. Exponentiating this value ($\exp(1.4702) = 4.35$) shows that the mortality rate is approximately 4.35 times higher for this age group compared to those under 50.
+    -   ageGroup60\~69: 2.3661: For individuals aged 60-69, the log mortality rate increases by 2.3661 units. Exponentiating this value ($\exp(2.3661) = 10.65$) indicates that the mortality rate is about 10.65 times higher for this age group compared to the \<50 group.
+    -   ageGroup\>=70: 2.6238: For individuals aged 70 or older, the log mortality rate increases by 2.6238 units. Exponentiating this value ($\exp(2.6238) = 13.78$) indicates that the mortality rate is 13.78 times higher for this age group compared to the reference (\<50) group.
+
+2.  **Statistical significance**
+
+    -   The p-values for all variables are very small (\<0.001), indicating that arsenic exposure and all age groups are significantly associated with increased mortality rates.
+
+3.  **Model fit**
+
+    -   Residual Deviance: 9.9323 on 3 degrees of freedom. This indicates how well the model fits the data. The small residual deviance relative to the degrees of freedom suggests a good fit, meaning the model explains most of the variability in the data.
+    -   Null Deviance: 260.9311 on 7 degrees of freedom. The null deviance represents the deviance of a model with no predictors, just an intercept. A large difference between null and residual deviance indicates that the predictors significantly improve the model fit.
+    -   The AIC (61.344) is a measure of model quality, with lower values indicating a better fit. It’s useful when comparing models to select the best one.
+
+    ::: callout-tip
+    ## Key findings
+
+    -   Arsenic exposure significantly increases the mortality rate (about 125% increase).
+    -   Age is also a strong predictor, with older age groups showing exponentially higher mortality rates.
+    -   The model fits the data well, as evidenced by the low residual deviance and significant predictors.
+    :::
+
+If the residual deviance is significantly larger than the degrees of freedom, it may indicate overdispersion, suggesting that the Poisson model may not be appropriate. In such cases, consider using a negative binomial regression or adjusting the model accordingly.
+
+## Negative binomial regression
+
+In Poisson regression, the assumption is that the mean ($\lambda$) and variance of the dependent variable are equal. When this assumption is violated (i.e., the data is overdispersed), the model may underestimate the standard errors, leading to misleading p-values and confidence intervals.
+
+Negative binomial regression is an extension of Poisson regression that is used when the data exhibits overdispersion—meaning the variance is larger than the mean. The negative binomial regression introduces an extra parameter, called the dispersion parameter or overdispersion parameter, to account for the excess variability.
+
+-   Poisson regression: $\text{var}(Y) = \mu$
+-   Negative binomial regression: $\text{var}(Y) = \mu + \frac{\mu^2}{\theta}$,
+
+where $\theta$ is the dispersion parameter (overdispersion parameter). When $\theta \to \infty$, the negative binomial model reduces to a Poisson model.
+
+The mean of the response variable $Y_i$ is related to the predictors $X_{i1}, X_{i2}, \dots, X_{ik}$ through the following log-linear relationship:
+
+$$
+\log(\mu_i) = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \dots + \beta_k X_{ik}
+$$
+
+where $\mu_i$ is the expected count (the mean of $Y_i$) for the $i$-th observation, $X_{i1}, X_{i2}, \dots, X_{ik}$ are the predictor variables, $\beta_0, \beta_1, \beta_2, \dots, \beta_k$ are the coefficients estimated from the data.
+
+::: example
+A researcher conducted a study to investigate the relationship between types of residence and the breeding of mosquito larvae by surveying 299 households from different types of residences. The results are shown in @tbl-mos-larvae . Please use an appropriate statistical method to analyze this data.
+:::
+
+<div>
+
+<a href="datasets/ex20-04.csv" download="ex20-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex20-04.csv", col_types = list(resType = col_factor())) |> 
+  mutate(
+    resType = factor(resType, labels = c("rural", "barriada", "urban"))
+  )
+```
+
+```{r}
+#| echo: false
+#| tbl-cap: Breeding situation of mosquito larvae in different resident areas
+#| label: tbl-mos-larvae
+df <- tb |> 
+  pivot_wider(
+    names_from  = resType,
+    values_from = nFamily,
+    names_glue = "{.value}.{resType}"
+  ) |> 
+  mutate(
+    nFamily.total = rowSums(across(contains("nFamily"))),
+    nContainer = as.character(nContainer))
+df |> 
+  summarise(across(contains("nFamily") ,sum)) |> 
+  mutate(nContainer = "Total") %>%
+  bind_rows(df, .) |> 
+  knitr::kable(align = "c")
+```
+
+You can fit a negative binomial regression using the `glm.nb()` function from the `MASS` package:
+
+```{r}
+neg.bin_fit <- MASS::glm.nb(nContainer ~ resType, data = tb, weights = nFamily)
+poisson_fit <- glm(nContainer ~ resType, family = poisson, data = tb, weights = nFamily)
+AIC(neg.bin_fit, poisson_fit)
+```
+
+AIC is a measure used for model selection. A lower AIC value indicates a better-fitting model while penalizing for model complexity. In this case, the AIC for `neg.bin_fit` is 426.2283, which is lower than the AIC for poisson_fit, which is 505.9154. Since a lower AIC value is preferred, the negative binomial regression model fits the data better than the Poisson regression model.
+
+The regression coefficients is:
+
+```{r}
+coef(neg.bin_fit)
+```
+
+The regression equation is:
+
+```{r}
+equatiomatic::extract_eq(neg.bin_fit, use_coefs = T, coef_digits = 4,font_size = "small")
+```
+
+```{r}
+summary(neg.bin_fit)
+```
+
+Here is the interpretation of the results from the negative binomial regression output:
+
+1.  **Coefficients**
+    -   Intercept: -0.7100, which corresponds to the log count of nContainer for the baseline group. p-value: 4.1e-05 (very small), which means the intercept is highly significant.
+    -   resTypebarriada (Effect of “barriada” residences compared to the baseline): -0.6762, indicating that the log count of containers is lower in barriada residences compared to the baseline by about 0.68. p-value = 0.113612, suggesting that the effect is not statistically significant.
+    -   resTypeurban (Effect of “urban” residences compared to the baseline): -1.9572, indicating that the log count of containers is significantly lower in urban residences compared to the baseline by about 1.96. p-value = 0.000196, suggesting this effect is statistically significant.
+2.  **Model fit**
+    -   Null deviance: 174.95 on 12 degrees of freedom, indicating how well the null model (no predictors) fits the data.
+    -   Residual deviance: 156.37 on 10 degrees of freedom, indicating how well the model with predictors fits the data. The reduction in deviance suggests that the predictors improve the model fit.
+    -   AIC: 426.23, a measure of model quality. Lower values suggest a better model fit, but should only be compared with other models fitted to the same data.
+3.  **Dispersion parameter**
+    -   Theta: 0.3003, with a standard error of 0.0764. Theta is the overdispersion parameter in the negative binomial model, and this small value indicates overdispersion, meaning the variance is larger than the mean, which justifies the use of negative binomial over Poisson regression.
+
+::: callout-tip
+## Conclusion
+
+-   The baseline category (likely a reference category like rural) has a significant effect on the number of containers.
+-   Urban residences have significantly fewer containers compared to the baseline category.
+-   Barriada residences do not significantly differ from the baseline in terms of the number of containers.
+-   The significant overdispersion in the data justifies using the negative binomial model over the Poisson model.
+:::

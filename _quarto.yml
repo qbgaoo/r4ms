@@ -14,33 +14,34 @@ book:
   chapters:
     - index.qmd
     - preface.qmd
-    - intro.qmd
+    - introduction.qmd
     
     - part: basic-stat.qmd
       chapters:
-        - quat-data-stat-desc.qmd
+        - quat-data-statdesc.qmd
         - normal-distribution.qmd
         - statistical-inference.qmd
         - hypothesis-test.qmd
         - ttest.qmd
         - anova.qmd
-        - count-data-stat-desc.qmd
+        - count-data-statdesc.qmd
         - discrete-data-dist.qmd
         - chi-square-test.qmd
         - nonparametric-test.qmd
-        - reg-and-corr.qmd
+        - regression-correlation.qmd
         
     - part: advanced-stat.qmd
       chapters:
-        - multi-factor-anova.qmd
-        - repeated-measure.qmd
+        - multifactor-anova.qmd
+        - repeated-measurement.qmd
         - general-linear-model.qmd
         - multivariate-groups-diff.qmd
-        - multiple-linear-reg.qmd
-        - logistic-reg.qmd
+        - multiple-linear-regression.qmd
+        - logistic-regression.qmd
         - generalized-linear-model.qmd
+        - survival-analysis.qmd
         - cox-regression.qmd
-        - ordered-cat-data.qmd
+        - generalized-estimating-equation.qmd
         
     - part: stat-anal-report.qmd
       chapters: 
