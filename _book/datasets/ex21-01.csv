@@ -1,4 +1,4 @@
-ID,startdate,enddate,time,sex,age,drug,status
+ID,startpoint,endpoint,time,sex,age,drug,status
 1,2004/10/7,2005/8/7,10,0,27,1,1
 2,2002/6/29,2002/7/29,1,0,47,1,0
 3,2004/8/2,2005/1/1,5,1,40,1,1

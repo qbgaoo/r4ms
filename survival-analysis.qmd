@@ -36,8 +36,8 @@ df <- read_csv("datasets/ex21-01.csv", show_col_types = F)
 ```{r}
 df |> 
   mutate(
-    startdate = as.Date(startdate),
-    enddate = as.Date(enddate)
+    startpoint = as.Date(startpoint),
+    endpoint = as.Date(endpoint)
   ) |> 
   head() |> 
   knitr::kable(align = "c")
