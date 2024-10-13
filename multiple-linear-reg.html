@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./logistic-regression.html" rel="next">
+<link href="./logistic-reg.html" rel="next">
 <link href="./multivariate-groups-diff.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -332,20 +332,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  <a href="./logistic-reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,19 +368,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -949,34 +955,22 @@ C_p = \frac{\text{RSS}_p}{\hat{\sigma}^2} + 2p - n
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(heart_disease_risk <span class="sc">~</span> age <span class="sc">+</span> cholesterol <span class="sc">+</span> blood_pressure <span class="sc">+</span> smoking_status, <span class="at">data =</span> patients_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
-</ol>
-<!-- -->
-<ol start="2" type="1">
 <li><p><strong>Drug efficacy analysis</strong></p>
 <p>In clinical trials, multiple linear regression is useful for evaluating the combined effects of multiple factors on drug efficacy. For example, when assessing blood sugar control in diabetic patients, variables such as drug dosage, age, weight, and lifestyle habits can be included to understand their effects on glucose levels.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(fasting_glucose <span class="sc">~</span> drug_dose <span class="sc">+</span> age <span class="sc">+</span> weight <span class="sc">+</span> exercise, <span class="at">data =</span> diabetes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
-</ol>
-<!-- -->
-<ol start="3" type="1">
 <li><p><strong>Controlling for confounding variables</strong></p>
 <p>Confounding factors such as age, gender, or lifestyle can affect the relationships between variables. Multiple linear regression helps control for these confounders by incorporating multiple variables, allowing a more accurate estimation of the primary exposure variable’s effect (e.g., treatment method) on health outcomes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(treatment_effect <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> treatment_group, <span class="at">data =</span> clinical_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
-</ol>
-<!-- -->
-<ol start="4" type="1">
 <li><p><strong>Prognostic model construction</strong></p>
 <p>Prognostic models are used to predict survival rates or disease outcomes in medical research. Multiple linear regression helps identify significant factors influencing disease progression and uses these factors to build a prognostic model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(survival_time <span class="sc">~</span> tumor_size <span class="sc">+</span> age <span class="sc">+</span> treatment_type <span class="sc">+</span> physical_activity, <span class="at">data =</span> cancer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
-</ol>
-<!-- -->
-<ol start="5" type="1">
-<li><p>Correlation Analysis of Physiological Indicators</p>
+<li><p><strong>Correlation analysis of physiological indicators</strong></p>
 <p>Multiple linear regression can analyze the relationship between different physiological indicators. For example, it can examine how weight, cholesterol, and blood pressure affect a health outcome, such as kidney or heart function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(kidney_function <span class="sc">~</span> weight <span class="sc">+</span> cholesterol <span class="sc">+</span> blood_pressure, <span class="at">data =</span> health_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1026,7 +1020,7 @@ C_p = \frac{\text{RSS}_p}{\hat{\sigma}^2} + 2p - n
 #&gt; BP = 6.4508, df = 4, p-value = 0.1679</code></pre>
 </div>
 </div>
-<p>As for White’s test specifically, we defined a custom function named <code>whites.test()</code> to perform White’s test.</p>
+<p>As for White’s test specifically, we defined a custom function named <code>whites.test()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>whites.test <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the independent variables in the model</span></span>
@@ -1723,8 +1717,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./logistic-regression.html" class="pagination-link" aria-label="Logistic Regression">
-        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./logistic-reg.html" class="pagination-link" aria-label="Logistic regression analysis">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

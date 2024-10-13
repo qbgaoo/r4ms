@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>19&nbsp; Logistic regression analysis – R for Medical Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./generalized-linear-model.html" rel="next">
+<link href="./multiple-linear-reg.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./logistic-reg.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Medical Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./reg-and-corr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate-groups-diff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple-linear-reg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multiple linear regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-reg.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communication</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">19.1</span> Prerequisite</a></li>
+  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression"><span class="header-section-number">19.2</span> Logistic regression</a>
+  <ul class="collapse">
+  <li><a href="#the-regression-model" id="toc-the-regression-model" class="nav-link" data-scroll-target="#the-regression-model"><span class="header-section-number">19.2.1</span> The regression model</a></li>
+  <li><a href="#model-parameters" id="toc-model-parameters" class="nav-link" data-scroll-target="#model-parameters"><span class="header-section-number">19.2.2</span> Model parameters</a></li>
+  <li><a href="#hypothesis-test" id="toc-hypothesis-test" class="nav-link" data-scroll-target="#hypothesis-test"><span class="header-section-number">19.2.3</span> Hypothesis test</a></li>
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection"><span class="header-section-number">19.2.4</span> Variable selection</a></li>
+  </ul></li>
+  <li><a href="#conditional-logistic-regression" id="toc-conditional-logistic-regression" class="nav-link" data-scroll-target="#conditional-logistic-regression"><span class="header-section-number">19.3</span> Conditional logistic regression</a></li>
+  <li><a href="#ordinal-logistic-regression" id="toc-ordinal-logistic-regression" class="nav-link" data-scroll-target="#ordinal-logistic-regression"><span class="header-section-number">19.4</span> Ordinal logistic regression</a></li>
+  <li><a href="#multinomial-logistic-regression" id="toc-multinomial-logistic-regression" class="nav-link" data-scroll-target="#multinomial-logistic-regression"><span class="header-section-number">19.5</span> Multinomial logistic regression</a></li>
+  <li><a href="#matters-need-attention" id="toc-matters-need-attention" class="nav-link" data-scroll-target="#matters-need-attention"><span class="header-section-number">19.6</span> <strong>Matters need attention</strong></a>
+  <ul class="collapse">
+  <li><a href="#parallel-lines-assumption" id="toc-parallel-lines-assumption" class="nav-link" data-scroll-target="#parallel-lines-assumption"><span class="header-section-number">19.6.1</span> Parallel lines assumption</a></li>
+  <li><a href="#sample-size" id="toc-sample-size" class="nav-link" data-scroll-target="#sample-size"><span class="header-section-number">19.6.2</span> Sample size</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/logistic-reg.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./logistic-reg.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Logistic regression is a type of regression analysis used for prediction of outcome based on one or more predictor variables. It is particularly useful when the dependent variable is binary (i.e., it takes on only two values, such as success/failure or yes/no). Its application is crucial in epidemiology, clinical research, and public health studies.</p>
+<section id="prerequisite" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">19.1</span> Prerequisite</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equatiomatic)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rms)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VGAM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="logistic-regression" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="logistic-regression"><span class="header-section-number">19.2</span> Logistic regression</h2>
+<section id="the-regression-model" class="level3" data-number="19.2.1">
+<h3 data-number="19.2.1" class="anchored" data-anchor-id="the-regression-model"><span class="header-section-number">19.2.1</span> The regression model</h3>
+<p>The logistic regression model can be represented by the following formula:</p>
+<p><span class="math display">
+P = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_n X_n)}}
+</span></p>
+<p>where <span class="math inline">P</span> is the probability of the event occurring (e.g., the probability of success) given the independent features <span class="math inline">X</span>, <span class="math inline">\beta_0</span> is the intercept, and <span class="math inline">\beta_1, \dots, \beta_n</span> are the regression coefficients for the independent <span class="math inline">X_1, X_2, \dots, X_n</span>. This formula indicates the probability of an event occurring based on the input features <span class="math inline">X</span>.</p>
+<p>Here is a plot of the logistic function:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="logistic-reg_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The plot of the logistic function has an S-shaped or sigmoid curve, the output probabilities range between <span class="math inline">0</span> and <span class="math inline">1</span>.</p>
+<p>The model can be transformed to a linear form as follows:</p>
+<p><span class="math display">
+\text{logit}(P) = \ln\left(\frac{P}{1-P}\right) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
+</span></p>
+<p>where <span class="math inline">\frac{P}{1-P}</span> is the odds of the event occurring, <span class="math inline">\text{logit}(P)</span> is the natural logarithm of the odds.</p>
+</section>
+<section id="model-parameters" class="level3" data-number="19.2.2">
+<h3 data-number="19.2.2" class="anchored" data-anchor-id="model-parameters"><span class="header-section-number">19.2.2</span> Model parameters</h3>
+<p>In logistic regression, the parameters mainly signify how the independent variables relate to the dependent variable (outcome) in terms of probability. Below are the primary meanings and interpretations of the parameters in a logistic regression model:</p>
+<p>The intercept (<span class="math inline">β_0</span>) represents the predicted log odds when all independent variables are equal to zero. It provides the baseline probability of the outcome. If the values of independent variables are zero, the intercept determines the initial output probability.</p>
+<p>Each coefficient represents the effect of the corresponding independent variable on the log odds of the dependent variable. Positive coefficient indicates that an increase in this variable raises the log odds of the event occurring, thereby increasing its probability. Negative coefficient suggests that an increase in this variable lowers the log odds of the event occurring, thereby decreasing its probability. The larger the absolute value of the coefficient, the more significant the independent variable’s effect on the outcome.</p>
+<p><strong>Parameter estimation</strong></p>
+<p>In logistic regression, parameter estimation is used to determine the relationship between independent variables (features) and dependent variables (usually binary outcomes). Maximum likelihood estimation (MLE) is the standard method for estimating parameters in logistic regression. MLE estimates model parameters by maximizing the likelihood function, which makes the observed data most probable under the model.</p>
+<p>For each observation <span class="math inline">i</span>, if <span class="math inline">Y_i</span> is the binary response variable, the likelihood function can be written as:</p>
+<p><span class="math display">
+L(\beta) = \prod_{i=1}^{n} P_i^{Y_i} (1 - P_i)^{(1 - Y_i)}
+</span></p>
+<p>where <span class="math inline">P_i = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_{1i} + … + \beta_k X_{ki})}}</span>. To simplify the calculations, the log-likelihood function is often used:</p>
+<p><span class="math display">
+\log L(\beta) = \sum_{i=1}^{n} \left( Y_i \log(P_i) + (1 - Y_i) \log(1 - P_i) \right)
+</span></p>
+<p><strong>Odds ratio estimation</strong></p>
+<p>In logistic regression, odds ratio (OR) is a key measure that quantifies the strength of association between a independent variable and the outcome of interest. The OR compares the odds of the event occurring in one group to the odds of the event occurring in another group. To get the OR, we exponentiate the coefficient:</p>
+<p><span class="math display">
+\text{OR} = e^{\beta_j}
+</span></p>
+<p>The OR representing how the odds of the event change with a one-unit increase in the independent variable <span class="math inline">X_j</span>.</p>
+<ul>
+<li>OR &gt; 1: Suggests that increasing the variable by one unit increases the odds of the event.</li>
+<li>OR &lt; 1: Indicates that increasing the variable by one unit decreases the odds of the event.</li>
+<li>OR = 1: Implies no effect of the variable on the odds of the event.</li>
+</ul>
+<p>It is common to calculate confidence intervals for the OR to assess the precision of the estimate. A 95% confidence interval for the OR that does not include 1 suggests a statistically significant association.</p>
+</section>
+<section id="hypothesis-test" class="level3" data-number="19.2.3">
+<h3 data-number="19.2.3" class="anchored" data-anchor-id="hypothesis-test"><span class="header-section-number">19.2.3</span> Hypothesis test</h3>
+<p>Each parameter typically undergoes hypothesis testing to determine its significance in the model. The Wald test and the likelihood ratio test are two commonly used statistical tests for assessing the significance of parameters in regression models, including logistic regression.</p>
+<p><strong>Wald Test</strong></p>
+<p>The Wald test evaluates the significance of individual coefficients in a regression model. It tests the null hypothesis that a specific parameter (coefficient) is equal to zero (no effect). For a coefficient <span class="math inline">\beta_j</span>:</p>
+<p><span class="math display">
+W = \frac{\hat{\beta_j}^2}{S_{\hat{\beta_j}}}
+</span></p>
+<p>where <span class="math inline">\hat{\beta}</span> is the estimated coefficient, <span class="math inline">S_{\hat{\beta_j}}</span> is the estimated variance of the coefficient.</p>
+<p>The Wald statistic follows a chi-squared distribution with 1 degree of freedom under the null hypothesis. A large Wald statistic indicates that the coefficient is significantly different from zero, leading to rejection of the null hypothesis.</p>
+<p>The Wald test can be unreliable in small samples or when the estimates are near the boundary of the parameter space, as it may lead to inflated type I error rates.</p>
+<p><strong>Likelihood ratio test</strong></p>
+<p>The likelihood ratio test compares the fit of two models: a full model (with the parameter of interest) and a reduced model (without the parameter). It tests whether the additional parameters improve the model fit significantly. The statistic is calculated as:</p>
+<p><span class="math display">
+G = 2 \cdot \left(\log L_{\text{full}} - \log L_{\text{reduced}} \right)
+</span></p>
+<p>where <span class="math inline">L_{\text{full}}</span> is the likelihood of the reduced model, <span class="math inline">L_{\text{reduced}}</span> is the likelihood of the full model. The <span class="math inline">G</span> statistic follows a chi-squared distribution, with degrees of freedom equal to the difference in the number of parameters between the full and reduced models. A large <span class="math inline">G</span> statistic suggests that the full model significantly improves the fit compared to the reduced model, leading to rejection of the null hypothesis that the additional parameters do not improve the model. The likelihood ratio test is more reliable than the Wald test in small samples and can be used for more complex models where multiple parameters are tested simultaneously.</p>
+<p>P-value are used to assess the significance of parameters. If the P-value is below a significance level (e.g., 0.05), the independent variable is considered to have a significant effect on the dependent variable.</p>
+<div id="ex-18-01" class="example">
+<strong>Example 1:</strong> 
+<p>Here is the data on a case-control study investigating the relationship between smoking, alcohol consumption, and esophageal cancer. Conduct a logistic regression analysis.</p>
+</div>
+<div>
+<p><a href="datasets/ex19-01.csv" download="ex19-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">x1 =</span> <span class="fu">factor</span>(x1),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x2 =</span> <span class="fu">factor</span>(x2),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y  =</span> <span class="fu">factor</span>(case_ctr),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">freq  =</span> <span class="fu">as.integer</span>(freq),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.keep =</span> <span class="st">"none"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Logistic regression can be performed using the <code>glm()</code> function. Here’s an example code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> y <span class="sc">~</span> x1 <span class="sc">+</span> x2, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family  =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data    =</span> df,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> freq</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>summary(model)</code> to display a detailed summary of the fitted model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; glm(formula = y ~ x1 + x2, family = binomial(link = "logit"), 
+#&gt;     data = df, weights = freq)
+#&gt; 
+#&gt; Coefficients:
+#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; (Intercept)  -0.9099     0.1358  -6.699 2.10e-11 ***
+#&gt; x11           0.8856     0.1500   5.904 3.54e-09 ***
+#&gt; x21           0.5261     0.1572   3.348 0.000815 ***
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; (Dispersion parameter for binomial family taken to be 1)
+#&gt; 
+#&gt;     Null deviance: 1228.0  on 7  degrees of freedom
+#&gt; Residual deviance: 1159.4  on 5  degrees of freedom
+#&gt; AIC: 1165.4
+#&gt; 
+#&gt; Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>In the summary output of <code>glm()</code>, the columns labeled “z value” and “Pr(&gt;|z|)” represent the results of the Wald test. The results show that both independent variables (<span class="math inline">X1</span> and <span class="math inline">X2</span>) are significant in the logistic regression model, showing a strong relationship with the outcome variable. The model fits the data well, as indicated by the reduction in deviance from the null model.</p>
+<p>The regression equation can be extracted from the model by <code>extract_eq()</code> function from <code>equatiomatic</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  model,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">swap_var_names =</span> <span class="fu">c</span>(<span class="st">"y"</span> <span class="ot">=</span> <span class="st">"Y"</span>, <span class="st">"x1"</span> <span class="ot">=</span> <span class="st">"X1"</span>, <span class="st">"x2"</span> <span class="ot">=</span> <span class="st">"X2"</span>),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_coefs =</span> T, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_digits =</span> <span class="dv">4</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">font_size =</span> <span class="st">"small"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><span class="math display">
+\small
+\begin{aligned}
+\log\left[ \frac { \widehat{P( \operatorname{Y} = \operatorname{1} )} }{ 1 - \widehat{P( \operatorname{Y} = \operatorname{1} )} } \right] &amp;= -0.9099 + 0.8856(\operatorname{X1}_{\operatorname{1}}) + 0.5261(\operatorname{X2}_{\operatorname{1}})
+\end{aligned}
+</span></p>
+</div>
+</div>
+<p>The odds ratios are the exponentiated coefficients from the logistic regression model, since logistic regression models the log-odds (logarithm of the odds). To get the odds ratios, you can use the <code>exp()</code> function on the coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model) <span class="sc">|&gt;</span> <span class="fu">exp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; (Intercept)         x11         x21 
+#&gt;   0.4025457   2.4243991   1.6923589</code></pre>
+</div>
+</div>
+<p>You can use the <code>confint()</code> function to compute confidence intervals for the model coefficients. To get confidence intervals for the odds ratios, you need to exponentiate the confidence intervals of the log-odds.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model) <span class="sc">|&gt;</span> <span class="fu">exp</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;                 2.5 %    97.5 %
+#&gt; (Intercept) 0.3071678 0.5234695
+#&gt; x11         1.8090525 3.2580064
+#&gt; x21         1.2441606 2.3048818</code></pre>
+</div>
+</div>
+</section>
+<section id="variable-selection" class="level3" data-number="19.2.4">
+<h3 data-number="19.2.4" class="anchored" data-anchor-id="variable-selection"><span class="header-section-number">19.2.4</span> Variable selection</h3>
+<p>In logistic regression, like any regression model, variable selection is the process of choosing the most relevant independent variables for the model. This step is crucial because including too many irrelevant variables can lead to overfitting, making the model less generalizable to new data. On the other hand, excluding important variables can result in biased estimates.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>To investigate the risk factors for coronary heart disease, a case-control study was conducted with 26 coronary heart disease patients and 28 controls. The description of each factor are shown in <a href="#tbl-factor-value" class="quarto-xref">Table&nbsp;<span>19.1</span></a> . Logistic stepwise regression analysis was performed to screen for risk factors.</p>
+</div>
+<div>
+<p><a href="datasets/ex19-02.csv" download="ex19-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div id="tbl-factor-value" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-factor-value-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;19.1: Possible risk factors for coronary heart disease and their values
+</figcaption>
+<div aria-describedby="tbl-factor-value-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 14%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Factor</th>
+<th style="text-align: center;">Variable</th>
+<th style="text-align: left;">Assignment specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Age (year)</td>
+<td style="text-align: center;">X1</td>
+<td style="text-align: left;">&lt;45=1，45～=2，55～=3，65～=4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hypertension history</td>
+<td style="text-align: center;">X2</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Family history of hypertension</td>
+<td style="text-align: center;">X3</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: center;">X4</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hyperlipidemia history</td>
+<td style="text-align: center;">X5</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Animal fat intake</td>
+<td style="text-align: center;">X6</td>
+<td style="text-align: left;">Low=0，High=1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: center;">X7</td>
+<td style="text-align: left;">&lt;24=1，24～=2，26～=3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Type A personality</td>
+<td style="text-align: center;">X8</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coronary heart disease</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: left;">Control=0，Case=1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-02.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">y =</span> <span class="fu">col_factor</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Here are common methods used for variable selection in logistic regression:</p>
+<p><strong>Stepwise selection</strong></p>
+<p>Stepwise selection involves adding or removing variables based on specific criteria, usually involving p-values or AIC. This can be done using the <code>step()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_full <span class="ot">&lt;-</span> <span class="fu">glm</span>( </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4 <span class="sc">+</span> x5 <span class="sc">+</span> x6 <span class="sc">+</span> x7 <span class="sc">+</span> x8,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(model_full, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>, <span class="at">k =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:  glm(formula = y ~ x1 + x2 + x5 + x6 + x8, family = binomial(link = "logit"), 
+#&gt;     data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           x1           x2           x5           x6  
+#&gt;      -4.760        0.746        1.145        1.293        3.370  
+#&gt;          x8  
+#&gt;       2.000  
+#&gt; 
+#&gt; Degrees of Freedom: 53 Total (i.e. Null);  48 Residual
+#&gt; Null Deviance:       74.79 
+#&gt; Residual Deviance: 44.16     AIC: 56.16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model_reduced <span class="ot">&lt;-</span> <span class="fu">step</span>(model_full, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nrow</span>(df)))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>model_reduced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Call:  glm(formula = y ~ x1 + x5 + x6 + x8, family = binomial(link = "logit"), 
+#&gt;     data = df)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)           x1           x5           x6           x8  
+#&gt;     -4.7050       0.9239       1.4959       3.1355       1.9471  
+#&gt; 
+#&gt; Degrees of Freedom: 53 Total (i.e. Null);  49 Residual
+#&gt; Null Deviance:       74.79 
+#&gt; Residual Deviance: 46.22     AIC: 56.22</code></pre>
+</div>
+</div>
+<p>The <code>k</code> argument in the <code>step()</code> function is used to specify the penalty per parameter that is added to the model when performing model selection. This penalty influences the criteria for including or excluding variables during the stepwise regression process. When <code>k = 2</code>, this corresponds to the AIC selection, which is common for model selection. When <code>k = log(n)</code>, it corresponds to the BIC selection, which imposes a stronger penalty for additional parameters, often leading to simpler models.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><span class="math display">
+\small
+\begin{aligned}
+\log\left[ \frac { \widehat{P( \operatorname{Y} = \operatorname{1} )} }{ 1 - \widehat{P( \operatorname{Y} = \operatorname{1} )} } \right] &amp;= -4.705 + 0.9239(\operatorname{X1}) + 1.4959(\operatorname{X5}) + 3.1355(\operatorname{X6}) + 1.9471(\operatorname{X8})
+\end{aligned}
+</span></p>
+</div>
+</div>
+<p>Alternatively, <code>stepwise()</code> function from <code>StepReg</code> package is another useful and convenient tool to select a optimal model using various stepwise regression strategies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>StepReg<span class="sc">::</span><span class="fu">stepwise</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4 <span class="sc">+</span> x5 <span class="sc">+</span> x6 <span class="sc">+</span> x7 <span class="sc">+</span> x8,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  df,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"logit"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strategy =</span> <span class="st">"bidirection"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"SBC"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_digits =</span> <span class="dv">5</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Warning in fun(libname, pkgname): couldn't connect to display
+#&gt; "/private/tmp/com.apple.launchd.19Vz8nt698/org.xquartz:0"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] "There was an error message."</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Table 1. Summary of arguments for model selection
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt;                        Parameter        Value
+#&gt; —————————————————————————————————————————————
+#&gt;                included variable         NULL 
+#&gt;                         strategy  bidirection 
+#&gt;                           metric          SBC 
+#&gt;   tolerance of multicollinearity        1e-07 
+#&gt;       multicollinearity variable         NULL 
+#&gt;                        intercept            1 
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt; 
+#&gt; Table 2. Summary of variables in dataset      
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt;   Variable_type  Variable_name  Variable_class
+#&gt; ——————————————————————————————————————————————
+#&gt;       Dependent              y          factor 
+#&gt;     Independent             x1         numeric 
+#&gt;     Independent             x2         numeric 
+#&gt;     Independent             x3         numeric 
+#&gt;     Independent             x4         numeric 
+#&gt;     Independent             x5         numeric 
+#&gt;     Independent             x6         numeric 
+#&gt;     Independent             x7         numeric 
+#&gt;     Independent             x8         numeric 
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt; 
+#&gt; Table 3. Summary of selection process under bidirection with SBC
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt;   Step  EffectEntered  EffectRemoved  NumberParams       SBC
+#&gt; ————————————————————————————————————————————————————————————
+#&gt;      1              1                            1  78.77479 
+#&gt;      2             x6                            2  71.44514 
+#&gt;      3             x5                            3  67.44722 
+#&gt;      4             x8                            4  66.35821 
+#&gt;      5             x1                            5  66.16941 
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt; 
+#&gt; Table 4. Summary of coefficients for the selected model with y under bidirection and SBC 
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
+#&gt;      Variable  Estimate  Std. Error   z value  Pr(&gt;|z|)
+#&gt; ———————————————————————————————————————————————————————
+#&gt;   (Intercept)  -4.70502     1.54324  -3.04879    0.0023 
+#&gt;            x6   3.13549     1.24888   2.51065   0.01205 
+#&gt;            x5   1.49594     0.74389   2.01097   0.04433 
+#&gt;            x8   1.94709     0.84661   2.29986   0.02146 
+#&gt;            x1    0.9239     0.47657   1.93864   0.05255 
+#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗</code></pre>
+</div>
+</div>
+<p>Stepwise methods can sometimes lead to overfitting, especially if the dataset is small. It may be slower for larger models or datasets compared to penalized regression methods like Lasso.</p>
+<p><strong>LASSO</strong></p>
+<p>LASSO (least absolute shrinkage and selection operator) is a regularization technique that performs both variable selection and regularization by adding a penalty term to the logistic regression model. It forces some of the coefficients to be exactly zero. Variables with coefficients set to zero are effectively excluded from the model, while variables with non-zero coefficients are selected as important.</p>
+<p>You can use the <code>glmnet</code> package for LASSO. Here is an example code block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"x"</span>)) <span class="sc">|&gt;</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">select</span>(df, y) <span class="sc">|&gt;</span> <span class="fu">pull</span>()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the optimal lambda using cross-validation</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>cv_model <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_model)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>best_lambda <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda.min</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="logistic-reg_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>The elasticnet mixing parameter, with <span class="math inline">0 ≤ \alpha ≤ 1</span>. <span class="math inline">\alpha=1</span> is the lasso penalty, and <span class="math inline">\alpha=0</span> the ridge penalty. If <span class="math inline">\alpha</span> is between 0 and 1, it would be Elastic Net, a combination of Lasso and Ridge regression.</li>
+</ol>
+<p>Since Lasso tends to set some coefficients exactly to zero, using optimal lambda ensures that only the most relevant features are kept in the model. The final model will have the lowest cross-validation error, making it more reliable for prediction and interpretation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy"><code class="sourceCode r"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> best_lambda)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After fitting the final model with the optimal lambda, you can check which variables have non-zero coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
+#&gt;                      s0
+#&gt; (Intercept) -2.81593546
+#&gt; x1           0.36588508
+#&gt; x2           0.47145719
+#&gt; x3           0.36146901
+#&gt; x4           0.20506780
+#&gt; x5           0.61619725
+#&gt; x6           1.79944497
+#&gt; x7           0.07481632
+#&gt; x8           0.98715786</code></pre>
+</div>
+</div>
+<p>When the regularization parameter (lambda) is very small, the Lasso penalty is not strong enough to shrink coefficients to zero. This could result in all variables being retained in the model. To address the reason and potentially shrink more coefficients to zero, you can try the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-1" class="code-annotation-target"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>lambda_strong <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda<span class="fl">.1</span>se</span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> lambda_strong)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="1" data-code-annotation="1">The largest lambda within 1 standard error of the best.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The <code>lambda.min</code> value minimizes the cross-validation error. The <code>lambda.1se</code> is more conservative and applies a larger penalty, often shrinking more coefficients to zero. After refitting the model with a higher lambda, you can check the coefficients to see if any are zero:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
+#&gt;                      s0
+#&gt; (Intercept) -0.63708463
+#&gt; x1           0.04213502
+#&gt; x2           0.09792626
+#&gt; x3           .         
+#&gt; x4           .         
+#&gt; x5           0.30243773
+#&gt; x6           0.75451858
+#&gt; x7           .         
+#&gt; x8           0.24106914</code></pre>
+</div>
+</div>
+<p>You can try a larger value for lambda (manually increasing the penalty):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stronger_lambda <span class="ot">&lt;-</span> best_lambda <span class="sc">*</span> <span class="fl">3.1</span>  <span class="co"># Increase lambda by a factor of 3.1</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> stronger_lambda)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
+#&gt;                     s0
+#&gt; (Intercept) -0.3825940
+#&gt; x1           .        
+#&gt; x2           0.0255965
+#&gt; x3           .        
+#&gt; x4           .        
+#&gt; x5           0.2267783
+#&gt; x6           0.6189254
+#&gt; x7           .        
+#&gt; x8           0.1337567</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lasso or Ridge regression both can constrain the regression coefficients to prevent overfitting. Moreover, Ridge regression does not perform variable selection, but rather shrinks all features to some degree. Although it retains all the variables, but it can help deal with multicollinearity problems.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="conditional-logistic-regression" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="conditional-logistic-regression"><span class="header-section-number">19.3</span> Conditional logistic regression</h2>
+<p>Conditional logistic regression is used when dealing with matched case-control studies where subjects (cases and controls) are matched based on certain characteristics, like age, sex, or other variables. Unlike standard logistic regression, conditional logistic regression takes into account the matching by estimating the relationship between predictors and outcomes within matched sets.</p>
+<p>In conditional logistic regression, the model is stratified by the matched sets (e.g., matched pairs or groups), meaning the analysis is performed within these groups.</p>
+<p>The conditional logistic regression model takes the following form:</p>
+<p><span class="math display">
+\log\left( \frac{P(Y_{ij} = 1 | X_{ij})}{P(Y_{ij} = 0 | X_{ij})} \right) = \beta_1 X_{ij_1} + \beta_2 X_{ij_2} + \cdots + \beta_p X_{ij_p}
+</span></p>
+<p>where <span class="math inline">Y_{ij}</span> is the response variable for the <span class="math inline">j</span>-th individual in the <span class="math inline">i</span>-th group, <span class="math inline">X_{ij_1}, X_{ij_2}, \dots, X_{ij_p}</span> are the predictors, and <span class="math inline">\beta_1, \beta_2, \dots, \beta_p</span> are the corresponding coefficients. The intercept is often omitted because the matching or stratification controls for differences between groups, or say it is conditioned out as part of the model’s structure when using the conditional likelihood function.</p>
+<p>In conditional logistic regression, the parameter estimation focuses on the effects of the explanatory variables on the odds of the outcome, while controlling for the matching or stratification. It uses a conditional likelihood approach to estimate parameters, which removes the effect of unmeasured confounders that are constant within strata.</p>
+<p>Consider <span class="math inline">n</span> paired observations, where each paired observation i includes two individuals <span class="math inline">i_1</span> and <span class="math inline">i_2</span>, with <span class="math inline">i_1</span> representing the observed success and <span class="math inline">i_2</span> representing the observed failure. The conditional likelihood function can be expressed as:</p>
+<p><span class="math display">
+L(\beta) = \prod_{i=1}^{n} \frac{\exp(X_{i_1}^\top \beta)}{\exp(X_{i_1}^\top \beta) + \exp(X_{i_2}^\top \beta)}
+</span></p>
+<p>where <span class="math inline">X_{i_1}</span> and <span class="math inline">X_{i_2}</span> are the vectors of independent variables for the two individuals in the matched pair, <span class="math inline">\beta</span> is the vector of coefficients you aim to estimate, <span class="math inline">\exp(X_{i}^\top \beta)</span> represents the linear predictor component in the logistic regression model.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>To investigate the risk factors associated with laryngeal cancer in a northern city, a 1:2 matched case-control study was conducted. Six potential risk factors were selected, and data from 25 matched pairs were extracted. The descriptions for the variable assignments are provided in <a href="#tbl-throat-assignment" class="quarto-xref">Table&nbsp;<span>19.2</span></a> . Please perform a conditional logistic stepwise regression analysis.</p>
+</div>
+<div>
+<p><a href="datasets/ex19-03.csv" download="ex19-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div id="tbl-throat-assignment" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-throat-assignment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;19.2: Risk factors and assignment of laryngeal cancer
+</figcaption>
+<div aria-describedby="tbl-throat-assignment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 11%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Factor</th>
+<th style="text-align: center;">Variable</th>
+<th style="text-align: left;">Assignment specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Pharyngitis</td>
+<td style="text-align: center;">X1</td>
+<td style="text-align: left;">No = 1, Occasionally = 2, Frequently = 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Smoking count (cigarettes per day)</td>
+<td style="text-align: center;">X2</td>
+<td style="text-align: left;">0=1，1～=2，5～=3，10～=4，20～=5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hoarseness history</td>
+<td style="text-align: center;">X3</td>
+<td style="text-align: left;">No = 1, Occasionally = 2, Frequently = 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fresh vegetables eating</td>
+<td style="text-align: center;">X4</td>
+<td style="text-align: left;">Rarely = 1, Often = 2, Daily = 3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fruit eating</td>
+<td style="text-align: center;">X5</td>
+<td style="text-align: left;">Rarely = 1, Small amount = 2, Often = 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Family history of cancer</td>
+<td style="text-align: center;">X6</td>
+<td style="text-align: left;">No=0，Yes=1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Throat cancer</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: left;">Control=0，Case=1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-03.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To perform a conditional logistic stepwise regression analysis, you can use the <code>survival</code> package, which provides functions for conditional logistic regression. Here is an example code block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">clogit</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4 <span class="sc">+</span> X5 <span class="sc">+</span> X6 <span class="sc">+</span> <span class="fu">strata</span>(id),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(full_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Call:
+#&gt; coxph(formula = Surv(rep(1, 75L), Y) ~ X1 + X2 + X3 + X4 + X5 + 
+#&gt;     X6 + strata(id), data = df, method = "exact")
+#&gt; 
+#&gt;   n= 75, number of events= 25 
+#&gt; 
+#&gt;        coef exp(coef) se(coef)      z Pr(&gt;|z|)  
+#&gt; X1  2.58880  13.31380  2.50172  1.035   0.3008  
+#&gt; X2  1.68796   5.40843  0.68545  2.463   0.0138 *
+#&gt; X3  2.31944  10.16995  1.26096  1.839   0.0659 .
+#&gt; X4 -3.88886   0.02047  1.90656 -2.040   0.0414 *
+#&gt; X5 -0.49102   0.61200  1.19020 -0.413   0.6799  
+#&gt; X6  3.50899  33.41447  2.13723  1.642   0.1006  
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt;    exp(coef) exp(-coef) lower .95 upper .95
+#&gt; X1  13.31380    0.07511 0.0988170 1793.7921
+#&gt; X2   5.40843    0.18490 1.4112830   20.7266
+#&gt; X3  10.16995    0.09833 0.8589963  120.4056
+#&gt; X4   0.02047   48.85506 0.0004878    0.8589
+#&gt; X5   0.61200    1.63399 0.0593818    6.3074
+#&gt; X6  33.41447    0.02993 0.5066653 2203.6771
+#&gt; 
+#&gt; Concordance= 0.91  (se = 0.064 )
+#&gt; Likelihood ratio test= 42.21  on 6 df,   p=2e-07
+#&gt; Wald test            = 7.71  on 6 df,   p=0.3
+#&gt; Score (logrank) test = 29.13  on 6 df,   p=6e-05</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(full_model, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Call:
+#&gt; coxph(formula = Surv(rep(1, 75L), Y) ~ X1 + X2 + X3 + X4 + X5 + 
+#&gt;     X6, data = df, method = "exact")
+#&gt; 
+#&gt;   n= 75, number of events= 25 
+#&gt; 
+#&gt;        coef exp(coef) se(coef)      z Pr(&gt;|z|)   
+#&gt; X1  1.19334   3.29809  0.70711  1.688  0.09148 . 
+#&gt; X2  1.10080   3.00658  0.36318  3.031  0.00244 **
+#&gt; X3  1.90056   6.68967  0.76039  2.499  0.01244 * 
+#&gt; X4 -3.44781   0.03182  1.38920 -2.482  0.01307 * 
+#&gt; X5 -0.29708   0.74299  0.59809 -0.497  0.61939   
+#&gt; X6  3.60814  36.89742  1.12328  3.212  0.00132 **
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt;    exp(coef) exp(-coef) lower .95 upper .95
+#&gt; X1   3.29809     0.3032   0.82483   13.1874
+#&gt; X2   3.00658     0.3326   1.47548    6.1265
+#&gt; X3   6.68967     0.1495   1.50716   29.6927
+#&gt; X4   0.03182    31.4316   0.00209    0.4843
+#&gt; X5   0.74299     1.3459   0.23008    2.3992
+#&gt; X6  36.89742     0.0271   4.08188  333.5274
+#&gt; 
+#&gt; Concordance= 0.896  (se = 0.039 )
+#&gt; Likelihood ratio test= 46.4  on 6 df,   p=2e-08
+#&gt; Wald test            = 15.06  on 6 df,   p=0.02
+#&gt; Score (logrank) test = 35.6  on 6 df,   p=3e-06</code></pre>
+</div>
+</div>
+<p>Significant variables in the final model include <span class="math inline">X_2</span>, <span class="math inline">X_3</span>, <span class="math inline">X_4</span>, and <span class="math inline">X_6</span>, while <span class="math inline">X_1</span> and <span class="math inline">X_5</span> is not significant.</p>
+</section>
+<section id="ordinal-logistic-regression" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="ordinal-logistic-regression"><span class="header-section-number">19.4</span> Ordinal logistic regression</h2>
+<p>Ordinal logistic regression is used when the dependent variable is ordinal, meaning it represents categories with a meaningful order, but the exact distance between the categories is unknown or not equal. It’s commonly used in situations where the outcome variable has more than two categories, and these categories have a natural order (e.g., from low to high).</p>
+<p>In ordinal logistic regression, the probability of an observation falling into a given category or lower is modeled as a function of the independent variables. The most commonly used model is the proportional odds model, which assumes that the relationship between each independent variable and the outcome is the same across all category boundaries.</p>
+<p>The ordinal logistic regression model estimates the cumulative probabilities of the ordinal outcome. For an outcome <span class="math inline">Y</span> with <span class="math inline">K</span> ordered categories, the model is:</p>
+<p><span class="math display">
+P(Y \leq k | X) = \frac{1}{1 + e^{-(\beta_0^* + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p)}} \quad \text{for } k = 1, 2, \ldots, K-1  \ \ \ \text{or}
+</span></p>
+<p><span class="math display">
+\log\left(\frac{P(Y \leq k | X)}{P(Y &gt; k | X)}\right) = \beta_0^* + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p \quad \text{for } k = 1, 2, \ldots, K-1
+</span></p>
+<p>where <span class="math inline">P(Y \leq k|X)</span> is the cumulative probability of the outcome being in category <span class="math inline">k</span> or lower given independent variable <span class="math inline">X</span>, <span class="math inline">P(Y &gt; k|X)</span> is the probability of the outcome being in a category higher than <span class="math inline">k</span>, <span class="math inline">\log \left( \frac{P(Y \leq j|X)}{P(Y &gt; j|X)} \right)</span> is the log-odds of being in a category <span class="math inline">k</span> or lower, <span class="math inline">\beta_0^*</span> is the intercept for the model that separate the different categories, <span class="math inline">\beta_p</span> are the regression coefficients associated with the independent variables.</p>
+<p>In other words, this model estimates the odds of the outcome falling in category <span class="math inline">j</span> or lower, compared to falling in a higher category, as a function of the variables.</p>
+<div id="ex19-04" class="example">
+<strong>Example 4:</strong> 
+<p>In order to study the changes in nucleolar organization related to gastric cancer and precancerous lesions, we analyzed the variation in the number and size of silver-staining nucleolar proteins (AgNOR) granules in cases of gastritis, atypical hyperplasia, and gastric cancer, as well as their clinical diagnostic significance. A total of 129 patients were tested. Perform a ordinal logistic regression analysis.</p>
+</div>
+<div>
+<p><a href="datasets/ex19-04.csv" download="ex19-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-04.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You can fit an ordinal logistic regression model using the <code>polr()</code> function from the <code>MASS</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ordered_df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Y =</span> <span class="fu">as.ordered</span>(Y))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ordinal_model <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">polr</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, ordered_df) </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>ordinal_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Call:
+#&gt; MASS::polr(formula = Y ~ X1 + X2, data = ordered_df)
+#&gt; 
+#&gt; Coefficients:
+#&gt;       X1       X2 
+#&gt; 5.042316 1.833791 
+#&gt; 
+#&gt; Intercepts:
+#&gt;      1|2      2|3 
+#&gt; 11.18435 16.71586 
+#&gt; 
+#&gt; Residual Deviance: 100.756 
+#&gt; AIC: 108.756</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(model, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">3</span>, <span class="at">font_size =</span> <span class="st">"small"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><span class="math display">
+\small
+\begin{aligned}
+\log\left[ \frac { \widehat{P( \operatorname{y} = \operatorname{1} )} }{ 1 - \widehat{P( \operatorname{y} = \operatorname{1} )} } \right] &amp;= -0.91 + 0.886(\operatorname{x1}_{\operatorname{1}}) + 0.526(\operatorname{x2}_{\operatorname{1}})
+\end{aligned}
+</span></p>
+</div>
+</div>
+</section>
+<section id="multinomial-logistic-regression" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="multinomial-logistic-regression"><span class="header-section-number">19.5</span> Multinomial logistic regression</h2>
+<p>Multinomial logistic regression is used for modeling the relationship between a categorical dependent variable with more than two levels and one or more independent variables. It is an extension of binary logistic regression, which is used when the outcome variable has only two categories.</p>
+<p>In the case of K categories (where K ),</p>
+<p>For a response variable <span class="math inline">Y</span> with categories <span class="math inline">k = 1, 2, \ldots, K</span>, and a set of independent variables <span class="math inline">X = (X_1, X_2, \ldots, X_p)</span>, we typically choose one category as the reference category. The probability of <span class="math inline">Y</span> being in category <span class="math inline">k</span> is given by:</p>
+<p><span class="math display">
+P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + \beta_{pk} X_p}}{\sum_{j=1}^{K} e^{\beta_{0j} + \beta_{1j} X_1 + \beta_{2j} X_2 + \ldots + \beta_{pj} X_p}}  \ \ \ \ \   \text{or}
+</span></p>
+<p><span class="math display">
+\text{logit}(P(Y = k | X)) = \log\left(\frac{P(Y = k | X)}{P(Y = K | X)}\right) = \beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + \beta_{pk} X_p
+</span></p>
+<p>where <span class="math inline">P(Y = k | X)</span> is the probability of the dependent variable being in category <span class="math inline">k</span>, <span class="math inline">P(Y = K | X)</span> is the probability of the response variable Y being in the reference category <span class="math inline">K</span>, <span class="math inline">\beta_{jk}</span> are the coefficients for the <span class="math inline">j-{\text{th}}</span> independent variable associated with the <span class="math inline">k-\text{th}</span> category.</p>
+<p>Each coefficient in the model represents the change in the log odds of the dependent variable being in a particular category compared to a reference category for a one-unit change in the predictor variable. Odds ratio can be calculated by exponentiating the coefficients, providing a multiplicative effect on the odds of being in one category versus the reference category.</p>
+<div class="example">
+<strong>Example 5:</strong> 
+<p>Use the data in <a href="#ex19-04">Example 4</a> to perform multinomial logistic regression analysis.</p>
+</div>
+<p>You can perform multinomial logistic regression using the <code>nnet</code> package with the <code>multinom()</code> function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>unordered_df <span class="ot">&lt;-</span> df</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="ot">&lt;-</span> nnet<span class="sc">::</span><span class="fu">multinom</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, unordered_df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # weights:  12 (6 variable)
+#&gt; initial  value 141.720985 
+#&gt; iter  10 value 50.383848
+#&gt; iter  20 value 50.168939
+#&gt; final  value 50.168755 
+#&gt; converged</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;   (Intercept)        X1       X2
+#&gt; 2   -11.35736  5.290469 1.776146
+#&gt; 3   -27.56254 10.011614 3.713867</code></pre>
+</div>
+</div>
+</section>
+<section id="matters-need-attention" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="matters-need-attention"><span class="header-section-number">19.6</span> <strong>Matters need attention</strong></h2>
+<section id="parallel-lines-assumption" class="level3" data-number="19.6.1">
+<h3 data-number="19.6.1" class="anchored" data-anchor-id="parallel-lines-assumption"><span class="header-section-number">19.6.1</span> Parallel lines assumption</h3>
+<p>Ordinal logistic regression (also known as proportional odds logistic regression) assumes that the effect of each predictor variable on the cumulative probabilities (i.e., the odds ratios) is constant across all levels of the response variable. This assumption is known as the proportional odds assumption or parallel lines assumption. Violation of this assumption means that the effect of the predictor variables is not constant across the levels of the response variable, which can affect the validity and interpretability of the model.</p>
+<p>To test whether this assumption holds, you can perform a parallel lines test. Here are some methods to test the parallel lines assumption in R for an ordinal logistic regression model:</p>
+<ol type="1">
+<li><p><strong>Brant test</strong> The Brant test is one of the most commonly used tests to check the proportional odds assumption. The <code>brant</code> package provides the <code>brant()</code> function for this test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brant)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brant</span>(ordinal_model) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; -------------------------------------------- 
+#&gt; Test for X2  df  probability 
+#&gt; -------------------------------------------- 
+#&gt; Omnibus      0.41    2   0.82
+#&gt; X1       0.16    1   0.69
+#&gt; X2       0.03    1   0.87
+#&gt; -------------------------------------------- 
+#&gt; 
+#&gt; H0: Parallel Regression Assumption holds
+#&gt;                 X2 df probability
+#&gt; Omnibus 0.40627948  2   0.8161642
+#&gt; X1      0.15502241  1   0.6937812
+#&gt; X2      0.02667615  1   0.8702599</code></pre>
+</div>
+</div>
+<p>If the results show that some predictor variables have p-values less than the significance level, it indicates that these variables violate the parallel lines assumption.</p></li>
+<li><p><strong>Likelihood ratio test</strong> Another approach is to compare the ordinal logistic regression model (which assumes parallel lines) to a multinomial logistic regression model (which does not make this assumption). This comparison can be done using a likelihood ratio test. Here we define a function named <code>likelihood_ratio_test()</code> to perform this test:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract log-likelihoods</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  logLik_x <span class="ot">&lt;-</span> <span class="fu">logLik</span>(x) </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  logLik_y <span class="ot">&lt;-</span> <span class="fu">logLik</span>(y)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  lr_statistic <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (logLik_y <span class="sc">-</span> logLik_x)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  df_diff <span class="ot">&lt;-</span> <span class="fu">attr</span>(logLik_y, <span class="st">"df"</span>) <span class="sc">-</span> <span class="fu">attr</span>(logLik_x, <span class="st">"df"</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lr_statistic =</span> lr_statistic,</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">df_diff =</span> df_diff,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_value =</span> p_value</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(result) <span class="ot">&lt;-</span> <span class="st">"likelihood_ratio_test"</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  result</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>print.likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Likelihood ratio test for parallel lines assumption:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"statistic: "</span>, x<span class="sc">$</span>lr_statistic, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"df: "</span>, x<span class="sc">$</span>df_diff, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"p-value: "</span>, x<span class="sc">$</span>p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is not held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likelihood_ratio_test</span>(ordinal_model, multinomial_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Likelihood ratio test for parallel lines assumption:
+#&gt; statistic:  0.4184909 
+#&gt; df:  2 
+#&gt; p-value:  0.8111961 
+#&gt; The parallel lines assumption is held.</code></pre>
+</div>
+</div>
+<p>If the p-value is small (e.g., less than 0.05), it indicates that the multinomial logistic regression model provides a significantly better fit to the data, and the parallel lines assumption of the ordinal logistic regression model might not hold. If the p-value is large (e.g., greater than 0.05), it suggests that the ordinal logistic regression model is sufficient, and the extra complexity of the multinomial model is not warranted.</p>
+<p>If you prefer to use the <code>VGAM</code> package to test the parallel lines assumption, you can follow these steps:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VGAM)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>model_parallel <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> T), <span class="at">data =</span> ordered_df)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>model_relaxed <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> F, <span class="at">reverse =</span> T), <span class="at">data =</span> ordered_df) </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>lr_statistic <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fu">logLik</span>(model_parallel) <span class="sc">-</span> <span class="fu">logLik</span>(model_relaxed))</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>df_diff <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(model_parallel) <span class="sc">-</span> <span class="fu">df.residual</span>(model_relaxed)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">"statistic"</span> <span class="ot">=</span> lr_statistic, <span class="st">"df"</span> <span class="ot">=</span> df_diff, <span class="st">"p-value:"</span> <span class="ot">=</span> p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 1 × 3
+#&gt;   statistic    df `p-value:`
+#&gt;       &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+#&gt; 1     0.366     2      0.833</code></pre>
+</div>
+</div>
+<p>The likelihood ratio test helps determine if the additional flexibility of the multinomial model significantly improves the fit over the ordinal model.</p></li>
+</ol>
+</section>
+<section id="sample-size" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="sample-size"><span class="header-section-number">19.6.2</span> Sample size</h3>
+<p>The sample size for logistic regression is crucial to ensure the reliability of the model and the statistical significance of its coefficients. Several factors affect the sample size in logistic regression, including the number of variables, expected effect sizes, prevalence of the outcome (for binary logistic regression), and the desired statistical power.</p>
+<p>Here’s a guide to understanding how to determine the sample size:</p>
+<p><strong>General rule of thumb</strong></p>
+<p>A commonly used guideline suggests that for binary logistic regression, you need at least 10 events (outcome occurrences) per independent variable. An “event” refers to cases where the binary outcome of interest occurs (e.g., “1” for success). For example, if you have 5 independent variables and the outcome (e.g., disease occurrence) happens in 30% of the sample, you would need:</p>
+<p><span class="math display">
+\text{Sample size} \geq \frac{10 \times \text{number of predictors}}{\text{proportion of events}} = \frac{10 \times 5}{0.3} \approx 167 \text{ subjects}
+</span></p>
+<p>This ensures that the model can reliably estimate the coefficients for each predictor.</p>
+<p><strong>Sample size for binary logistic regression</strong></p>
+<p>The formula to calculate the sample size for binary logistic regression can be complex, and software tools like <code>G*Power</code> or the <code>pwr</code> package in R are often used. The following parameters are typically needed:</p>
+<p>Significance level (α): Commonly set at 0.05.</p>
+<p>Statistical power (1-β): Typically set at 0.80, meaning you have an 80% chance of detecting an effect if one exists. Effect size: This refers to the strength of the association between predictors and the outcome. Proportion of events (P): The proportion of positive outcomes in the population.</p>
+<p>An approximate formula for determining sample size for binary logistic regression is:</p>
+<p><span class="math display">
+n = \frac{(Z_{\alpha/2} + Z_\beta)^2 \times (p_1(1 - p_1) + p_2(1 - p_2))}{(p_1 - p_2)^2}
+</span></p>
+<p>where <span class="math inline">p_1</span> and <span class="math inline">p_2</span> are the proportions of events in the two groups. <span class="math inline">Z_{\alpha/2}</span> and <span class="math inline">Z_\beta</span> are the <span class="math inline">z</span>-scores corresponding to the desired significance level and power.</p>
+<p><strong>Sample size for ordinal and multinomial logistic regression</strong></p>
+<p>For ordinal logistic regression, the sample size determination is similar to binary logistic regression, but since there are more than two categories, the complexity increases. A general rule is to aim for at least 10 observations per predictor per outcome category.</p>
+<p>For multinomial logistic regression, the sample size depends on the number of categories in the outcome variable. A general rule is to aim for 10-20 cases per category per predictor.</p>
+<p><strong>Practical considerations</strong></p>
+<p>Outcome Imbalance: If the outcome is rare (e.g., a disease with very low prevalence), you may need a larger sample size to detect associations. More complex models with many interaction terms or non-linearities will require a larger sample size. Insufficient sample size can lead to overfitting, where the model fits the data too closely, leading to poor generalization to new data.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./multiple-linear-reg.html" class="pagination-link" aria-label="Multiple linear regression analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multiple linear regression analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./generalized-linear-model.html" class="pagination-link" aria-label="Generalized linear model">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/logistic-reg.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

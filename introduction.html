@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R for Medical Statistics - 13&nbsp; Correlation and Regression</title>
+<title>2&nbsp; Introduction – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./logistic-regression.html" rel="next">
-<link href="./nonparametric-test.html" rel="prev">
+<link href="./basic-stat.html" rel="next">
+<link href="./preface.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -82,13 +82,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./corr-linear-reg.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -133,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -141,14 +141,14 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Basic methods</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quat-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+  <a href="./quat-data-statdesc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
   </div>
 </li>
@@ -184,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./count-data-stat-desc.html" class="sidebar-item-text sidebar-link">
+  <a href="./count-data-statdesc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
   </div>
 </li>
@@ -208,20 +208,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./corr-linear-reg.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  <a href="./regression-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,27 +218,69 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Advanced methods</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./multi-factor-anova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multiple factor ANOVA</span></span></a>
+  <a href="./multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repeated-measure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Repeated measurement data</span></span></a>
+  <a href="./repeated-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ordered-cat-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
+  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate-groups-diff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multiple linear regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cox regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Ordered categorical data</span></span></a>
   </div>
 </li>
       </ul>
@@ -259,7 +289,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="sidebar-item-container"> 
             <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Communication</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -267,19 +297,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -290,14 +320,32 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#medical-statistics" id="toc-medical-statistics" class="nav-link active" data-scroll-target="#medical-statistics"><span class="header-section-number">2.1</span> Medical statistics</a></li>
+  <li><a href="#population-and-sample" id="toc-population-and-sample" class="nav-link" data-scroll-target="#population-and-sample"><span class="header-section-number">2.2</span> Population and sample</a>
+  <ul class="collapse">
+  <li><a href="#population" id="toc-population" class="nav-link" data-scroll-target="#population"><span class="header-section-number">2.2.1</span> Population</a></li>
+  <li><a href="#sample" id="toc-sample" class="nav-link" data-scroll-target="#sample"><span class="header-section-number">2.2.2</span> Sample</a></li>
+  <li><a href="#relationship-between-population-and-sample" id="toc-relationship-between-population-and-sample" class="nav-link" data-scroll-target="#relationship-between-population-and-sample"><span class="header-section-number">2.2.3</span> Relationship between population and sample</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">2.3</span> Data</a>
+  <ul class="collapse">
+  <li><a href="#quantitative-data" id="toc-quantitative-data" class="nav-link" data-scroll-target="#quantitative-data"><span class="header-section-number">2.3.1</span> Quantitative data</a></li>
+  <li><a href="#qualitative-data-categorical-data" id="toc-qualitative-data-categorical-data" class="nav-link" data-scroll-target="#qualitative-data-categorical-data"><span class="header-section-number">2.3.2</span> <strong>Qualitative data (Categorical data)</strong></a></li>
+  <li><a href="#ordinal-data" id="toc-ordinal-data" class="nav-link" data-scroll-target="#ordinal-data"><span class="header-section-number">2.3.3</span> <strong>Ordinal Data</strong></a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/introduction.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./basic-stat.html">Basic methods</a></li><li class="breadcrumb-item"><a href="./corr-linear-reg.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Correlation and Regression</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
 </div>
 
 
@@ -314,8 +362,167 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="medical-statistics" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="medical-statistics"><span class="header-section-number">2.1</span> Medical statistics</h2>
+<p>Medical statistics is the science of applying statistical techniques and principles to analyze data related to health, disease, treatment effectiveness, and public health issues. It involves the systematic collection, organization, description, and inference of health-related data to assist healthcare professionals in making evidence-based, scientific decisions.</p>
+<p><strong>Key Components:</strong></p>
+<p>1. <strong>Data Collection</strong>: Gathering health-related data systematically through experiments, observational studies, or clinical trials.</p>
+<p>2. <strong>Data Organization and Description</strong>: Using statistical measures, such as means, variances, and frequency distributions, to describe and summarize the basic characteristics of the data.</p>
+<p>3. <strong>Data Analysis</strong>: Applying inferential statistical methods, such as hypothesis testing, regression analysis, and analysis of variance (ANOVA), to uncover patterns and causal relationships in the data.</p>
+<p>4. <strong>Interpretation of Results</strong>: Applying the results of statistical analyses to the medical field, explaining the occurrence and progression of diseases, the effectiveness of treatments, and providing evidence-based support for clinical decisions and public health policies.</p>
+<p>Medical statistics is widely used in medical research, the design of clinical trials, the evaluation of diagnostic tests, the comparison of treatment outcomes, and the epidemiological study of diseases.</p>
+</section>
+<section id="population-and-sample" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="population-and-sample"><span class="header-section-number">2.2</span> Population and sample</h2>
+<p>Population and sample are fundamental concepts in statistics, and they are key to understanding data analysis, particularly in the context of statistical inference.</p>
+<section id="population" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="population"><span class="header-section-number">2.2.1</span> Population</h3>
+<p>A population includes all members of a defined group that we are studying or collecting information on for data-driven decisions. The population represents the entire group of interest, which could be people, objects, events, or measurements.</p>
+<p>Examples: All adults living in a particular country. All patients treated for a particular condition in a hospital over a decade.</p>
+<p>Characteristics:</p>
+<p>Parameters: The numerical characteristics of a population are called parameters (e.g., population mean, population standard deviation).</p>
+<p>Size: The population can be finite (e.g., all students in a school) or infinite (e.g., all possible outcomes of rolling a die).</p>
+</section>
+<section id="sample" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="sample"><span class="header-section-number">2.2.2</span> Sample</h3>
+<p>A sample is a subset of the population selected for study. It is often impractical or impossible to study an entire population, so researchers use a sample to draw conclusions about the population.</p>
+<p>Examples: 1,000 randomly selected adults from a country. 200 patients selected from the hospital’s records.</p>
+<p>Statistics: The numerical characteristics of a sample are called statistics (e.g., sample mean, sample standard deviation).</p>
+<p>Size: The size of the sample (denoted as n) is always smaller than the population size (denoted as N).</p>
+</section>
+<section id="relationship-between-population-and-sample" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="relationship-between-population-and-sample"><span class="header-section-number">2.2.3</span> Relationship between population and sample</h3>
+<p>Sampling: The process of selecting a sample from a population is called sampling. It is crucial that the sample is representative of the population to ensure that the conclusions drawn from the sample can be generalized to the population.</p>
+<p>Inference: Statistical inference involves making predictions or generalizations about a population based on information from a sample. This is done using various statistical methods, including estimation and hypothesis testing.</p>
+<p>Bias and Variability: A sample might not perfectly represent the population due to sampling bias or variability. Researchers use random sampling techniques to minimize these issues and improve the reliability of the inference.</p>
+<p>Practical Example</p>
+<p>Imagine you want to study the average height of all adult women in a country (population). Measuring the height of every woman in the country would be impractical, so instead, you randomly select 500 women (sample) and measure their heights. The average height of these 500 women is a statistic. You then use this statistic to estimate the parameter—the average height of all adult women in the country.</p>
+<p>Key Points to Remember</p>
+<p>Population: Entire group of interest; parameters describe it.</p>
+<p>Sample: Subset of the population; statistics describe it.</p>
+<p>Inference: Drawing conclusions about the population based on sample data.</p>
+<p>Representativeness: A sample should represent the population to ensure valid inferences.</p>
+<p>Understanding the distinction between population and sample is essential for conducting valid and reliable statistical analyses.</p>
+</section>
+</section>
+<section id="data" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data"><span class="header-section-number">2.3</span> Data</h2>
+<p>In statistics, data can be classified into different types based on various characteristics. Understanding these data types is crucial for selecting appropriate statistical methods and accurately interpreting results. Below are the main types of data:</p>
+<section id="quantitative-data" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="quantitative-data"><span class="header-section-number">2.3.1</span> Quantitative data</h3>
+<p>Quantitative data (numerical data) refers to data that can be measured and expressed numerically. This type of data is critical in the medical field as it allows for precise measurements, comparisons, and statistical analysis, ultimately leading to better understanding, diagnosis, treatment, and prevention of diseases. Quantitative data can be further classified into two main types:</p>
+<p><strong>1. Discrete Data</strong></p>
+<p>Discrete data consist of distinct, separate values that are countable. These values are typically whole numbers, and there is no intermediate value between them.</p>
+<p><strong>Examples:</strong></p>
+<p>Number of patients: The number of patients admitted to a hospital.</p>
+<p>Number of medications: The number of medications a patient is taking.</p>
+<p>Number of occurrences: The number of heartbeats per minute (heart rate).</p>
+<p><strong>Characteristics of count data</strong></p>
+<ol type="1">
+<li>Discrete: The data are non-negative integers, as they represent counts of occurrences.</li>
+<li>Overdispersion: Count data in medical settings often show overdispersion, where the variance exceeds the mean (e.g., some patients may have a high number of hospital visits while others have very few).</li>
+<li>Skewed Distribution: Count data are often positively skewed, with many individuals having low counts (e.g., no hospital visits) and fewer individuals having higher counts.</li>
+</ol>
+<p><strong>2. Continuous Data</strong></p>
+<p>Continuous data can take any value within a given range. These data represent measurements and can have decimal places, meaning they are not restricted to whole numbers.</p>
+<p>Examples:</p>
+<p>Blood pressure: Systolic and diastolic blood pressure measurements (e.g., 120/80 mmHg).</p>
+<p>Body temperature: Body temperature measured in degrees Celsius or Fahrenheit (e.g., 36.6°C).</p>
+<p>Cholesterol levels: Blood cholesterol levels measured in milligrams per deciliter (e.g., 180 mg/dL).</p>
+<p>Quantitative data is fundamental in many areas of medicine:</p>
+<ol type="1">
+<li>Diagnosis: • Quantitative measurements such as blood pressure, blood glucose levels, and cholesterol levels are used to diagnose conditions like hypertension, diabetes, and hyperlipidemia. 2. Treatment Monitoring: • Quantitative data is crucial for monitoring treatment effectiveness. For example, changes in tumor size (measured in millimeters or centimeters) can indicate whether cancer treatment is effective. 3. Epidemiology: • Quantitative data is used to track disease incidence and prevalence rates, mortality rates, and other public health indicators. • Example: Tracking the number of new COVID-19 cases per day during a pandemic. 4. Clinical Research: • In clinical trials, quantitative data is collected to assess the safety and efficacy of new drugs or treatments. • Example: Measuring the reduction in blood pressure in participants taking an antihypertensive drug. 5. Medical Imaging: • Quantitative data is used in medical imaging to measure organ size, tumor volume, and other anatomical features. • Example: Measuring the size of a kidney stone on an ultrasound image.</li>
+</ol>
+<p>Statistical Analysis of Quantitative Data in Medicine</p>
+<p>Quantitative data allows for a variety of statistical analyses, including:</p>
+<ol type="1">
+<li>Descriptive Statistics: • Mean: The average value (e.g., average heart rate of a group of patients). • Median: The middle value when data is ordered (e.g., median age of patients in a study). • Standard Deviation: A measure of the variability or spread of data (e.g., variability in blood pressure readings).</li>
+<li>Inferential Statistics: • t-tests and ANOVA: Used to compare means between two or more groups. • Regression Analysis: Used to model the relationship between a dependent variable and one or more independent variables. • Correlation: Used to assess the strength and direction of the relationship between two continuous variables.</li>
+<li>Probability and Distributions: • Quantitative data often follows specific statistical distributions (e.g., normal distribution), which are used in probability and inferential statistics.</li>
+</ol>
+<p>Examples of Quantitative Data in Medical Practice</p>
+<p>Vital Signs Monitoring: • Continuous monitoring of heart rate, blood pressure, and oxygen saturation levels in critically ill patients. • Laboratory Tests: • Quantitative measurement of blood glucose levels, complete blood count (CBC), and electrolyte levels. • Growth and Development: • Tracking height, weight, and head circumference in pediatric patients over time to assess growth and development. • Pharmacokinetics: • Measuring drug concentrations in the blood over time to understand absorption, distribution, metabolism, and excretion.</p>
+<p>Application of Quantitative Data in Medical Research</p>
+<ol type="1">
+<li>Randomized Controlled Trials (RCTs): • Quantitative data is used to compare the effectiveness of new treatments or interventions with standard care or placebo. • Example: Measuring the reduction in blood pressure in patients receiving a new antihypertensive drug versus a placebo.</li>
+<li>Longitudinal Studies: • Quantitative data is collected over time to study changes in health outcomes, risk factors, or disease progression. • Example: Tracking changes in lung function in smokers versus non-smokers over several years.</li>
+<li>Health Economics: • Quantitative data is used to evaluate the cost-effectiveness of medical interventions, including cost per quality-adjusted life year (QALY) gained. • Example: Calculating the cost-effectiveness of a new cancer treatment based on survival rates and costs.</li>
+</ol>
+<p>Quantitative data is a cornerstone of medical science, providing the foundation for diagnosis, treatment, research, and public health. Its ability to be precisely measured and analyzed makes it indispensable for advancing medical knowledge, improving patient care, and making informed decisions in healthcare.</p>
+</section>
+<section id="qualitative-data-categorical-data" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="qualitative-data-categorical-data"><span class="header-section-number">2.3.2</span> <strong>Qualitative data (Categorical data)</strong></h3>
+<p>Qualitative data in medicine refers to non-numerical data that represent categories or groups. Unlike quantitative data, which deals with numbers and measurements, qualitative data describes characteristics or attributes that can be used to classify individuals, objects, or events into distinct groups. This type of data is crucial in medical research and practice for understanding patient demographics, disease classifications, and treatment outcomes. ain types:</p>
+<p><strong>1. Nominal Data</strong></p>
+<p>Nominal data consists of categories that do not have a natural order or ranking. These categories are mutually exclusive, meaning that an individual or event can belong to only one category.</p>
+<p><strong>Blood Type:</strong> Categories like A, B, AB, and O.</p>
+<p><strong>Gender:</strong> Male, Female, Other.</p>
+<p><strong>Presence or Absence of a Condition:</strong> Yes/No responses (e.g., presence of hypertension).</p>
+</section>
+<section id="ordinal-data" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="ordinal-data"><span class="header-section-number">2.3.3</span> <strong>Ordinal Data</strong></h3>
+<p>Ordinal data consists of categories that have a meaningful order or ranking, but the intervals between the categories are not necessarily equal or meaningful.</p>
+<p><strong>Severity of Disease:</strong> Mild, Moderate, Severe.</p>
+<p><strong>Pain Scale:</strong> Numeric rating scale (e.g., 0–10), where 0 is no pain and 10 is the worst pain imaginable.</p>
+<p><strong>Stage of Cancer:</strong> Stages I, II, III, IV.</p>
+<p>Qualitative data plays a vital role in various aspects:</p>
+<ul>
+<li><strong>Patient Demographics:</strong>
+<ul>
+<li><strong>Categorization:</strong> Patients are often categorized based on attributes like age group, gender, race, and ethnicity, which are critical for understanding the distribution of diseases and tailoring medical interventions.</li>
+<li><strong>Example:</strong> A study may categorize patients by age group (e.g., children, adults, elderly) to analyze how a particular disease affects different age groups.</li>
+</ul></li>
+<li><strong>Disease Classification:</strong>
+<ul>
+<li><strong>Diagnosis:</strong> Diseases are classified into categories based on symptoms, genetic markers, or other clinical criteria. This classification helps in diagnosing, treating, and researching diseases.</li>
+<li><strong>Example:</strong> Types of diabetes (Type 1, Type 2, Gestational Diabetes) are categorical variables that guide treatment plans.</li>
+</ul></li>
+<li><strong>Treatment Outcomes:</strong>
+<ul>
+<li><strong>Outcome Measures:</strong> Treatment outcomes can be categorized as successful/unsuccessful, improved/no improvement, or recurrence/no recurrence. These qualitative outcomes are essential for evaluating the effectiveness of treatments.</li>
+<li><strong>Example:</strong> A study on cancer treatment might categorize outcomes as “complete remission,” “partial remission,” or “no response.”</li>
+</ul></li>
+<li><strong>Quality of Life and Patient Satisfaction:</strong>
+<ul>
+<li><strong>Surveys and Questionnaires:</strong> Patient satisfaction surveys and quality of life assessments often use ordinal scales (e.g., very satisfied, satisfied, neutral, dissatisfied, very dissatisfied) to gather qualitative data on patient experiences.</li>
+<li><strong>Example:</strong> A patient satisfaction survey may categorize responses to a question about hospital care quality into five levels, from “very poor” to “excellent.”</li>
+</ul></li>
+</ul>
+<p><strong>Statistical Analysis of Qualitative Data</strong></p>
+<ul>
+<li><p><strong>Frequency and Proportion:</strong> The most basic analysis involves counting the number of occurrences in each category and expressing them as frequencies or proportions (percentages).</p>
+<p><strong>Example:</strong> Proportion of patients with a specific blood type in a population.</p></li>
+<li><p><strong>Chi-Square Tests:</strong> Used to determine if there is a significant association between two categorical variables.</p>
+<p><strong>Example:</strong> Assessing the relationship between smoking status (smoker, non-smoker) and lung cancer diagnosis (yes, no).</p></li>
+</ul>
+<!-- -->
+<ul>
+<li><p><strong>Logistic Regression:</strong> Used for modeling the probability of a binary outcome based on one or more predictor variables.</p>
+<p><strong>Example:</strong> Predicting the likelihood of a disease relapse based on treatment type and other categorical factors.</p></li>
+<li><p><strong>Cross-Tabulation:</strong> A method used to examine the relationship between two or more categorical variables by displaying the data in a matrix format.</p>
+<p><strong>Example:</strong> Cross-tabulating the relationship between gender and the prevalence of a specific medical condition.</p></li>
+</ul>
+<p><strong>Applications in Medical Research</strong></p>
+<ol type="1">
+<li><strong>Epidemiology:</strong></li>
+</ol>
+<p>Researchers often use qualitative data to study the distribution and determinants of health-related states in populations.</p>
+<p><strong>Example:</strong> Categorizing patients by exposure to a risk factor (e.g., exposure to asbestos: yes/no) and examining its relationship with disease occurrence.</p>
+<ol start="2" type="1">
+<li><strong>Clinical Trials:</strong></li>
+</ol>
+<p>Clinical trials use qualitative data to classify participants, monitor treatment adherence, and assess treatment responses.</p>
+<p><strong>Example:</strong> Categorizing patients based on their response to a new drug as “responsive,” “partially responsive,” or “non-responsive.”</p>
+<ol start="3" type="1">
+<li><strong>Public Health:</strong></li>
+</ol>
+<p>Public health studies often categorize populations based on demographic factors to identify health disparities and target interventions.</p>
+<p><strong>Example:</strong> Identifying vaccination rates across different ethnic groups to improve immunization programs.</p>
+<p>Qualitative data is essential in the medical field for categorizing and analyzing various aspects of health and disease. It provides the basis for understanding patterns, making clinical decisions, and conducting research that ultimately improves patient care. Properly collecting, analyzing, and interpreting qualitative data ensures that medical interventions are tailored to the specific needs of patients and populations.</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -497,18 +704,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -540,7 +736,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
@@ -548,7 +766,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -912,13 +1130,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./nonparametric-test.html" class="pagination-link" aria-label="Nonparametric Tests">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span>
+      <a href="./preface.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./logistic-regression.html" class="pagination-link" aria-label="Logistic Regression">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./basic-stat.html" class="pagination-link" aria-label="Basic methods">
+        <span class="nav-page-text">Basic methods</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -927,5 +1145,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/corr-linear-reg.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/introduction.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
