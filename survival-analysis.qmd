@@ -689,3 +689,5 @@ ggsurvplot(
 This will generate Kaplan-Meier survival curves based on the fitted Cox model, allowing you to visually compare the survival distributions between groups.
 
 The Cox model is a flexible and powerful tool for assessing the impact of various covariates on survival times without making assumptions about the underlying survival distribution. It is especially useful for analyzing clinical and observational data where the event of interest is subject to right-censoring.
+
+## Life tabes
