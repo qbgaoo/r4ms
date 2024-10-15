@@ -425,7 +425,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./logistic-regression.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></h1>
+<h1 class="title"><span id="sec-logistic-regression" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></h1>
 </div>
 
 
@@ -761,84 +761,27 @@ Table&nbsp;19.1: Possible risk factors for coronary heart disease and their valu
 </div>
 <p>Alternatively, <code>stepwise()</code> function from <code>StepReg</code> package is another useful and convenient tool to select a optimal model using various stepwise regression strategies.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>StepReg<span class="sc">::</span><span class="fu">stepwise</span>(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4 <span class="sc">+</span> x5 <span class="sc">+</span> x6 <span class="sc">+</span> x7 <span class="sc">+</span> x8,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  df,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"logit"</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">strategy =</span> <span class="st">"bidirection"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">metric =</span> <span class="st">"SBC"</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">num_digits =</span> <span class="dv">5</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Warning in fun(libname, pkgname): couldn't connect to display
-#&gt; "/private/tmp/com.apple.launchd.yfjxUGHqFX/org.xquartz:0"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] "There was an error message."</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; Table 1. Summary of arguments for model selection
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt;                        Parameter        Value
-#&gt; —————————————————————————————————————————————
-#&gt;                included variable         NULL 
-#&gt;                         strategy  bidirection 
-#&gt;                           metric          SBC 
-#&gt;   tolerance of multicollinearity        1e-07 
-#&gt;       multicollinearity variable         NULL 
-#&gt;                        intercept            1 
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt; 
-#&gt; Table 2. Summary of variables in dataset      
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt;   Variable_type  Variable_name  Variable_class
-#&gt; ——————————————————————————————————————————————
-#&gt;       Dependent              y          factor 
-#&gt;     Independent             x1         numeric 
-#&gt;     Independent             x2         numeric 
-#&gt;     Independent             x3         numeric 
-#&gt;     Independent             x4         numeric 
-#&gt;     Independent             x5         numeric 
-#&gt;     Independent             x6         numeric 
-#&gt;     Independent             x7         numeric 
-#&gt;     Independent             x8         numeric 
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt; 
-#&gt; Table 3. Summary of selection process under bidirection with SBC
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt;   Step  EffectEntered  EffectRemoved  NumberParams       SBC
-#&gt; ————————————————————————————————————————————————————————————
-#&gt;      1              1                            1  78.77479 
-#&gt;      2             x6                            2  71.44514 
-#&gt;      3             x5                            3  67.44722 
-#&gt;      4             x8                            4  66.35821 
-#&gt;      5             x1                            5  66.16941 
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt; 
-#&gt; Table 4. Summary of coefficients for the selected model with y under bidirection and SBC 
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗
-#&gt;      Variable  Estimate  Std. Error   z value  Pr(&gt;|z|)
-#&gt; ———————————————————————————————————————————————————————
-#&gt;   (Intercept)  -4.70502     1.54324  -3.04879    0.0023 
-#&gt;            x6   3.13549     1.24888   2.51065   0.01205 
-#&gt;            x5   1.49594     0.74389   2.01097   0.04433 
-#&gt;            x8   1.94709     0.84661   2.29986   0.02146 
-#&gt;            x1    0.9239     0.47657   1.93864   0.05255 
-#&gt; ‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># StepReg::stepwise(</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8,</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   df,</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   type = "logit",</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   strategy = "bidirection",</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   metric = "SBC",</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   num_digits = 5</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Stepwise methods can sometimes lead to overfitting, especially if the dataset is small. It may be slower for larger models or datasets compared to penalized regression methods like Lasso.</p>
 <p><strong>LASSO</strong></p>
 <p>LASSO (least absolute shrinkage and selection operator) is a regularization technique that performs both variable selection and regularization by adding a penalty term to the logistic regression model. It forces some of the coefficients to be exactly zero. Variables with coefficients set to zero are effectively excluded from the model, while variables with non-zero coefficients are selected as important.</p>
 <p>You can use the <code>glmnet</code> package for LASSO. Here is an example code block:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"x"</span>)) <span class="sc">|&gt;</span> <span class="fu">as.matrix</span>()</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">select</span>(df, y) <span class="sc">|&gt;</span> <span class="fu">pull</span>()</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the optimal lambda using cross-validation</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>cv_model <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_model)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>best_lambda <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda.min</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">select</span>(df, <span class="fu">contains</span>(<span class="st">"x"</span>)) <span class="sc">|&gt;</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="fu">select</span>(df, y) <span class="sc">|&gt;</span> <span class="fu">pull</span>()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the optimal lambda using cross-validation</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>cv_model <span class="ot">&lt;-</span> <span class="fu">cv.glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cv_model)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>best_lambda <span class="ot">&lt;-</span> cv_model<span class="sc">$</span>lambda.min</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -856,7 +799,7 @@ Table&nbsp;19.1: Possible risk factors for coronary heart disease and their valu
 </div>
 <p>After fitting the final model with the optimal lambda, you can check which variables have non-zero coefficients.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
 #&gt;                      s0
@@ -886,7 +829,7 @@ Table&nbsp;19.1: Possible risk factors for coronary heart disease and their valu
 </div>
 <p>The <code>lambda.min</code> value minimizes the cross-validation error. The <code>lambda.1se</code> is more conservative and applies a larger penalty, often shrinking more coefficients to zero. After refitting the model with a higher lambda, you can check the coefficients to see if any are zero:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
 #&gt;                      s0
@@ -903,9 +846,9 @@ Table&nbsp;19.1: Possible risk factors for coronary heart disease and their valu
 </div>
 <p>You can try a larger value for lambda (manually increasing the penalty):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stronger_lambda <span class="ot">&lt;-</span> best_lambda <span class="sc">*</span> <span class="fl">3.1</span>  <span class="co"># Increase lambda by a factor of 3.1</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> stronger_lambda)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>stronger_lambda <span class="ot">&lt;-</span> best_lambda <span class="sc">*</span> <span class="fl">3.1</span>  <span class="co"># Increase lambda by a factor of 3.1</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lasso_model <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(x, y, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">alpha =</span> <span class="dv">1</span>, <span class="at">lambda =</span> stronger_lambda)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lasso_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 9 x 1 sparse Matrix of class "dgCMatrix"
 #&gt;                     s0
@@ -1022,16 +965,16 @@ Table&nbsp;19.2: Risk factors and assignment of laryngeal cancer
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-03.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-03.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To perform a conditional logistic stepwise regression analysis, you can use the <code>survival</code> package, which provides functions for conditional logistic regression. Here is an example code block:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">clogit</span>(</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4 <span class="sc">+</span> X5 <span class="sc">+</span> X6 <span class="sc">+</span> <span class="fu">strata</span>(id),</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>) </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(full_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">clogit</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  Y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4 <span class="sc">+</span> X5 <span class="sc">+</span> X6 <span class="sc">+</span> <span class="fu">strata</span>(id),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"exact"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(full_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Call:
 #&gt; coxph(formula = Surv(rep(1, 75L), Y) ~ X1 + X2 + X3 + X4 + X5 + 
@@ -1064,7 +1007,7 @@ Table&nbsp;19.2: Risk factors and assignment of laryngeal cancer
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(full_model, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(full_model, <span class="at">direction =</span> <span class="st">"both"</span>, <span class="at">trace =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Call:
 #&gt; coxph(formula = Surv(rep(1, 75L), Y) ~ X1 + X2 + X3 + X4 + X5 + 
@@ -1119,13 +1062,13 @@ P(Y \leq k | X) = \frac{1}{1 + e^{-(\beta_0^* + \beta_1 X_1 + \beta_2 X_2 + \ldo
 <p><a href="datasets/ex19-04.csv" download="ex19-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-04.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex19-04.csv"</span>, <span class="at">show_col_types =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can fit an ordinal logistic regression model using the <code>polr()</code> function from the <code>MASS</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ordered_df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Y =</span> <span class="fu">as.ordered</span>(Y))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ordinal_model <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">polr</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, ordered_df) </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>ordinal_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ordered_df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Y =</span> <span class="fu">as.ordered</span>(Y))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ordinal_model <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">polr</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, ordered_df) </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>ordinal_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Call:
 #&gt; MASS::polr(formula = Y ~ X1 + X2, data = ordered_df)
@@ -1143,7 +1086,7 @@ P(Y \leq k | X) = \frac{1}{1 + e^{-(\beta_0^* + \beta_1 X_1 + \beta_2 X_2 + \ldo
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(model, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">3</span>, <span class="at">font_size =</span> <span class="st">"small"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">extract_eq</span>(model, <span class="at">use_coefs =</span> T, <span class="at">coef_digits =</span> <span class="dv">3</span>, <span class="at">font_size =</span> <span class="st">"small"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><span class="math display">
 \small
@@ -1173,8 +1116,8 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 </div>
 <p>You can perform multinomial logistic regression using the <code>nnet</code> package with the <code>multinom()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>unordered_df <span class="ot">&lt;-</span> df</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="ot">&lt;-</span> nnet<span class="sc">::</span><span class="fu">multinom</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, unordered_df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>unordered_df <span class="ot">&lt;-</span> df</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="ot">&lt;-</span> nnet<span class="sc">::</span><span class="fu">multinom</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, unordered_df) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # weights:  12 (6 variable)
 #&gt; initial  value 141.720985 
@@ -1183,7 +1126,7 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 #&gt; final  value 50.168755 
 #&gt; converged</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>multinomial_model <span class="sc">|&gt;</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;   (Intercept)        X1       X2
 #&gt; 2   -11.35736  5.290469 1.776146
@@ -1200,8 +1143,8 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 <ol type="1">
 <li><p><strong>Brant test</strong> The Brant test is one of the most commonly used tests to check the proportional odds assumption. The <code>brant</code> package provides the <code>brant()</code> function for this test.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brant)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brant</span>(ordinal_model) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brant)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">brant</span>(ordinal_model) <span class="sc">|&gt;</span> <span class="fu">print</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; -------------------------------------------- 
 #&gt; Test for X2  df  probability 
@@ -1221,38 +1164,38 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 <p>If the results show that some predictor variables have p-values less than the significance level, it indicates that these variables violate the parallel lines assumption.</p></li>
 <li><p><strong>Likelihood ratio test</strong> Another approach is to compare the ordinal logistic regression model (which assumes parallel lines) to a multinomial logistic regression model (which does not make this assumption). This comparison can be done using a likelihood ratio test. Here we define a function named <code>likelihood_ratio_test()</code> to perform this test:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract log-likelihoods</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  logLik_x <span class="ot">&lt;-</span> <span class="fu">logLik</span>(x) </span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  logLik_y <span class="ot">&lt;-</span> <span class="fu">logLik</span>(y)</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  lr_statistic <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (logLik_y <span class="sc">-</span> logLik_x)</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  df_diff <span class="ot">&lt;-</span> <span class="fu">attr</span>(logLik_y, <span class="st">"df"</span>) <span class="sc">-</span> <span class="fu">attr</span>(logLik_x, <span class="st">"df"</span>)</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lr_statistic =</span> lr_statistic,</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">df_diff =</span> df_diff,</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_value =</span> p_value</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(result) <span class="ot">&lt;-</span> <span class="st">"likelihood_ratio_test"</span></span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  result</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>print.likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Likelihood ratio test for parallel lines assumption:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"statistic: "</span>, x<span class="sc">$</span>lr_statistic, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"df: "</span>, x<span class="sc">$</span>df_diff, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"p-value: "</span>, x<span class="sc">$</span>p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is not held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract log-likelihoods</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  logLik_x <span class="ot">&lt;-</span> <span class="fu">logLik</span>(x) </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  logLik_y <span class="ot">&lt;-</span> <span class="fu">logLik</span>(y)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  lr_statistic <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (logLik_y <span class="sc">-</span> logLik_x)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  df_diff <span class="ot">&lt;-</span> <span class="fu">attr</span>(logLik_y, <span class="st">"df"</span>) <span class="sc">-</span> <span class="fu">attr</span>(logLik_x, <span class="st">"df"</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lr_statistic =</span> lr_statistic,</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">df_diff =</span> df_diff,</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_value =</span> p_value</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(result) <span class="ot">&lt;-</span> <span class="st">"likelihood_ratio_test"</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  result</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>print.likelihood_ratio_test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Likelihood ratio test for parallel lines assumption:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"statistic: "</span>, x<span class="sc">$</span>lr_statistic, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"df: "</span>, x<span class="sc">$</span>df_diff, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"p-value: "</span>, x<span class="sc">$</span>p_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x<span class="sc">$</span>p_value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is not held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"The parallel lines assumption is held.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likelihood_ratio_test</span>(ordinal_model, multinomial_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">likelihood_ratio_test</span>(ordinal_model, multinomial_model) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Likelihood ratio test for parallel lines assumption:
 #&gt; statistic:  0.4184909 
@@ -1264,16 +1207,16 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 <p>If the p-value is small (e.g., less than 0.05), it indicates that the multinomial logistic regression model provides a significantly better fit to the data, and the parallel lines assumption of the ordinal logistic regression model might not hold. If the p-value is large (e.g., greater than 0.05), it suggests that the ordinal logistic regression model is sufficient, and the extra complexity of the multinomial model is not warranted.</p>
 <p>If you prefer to use the <code>VGAM</code> package to test the parallel lines assumption, you can follow these steps:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VGAM)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>model_parallel <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> T), <span class="at">data =</span> ordered_df)</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>model_relaxed <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> F, <span class="at">reverse =</span> T), <span class="at">data =</span> ordered_df) </span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>lr_statistic <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fu">logLik</span>(model_parallel) <span class="sc">-</span> <span class="fu">logLik</span>(model_relaxed))</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>df_diff <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(model_parallel) <span class="sc">-</span> <span class="fu">df.residual</span>(model_relaxed)</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">"statistic"</span> <span class="ot">=</span> lr_statistic, <span class="st">"df"</span> <span class="ot">=</span> df_diff, <span class="st">"p-value:"</span> <span class="ot">=</span> p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VGAM)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>model_parallel <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> T), <span class="at">data =</span> ordered_df)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>model_relaxed <span class="ot">&lt;-</span> <span class="fu">vglm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2, <span class="at">family =</span> <span class="fu">cumulative</span>(<span class="at">parallel =</span> F, <span class="at">reverse =</span> T), <span class="at">data =</span> ordered_df) </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>lr_statistic <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> (<span class="fu">logLik</span>(model_parallel) <span class="sc">-</span> <span class="fu">logLik</span>(model_relaxed))</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>df_diff <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(model_parallel) <span class="sc">-</span> <span class="fu">df.residual</span>(model_relaxed)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(lr_statistic, <span class="at">df =</span> df_diff, <span class="at">lower.tail =</span> F)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">"statistic"</span> <span class="ot">=</span> lr_statistic, <span class="st">"df"</span> <span class="ot">=</span> df_diff, <span class="st">"p-value:"</span> <span class="ot">=</span> p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1 × 3
 #&gt;   statistic    df `p-value:`

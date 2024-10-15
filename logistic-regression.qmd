@@ -1,4 +1,4 @@
-# Logistic regression analysis
+# Logistic regression analysis {#sec-logistic-regression}
 
 ```{r}
 #| echo: false
@@ -276,7 +276,7 @@ Alternatively, `stepwise()` function from `StepReg` package is another useful an
 #   strategy = "bidirection",
 #   metric = "SBC",
 #   num_digits = 5
-# ) 
+# )
 ```
 
 Stepwise methods can sometimes lead to overfitting, especially if the dataset is small. It may be slower for larger models or datasets compared to penalized regression methods like Lasso.
