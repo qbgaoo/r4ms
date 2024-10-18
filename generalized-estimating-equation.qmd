@@ -1,4 +1,4 @@
-# Ordered categorical data
+# Generalized estimating equation
 
 ```{r}
 #| echo: false

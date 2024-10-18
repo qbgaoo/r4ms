@@ -40,7 +40,7 @@ book:
         - logistic-regression.qmd
         - generalized-linear-model.qmd
         - survival-analysis.qmd
-        - cox-regression.qmd
+        - cluster-analysis.qmd
         - generalized-estimating-equation.qmd
         
     - part: stat-anal-report.qmd

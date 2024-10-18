@@ -1,3 +1,0 @@
-# Cox regression
-
-Cox regression, also known as Cox proportional hazards regression, is a statistical method used to analyze the time until an event occurs, typically survival time. It is widely used in medical research to explore the relationship between the survival time of patients and one or more predictor variables. Unlike other models, Cox regression does not require assumptions about the baseline hazard function, making it a flexible tool for handling censored data where the exact time of the event may not be known for all subjects.
