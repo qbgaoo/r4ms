@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./generalized-estimating-equation.html" rel="next">
+<link href="./discriminant-analysis.html" rel="next">
 <link href="./survival-analysis.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -356,8 +356,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./discriminant-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Discriminant analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca-factor-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Principal components and factor analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./canonical-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
       </ul>
@@ -374,19 +392,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -404,7 +422,7 @@ window.Quarto = {
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">22.1</span> Prerequisite</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">22.2</span> Overview</a>
   <ul class="collapse">
-  <li><a href="#similarity-metrics" id="toc-similarity-metrics" class="nav-link" data-scroll-target="#similarity-metrics"><span class="header-section-number">22.2.1</span> Similarity metrics</a></li>
+  <li><a href="#sec-similarity-metrics" id="toc-sec-similarity-metrics" class="nav-link" data-scroll-target="#sec-similarity-metrics"><span class="header-section-number">22.2.1</span> Similarity metrics</a></li>
   <li><a href="#types-of-clustering-methods" id="toc-types-of-clustering-methods" class="nav-link" data-scroll-target="#types-of-clustering-methods"><span class="header-section-number">22.2.2</span> Types of clustering methods</a></li>
   </ul></li>
   <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering"><span class="header-section-number">22.3</span> Hierarchical clustering</a>
@@ -421,8 +439,7 @@ window.Quarto = {
   <li><a href="#k-prototypes-clustering" id="toc-k-prototypes-clustering" class="nav-link" data-scroll-target="#k-prototypes-clustering"><span class="header-section-number">22.5.1</span> K-prototypes clustering</a></li>
   <li><a href="#gowers-distance-hierarchical-clustering" id="toc-gowers-distance-hierarchical-clustering" class="nav-link" data-scroll-target="#gowers-distance-hierarchical-clustering"><span class="header-section-number">22.5.2</span> Gower’s distance + hierarchical clustering</a></li>
   <li><a href="#two-step-clustering" id="toc-two-step-clustering" class="nav-link" data-scroll-target="#two-step-clustering"><span class="header-section-number">22.5.3</span> <strong>Two-step clustering</strong></a></li>
-  <li><a href="#latent-class-analysis" id="toc-latent-class-analysis" class="nav-link" data-scroll-target="#latent-class-analysis"><span class="header-section-number">22.5.4</span> Latent class analysis</a></li>
-  <li><a href="#famd-clustering" id="toc-famd-clustering" class="nav-link" data-scroll-target="#famd-clustering"><span class="header-section-number">22.5.5</span> FAMD + clustering</a></li>
+  <li><a href="#famd-clustering" id="toc-famd-clustering" class="nav-link" data-scroll-target="#famd-clustering"><span class="header-section-number">22.5.4</span> FAMD + clustering</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/cluster-analysis.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -465,8 +482,8 @@ window.Quarto = {
 <section id="overview" class="level2" data-number="22.2">
 <h2 data-number="22.2" class="anchored" data-anchor-id="overview"><span class="header-section-number">22.2</span> Overview</h2>
 <p>The goal of cluster analysis is to maximize the similarity of objects within the same group (intra-group similarity) while maximizing the differences between groups (inter-group dissimilarity).</p>
-<section id="similarity-metrics" class="level3" data-number="22.2.1">
-<h3 data-number="22.2.1" class="anchored" data-anchor-id="similarity-metrics"><span class="header-section-number">22.2.1</span> Similarity metrics</h3>
+<section id="sec-similarity-metrics" class="level3" data-number="22.2.1">
+<h3 data-number="22.2.1" class="anchored" data-anchor-id="sec-similarity-metrics"><span class="header-section-number">22.2.1</span> Similarity metrics</h3>
 <p>Similarity metrics are crucial for cluster analysis, as they help determine how similar or different patients, diseases, or clinical observations are from one another. These metrics are essential when grouping patients with similar characteristics, symptoms, or responses to treatments. Different types of data (continuous, categorical, binary) require different similarity metrics.</p>
 <p><strong>Euclidean distance</strong></p>
 <p><span class="math display">
@@ -871,25 +888,44 @@ d(x, y) = 1 - \frac{(x - \bar{x}) \cdot (y - \bar{y})}{\sqrt{(x - \bar{x})^2} \s
 <h3 data-number="22.5.2" class="anchored" data-anchor-id="gowers-distance-hierarchical-clustering"><span class="header-section-number">22.5.2</span> Gower’s distance + hierarchical clustering</h3>
 <p>Gower’s distance is a similarity measure that can handle mixed data types (numeric, ordinal, and categorical). After calculating the distance matrix, hierarchical clustering can be applied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Gower's distance for mixed data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>gower_dist <span class="ot">&lt;-</span> <span class="fu">daisy</span>(x, <span class="at">metric =</span> <span class="st">"gower"</span>, <span class="at">stand =</span> T)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>hclust_result <span class="ot">&lt;-</span> <span class="fu">hclust</span>(gower_dist, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cut tree to form clusters</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hclust_result, <span class="at">k =</span> <span class="dv">3</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>hclust_result <span class="sc">|&gt;</span> </span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.dendrogram</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"branches_k_color"</span>) <span class="sc">|&gt;</span>             </span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"branches_lty"</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"labels_colors"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"labels_cex"</span>, <span class="fu">c</span>(.<span class="dv">75</span>, .<span class="dv">75</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">axes =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Byar)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> Byar <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> Size.of.primary.tumour,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp=</span> Serum.prostatic.acid.phosphatase,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> Electrocardiogram.code</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">if_else</span>(Serum.pacp <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">mean</span>(Serum.pacp), Serum.pacp),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> <span class="fu">sqrt</span>(Size.tumor),                        </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">log</span>(Serum.pacp)                           </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span>  </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">7</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> <span class="fu">case_when</span>(                                  </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">0</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">2</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">3</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">4</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">5</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">6</span> <span class="sc">~</span> <span class="dv">3</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Gower's distance for mixed data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>gower_dist <span class="ot">&lt;-</span> <span class="fu">daisy</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  x, <span class="at">metric =</span> <span class="st">"gower"</span>, <span class="at">stand =</span> T, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">list</span>(<span class="at">numeric =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>), <span class="at">ordered =</span> <span class="dv">9</span>, <span class="at">symm =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">11</span>), <span class="at">factor =</span> <span class="dv">12</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hclust</span>(gower_dist, <span class="at">method =</span> <span class="st">"ward.D2"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.dendrogram</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"branches_k_color"</span>, <span class="at">k =</span> <span class="dv">60</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set</span>(<span class="st">"branches_k_lty"</span>, <span class="at">k =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">axes =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="cluster-analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="cluster-analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -904,286 +940,46 @@ d(x, y) = 1 - \frac{(x - \bar{x}) \cdot (y - \bar{y})}{\sqrt{(x - \bar{x})^2} \s
 </ol>
 <p>Unfortunately, there isn’t a direct two-step clustering function in R, here is a customized function named <code>two_step_clustering()</code> to approximate it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>two_step_clustering <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">n_pre_clusters =</span> <span class="dv">5</span>, <span class="at">n_final_clusters =</span> <span class="dv">3</span>, <span class="at">distance_method =</span> <span class="st">"euclidean"</span>, <span class="at">seed =</span> <span class="dv">123</span>) {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># STEP 1: Pre-Clustering using Hierarchical Clustering</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the distance matrix (for mixed data, replace with Gower's distance)</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  distance_matrix <span class="ot">&lt;-</span> <span class="fu">dist</span>(data, <span class="at">method =</span> distance_method)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Perform hierarchical clustering</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  hclust_result <span class="ot">&lt;-</span> <span class="fu">hclust</span>(distance_matrix, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create pre-clusters (cut the dendrogram into n_pre_clusters groups)</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  pre_clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hclust_result, <span class="at">k =</span> n_pre_clusters)</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the pre-cluster information to the dataset</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  data_with_preclusters <span class="ot">&lt;-</span> data</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  data_with_preclusters<span class="sc">$</span>pre_cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pre_clusters)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># STEP 2: Final Clustering using K-means</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now, apply k-means clustering on the pre-clustered data</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  kmeans_result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(data_with_preclusters, <span class="at">centers =</span> n_final_clusters)</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add final cluster labels to the original data</span></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  data_with_preclusters<span class="sc">$</span>final_cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(kmeans_result<span class="sc">$</span>cluster)</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Visualization: Final clusters (using the first two principal components)</span></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fviz_cluster</span>(kmeans_result, <span class="at">data =</span> data, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">ellipse.type =</span> <span class="st">"convex"</span>, <span class="at">show.clust.cent =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Two-Step Clustering Result"</span>) <span class="sc">+</span></span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Return the clustered data with pre-cluster and final cluster assignments</span></span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(data_with_preclusters)</span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage with the mtcars dataset</span></span>
-<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> mtcars</span>
-<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>clustered_data <span class="ot">&lt;-</span> <span class="fu">two_step_clustering</span>(df, <span class="at">n_pre_clusters =</span> <span class="dv">5</span>, <span class="at">n_final_clusters =</span> <span class="dv">3</span>)</span>
-<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a><span class="co"># View the result</span></span>
-<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>clustered_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-#&gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-#&gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-#&gt; Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-#&gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
-#&gt;                     pre_cluster final_cluster
-#&gt; Mazda RX4                     1             3
-#&gt; Mazda RX4 Wag                 1             3
-#&gt; Datsun 710                    1             3
-#&gt; Hornet 4 Drive                2             1
-#&gt; Hornet Sportabout             3             2
-#&gt; Valiant                       2             1
-#&gt; Duster 360                    4             2
-#&gt; Merc 240D                     1             3
-#&gt; Merc 230                      1             3
-#&gt; Merc 280                      1             3
-#&gt; Merc 280C                     1             3
-#&gt; Merc 450SE                    2             1
-#&gt; Merc 450SL                    2             1
-#&gt; Merc 450SLC                   2             1
-#&gt; Cadillac Fleetwood            3             2
-#&gt; Lincoln Continental           3             2
-#&gt; Chrysler Imperial             3             2
-#&gt; Fiat 128                      5             3
-#&gt; Honda Civic                   5             3
-#&gt; Toyota Corolla                5             3
-#&gt; Toyota Corona                 1             3
-#&gt; Dodge Challenger              2             1
-#&gt; AMC Javelin                   2             1
-#&gt; Camaro Z28                    4             2
-#&gt; Pontiac Firebird              3             2
-#&gt; Fiat X1-9                     5             3
-#&gt; Porsche 914-2                 1             3
-#&gt; Lotus Europa                  1             3
-#&gt; Ford Pantera L                4             2
-#&gt; Ferrari Dino                  1             3
-#&gt; Maserati Bora                 4             2
-#&gt; Volvo 142E                    1             3</code></pre>
-</div>
-</div>
-</section>
-<section id="latent-class-analysis" class="level3" data-number="22.5.4">
-<h3 data-number="22.5.4" class="anchored" data-anchor-id="latent-class-analysis"><span class="header-section-number">22.5.4</span> Latent class analysis</h3>
-<p>Latent class analysis (LCA) is another method that can handle mixed data types, particularly when categorical variables dominate. It assumes that the data comes from a mixture of underlying classes or clusters and aims to estimate these latent (unobserved) classes.</p>
-<p>It models the probability that an observation belongs to each latent class based on the observed variables. LCA is particularly suitable for categorical variables but can be extended for mixed data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poLCA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Loading required package: scatterplot3d</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Loading required package: MASS</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; 
-#&gt; Attaching package: 'MASS'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; The following object is masked from 'package:dplyr':
-#&gt; 
-#&gt;     select</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a formula for LCA with mixed variables</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cbind</span>(age, gender, cholesterol) <span class="sc">~</span> <span class="dv">1</span>  </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform latent class analysis with 3 classes</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>lc_result <span class="ot">&lt;-</span> <span class="fu">poLCA</span>(f, <span class="at">data =</span> x, <span class="at">nclass =</span> <span class="dv">2</span>, <span class="at">graphs =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; Conditional item response (column) probabilities,
-#&gt;  by outcome variable, for each class (row) 
-#&gt;  
-#&gt; $age
-#&gt;           Pr(1) Pr(2) Pr(3) Pr(4) Pr(5) Pr(6) Pr(7) Pr(8) Pr(9) Pr(10)
-#&gt; class 1:      0     0     0     0     0     0     0     0     0      0
-#&gt; class 2:      0     0     0     0     0     0     0     0     0      0
-#&gt;           Pr(11) Pr(12) Pr(13) Pr(14) Pr(15) Pr(16) Pr(17) Pr(18) Pr(19)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(20) Pr(21) Pr(22) Pr(23) Pr(24) Pr(25) Pr(26) Pr(27) Pr(28)
-#&gt; class 1:       0      0      0   0.00      0      0      0      0    0.5
-#&gt; class 2:       0      0      0   0.25      0      0      0      0    0.0
-#&gt;           Pr(29) Pr(30) Pr(31) Pr(32) Pr(33) Pr(34) Pr(35) Pr(36) Pr(37)
-#&gt; class 1:       0      0      0      0      0   0.00      0   0.00      0
-#&gt; class 2:       0      0      0      0      0   0.25      0   0.25      0
-#&gt;           Pr(38) Pr(39) Pr(40) Pr(41) Pr(42) Pr(43) Pr(44) Pr(45) Pr(46)
-#&gt; class 1:       0      0      0      0      0      0      0    0.5      0
-#&gt; class 2:       0      0      0      0      0      0      0    0.0      0
-#&gt;           Pr(47) Pr(48) Pr(49) Pr(50) Pr(51) Pr(52)
-#&gt; class 1:       0      0      0      0      0   0.00
-#&gt; class 2:       0      0      0      0      0   0.25
-#&gt; 
-#&gt; $gender
-#&gt;              F    M
-#&gt; class 1:  1.00 0.00
-#&gt; class 2:  0.25 0.75
-#&gt; 
-#&gt; $cholesterol
-#&gt;           Pr(1) Pr(2) Pr(3) Pr(4) Pr(5) Pr(6) Pr(7) Pr(8) Pr(9) Pr(10)
-#&gt; class 1:      0     0     0     0     0     0     0     0     0      0
-#&gt; class 2:      0     0     0     0     0     0     0     0     0      0
-#&gt;           Pr(11) Pr(12) Pr(13) Pr(14) Pr(15) Pr(16) Pr(17) Pr(18) Pr(19)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(20) Pr(21) Pr(22) Pr(23) Pr(24) Pr(25) Pr(26) Pr(27) Pr(28)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(29) Pr(30) Pr(31) Pr(32) Pr(33) Pr(34) Pr(35) Pr(36) Pr(37)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(38) Pr(39) Pr(40) Pr(41) Pr(42) Pr(43) Pr(44) Pr(45) Pr(46)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(47) Pr(48) Pr(49) Pr(50) Pr(51) Pr(52) Pr(53) Pr(54) Pr(55)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(56) Pr(57) Pr(58) Pr(59) Pr(60) Pr(61) Pr(62) Pr(63) Pr(64)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(65) Pr(66) Pr(67) Pr(68) Pr(69) Pr(70) Pr(71) Pr(72) Pr(73)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(74) Pr(75) Pr(76) Pr(77) Pr(78) Pr(79) Pr(80) Pr(81) Pr(82)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(83) Pr(84) Pr(85) Pr(86) Pr(87) Pr(88) Pr(89) Pr(90) Pr(91)
-#&gt; class 1:       0      0      0      0      0      0      0      0      0
-#&gt; class 2:       0      0      0      0      0      0      0      0      0
-#&gt;           Pr(92) Pr(93) Pr(94) Pr(95) Pr(96) Pr(97) Pr(98) Pr(99) Pr(100)
-#&gt; class 1:       0      0      0      0      0      0      0      0       0
-#&gt; class 2:       0      0      0      0      0      0      0      0       0
-#&gt;           Pr(101) Pr(102) Pr(103) Pr(104) Pr(105) Pr(106) Pr(107) Pr(108)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(109) Pr(110) Pr(111) Pr(112) Pr(113) Pr(114) Pr(115) Pr(116)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(117) Pr(118) Pr(119) Pr(120) Pr(121) Pr(122) Pr(123) Pr(124)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(125) Pr(126) Pr(127) Pr(128) Pr(129) Pr(130) Pr(131) Pr(132)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(133) Pr(134) Pr(135) Pr(136) Pr(137) Pr(138) Pr(139) Pr(140)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(141) Pr(142) Pr(143) Pr(144) Pr(145) Pr(146) Pr(147) Pr(148)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(149) Pr(150) Pr(151) Pr(152) Pr(153) Pr(154) Pr(155) Pr(156)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(157) Pr(158) Pr(159) Pr(160) Pr(161) Pr(162) Pr(163) Pr(164)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(165) Pr(166) Pr(167) Pr(168) Pr(169) Pr(170) Pr(171) Pr(172)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(173) Pr(174) Pr(175) Pr(176) Pr(177) Pr(178) Pr(179) Pr(180)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(181) Pr(182) Pr(183) Pr(184) Pr(185) Pr(186) Pr(187) Pr(188)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(189) Pr(190) Pr(191) Pr(192) Pr(193) Pr(194) Pr(195) Pr(196)
-#&gt; class 1:        0     0.5       0       0       0       0       0       0
-#&gt; class 2:        0     0.0       0       0       0       0       0       0
-#&gt;           Pr(197) Pr(198) Pr(199) Pr(200) Pr(201) Pr(202) Pr(203) Pr(204)
-#&gt; class 1:        0       0       0    0.00       0       0       0       0
-#&gt; class 2:        0       0       0    0.25       0       0       0       0
-#&gt;           Pr(205) Pr(206) Pr(207) Pr(208) Pr(209) Pr(210) Pr(211) Pr(212)
-#&gt; class 1:        0       0       0       0       0    0.00       0       0
-#&gt; class 2:        0       0       0       0       0    0.25       0       0
-#&gt;           Pr(213) Pr(214) Pr(215) Pr(216) Pr(217) Pr(218) Pr(219) Pr(220)
-#&gt; class 1:        0       0       0       0       0       0       0     0.5
-#&gt; class 2:        0       0       0       0       0       0       0     0.0
-#&gt;           Pr(221) Pr(222) Pr(223) Pr(224) Pr(225) Pr(226) Pr(227) Pr(228)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(229) Pr(230) Pr(231) Pr(232) Pr(233) Pr(234) Pr(235) Pr(236)
-#&gt; class 1:        0       0       0       0       0       0       0       0
-#&gt; class 2:        0       0       0       0       0       0       0       0
-#&gt;           Pr(237) Pr(238) Pr(239) Pr(240) Pr(241) Pr(242) Pr(243) Pr(244)
-#&gt; class 1:        0       0       0    0.00       0       0       0       0
-#&gt; class 2:        0       0       0    0.25       0       0       0       0
-#&gt;           Pr(245) Pr(246) Pr(247) Pr(248) Pr(249) Pr(250)
-#&gt; class 1:        0       0       0       0       0    0.00
-#&gt; class 2:        0       0       0       0       0    0.25
-#&gt; 
-#&gt; Estimated class population shares 
-#&gt;  0.3333 0.6667 
-#&gt;  
-#&gt; Predicted class memberships (by modal posterior prob.) 
-#&gt;  0.3333 0.6667 
-#&gt;  
-#&gt; ========================================================= 
-#&gt; Fit for 2 latent classes: 
-#&gt; ========================================================= 
-#&gt; number of observations: 6 
-#&gt; number of estimated parameters: 603 
-#&gt; residual degrees of freedom: -597 
-#&gt; maximum log-likelihood: -19.93137 
-#&gt;  
-#&gt; AIC(2): 1245.863
-#&gt; BIC(2): 1120.294
-#&gt; G^2(2): 18.36162 (Likelihood ratio/deviance statistic) 
-#&gt; X^2(2): 30 (Chi-square goodness of fit) 
-#&gt;  
-#&gt; ALERT: number of parameters estimated ( 603 ) exceeds number of observations ( 6 ) 
-#&gt;  
-#&gt; ALERT: negative degrees of freedom; respecify model 
-#&gt; </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>two_step_clustering <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">n_pre_clust =</span> <span class="dv">5</span>, <span class="at">n_final_clust =</span> <span class="dv">3</span>, <span class="at">dist_method =</span> <span class="st">"euclidean"</span>, <span class="at">seed =</span> <span class="dv">123</span>) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># STEP 1: Pre-Clustering using Hierarchical Clustering</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compute the distance matrix (for mixed data, replace with Gower's distance)</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  distance_matrix <span class="ot">&lt;-</span> <span class="fu">dist</span>(data, <span class="at">method =</span> dist_method)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Perform hierarchical clustering</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  hclust_result <span class="ot">&lt;-</span> <span class="fu">hclust</span>(distance_matrix, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create pre-clusters (cut the dendrogram into n_pre_clusters groups)</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  pre_clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hclust_result, <span class="at">k =</span> n_pre_clust)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the pre-cluster information to the dataset</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  data_with_clusters <span class="ot">&lt;-</span> data</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  data_with_clusters<span class="sc">$</span>pre_cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pre_clusters)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># STEP 2: Final Clustering using K-means</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Now, apply k-means clustering on the pre-clustered data</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  kmeans_result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(data_with_clusters, <span class="at">centers =</span> n_final_clust)</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add final cluster labels to the original data</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  data_with_clusters<span class="sc">$</span>final_cluster <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(kmeans_result<span class="sc">$</span>cluster)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Visualization: Final clusters (using the first two principal components)</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>fviz_plot <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(kmeans_result, <span class="at">data =</span> data, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">show.clust.cent =</span> T, <span class="at">main =</span> <span class="st">"Two-step clustering"</span>, <span class="at">xlab =</span> F, <span class="at">ylab =</span> F, <span class="at">legend.title =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>), </span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>)</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a> data_with_clusters</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a> fviz_plot</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage with the mtcars dataset</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> mtcars</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="fu">two_step_clustering</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1193,95 +989,95 @@ d(x, y) = 1 - \frac{(x - \bar{x}) \cdot (y - \bar{y})}{\sqrt{(x - \bar{x})^2} \s
 </div>
 </div>
 </section>
-<section id="famd-clustering" class="level3" data-number="22.5.5">
-<h3 data-number="22.5.5" class="anchored" data-anchor-id="famd-clustering"><span class="header-section-number">22.5.5</span> FAMD + clustering</h3>
+<section id="famd-clustering" class="level3" data-number="22.5.4">
+<h3 data-number="22.5.4" class="anchored" data-anchor-id="famd-clustering"><span class="header-section-number">22.5.4</span> FAMD + clustering</h3>
 <p>Factor analysis of mixed data (FAMD) is used for dimensionality reduction of mixed-type datasets. It reduces the mixed-type data to a smaller number of dimensions that represent both numeric and categorical information. After reducing the dimensions, standard clustering techniques like K-means or hierarchical clustering can then be applied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(geomorphology)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> geomorphology</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">FAMD</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(geomorphology)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> geomorphology</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">FAMD</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Warning: ggrepel: 43 unlabeled data points (too many overlaps). Consider
 #&gt; increasing max.overlaps</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot FAMD result</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_famd_ind</span>(res, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">xlab =</span> F, <span class="at">ylab =</span> F) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>), </span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform k-means clustering on the FAMD results</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>kmeans_res <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(res<span class="sc">$</span>ind<span class="sc">$</span>coord, <span class="at">centers =</span> <span class="dv">3</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(kmeans_res, res<span class="sc">$</span>ind<span class="sc">$</span>coord, <span class="at">geom =</span> <span class="st">"point"</span>, , <span class="at">xlab =</span> F, <span class="at">ylab =</span> F) <span class="sc">+</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>), </span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>)</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot FAMD result</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_famd_ind</span>(res, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">xlab =</span> F, <span class="at">ylab =</span> F) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>), </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform k-means clustering on the FAMD results</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>kmeans_res <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(res<span class="sc">$</span>ind<span class="sc">$</span>coord, <span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(kmeans_res, res<span class="sc">$</span>ind<span class="sc">$</span>coord, <span class="at">geom =</span> <span class="st">"point"</span>, , <span class="at">xlab =</span> F, <span class="at">ylab =</span> F) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>), </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.35</span>, <span class="st">"cm"</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>clustMD package</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-23"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> Byar <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="annotated-cell-23-3"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> Size.of.primary.tumour,</span>
-<span id="annotated-cell-23-4"><a href="#annotated-cell-23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp=</span> Serum.prostatic.acid.phosphatase,</span>
-<span id="annotated-cell-23-5"><a href="#annotated-cell-23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> Electrocardiogram.code</span>
-<span id="annotated-cell-23-6"><a href="#annotated-cell-23-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="annotated-cell-23-7"><a href="#annotated-cell-23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="annotated-cell-23-8"><a href="#annotated-cell-23-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">if_else</span>(Serum.pacp <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">mean</span>(Serum.pacp), Serum.pacp),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="1">1</button><span id="annotated-cell-23-9" class="code-annotation-target"><a href="#annotated-cell-23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> <span class="fu">sqrt</span>(Size.tumor),</span>
-<span id="annotated-cell-23-10"><a href="#annotated-cell-23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">log</span>(Serum.pacp)</span>
-<span id="annotated-cell-23-11"><a href="#annotated-cell-23-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="2">2</button><span id="annotated-cell-23-12" class="code-annotation-target"><a href="#annotated-cell-23-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">7</span>) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-23-13"><a href="#annotated-cell-23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="3">3</button><span id="annotated-cell-23-14" class="code-annotation-target"><a href="#annotated-cell-23-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(<span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>), \(x) x <span class="sc">+</span> <span class="dv">1</span>),</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="4">4</button><span id="annotated-cell-23-15" class="code-annotation-target"><a href="#annotated-cell-23-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> <span class="fu">case_when</span>(</span>
-<span id="annotated-cell-23-16"><a href="#annotated-cell-23-16" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="annotated-cell-23-17"><a href="#annotated-cell-23-17" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">3</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="annotated-cell-23-18"><a href="#annotated-cell-23-18" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="dv">3</span></span>
-<span id="annotated-cell-23-19"><a href="#annotated-cell-23-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="annotated-cell-23-20"><a href="#annotated-cell-23-20" aria-hidden="true" tabindex="-1"></a>  )  </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-22"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-22-1"><a href="#annotated-cell-22-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> Byar <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-22-2"><a href="#annotated-cell-22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="annotated-cell-22-3"><a href="#annotated-cell-22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> Size.of.primary.tumour,</span>
+<span id="annotated-cell-22-4"><a href="#annotated-cell-22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp=</span> Serum.prostatic.acid.phosphatase,</span>
+<span id="annotated-cell-22-5"><a href="#annotated-cell-22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> Electrocardiogram.code</span>
+<span id="annotated-cell-22-6"><a href="#annotated-cell-22-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="annotated-cell-22-7"><a href="#annotated-cell-22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-22-8"><a href="#annotated-cell-22-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">if_else</span>(Serum.pacp <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">mean</span>(Serum.pacp), Serum.pacp),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="1">1</button><span id="annotated-cell-22-9" class="code-annotation-target"><a href="#annotated-cell-22-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Size.tumor =</span> <span class="fu">sqrt</span>(Size.tumor),</span>
+<span id="annotated-cell-22-10"><a href="#annotated-cell-22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">Serum.pacp =</span> <span class="fu">log</span>(Serum.pacp)</span>
+<span id="annotated-cell-22-11"><a href="#annotated-cell-22-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="2">2</button><span id="annotated-cell-22-12" class="code-annotation-target"><a href="#annotated-cell-22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">12</span>, <span class="dv">7</span>) <span class="sc">|&gt;</span></span>
+<span id="annotated-cell-22-13"><a href="#annotated-cell-22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="3">3</button><span id="annotated-cell-22-14" class="code-annotation-target"><a href="#annotated-cell-22-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">c</span>(<span class="dv">9</span><span class="sc">:</span><span class="dv">12</span>), \(x) x <span class="sc">+</span> <span class="dv">1</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-22" data-target-annotation="4">4</button><span id="annotated-cell-22-15" class="code-annotation-target"><a href="#annotated-cell-22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">Ecg.code =</span> <span class="fu">case_when</span>(</span>
+<span id="annotated-cell-22-16"><a href="#annotated-cell-22-16" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="annotated-cell-22-17"><a href="#annotated-cell-22-17" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">3</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="annotated-cell-22-18"><a href="#annotated-cell-22-18" aria-hidden="true" tabindex="-1"></a>      Ecg.code <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> Ecg.code <span class="sc">==</span> <span class="dv">7</span> <span class="sc">~</span> <span class="dv">3</span></span>
+<span id="annotated-cell-22-19"><a href="#annotated-cell-22-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="annotated-cell-22-20"><a href="#annotated-cell-22-20" aria-hidden="true" tabindex="-1"></a>  )  </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-23" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-23" data-code-lines="9,10" data-code-annotation="1">Transformation skewed variables</span>
+<span data-code-cell="annotated-cell-22" data-code-lines="9,10" data-code-annotation="1">Transformation skewed variables</span>
 </dd>
-<dt data-target-cell="annotated-cell-23" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-23" data-code-lines="12" data-code-annotation="2">Order variables (Continuous, ordinal, nominal)</span>
+<span data-code-cell="annotated-cell-22" data-code-lines="12" data-code-annotation="2">Order variables (Continuous, ordinal, nominal)</span>
 </dd>
-<dt data-target-cell="annotated-cell-23" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-23" data-code-lines="14" data-code-annotation="3">Start categorical variables at 1 rather than 0</span>
+<span data-code-cell="annotated-cell-22" data-code-lines="14" data-code-annotation="3">Start categorical variables at 1 rather than 0</span>
 </dd>
-<dt data-target-cell="annotated-cell-23" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-22" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-23" data-code-lines="15" data-code-annotation="4">Merge categories of EKG variable for efficiency</span>
+<span data-code-cell="annotated-cell-22" data-code-lines="15" data-code-annotation="4">Merge categories of EKG variable for efficiency</span>
 </dd>
 </dl>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clustMD</span>(</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">as.matrix</span>(X), </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">G =</span> <span class="dv">2</span>,  </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">CnsIndx =</span> <span class="dv">8</span>,  </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">OrdIndx =</span> <span class="dv">11</span>,  </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Nnorms =</span> <span class="dv">20000</span>,  </span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">MaxIter =</span> <span class="dv">500</span>, </span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"BD"</span>, </span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">store.params =</span> F, </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> T,  </span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">startCL =</span> <span class="st">"kmeans"</span>,  </span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">autoStop =</span> T,  </span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ma.band =</span> <span class="dv">30</span>,  </span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">stop.tol =</span> <span class="fl">0.0001</span>  </span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clustMD</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">X =</span> <span class="fu">as.matrix</span>(X), </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">G =</span> <span class="dv">2</span>,  </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">CnsIndx =</span> <span class="dv">8</span>,  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">OrdIndx =</span> <span class="dv">11</span>,  </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Nnorms =</span> <span class="dv">20000</span>,  </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">MaxIter =</span> <span class="dv">500</span>, </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"BD"</span>, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">store.params =</span> F, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> T,  </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">startCL =</span> <span class="st">"kmeans"</span>,  </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">autoStop =</span> T,  </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ma.band =</span> <span class="dv">30</span>,  </span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">stop.tol =</span> <span class="fl">0.0001</span>  </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
   |                                                                         
@@ -1943,8 +1739,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./generalized-estimating-equation.html" class="pagination-link" aria-label="Generalized estimating equation">
-        <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./discriminant-analysis.html" class="pagination-link" aria-label="Discriminant analysis">
+        <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Discriminant analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
