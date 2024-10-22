@@ -24,7 +24,7 @@ library(FactoMineR)
 
 The goal of cluster analysis is to maximize the similarity of objects within the same group (intra-group similarity) while maximizing the differences between groups (inter-group dissimilarity).
 
-### Similarity metrics
+### Similarity metrics {#sec-similarity-metrics}
 
 Similarity metrics are crucial for cluster analysis, as they help determine how similar or different patients, diseases, or clinical observations are from one another. These metrics are essential when grouping patients with similar characteristics, symptoms, or responses to treatments. Different types of data (continuous, categorical, binary) require different similarity metrics.
 
@@ -331,20 +331,40 @@ This function combines K-means clustering for numerical data with K-modes cluste
 Gower’s distance is a similarity measure that can handle mixed data types (numeric, ordinal, and categorical). After calculating the distance matrix, hierarchical clustering can be applied.
 
 ```{r}
+data(Byar)
+x <- Byar |> 
+  rename(
+    Size.tumor = Size.of.primary.tumour,
+    Serum.pacp= Serum.prostatic.acid.phosphatase,
+    Ecg.code = Electrocardiogram.code
+  ) |> 
+  mutate(
+    Serum.pacp = if_else(Serum.pacp == 0, mean(Serum.pacp), Serum.pacp),
+    Size.tumor = sqrt(Size.tumor),                        
+    Serum.pacp = log(Serum.pacp)                           
+  ) |>  
+  select(1, 2, 5, 6, 8, 9, 10, 11, 3, 4, 12, 7) |>
+  mutate(
+    Ecg.code = case_when(                                  
+      Ecg.code == 0 | Ecg.code == 1 ~ 1,
+      Ecg.code == 2 | Ecg.code == 3 | Ecg.code == 4 ~ 2,
+      Ecg.code == 5 | Ecg.code == 6 ~ 3
+    )
+  ) 
+```
+
+```{r}
 # Compute Gower's distance for mixed data
-gower_dist <- daisy(x, metric = "gower", stand = T)
+gower_dist <- daisy(
+  x, metric = "gower", stand = T, 
+  type = list(numeric = c(1:8), ordered = 9, symm = c(10,11), factor = 12)
+)
 
 # Perform hierarchical clustering
-hclust_result <- hclust(gower_dist, method = "ward.D2")
-
-# Cut tree to form clusters
-clusters <- cutree(hclust_result, k = 3)
-hclust_result |> 
+hclust(gower_dist, method = "ward.D2") |> 
   as.dendrogram() |> 
-  set("branches_k_color") |>             
-  set("branches_lty", c(1, 2, 3, 4, 5)) |> 
-  set("labels_colors") |> 
-  set("labels_cex", c(.75, .75)) |> 
+  set("branches_k_color", k = 60) |> 
+  set("branches_k_lty", k = 2) |> 
   plot(axes = F)
 ```
 
@@ -358,61 +378,46 @@ Two-step clustering is a method designed to handle large datasets that contain b
 Unfortunately, there isn’t a direct two-step clustering function in R, here is a customized function named `two_step_clustering()` to approximate it.
 
 ```{r}
-two_step_clustering <- function(data, n_pre_clusters = 5, n_final_clusters = 3, distance_method = "euclidean", seed = 123) {
+two_step_clustering <- function(data, n_pre_clust = 5, n_final_clust = 3, dist_method = "euclidean", seed = 123) {
   set.seed(seed)
   
   # STEP 1: Pre-Clustering using Hierarchical Clustering
   # Compute the distance matrix (for mixed data, replace with Gower's distance)
-  distance_matrix <- dist(data, method = distance_method)
+  distance_matrix <- dist(data, method = dist_method)
   
   # Perform hierarchical clustering
   hclust_result <- hclust(distance_matrix, method = "ward.D2")
   
   # Create pre-clusters (cut the dendrogram into n_pre_clusters groups)
-  pre_clusters <- cutree(hclust_result, k = n_pre_clusters)
+  pre_clusters <- cutree(hclust_result, k = n_pre_clust)
   
   # Add the pre-cluster information to the dataset
-  data_with_preclusters <- data
-  data_with_preclusters$pre_cluster <- as.factor(pre_clusters)
+  data_with_clusters <- data
+  data_with_clusters$pre_cluster <- as.factor(pre_clusters)
   
   # STEP 2: Final Clustering using K-means
   # Now, apply k-means clustering on the pre-clustered data
-  kmeans_result <- kmeans(data_with_preclusters, centers = n_final_clusters)
+  kmeans_result <- kmeans(data_with_clusters, centers = n_final_clust)
   
   # Add final cluster labels to the original data
-  data_with_preclusters$final_cluster <- as.factor(kmeans_result$cluster)
+  data_with_clusters$final_cluster <- as.factor(kmeans_result$cluster)
   
   # Visualization: Final clusters (using the first two principal components)
-  fviz_cluster(kmeans_result, data = data, geom = "point", ellipse.type = "convex", show.clust.cent = TRUE) +
-    labs(title = "Two-Step Clustering Result") +
-    theme_minimal()
+fviz_plot <- fviz_cluster(kmeans_result, data = data, geom = "point", show.clust.cent = T, main = "Two-step clustering", xlab = F, ylab = F, legend.title = "") +
+  theme(
+    plot.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.text = element_text(size = 9), 
+    legend.key.size = unit(0.35, "cm")
+  )
   
-  # Return the clustered data with pre-cluster and final cluster assignments
-  return(data_with_preclusters)
+ data_with_clusters
+ fviz_plot
 }
 
 # Example usage with the mtcars dataset
 df <- mtcars
-clustered_data <- two_step_clustering(df, n_pre_clusters = 5, n_final_clusters = 3)
-
-# View the result
-clustered_data
-```
-
-### Latent class analysis
-
-Latent class analysis (LCA) is another method that can handle mixed data types, particularly when categorical variables dominate. It assumes that the data comes from a mixture of underlying classes or clusters and aims to estimate these latent (unobserved) classes.
-
-It models the probability that an observation belongs to each latent class based on the observed variables. LCA is particularly suitable for categorical variables but can be extended for mixed data.
-
-```{r}
-library(poLCA)
-
-# Create a formula for LCA with mixed variables
-f <- cbind(age, gender, cholesterol) ~ 1  
-
-# Perform latent class analysis with 3 classes
-lc_result <- poLCA(f, data = x, nclass = 2, graphs = T)
+two_step_clustering(df)
 ```
 
 ### FAMD + clustering
@@ -457,7 +462,7 @@ X <- Byar |>
     Size.tumor = sqrt(Size.tumor),                         # <1>
     Serum.pacp = log(Serum.pacp)                           # <1>
   ) |> 
-  dplyr::select(1, 2, 5, 6, 8, 9, 10, 11, 3, 4, 12, 7) |>  # <2>
+  select(1, 2, 5, 6, 8, 9, 10, 11, 3, 4, 12, 7) |>  # <2>
   mutate(
     across(c(9:12), \(x) x + 1),                           # <3>
     Ecg.code = case_when(                                  # <4> 

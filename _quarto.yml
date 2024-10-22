@@ -41,6 +41,9 @@ book:
         - generalized-linear-model.qmd
         - survival-analysis.qmd
         - cluster-analysis.qmd
+        - discriminant-analysis.qmd
+        - pca-factor-analysis.qmd
+        - canonical-correlation.qmd
         - generalized-estimating-equation.qmd
         
     - part: stat-anal-report.qmd
@@ -59,7 +62,7 @@ format:
     code-copy: hover
     code-annotations: hover
     smooth-scroll: true
-
+    
 editor: visual
 
 filters:

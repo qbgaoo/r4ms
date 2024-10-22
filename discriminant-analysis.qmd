@@ -1,0 +1,374 @@
+# Discriminant analysis
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Discriminant analysis is widely used for classifying subjects into predefined groups based on observed variables. Its main goal is to build a model that can predict group membership (such as disease vs. no disease) based on a set of independent variables, which could be clinical measurements, lab results, or survey responses. The method assumes that different groups have distinct characteristics, and it helps identify which variables contribute most to the classification.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(class)
+```
+
+## Distance discriminant analysis
+
+Distance discriminant analysis is a method of discriminant analysis that classifies samples based on their distance from the center of each class. It is commonly used for classification problems where the goal is to differentiate between two or more groups. The method assumes that samples in each class are clustered around a central point, and the closer a sample is to a class center, the more likely it belongs to that class.
+
+### Distance measure
+
+The core of distance discriminant analysis is calculating the distance between each sample and the center of every class, assigning the sample to the class with the nearest center. Common distance measures include:
+
+**Euclidean distance**
+
+This is a standard distance measure between a sample and class centers. The sample is assigned to the class with the smallest Euclidean distance.
+
+**Mahalanobis distance**
+
+This distance measure takes into account the variance and correlations within the data by using the covariance matrix, making it a more robust metric for classification than Euclidean distance.
+
+For more details about distance measures, please refer to @sec-similarity-metrics .
+
+### Discriminant function and criterion
+
+**Discriminant function**
+
+For a given observation $\mathbf{x}$ and group $k$ with mean vector $\boldsymbol{\mu}_k$, the Mahalanobis distance (accounts for the covariance structure of the data) can be represented as:
+
+$$
+d_k(\mathbf{x}) = (\mathbf{x} - \boldsymbol{\mu}_k)^\top \mathbf{\Sigma}_k^{-1} (\mathbf{x} - \boldsymbol{\mu}_k)
+$$
+
+Where $\mathbf{\Sigma}_k$ is the covariance matrix of group $k$.
+
+When the covariance matrices are equal across groups, the Mahalanobis distance is given by:
+
+$$
+d_k(\mathbf{x}) = (\mathbf{x} - \boldsymbol{\mu}_k)^\top \mathbf{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}_k)
+$$
+
+Where $\mathbf{\Sigma}$ is the common covariance matrix.
+
+Since the covariance matrices are assumed to be the same across all groups, estimate the pooled covariance matrix $\mathbf{\Sigma}$ , which is a weighted average of the covariance matrices of the individual groups:
+
+$$
+\mathbf{\Sigma} = \frac{1}{n - g} \sum_{j=1}^{g} \sum_{i \in j} (\mathbf{x}_i - \boldsymbol{\mu}_j)(\mathbf{x}_i - \boldsymbol{\mu}_j)^\top
+$$
+
+where $n$ is the total number of observations, $g$ is the number of groups, $\mathbf{x}_i$ is a observation $i$ in group $j$, $\boldsymbol{\mu}_j$ is the mean vector for group $j$.
+
+**Discriminant criterion**
+
+The observation $\mathbf{x}$ belongs to group $k$ if:
+
+$$
+k = \arg \min_j \{ d_j(\mathbf{x}) \}
+$$
+
+where $d_j(\mathbf{x})$ is the distance between $\mathbf{x}$ and the centroid $\boldsymbol{\mu}_j$ of group $j$.
+
+In other words, the object is assigned to the group with the smallest discriminant function value, or in practical terms, the closest group centroid in terms of the chosen distance metric.
+
+For instance, if there are two groups with centroids $\boldsymbol{\mu}_1$and $\boldsymbol{\mu}_2$, for a new observation $\mathbf{x}$, if $d_1(\mathbf{x}) < d_2(\mathbf{x})$, the observation is classified as belonging to group $1$, otherwise it is classified as belonging to group $2$.
+
+::: {#ex23-01 .example}
+In order to predict whether a patient will develop an infection after surgery, 54 surgical patients were recruited and their extracorporeal circulation time (X1, in minutes), occlusion time (X2, in minutes), and drainage volume on the day of surgery (X3, in milliliters) were recorded. The surgical patients include 18 cases of infection and 36 cases without infection. Perform a discriminant analysis on this data.
+:::
+
+<div>
+
+<a href="datasets/ex23-01.csv" download="ex23-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex23-01.csv", show_col_types = F)
+```
+
+At present there is no specialized function for this method. Thus, we write a pair of custom functions based on Mahalanobis distance to perform discriminant analysis. The accuracy of the `dda()` function is assessed on the training data, while the `dda_cv()` function uses the leave-one-out cross-validation.
+
+::: panel-tabset
+## dda()
+
+```{r}
+dda <- function(formula, data, cov.equal = TRUE) {
+  m <- model.frame(formula, data)
+  group <- model.response(m)  # Grouping variable
+  x_vars <- m[-group]  # feature variable
+  
+  group <- as.factor(group)
+  
+  # Split the data by group
+  group_name <- levels(group)
+  group_data <- split(x_vars, group)
+  
+  # Calculate the mean and covariance matrix for each group
+  group_means <- lapply(group_data, colMeans)
+  group_covs <- lapply(group_data, cov)
+  
+  # If covariance matrix is equal, the pooled covariance matrix is used
+  if (cov.equal) {
+    pooled_cov <- Reduce(
+      "+", 
+      lapply(
+        1:length(group_name), 
+        \(i) {
+          (nrow(group_data[[i]]) - 1) * group_covs[[i]]
+        }
+      )
+    ) / (nrow(data) - length(group_name))
+  }
+  
+  # The Mahalanobis distance from each sample to each group
+  mahalanobis_to_groups <- sapply(1:nrow(x_vars), function(i) {
+    x_i <- x_vars[i, , drop = FALSE]
+    sapply(1:length(group_name), function(j) {
+      mean_j <- group_means[[j]]
+      cov_j <- if (cov.equal) pooled_cov else group_covs[[j]]
+      mahalanobis(x_i, mean_j, cov_j)
+    })
+  })
+  
+  # Classify according to the group with the smallest distance
+  predicted <- apply(mahalanobis_to_groups, 2, function(d) {
+    group_name[which.min(d)]
+  })
+  
+  # Generate confusion matrix and calculate accuracy
+  confusion_matrix <- table(Predicted = predicted, Actual = group)
+  accuracy <- mean(predicted == group)
+  
+  # Return the result
+  list(
+    Predicted = predicted,
+    Confusion_matrix = confusion_matrix,
+    Accuracy = accuracy
+  )
+}
+```
+
+## dda_cv()
+
+```{r}
+dda_cv <- function(formula, data, cov.equal = TRUE) {
+  m <- model.frame(formula, data)
+  group <- model.response(m)  # Grouping variable
+  x_vars <- m[-group]  # feature variable
+  
+  group <- as.factor(group)
+  group_name <- levels(group)
+  n <- nrow(data)
+  
+  # Used to save the predicted results of each test
+  predicted <- rep(NA, n)
+  
+  # Leave one out method
+  for (i in 1:n) {
+    # Training data: Sample i is removed
+    train_data <- data[-i, ]
+    train_m <- model.frame(formula, train_data)
+    train_group <- model.response(train_m)
+    train_x_vars <- train_m[-train_group]
+    
+    # Split the data by group
+    train_group_data <- split(train_x_vars, train_group)
+    
+    # Calculate the mean and covariance matrix for each group
+    group_means <- lapply(train_group_data, colMeans)
+    group_covs <- lapply(train_group_data, cov)
+  
+    # If covariance matrices are equal, use weighted mean covariance matrix
+    if (cov.equal) {
+      pooled_cov <- Reduce(
+        "+", 
+        lapply(
+          1:length(group_name), 
+          \(j) {
+            (nrow(train_group_data[[j]]) - 1) * group_covs[[j]]
+          }
+        )
+      ) / (nrow(train_data) - length(group_name))
+    }
+    # Obtain the i th sample for testing
+    test_sample <- x_vars[i, , drop = FALSE]
+  
+    # Calculate the Mahalanobis distance
+    distances <- sapply(1:length(group_name), function(j) {
+      mean_j <- group_means[[j]]
+      cov_j <- if (cov.equal) pooled_cov else group_covs[[j]]
+      mahalanobis(test_sample, mean_j, cov_j)
+    })
+    
+    # Classify according to the group with the smallest distance
+    predicted[i] <- group_name[which.min(distances)]
+ }
+
+  # Generate confusion matrix and calculate accuracy
+  confusion_matrix <- table(Predicted = predicted, Actual = group)
+  accuracy <- mean(predicted == group)
+  
+  # Return the result
+  list(
+    Predicted = predicted,
+    Confusion_matrix = confusion_matrix,
+    Accuracy = accuracy
+  )
+}
+```
+:::
+
+```{r}
+dda(group ~ x1 + x2 + x3, df, cov.equal = T)
+dda_cv(group ~ x1 + x2 + x3, df, cov.equal = T)
+```
+
+## Fisher discriminant analysis
+
+Fisher discriminant analysis is a classical statistical method used for classification and dimensionality reduction. The primary goal aims to find a linear decision boundary that maximizes the separation between classes by maximizing the between-class variance while minimizing the within-class variance. The goal is to project the data onto a lower-dimensional space where the classes are well-separated.
+
+Suppose we have two classes, $\text G_1$ and $\text G_2$, with corresponding mean vectors $\boldsymbol{\mu}_1$ and $\boldsymbol{\mu}_2$, and their covariance matrices $\boldsymbol {\Sigma}_1$ and $\boldsymbol {\Sigma}_2$. The Fisher discriminant function is expressed as:
+
+$$
+f(\mathbf {x}) =  \mathbf w^\top \mathbf x + \mathbf b
+$$
+
+where $\mathbf x$ is a observation, $\mathbf w$ is the optimal projection direction found by Fisher discriminant analysis, $\mathbf b$ is a bias term, typically used to define the decision boundary.
+
+The discriminant direction $\mathbf w$ is computed as:
+
+$$
+\mathbf w = \mathbf S_\text{w}^{-1} (\boldsymbol {\mu}_1 - \boldsymbol {\mu}_2)
+$$
+
+where $\mathbf S_\text{w}$ is the within-class scatter matrix, computed as $\mathbf S_\text{w} = \mathbf S_1 + \mathbf S_2$, with $\mathbf S_1$ and $\mathbf S_2$ being the within-class scatter matrix of the two classes, $\boldsymbol \mu_1 - \boldsymbol \mu_2$ is the difference between the mean vectors of the two classes.
+
+For a new observation $\mathbf x$, the Fisher discriminant function projects the observation onto the discriminant direction. If the projection value is greater than a certain threshold, the sample is classified into one class; otherwise, it is classified into the other class. The general classification rule is:
+
+$f(\mathbf {x}) = \mathbf w^\top \mathbf x + \mathbf b > 0, \quad \mathbf {x} \in \text G_1$
+
+$f(\mathbf {x}) = \mathbf w^\top \mathbf x + \mathbf b < 0, \quad \mathbf x \in \text G_2$
+
+::: example
+Try performing Fisher discriminant analysis on the data from [Example 1](#ex23-01).
+:::
+
+```{r}
+df <- read_csv("datasets/ex23-01.csv", col_types = list(group = col_factor()))
+```
+
+Fisher discriminant analysis is performed using the `lda()` function from the `MASS` package:
+
+```{r}
+model <- df |> 
+  mutate(across(contains("x"), scale)) |> 
+  MASS::lda(group ~ x1 + x2 + x3, data = _, method = "mle")
+cf <- coef(model)
+```
+
+The linear discriminant function is:
+
+$Z=$ `r round(cf[1],3)`$X_1$ `r ifelse(cf[2]>0,"+", "-")` `r round(abs(cf[2]),3)`$X_2$ `r ifelse(cf[3]>0,"+", "-")` `r round(abs(cf[3]),3)`$X_3$
+
+To assess the performance of discriminant model, you can use the `confusionMatrix()` from the `caret` package:
+
+```{r}
+model_cv <- mutate(df, across(contains("x"), scale)) |> 
+  MASS::lda(group ~ x1 + x2 + x3, data = _, method = "mle", CV = T) 
+  
+pred <- pluck(model_cv, "class")
+refer <- pull(df, group)
+
+caret::confusionMatrix(pred, refer)
+```
+
+## Bayes discriminant analysis
+
+Bayes discriminant analysis is a classification method based on Bayesian decision theory, where the goal is to assign a given observation to the most probable class based on the posterior probabilities. This approach relies on Bayes theorem, which uses prior probabilities of classes, likelihoods (based on the distribution of data), and evidence from the data to make decisions.
+
+### Bayes theorem
+
+The fundamental principle behind Bayes discriminant analysis is Bayes theorem, which calculates the posterior probability of a class given some observed $\mathbf x$.
+
+$$
+P(C_k | \mathbf x) = \frac{P(\mathbf x | C_k) P(C_k)}{P(\mathbf x)}
+$$
+
+where $P(C_k | \mathbf x)$ is the posterior probability of class $C_k$ given the data $X$, $P(\mathbf x | C_k)$ is the likelihood of the data given class $C_k$, $P(C_k)$ is the prior probability of class $C_k$ (the probability of class $C_k$ without any observation). $P(\mathbf x)$ is the evidence, a normalization factor that ensures the posterior probabilities sum to 1.
+
+### Discriminant function
+
+In Bayes discriminant analysis, we use a discriminant function for each class to decide which class a new observation belongs to. The discriminant function can be written as:
+
+$$
+G_k(\mathbf x) = \log P(C_k | \mathbf x) = \log P(\mathbf x | C_k) + \log P(C_k)
+$$
+
+The observation $\mathbf x$ is assigned to the class with the largest discriminant function $G_k(\mathbf x)$ .
+
+Types of Bayes Discriminant Analysis
+
+### Gaussian discriminant analysis
+
+In Gaussian Discriminant Analysis, it is assumed that the features for each class follow a multivariate normal (Gaussian) distribution. The class-conditional probability for class $C_k$ is modeled as:
+
+$$
+P(\mathbf{x} | C_k) = \frac{1}{(2 \pi)^{d/2} |\boldsymbol {\Sigma}_k|^{1/2}} \exp \left( -\frac{1}{2} (\mathbf{x} - \boldsymbol \mu_k)^T \Sigma_k^{-1} (\mathbf{x} - \boldsymbol \mu_k) \right)
+$$
+
+Where $\boldsymbol \mu_k$ is the mean vector of class $C_k$, $\boldsymbol \Sigma_k$ is the covariance matrix of class $C_k$, $d$ is the dimensionality of the feature space.
+
+If each class has the same covariance matrix $\boldsymbol \Sigma_1 = \boldsymbol \Sigma_2 = \dots = \boldsymbol \Sigma$, the method reduces to linear discriminant analysis, and the decision boundary is linear.
+
+If the covariance matrices are different for each class $\boldsymbol \Sigma_1 \neq \boldsymbol \Sigma_2$, it results in quadratic discriminant analysis, and the decision boundary is quadratic.
+
+### Naive Bayes classifier
+
+The Naive Bayes classifier is a simplified version of Bayes discriminant analysis that assumes that the features are conditionally independent given the class. This assumption dramatically simplifies the computation of $P(\mathbf x | C_k)$ as a product of individual probabilities for each feature:
+
+$$
+P(\mathbf x| C_k) = \prod_{i=1}^d P(x_i | C_k)
+$$
+
+Despite the strong independence assumption, Naive Bayes often performs surprisingly well, particularly in high-dimensional spaces.
+
+::: example
+To differentiate between vocal cord polyps and vocal cord nodules through a non-invasive voice test, a researcher randomly selected 30 patients diagnosed with vocal cord polyps and 30 patients diagnosed with vocal cord nodules. At the same time, 40 healthy individuals, matched in age, gender, and education level, were selected as a control group. The longest phonation time X1, fundamental frequency X2, minimum sound pressure level X3, and voice handicap index X4 were measured for each individual through voice tests and voice evaluation scales. Based on this data, can the researcher distinguish between individuals with normal vocal cords, vocal cord nodules, and vocal cord polyps? From the 100 subjects, 85 were randomly selected as the training sample and 15 as the testing sample.
+:::
+
+<div>
+
+<a href="datasets/ex23-02.csv" download="ex23-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex23-02.csv", col_types = list(group = col_factor()))
+
+train <- df |> 
+  filter(flag == "1") |> 
+  select(group, starts_with("x"))
+
+test <- df |> 
+  filter(flag == "0")|> 
+  select(group, starts_with("x"))
+```
+
+You can use the `NaiveBayes()` function from the `klaR` package to implement Naive Bayes classification:
+
+```{r}
+model <- klaR::NaiveBayes(group ~ x1 + x2 + x3 + x4, data = train)
+```
+
+```{r}
+(result <- predict(model, test))
+```
+
+```{r}
+pred <- pluck(result, "class")
+refer <- pull(test, group)
+print(paste0("Accuracy: ", mean(pred == refer) * 100, "%"))
+```

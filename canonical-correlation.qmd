@@ -1,0 +1,17 @@
+# Canonical correlation analysis
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Canonical correlation analysis (CCA) is a multivariate statistical technique used to explore the relationship between two sets of variables. It examines the linear relationships between two datasets and finds pairs of canonical variables—linear combinations of the original variables—that have maximum correlation with each other.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+## Pri
