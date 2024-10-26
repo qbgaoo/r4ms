@@ -374,8 +374,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./structural-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multilevel-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multilevel model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
       </ul>
@@ -392,19 +404,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -430,7 +442,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#factor-analysis" id="toc-factor-analysis" class="nav-link" data-scroll-target="#factor-analysis"><span class="header-section-number">24.3</span> Factor analysis</a>
   <ul class="collapse">
-  <li><a href="#types-of-factor-analysis" id="toc-types-of-factor-analysis" class="nav-link" data-scroll-target="#types-of-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</a></li>
+  <li><a href="#sec-factor-analysis" id="toc-sec-factor-analysis" class="nav-link" data-scroll-target="#sec-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</a></li>
   <li><a href="#mathematical-model" id="toc-mathematical-model" class="nav-link" data-scroll-target="#mathematical-model"><span class="header-section-number">24.3.2</span> Mathematical model</a></li>
   <li><a href="#factor-loading-matrix" id="toc-factor-loading-matrix" class="nav-link" data-scroll-target="#factor-loading-matrix"><span class="header-section-number">24.3.3</span> Factor loading matrix</a></li>
   <li><a href="#factor-rotation" id="toc-factor-rotation" class="nav-link" data-scroll-target="#factor-rotation"><span class="header-section-number">24.3.4</span> Factor rotation</a></li>
@@ -984,8 +996,8 @@ Z_i = v_{i1}X_1 + v_{i2}X_2 + \dots + v_{im}X_m
 <section id="factor-analysis" class="level2" data-number="24.3">
 <h2 data-number="24.3" class="anchored" data-anchor-id="factor-analysis"><span class="header-section-number">24.3</span> Factor analysis</h2>
 <p>Factor analysis (FA) is used to identify underlying relationships between observed variables. The goal is to model the data using fewer unobserved variables, called latent variables or factors, which explain the correlations or covariances among the observed variables. It’s widely used in fields such as psychology, social sciences, finance, and biology to reduce data dimensionality and uncover latent structures.</p>
-<section id="types-of-factor-analysis" class="level3" data-number="24.3.1">
-<h3 data-number="24.3.1" class="anchored" data-anchor-id="types-of-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</h3>
+<section id="sec-factor-analysis" class="level3" data-number="24.3.1">
+<h3 data-number="24.3.1" class="anchored" data-anchor-id="sec-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</h3>
 <ol type="1">
 <li><strong>Exploratory factor analysis</strong></li>
 </ol>
@@ -994,6 +1006,7 @@ Z_i = v_{i1}X_1 + v_{i2}X_2 + \dots + v_{im}X_m
 <li><strong>Confirmatory factor analysis</strong></li>
 </ol>
 <p>Confirmatory factor analysis (CFA) is used when you have a hypothesis or prior knowledge about the number of factors and their relationships. CFA tests how well the hypothesized model fits the data.</p>
+<p>The factor analysis discussed in this chapter primarily refers to EFA, CFA will be discussed in details in <a href="structural-equation.html" class="quarto-xref"><span>Chapter 26</span></a> .</p>
 </section>
 <section id="mathematical-model" class="level3" data-number="24.3.2">
 <h3 data-number="24.3.2" class="anchored" data-anchor-id="mathematical-model"><span class="header-section-number">24.3.2</span> Mathematical model</h3>
