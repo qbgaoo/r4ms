@@ -435,7 +435,10 @@ window.Quarto = {
   <li><a href="#mixed-model" id="toc-mixed-model" class="nav-link" data-scroll-target="#mixed-model"><span class="header-section-number">27.2</span> Mixed model</a></li>
   <li><a href="#variance-component-model" id="toc-variance-component-model" class="nav-link" data-scroll-target="#variance-component-model"><span class="header-section-number">27.3</span> Variance component model</a></li>
   <li><a href="#random-coefficient-model" id="toc-random-coefficient-model" class="nav-link" data-scroll-target="#random-coefficient-model"><span class="header-section-number">27.4</span> Random coefficient model</a></li>
-  <li><a href="#multilevel-model-of-discrete-data" id="toc-multilevel-model-of-discrete-data" class="nav-link" data-scroll-target="#multilevel-model-of-discrete-data"><span class="header-section-number">27.5</span> Multilevel model of discrete data</a></li>
+  <li><a href="#multilevel-model-of-discrete-data" id="toc-multilevel-model-of-discrete-data" class="nav-link" data-scroll-target="#multilevel-model-of-discrete-data"><span class="header-section-number">27.5</span> Multilevel model of discrete data</a>
+  <ul class="collapse">
+  <li><a href="#reliability-assessment" id="toc-reliability-assessment" class="nav-link" data-scroll-target="#reliability-assessment"><span class="header-section-number">27.5.1</span> Reliability assessment</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/multilevel-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -664,8 +667,8 @@ Packages for linear mixed models
 <pre><code>#&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 6.1e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.61 seconds.
+#&gt; Chain 1: Gradient evaluation took 5.3e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.53 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -682,15 +685,15 @@ Packages for linear mixed models
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.126 seconds (Warm-up)
-#&gt; Chain 1:                0.05 seconds (Sampling)
-#&gt; Chain 1:                0.176 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.121 seconds (Warm-up)
+#&gt; Chain 1:                0.049 seconds (Sampling)
+#&gt; Chain 1:                0.17 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 5e-06 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#&gt; Chain 2: Gradient evaluation took 4e-06 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -708,14 +711,14 @@ Packages for linear mixed models
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
 #&gt; Chain 2:  Elapsed Time: 0.086 seconds (Warm-up)
-#&gt; Chain 2:                0.049 seconds (Sampling)
-#&gt; Chain 2:                0.135 seconds (Total)
+#&gt; Chain 2:                0.048 seconds (Sampling)
+#&gt; Chain 2:                0.134 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 3e-06 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
+#&gt; Chain 3: Gradient evaluation took 4e-06 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -732,15 +735,15 @@ Packages for linear mixed models
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.089 seconds (Warm-up)
-#&gt; Chain 3:                0.048 seconds (Sampling)
-#&gt; Chain 3:                0.137 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.081 seconds (Warm-up)
+#&gt; Chain 3:                0.046 seconds (Sampling)
+#&gt; Chain 3:                0.127 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 5e-06 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#&gt; Chain 4: Gradient evaluation took 7e-06 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -757,9 +760,9 @@ Packages for linear mixed models
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.105 seconds (Warm-up)
+#&gt; Chain 4:  Elapsed Time: 0.108 seconds (Warm-up)
 #&gt; Chain 4:                0.052 seconds (Sampling)
-#&gt; Chain 4:                0.157 seconds (Total)
+#&gt; Chain 4:                0.16 seconds (Total)
 #&gt; Chain 4:</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bayes_fit <span class="sc">|&gt;</span> <span class="fu">summary</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -810,7 +813,7 @@ S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
 <blockquote class="blockquote">
 <p>Patients (individuals) are nested within hospitals (groups). The total variance can be separated into hospital-level variation and patient-level variation.</p>
 </blockquote>
-<p>Variance component models are typically estimated using maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML). The packages like lme4 or nlme are used to fit variance component models.</p>
+<p>Variance component models are typically estimated using maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML). The packages like <code>lme4</code> or <code>nlme</code> are used to fit variance component models.</p>
 <div class="example">
 <strong>Example 2:</strong> 
 <p>A researcher intends to use a meta-analysis to understand the effect of migraines on adult depression. The literature search was conducted up and 16 eligible studies were included. Each study was independent and had the same research hypothesis. The available data include the odds ratios (OR) for each study, as well as study-level explanatory variables such as sample size, whether adjustments for education level were made, and study region, as shown in the data file. Please use R to perform a variance components model analysis.</p>
@@ -819,10 +822,20 @@ S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
 <p><a href="datasets/ex27-02.csv" download="ex27-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-02.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">id =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">edu_adj =</span> <span class="fu">as.factor</span>(edu_adj),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">study_rgn =</span> <span class="fu">as.factor</span>(study_rgn)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rma</span>(<span class="at">yi =</span> <span class="fu">log</span>(or), <span class="at">vi =</span> <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">/</span>n_sample), <span class="at">data =</span> tb, <span class="at">mods =</span> <span class="sc">~</span> edu_adj <span class="sc">+</span> study_rgn, <span class="at">method =</span> <span class="st">"REML"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rma</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">yi =</span> <span class="fu">log</span>(or),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vi =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n_sample), </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mods =</span> <span class="sc">~</span> edu_adj <span class="sc">+</span> study_rgn , </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"REML"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Mixed-Effects Model (k = 16; tau^2 estimator: REML)
@@ -841,10 +854,10 @@ S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
 #&gt; 
 #&gt; Model Results:
 #&gt; 
-#&gt;            estimate      se     zval    pval    ci.lb   ci.ub      
-#&gt; intrcpt      0.6516  0.1934   3.3697  0.0008   0.2726  1.0307  *** 
-#&gt; edu_adj     -0.0446  0.2486  -0.1792  0.8578  -0.5319  0.4427      
-#&gt; study_rgn    0.0610  0.2245   0.2718  0.7858  -0.3790  0.5010      
+#&gt;             estimate      se     zval    pval    ci.lb   ci.ub      
+#&gt; intrcpt       0.6516  0.1934   3.3697  0.0008   0.2726  1.0307  *** 
+#&gt; edu_adj1     -0.0446  0.2486  -0.1792  0.8578  -0.5319  0.4427      
+#&gt; study_rgn1    0.0610  0.2245   0.2718  0.7858  -0.3790  0.5010      
 #&gt; 
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
@@ -1017,8 +1030,25 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 #&gt;    -0.19873      0.00394</code></pre>
 </div>
 </div>
+<section id="reliability-assessment" class="level3" data-number="27.5.1">
+<h3 data-number="27.5.1" class="anchored" data-anchor-id="reliability-assessment"><span class="header-section-number">27.5.1</span> Reliability assessment</h3>
+<p>Multilevel models for discrete data hold unique value in assessing questionnaire reliability, especially in studies where responses are influenced by hierarchical structures or clustering effects. Here’s why these models are particularly advantageous:</p>
+<ol type="1">
+<li><p>Addressing hierarchical structure and nested effects</p>
+<p>Questionnaire data often involve a natural hierarchy, such as responses collected by different interviewers or across diverse locations. Multilevel models allow for this complexity by adding random effects at various levels (e.g., interviewers or locations), thus accurately accounting for variations in responses due to these nested structures. This prevents underestimation of reliability and provides a more accurate picture of the questionnaire’s consistency.</p></li>
+<li><p>Suitability for discrete response variables</p>
+<p>Responses in reliability studies are typically discrete, such as binary “yes/no” answers or ordinal scales. Multilevel models are well-suited to handle such data through link functions like logit or probit, allowing for reliable modeling of these non-continuous variables. This ability to directly model the response distribution improves accuracy in reliability estimates, especially when items vary widely in response patterns.</p></li>
+<li><p>Quantifying item-specific and overall reliability</p>
+<p>By treating items as a separate level in the model, multilevel approaches can isolate the variance associated with each questionnaire item through random effects. This item-level analysis provides crucial insights into the consistency of individual items and contributes to an overall reliability measure that is richer and more detailed than traditional metrics.</p></li>
+<li><p>Enabling complex reliability metrics beyond standard measures</p>
+<p>Unlike standard reliability coefficients (e.g., Cronbach’s α), multilevel models offer the flexibility to calculate advanced reliability metrics, such as hierarchical reliability coefficients. By leveraging variance components at various levels, multilevel models can reflect both item and respondent consistency, yielding a nuanced and holistic view of questionnaire reliability.</p></li>
+<li><p>Controlling for systematic bias in questionnaire administration</p>
+<p>Multilevel models can include potential sources of systematic bias, such as interviewer differences or geographic variation, as either fixed or random effects. This feature helps control for external factors that may influence responses, ultimately resulting in more accurate and reliable assessments of the questionnaire’s consistency.</p></li>
+</ol>
+<p>In practice, multilevel models can directly model questionnaire data with individual- and item-level variations, allowing researchers to differentiate between these sources of variability. This precise control over respondent- and item-specific effects makes multilevel modeling an invaluable tool in questionnaire reliability studies.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
