@@ -422,7 +422,7 @@ In a word, this principle components regression procedure helps to handle issues
 
 Factor analysis (FA) is used to identify underlying relationships between observed variables. The goal is to model the data using fewer unobserved variables, called latent variables or factors, which explain the correlations or covariances among the observed variables. It’s widely used in fields such as psychology, social sciences, finance, and biology to reduce data dimensionality and uncover latent structures.
 
-### Types of factor analysis
+### Types of factor analysis {#sec-factor-analysis}
 
 1.  **Exploratory factor analysis**
 
@@ -431,6 +431,8 @@ Exploratory factor analysis (EFA) is used when you don’t have preconceived not
 2.  **Confirmatory factor analysis**
 
 Confirmatory factor analysis (CFA) is used when you have a hypothesis or prior knowledge about the number of factors and their relationships. CFA tests how well the hypothesized model fits the data.
+
+The factor analysis discussed in this chapter primarily refers to EFA, CFA will be discussed in details in @sec-structural-equation .
 
 ### Mathematical model
 
@@ -607,4 +609,3 @@ The output shows the results of a factor analysis with four factors. Here’s ho
 3.  Appropriate sample size
 
     For reliable factor analysis, it is generally recommended to have at least 100 to 200 cases, with a preferred observation-to-variable ratio of 10:1 or higher. However, specific requirements will vary depending on the complexity of the model, communalities of the variables, and the number of factors.
-

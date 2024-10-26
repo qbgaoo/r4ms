@@ -44,6 +44,8 @@ book:
         - discriminant-analysis.qmd
         - pca-factor-analysis.qmd
         - canonical-correlation.qmd
+        - structural-equation.qmd
+        - multilevel-model.qmd
         - generalized-estimating-equation.qmd
         
     - part: stat-anal-report.qmd

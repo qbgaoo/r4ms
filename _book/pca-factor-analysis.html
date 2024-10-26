@@ -374,8 +374,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./structural-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
       </ul>
@@ -392,19 +398,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -430,10 +436,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#factor-analysis" id="toc-factor-analysis" class="nav-link" data-scroll-target="#factor-analysis"><span class="header-section-number">24.3</span> Factor analysis</a>
   <ul class="collapse">
-  <li><a href="#types-of-factor-analysis" id="toc-types-of-factor-analysis" class="nav-link" data-scroll-target="#types-of-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</a></li>
+  <li><a href="#sec-factor-analysis" id="toc-sec-factor-analysis" class="nav-link" data-scroll-target="#sec-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</a></li>
   <li><a href="#mathematical-model" id="toc-mathematical-model" class="nav-link" data-scroll-target="#mathematical-model"><span class="header-section-number">24.3.2</span> Mathematical model</a></li>
   <li><a href="#factor-loading-matrix" id="toc-factor-loading-matrix" class="nav-link" data-scroll-target="#factor-loading-matrix"><span class="header-section-number">24.3.3</span> Factor loading matrix</a></li>
   <li><a href="#factor-rotation" id="toc-factor-rotation" class="nav-link" data-scroll-target="#factor-rotation"><span class="header-section-number">24.3.4</span> Factor rotation</a></li>
+  <li><a href="#matters-need-consideration" id="toc-matters-need-consideration" class="nav-link" data-scroll-target="#matters-need-consideration"><span class="header-section-number">24.3.5</span> Matters need consideration</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/pca-factor-analysis.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -982,9 +989,9 @@ Z_i = v_{i1}X_1 + v_{i2}X_2 + \dots + v_{im}X_m
 </section>
 <section id="factor-analysis" class="level2" data-number="24.3">
 <h2 data-number="24.3" class="anchored" data-anchor-id="factor-analysis"><span class="header-section-number">24.3</span> Factor analysis</h2>
-<p>Factor analysis is used to identify underlying relationships between observed variables. The goal is to model the data using fewer unobserved variables, called latent variables or factors, which explain the correlations or covariances among the observed variables. It’s widely used in fields such as psychology, social sciences, finance, and biology to reduce data dimensionality and uncover latent structures.</p>
-<section id="types-of-factor-analysis" class="level3" data-number="24.3.1">
-<h3 data-number="24.3.1" class="anchored" data-anchor-id="types-of-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</h3>
+<p>Factor analysis (FA) is used to identify underlying relationships between observed variables. The goal is to model the data using fewer unobserved variables, called latent variables or factors, which explain the correlations or covariances among the observed variables. It’s widely used in fields such as psychology, social sciences, finance, and biology to reduce data dimensionality and uncover latent structures.</p>
+<section id="sec-factor-analysis" class="level3" data-number="24.3.1">
+<h3 data-number="24.3.1" class="anchored" data-anchor-id="sec-factor-analysis"><span class="header-section-number">24.3.1</span> Types of factor analysis</h3>
 <ol type="1">
 <li><strong>Exploratory factor analysis</strong></li>
 </ol>
@@ -993,6 +1000,7 @@ Z_i = v_{i1}X_1 + v_{i2}X_2 + \dots + v_{im}X_m
 <li><strong>Confirmatory factor analysis</strong></li>
 </ol>
 <p>Confirmatory factor analysis (CFA) is used when you have a hypothesis or prior knowledge about the number of factors and their relationships. CFA tests how well the hypothesized model fits the data.</p>
+<p>The factor analysis discussed in this chapter primarily refers to EFA, CFA will be discussed in details in <a href="structural-equation.html" class="quarto-xref"><span>Chapter 26</span></a> .</p>
 </section>
 <section id="mathematical-model" class="level3" data-number="24.3.2">
 <h3 data-number="24.3.2" class="anchored" data-anchor-id="mathematical-model"><span class="header-section-number">24.3.2</span> Mathematical model</h3>
@@ -1115,7 +1123,7 @@ X_i = \lambda_{i1}F_1 + \lambda_{i2}F_2 + \dots + \lambda_{im}F_m + \epsilon_i
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fa.parallel</span>(<span class="fu">cor</span>(df), <span class="at">n.obs =</span> <span class="dv">36</span>, <span class="at">fm =</span> <span class="st">"ml"</span>, <span class="at">fa =</span> <span class="st">"fa"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
+<pre><code>#&gt; Parallel analysis suggests that the number of factors =  4  and the number of components =  NA</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1127,35 +1135,32 @@ X_i = \lambda_{i1}F_1 + \lambda_{i2}F_2 + \dots + \lambda_{im}F_m + \epsilon_i
 </div>
 <p>The primary function used for factor analysis is <code>fa()</code> from the <code>psych</code> package. Additionally, the <code>factanal()</code> function from the base <code>stats</code> package can also be used for factor analysis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">fa</span>(df, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">scores =</span> <span class="st">"regression"</span>, <span class="at">fm =</span> <span class="st">"ml"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Loading required namespace: GPArotation</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="st">"loadings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">fa</span>(df, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">"varimax"</span>, <span class="at">fm =</span> <span class="st">"ml"</span>) </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>model <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="st">"loadings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Loadings:
-#&gt;    ML2    ML4    ML1    ML3   
-#&gt; x0  0.982 -0.156              
-#&gt; x1                0.983       
-#&gt; x2  0.808  0.247  0.195  0.105
-#&gt; x3 -0.353  0.832              
-#&gt; x4  0.221  0.912  0.107       
-#&gt; x5 -0.349 -0.368  0.350  0.320
-#&gt; x6                       0.995
-#&gt; x7 -0.243 -0.223        -0.380
-#&gt; x8 -0.537         0.227       
-#&gt; x9  0.582  0.104 -0.305       
+#&gt;    ML2    ML4    ML3    ML1   
+#&gt; x0  0.971 -0.192              
+#&gt; x1 -0.269  0.222         0.934
+#&gt; x2  0.788  0.246  0.209  0.223
+#&gt; x3 -0.182  0.812              
+#&gt; x4  0.371  0.902         0.202
+#&gt; x5 -0.545 -0.312  0.271  0.275
+#&gt; x6                0.989       
+#&gt; x7 -0.239 -0.189 -0.416       
+#&gt; x8 -0.608                0.198
+#&gt; x9  0.687               -0.265
 #&gt; 
-#&gt;                  ML2   ML4   ML1   ML3
-#&gt; SS loadings    2.599 1.810 1.297 1.255
-#&gt; Proportion Var 0.260 0.181 0.130 0.126
-#&gt; Cumulative Var 0.260 0.441 0.571 0.696</code></pre>
+#&gt;                  ML2   ML4   ML3   ML1
+#&gt; SS loadings    3.006 1.761 1.288 1.169
+#&gt; Proportion Var 0.301 0.176 0.129 0.117
+#&gt; Cumulative Var 0.301 0.477 0.606 0.722</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">factanal</span>(df, <span class="at">factors =</span> <span class="dv">4</span>, <span class="at">scores =</span> <span class="st">"regression"</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>model <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="st">"loadings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">factanal</span>(df, <span class="at">factors =</span> <span class="dv">4</span>, <span class="at">rotation =</span><span class="st">"varimax"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>model <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="st">"loadings"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Loadings:
@@ -1184,6 +1189,26 @@ X_i = \lambda_{i1}F_1 + \lambda_{i2}F_2 + \dots + \lambda_{im}F_m + \epsilon_i
 <p><strong>Factor3</strong>: Variable x6 has a very high loading on Factor3 (0.989), suggesting it primarily defines this factor.</p>
 <p><strong>Factor4</strong>: Variable x1 has a strong loading on Factor4 (0.934), suggesting it strongly contributes to this factor.</p>
 </blockquote>
+</section>
+<section id="matters-need-consideration" class="level3" data-number="24.3.5">
+<h3 data-number="24.3.5" class="anchored" data-anchor-id="matters-need-consideration"><span class="header-section-number">24.3.5</span> Matters need consideration</h3>
+<ol type="1">
+<li><p>The solution to a factor analysis is not unique. There are several reasons for this:</p>
+<ul>
+<li>Rotation ambiguity: After extracting the initial factors, different rotations can be applied to simplify or clarify the structure of the factor loadings. The rotation affects how the factors are interpreted, but there are many possible rotations, leading to different sets of factor loadings and thus different interpretations.</li>
+<li>Sign ambiguity: Factor analysis can produce factor loadings with positive or negative signs, and both can explain the same amount of variance. Swapping the sign of all loadings for a factor does not change the interpretation but can lead to different representations of the solution.</li>
+<li>Factor score indeterminacy: The factor scores (the values that represent how much each individual case scores on each factor) are indeterminate. Different methods (e.g., regression, Bartlett, Thurstone’s) can be used to estimate factor scores, and each method can yield slightly different scores. Factor analysis provides factor loadings, but the scores themselves can vary depending on the estimation method used.</li>
+<li>Number of factors chosen: The number of factors to retain is subjective and based on criteria such as the Kaiser criterion (eigenvalues &gt; 1), scree plot, or parallel analysis. The choice of the number of factors can lead to different factor structures, so even when the same data is used, analysts might arrive at different conclusions.</li>
+</ul></li>
+<li><p>Distinctions between PCA and FA</p>
+<ul>
+<li>Different objectives: PCA is primarily used for dimensionality reduction. The goal is to simplify a dataset by extracting the most important principal components while retaining as much of the original information as possible. It focuses on combining the original variables into uncorrelated principal components that explain the maximum variance in the data. FA is primarily used to identify underlying structures or patterns. The goal is to uncover the latent relationships between variables and determine which variables can be grouped into the same factor. FA emphasizes the understanding of underlying constructs.</li>
+<li>Mathematical Foundations: PCA is based on the eigenvalue decomposition of the covariance or correlation matrix, producing new variables (principal components) that are linear combinations of the original variables. FA is Based on a model assumption where observed variables are generated by factors and error terms. Estimation is usually done through least squares or maximum likelihood methods. Factor loadings indicate the relationships between variables and latent factors.</li>
+<li>Application contexts: PCA is more suitable for data preprocessing and feature extraction, especially when the number of variables exceeds the number of observations. FA is more commonly applied in fields like psychology and sociology to identify the influence of latent variables.</li>
+</ul></li>
+<li><p>Appropriate sample size</p>
+<p>For reliable factor analysis, it is generally recommended to have at least 100 to 200 cases, with a preferred observation-to-variable ratio of 10:1 or higher. However, specific requirements will vary depending on the complexity of the model, communalities of the variables, and the number of factors.</p></li>
+</ol>
 
 
 </section>

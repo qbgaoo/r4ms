@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>25&nbsp; Canonical correlation analysis – R for Medical Statistics</title>
+<title>26&nbsp; Structural equation model – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./structural-equation-model.html" rel="next">
-<link href="./pca-factor-analysis.html" rel="prev">
+<link href="./generalized-estimating-equation.html" rel="next">
+<link href="./canonical-correlation.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -107,49 +107,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
-  <script>document.addEventListener("DOMContentLoaded", function () {
- var mathElements = document.getElementsByClassName("math");
- var macros = [];
- for (var i = 0; i < mathElements.length; i++) {
-  var texText = mathElements[i].firstChild;
-  if (mathElements[i].tagName == "SPAN") {
-   katex.render(texText.data, mathElements[i], {
-    displayMode: mathElements[i].classList.contains('display'),
-    throwOnError: false,
-    macros: macros,
-    fleqn: false
-   });
-}}});
-  </script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -162,7 +119,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./canonical-correlation.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./structural-equation-model.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -368,14 +325,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./canonical-correlation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./canonical-correlation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./structural-equation-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">structural-equation-model.html</span></span></a>
+  <a href="./structural-equation-model.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -425,34 +382,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">25.1</span> Prerequisite</a></li>
-  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts"><span class="header-section-number">25.2</span> Key concepts</a>
-  <ul class="collapse">
-  <li><a href="#canonical-variables" id="toc-canonical-variables" class="nav-link" data-scroll-target="#canonical-variables"><span class="header-section-number">25.2.1</span> Canonical variables</a></li>
-  <li><a href="#canonical-coefficients" id="toc-canonical-coefficients" class="nav-link" data-scroll-target="#canonical-coefficients"><span class="header-section-number">25.2.2</span> Canonical coefficients</a></li>
-  <li><a href="#canonical-loadings" id="toc-canonical-loadings" class="nav-link" data-scroll-target="#canonical-loadings"><span class="header-section-number">25.2.3</span> Canonical loadings</a></li>
-  <li><a href="#canonical-correlation" id="toc-canonical-correlation" class="nav-link" data-scroll-target="#canonical-correlation"><span class="header-section-number">25.2.4</span> Canonical correlation</a></li>
-  <li><a href="#canonical-correlation-coefficients" id="toc-canonical-correlation-coefficients" class="nav-link" data-scroll-target="#canonical-correlation-coefficients"><span class="header-section-number">25.2.5</span> Canonical correlation coefficients</a></li>
-  </ul></li>
-  <li><a href="#steps-of-cca" id="toc-steps-of-cca" class="nav-link" data-scroll-target="#steps-of-cca"><span class="header-section-number">25.3</span> Steps of CCA</a>
-  <ul class="collapse">
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">25.3.1</span> Data Preparation</a></li>
-  <li><a href="#construct-covariance-matrices" id="toc-construct-covariance-matrices" class="nav-link" data-scroll-target="#construct-covariance-matrices"><span class="header-section-number">25.3.2</span> Construct covariance matrices</a></li>
-  <li><a href="#derive-canonical-variables" id="toc-derive-canonical-variables" class="nav-link" data-scroll-target="#derive-canonical-variables"><span class="header-section-number">25.3.3</span> Derive canonical variables</a></li>
-  <li><a href="#significance-test" id="toc-significance-test" class="nav-link" data-scroll-target="#significance-test"><span class="header-section-number">25.3.4</span> Significance test</a></li>
-  <li><a href="#interpret-canonical-variables" id="toc-interpret-canonical-variables" class="nav-link" data-scroll-target="#interpret-canonical-variables"><span class="header-section-number">25.3.5</span> Interpret canonical variables</a></li>
-  <li><a href="#report-results" id="toc-report-results" class="nav-link" data-scroll-target="#report-results"><span class="header-section-number">25.3.6</span> Report results</a></li>
-  <li><a href="#visualization-optional" id="toc-visualization-optional" class="nav-link" data-scroll-target="#visualization-optional"><span class="header-section-number">25.3.7</span> Visualization (optional)</a></li>
-  </ul></li>
+  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">26.1</span> Prerequisite</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">26.2</span> Overview</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/canonical-correlation.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/structural-equation-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./canonical-correlation.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./structural-equation-model.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></h1>
+<h1 class="title"><span id="sec-structural-equation" class="quarto-section-identifier"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></span></h1>
 </div>
 
 
@@ -469,204 +409,18 @@ window.Quarto = {
 </header>
 
 
-<p>Canonical correlation analysis (CCA) is a multivariate statistical technique used to explore the relationship between two sets of variables. It examines the linear relationships between two datasets and finds pairs of canonical variables—linear combinations of the original variables—that have maximum correlation with each other.</p>
-<section id="prerequisite" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">25.1</span> Prerequisite</h2>
+<p>Structural equation modeling (SEM) is a statistical technique that allows for the estimation of complex relationships between observed and latent variables. SEM combines the strengths of path analysis, confirmatory factor analysis (CFA), and regression analysis, allowing for the simultaneous handling of measurement errors, latent variables, and observed variables. It enables researchers to test complex causal relationships. It is widely used in various fields, including psychology, medicine, and the social sciences, to model relationships that are too complex for traditional regression analysis.</p>
+<section id="prerequisite" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">26.1</span> Prerequisite</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CCP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="key-concepts" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">25.2</span> Key concepts</h2>
-<section id="canonical-variables" class="level3" data-number="25.2.1">
-<h3 data-number="25.2.1" class="anchored" data-anchor-id="canonical-variables"><span class="header-section-number">25.2.1</span> Canonical variables</h3>
-<p>Let <span class="math inline">\mathbf X</span> be a <span class="math inline">n \times p</span> matrix representing the first set of variables <span class="math inline">X_1, X_2, \dots, X_p</span>, and <span class="math inline">\mathbf Y</span> be a <span class="math inline">n \times q</span> matrix representing the second set of variables <span class="math inline">Y_1, Y_2, \dots, Y_q</span>. The canonical variables are linear combinations of the original variables in both sets. For example:</p>
-<p><span class="math display">
-U_1 = \mathbf a_1 X_1 + \mathbf a_2 X_2 + \dots + \mathbf a_p X_p
-</span></p>
-<p><span class="math display">V_1 = \mathbf b_1 Y_1 + \mathbf b_2 Y_2 + \dots + \mathbf b_q Y_q</span></p>
-<p>The coefficients <span class="math inline">\mathbf a_1, \mathbf a_2, \dots, \mathbf a_p</span> and <span class="math inline">\mathbf b_1, \mathbf b_2, \dots, \mathbf b_q</span> are chosen to maximize the correlation between <span class="math inline">U_1</span> and <span class="math inline">V_1</span> , the first pair of canonical variables. The first pair of <span class="math inline">U_1</span> and <span class="math inline">V_1</span> explains the most variance, followed by subsequent pairs <span class="math inline">U_2</span> and <span class="math inline">V_2</span>, and so on, which are orthogonal to the first pair.</p>
-</section>
-<section id="canonical-coefficients" class="level3" data-number="25.2.2">
-<h3 data-number="25.2.2" class="anchored" data-anchor-id="canonical-coefficients"><span class="header-section-number">25.2.2</span> Canonical coefficients</h3>
-<p>Canonical coefficients are the weights used to linearly combine the original variables <span class="math inline">\mathbf X</span> and <span class="math inline">\mathbf Y</span> into the canonical variables <span class="math inline">\mathbf U = \mathbf X \cdot \mathbf A</span> and <span class="math inline">\mathbf V = \mathbf Y \cdot \mathbf B</span>. They are obtained by solving an optimization problem that maximizes the correlation between <span class="math inline">\mathbf U</span> and <span class="math inline">\mathbf V</span>.</p>
-</section>
-<section id="canonical-loadings" class="level3" data-number="25.2.3">
-<h3 data-number="25.2.3" class="anchored" data-anchor-id="canonical-loadings"><span class="header-section-number">25.2.3</span> Canonical loadings</h3>
-<p>Canonical loadings (also known as structure coefficients) are the correlations between the original variables and their corresponding canonical variables. They show how strongly each original variable contributes to the canonical variables. In other words, canonical loadings help us understand which original variables are most strongly related to the canonical variates .</p>
-<p>Each set of variables (say, <span class="math inline">\mathbf X</span> and <span class="math inline">\mathbf Y</span>) has its own canonical loadings for each canonical variable. Canonical loadings reveal how much weight each original variable carries in the overall relationship between the two sets of variables.</p>
-<p>Mathematically, the canonical loading of a variable <span class="math inline">X_i</span> is <span class="math inline">\text{cor}(X_i, U)</span> , and for a variable <span class="math inline">Y_j</span>, it is <span class="math inline">\text{cor}(Y_j, V)</span>.</p>
-</section>
-<section id="canonical-correlation" class="level3" data-number="25.2.4">
-<h3 data-number="25.2.4" class="anchored" data-anchor-id="canonical-correlation"><span class="header-section-number">25.2.4</span> Canonical correlation</h3>
-<p>The correlation between the canonical variables <span class="math inline">U_1</span> and <span class="math inline">V_1</span> is called the canonical correlation. CCA will provide several canonical correlations, corresponding to the number of canonical variable pairs extracted. The first canonical correlation represents the strongest relationship between the two sets of variables. The subsequent canonical correlations show relationships that are independent of the first and represent additional layers of shared variation between the two datasets.</p>
-</section>
-<section id="canonical-correlation-coefficients" class="level3" data-number="25.2.5">
-<h3 data-number="25.2.5" class="anchored" data-anchor-id="canonical-correlation-coefficients"><span class="header-section-number">25.2.5</span> Canonical correlation coefficients</h3>
-<p>Canonical correlation coefficient measure the correlation between a pair of canonical variables <span class="math inline">U_i</span> and <span class="math inline">V_i</span>. Each canonical correlation coefficient corresponds to a pair of canonical variables, with the first canonical correlation being the strongest, followed by the second, and so on. These coefficients are similar to regular correlation coefficients, but they represent the correlation between combinations of variables rather than individual variables.</p>
-</section>
-</section>
-<section id="steps-of-cca" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="steps-of-cca"><span class="header-section-number">25.3</span> Steps of CCA</h2>
-<p>The general steps for conducting CCA are as follows:</p>
-<section id="data-preparation" class="level3" data-number="25.3.1">
-<h3 data-number="25.3.1" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">25.3.1</span> Data Preparation</h3>
-<p>First, identify the two sets of variables, for instance <span class="math inline">\mathbf X</span> and <span class="math inline">\mathbf Y</span>. The number of variables in each set can be different. Inspect the data for missing values or outliers and handle them appropriately. Standardization or normalization is recommended if the two sets of variables have different units or scales.</p>
-</section>
-<section id="construct-covariance-matrices" class="level3" data-number="25.3.2">
-<h3 data-number="25.3.2" class="anchored" data-anchor-id="construct-covariance-matrices"><span class="header-section-number">25.3.2</span> Construct covariance matrices</h3>
-<p>Compute the covariance matrices for the two sets of variables. CCA relies on the covariance matrices to determine the linear relationships between the two sets.</p>
-</section>
-<section id="derive-canonical-variables" class="level3" data-number="25.3.3">
-<h3 data-number="25.3.3" class="anchored" data-anchor-id="derive-canonical-variables"><span class="header-section-number">25.3.3</span> Derive canonical variables</h3>
-<p>The goal of CCA is to find matrices <span class="math inline">\mathbf A</span> and <span class="math inline">\mathbf B</span> such that the correlation between <span class="math inline">\mathbf U = \mathbf X \cdot \mathbf A</span> and <span class="math inline">\mathbf V = \mathbf Y \cdot \mathbf B</span> is maximized. This involves solving the following maximization problem:</p>
-<p><span class="math display">
-\max \; \text{corr}(\mathbf U, \mathbf V) = \max \; \frac{\text{cov}(\mathbf U, \mathbf V)}{\sqrt{\text{var}(\mathbf U) \cdot \text{var}(\mathbf V)}}
-</span></p>
-<p>where <span class="math inline">\mathbf U</span> and <span class="math inline">\mathbf V</span> are the canonical variables, i.e., linear combinations <span class="math inline">\mathbf U = \mathbf X \cdot \mathbf A</span> and <span class="math inline">\mathbf V = \mathbf Y \cdot \mathbf B</span>.</p>
-<p>After obtaining the canonical variables, compute the canonical correlation coefficient, which measures the correlation between the two canonical variables.</p>
-</section>
-<section id="significance-test" class="level3" data-number="25.3.4">
-<h3 data-number="25.3.4" class="anchored" data-anchor-id="significance-test"><span class="header-section-number">25.3.4</span> Significance test</h3>
-<p>Perform significance test using statistical methods such as the chi-square test or Wilks’ Lambda to evaluate whether the canonical correlation is significant and meaningful. Based on the significance level, determine how many pairs of canonical variables should be retained for further interpretation.</p>
-</section>
-<section id="interpret-canonical-variables" class="level3" data-number="25.3.5">
-<h3 data-number="25.3.5" class="anchored" data-anchor-id="interpret-canonical-variables"><span class="header-section-number">25.3.5</span> Interpret canonical variables</h3>
-<p>The higher the canonical correlation coefficient, the stronger the linear relationship between the two sets of variables. Each pair of canonical variables should be interpreted in terms of their real-world meaning. Canonical loadings indicate how much each original variable contributes to the canonical variables. These loadings help understand which variables in the original sets drive the correlation.</p>
-</section>
-<section id="report-results" class="level3" data-number="25.3.6">
-<h3 data-number="25.3.6" class="anchored" data-anchor-id="report-results"><span class="header-section-number">25.3.6</span> Report results</h3>
-<p>Summarize the analysis, including the canonical correlation coefficients, significance tests, and canonical loadings, and discuss their relevance to the research.</p>
-</section>
-<section id="visualization-optional" class="level3" data-number="25.3.7">
-<h3 data-number="25.3.7" class="anchored" data-anchor-id="visualization-optional"><span class="header-section-number">25.3.7</span> Visualization (optional)</h3>
-<p>Use graphical representations, such as scatter plots of the canonical variables, to visually explore the relationships between the two sets of variables.</p>
-<div class="example">
-<strong>Example 1:</strong> 
-<p>In order to explore the relationship between mental health and well-being, a university conducted a survey on the mental health and subjective well-being of first-year students. Performed canonical correlation analysis on the data of 674 students, focusing on three mental health indicators (depression score, anxiety score, and stress score) and two subjective well-being indicators (life attitude score and emotional state score).</p>
-</div>
-<div>
-<p><a href="datasets/ex25-01.csv" download="ex25-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex25-01.csv"</span>, <span class="at">show_col_types =</span> F) </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="fu">scale</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">select</span>(df, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">|&gt;</span> <span class="fu">scale</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The <code>cancor()</code> function can be used to perform canonical correlation analysis. Here’s an example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res.cc <span class="ot">&lt;-</span> <span class="fu">cancor</span>(X, Y) </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>res.cc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; $cor
-#&gt; [1] 0.70874979 0.05777605
-#&gt; 
-#&gt; $xcoef
-#&gt;                  [,1]         [,2]        [,3]
-#&gt; DEPRES  -0.0184807659  0.056669704 -0.03975040
-#&gt; ANIETY  -0.0007031538 -0.064838367 -0.04134194
-#&gt; PRESSUR -0.0213237972  0.002855532  0.07657176
-#&gt; 
-#&gt; $ycoef
-#&gt;                [,1]        [,2]
-#&gt; ALTITUD 0.001226327 -0.04739979
-#&gt; EMOTE   0.037820164  0.02859859
-#&gt; 
-#&gt; $xcenter
-#&gt;        DEPRES        ANIETY       PRESSUR 
-#&gt;  7.560718e-17 -1.948656e-16  1.004801e-17 
-#&gt; 
-#&gt; $ycenter
-#&gt;       ALTITUD         EMOTE 
-#&gt; -3.750709e-16 -2.223740e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract canonical variables</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">scale</span>(X) <span class="sc">%*%</span> res.cc<span class="sc">$</span>xcoef  </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">scale</span>(Y) <span class="sc">%*%</span> res.cc<span class="sc">$</span>ycoef  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<blockquote class="blockquote">
-<p><strong>CCA result</strong></p>
-<ul>
-<li>The first canonical correlation is 0.7087, meaning there is a moderately strong relationship between the first pair of canonical variables.</li>
-<li>The second canonical correlation is 0.0578, indicating a very weak or almost negligible relationship between the second pair of canonical variables.</li>
-</ul>
-</blockquote>
-<p>The <code>p.asym()</code> function from <code>CCP</code> packages can be used to test significance in canonical correlation analysis.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res.test <span class="ot">&lt;-</span> <span class="fu">pluck</span>(res.cc, <span class="st">"cor"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">p.asym</span>(<span class="fu">nrow</span>(X), <span class="fu">ncol</span>(X), <span class="fu">ncol</span>(Y), <span class="at">tstat =</span> <span class="st">"Wilks"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; Wilks' Lambda, using F-approximation (Rao's F):
-#&gt;               stat    approx df1  df2   p.value
-#&gt; 1 to 2:  0.4960125 93.634745   6 1338 0.0000000
-#&gt; 2 to 2:  0.9966619  1.121999   2  670 0.3262391</code></pre>
-</div>
-</div>
-<blockquote class="blockquote">
-<p><strong>Significance test result</strong></p>
-<ul>
-<li>The first canonical correlation is significant, as indicated by the small Wilks’ Lambda and p-value less than 0.001.</li>
-<li>The second canonical correlation is not significant, as shown by the large Wilks’ Lambda and p-value greater than 0.05. Therefore, only the first canonical variate pair shows a strong relationship between the two sets of variables.</li>
-</ul>
-</blockquote>
-<p>Use the <code>plt.asym()</code> function to plot asymptotic distributions used to test the statistical significance of canonical correlation coefficients.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">cex =</span> <span class="fl">0.8</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.asym</span>(res.test, <span class="at">rhostart =</span> <span class="dv">1</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plt.asym</span>(res.test, <span class="at">rhostart =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="canonical-correlation_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="canonical-correlation_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Use scatter plots of the canonical variables to visually explore the relationships between two sets of variables.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">scale</span>(X) <span class="sc">%*%</span> res.cc<span class="sc">$</span>xcoef  <span class="co"># Canonical variables for X</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">scale</span>(Y) <span class="sc">%*%</span> res.cc<span class="sc">$</span>ycoef  <span class="co"># Canonical variables for Y</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">U1 =</span> U[, <span class="dv">1</span>], <span class="at">U2 =</span> U[, <span class="dv">2</span>], <span class="at">V1 =</span> V[, <span class="dv">1</span>], <span class="at">V2 =</span> V[, <span class="dv">2</span>])</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> U1, <span class="at">y =</span> V1)) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot of Canonical Variables (U1 vs V1)"</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"U1"</span>, <span class="at">y =</span> <span class="st">"V1"</span>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> U2, <span class="at">y =</span> V2)) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Scatter Plot of Canonical Variables (U2 vs V2)"</span>,</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"U2"</span>, <span class="at">y =</span> <span class="st">"V2"</span>) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="canonical-correlation_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="canonical-correlation_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="overview" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="overview"><span class="header-section-number">26.2</span> Overview</h2>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1275,13 +1029,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pca-factor-analysis.html" class="pagination-link" aria-label="Principal components and factor analysis">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Principal components and factor analysis</span></span>
+      <a href="./canonical-correlation.html" class="pagination-link" aria-label="Canonical correlation analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./structural-equation-model.html" class="pagination-link" aria-label="structural-equation-model.html">
-        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">structural-equation-model.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./generalized-estimating-equation.html" class="pagination-link" aria-label="Generalized estimating equation">
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1290,5 +1044,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/canonical-correlation.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/structural-equation-model.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

@@ -1,0 +1,468 @@
+# Structural equation model {#sec-structural-equation}
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Structural equation modeling (SEM) is a statistical technique that allows for the estimation of complex relationships between observed and latent variables. SEM combines the strengths of path analysis, confirmatory factor analysis (CFA), and regression analysis, allowing for the simultaneous handling of measurement errors, latent variables, and observed variables. It enables us to test complex causal relationships. The SEM introduced in this chapter is primarily used for CFA. CFA is widely used in fields like psychology, education, and social sciences to validate theoretical constructs and measurement instruments.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lavaan)
+library(semPlot)
+```
+
+## Overview
+
+### Confirmatory factor analysis
+
+Confirmatory factor analysis (CFA) is often used to test whether a hypothesized factor structure fits the observed data. Unlike exploratory factor analysis (EFA, see @sec-factor-analysis ), which is used to discover the underlying structure of data without predefined assumptions, CFA is applied when researchers have specific theories or models about the relationships between observed variables and their underlying latent factors. It is frequently used in scale design for estimating parameters and assessing the model’s goodness-of-fit, [Example 1](#ex26-01) is an scale for stroke patient-reported outcome measure. Based on this example, the readers can better understand the concepts and principles of CFA and SEM.
+
+::: {#ex26-01 .example}
+A group utilized the stroke patient-reported outcome measure (hereafter referred to as Stroke-PROM) to survey 295 stroke patients in order to assess their treatment outcomes. The Stroke-PROM includes four dimensions with 20 items in the physiological domain, three dimensions with 14 items in the psychological domain, two dimensions with 7 items in the social domain, and one dimension with 5 items in the treatment domain. The structure of Stroke-PROM is shown in @tbl-stroke-prom .
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-stroke-prom
+#| tbl-cap: Brief description of Stroke-PROM structure
+
+# Define the data for the table
+tibble(
+  Domain = c(
+    "Physiological domain", " ", " ", " ", "Psychological domain", " ", " ",
+    "Social domain", " ", "Treatment domain"),
+  Dimension = c(
+    "Somatic symptoms", "Cognitive ability", "Verbal communication", 
+    "Self-help skill", "Anxiety", "Depression", "Avoidance",
+    "Social contact", "Family support", "Satisfaction"),
+  Variable = c(
+    "SOS", "COG", "VEC", "SHS", "ANX", "DEP", "AVO", "SOC", "FAS", "SAT"),
+  Number_of_Items = c(7, 4, 4, 5, 5, 5, 4, 3, 4, 5),
+  Items_Included = c(
+    "PHD1 ~ PHD7", "PHD8 ~ PHD11", "PHD12 ~ PHD15", "PHD16 ~ PHD20", "PSD1 ~ PSD5", 
+    "PSD6 ~ PSD10", "PSD11 ~ PSD14", "SOR1 ~ SOR3", "SOR4 ~ SOR7", "THA1 ~ THA5")
+) |> 
+  knitr::kable(align = c("l", "l", "c", "c", "l"))
+```
+
+### Components of SEM
+
+The structure of a SEM consists of several key components:
+
+**Observed variables**
+
+Observed variables, also known as manifest variables, these are the variables that are directly measured in a study. They are the actual data collected from participants or experiments. For example, in @tbl-stroke-prom , items or questions that participants respond to are observed variables because they are directly measured.
+
+**Latent variables**
+
+Latent variables are variables that are not directly measured but are inferred from observed variables. Latent variables represent underlying constructs or factors that are assumed to influence the observed variables. In @tbl-stroke-prom , examples of latent variables include psychological traits like anxiety, depression, or avoidance, which cannot be measured directly but can be inferred through a set of observed vairables.
+
+**Exogenous variables**
+
+Exogenous variables are the independent variables in the model. They are not explained by any other variables within the model and are used to explain the variation in the endogenous variables. Exogenous variables are typically assumed to be external to the model.
+
+**Endogenous variables**
+
+Endogenous variables are the dependent variables in the model that are explained by other variables. They are influenced by both exogenous variables and other endogenous variables. In SEM, endogenous variables can be either latent or observed variables.
+
+**Measurement model**
+
+The measurement model describes the relationships between latent variables and observed variables. It is typically estimated using CFA. For each latent variable $\boldsymbol \eta$ and its corresponding observed variables $\mathbf y$, the measurement model can be expressed as:
+
+$$
+\mathbf y = \boldsymbol \Lambda_\mathbf y \boldsymbol \eta ​+ \boldsymbol \epsilon
+$$
+
+where $\mathbf y$ is a vector of all observed variables, $\boldsymbol \eta$ is a vector of all latent variables. $\boldsymbol \Lambda_\mathbf y$ ​is the factor loadings matrix, representing the strength of the relationship between each observed variable and its corresponding latent variable, and $\boldsymbol \epsilon$ is the measurement error vector, representing the portion of each observed variable that is not explained by the latent variable.
+
+**Structural model**
+
+The structural model describes the causal relationships among latent variables. It is similar to path analysis but can include more complex causal relationships, such as direct effects, indirect effects, and mediating effects. The structural model can be expressed as:
+
+$$
+\boldsymbol \eta = \mathbf B \boldsymbol \eta + \boldsymbol \Gamma \boldsymbol \xi + \boldsymbol \zeta
+$$
+
+where $\boldsymbol \eta$ is a vector of endogenous latent variables , $\boldsymbol \xi$ is a vector of exogenous latent variables, $\mathbf B$ is the path coefficients matrix, representing the causal relationships among endogenous latent variables, $\boldsymbol \Gamma$ is the effects matrix, representing the influence of exogenous latent variables on endogenous latent variables, $\boldsymbol \zeta$ is the residual vector, representing the portion of the endogenous latent variables that is not explained by the model.
+
+Combining the measurement model and the structural model, we get the complete SEM model. Suppose we have $p$ observed variables and $q$ latent variables, where $m$ are endogenous latent variables and $n$ are exogenous latent variables. The combined model can be expressed as:
+
+$$
+\left\{
+\begin{array}{l}
+\mathbf y = \boldsymbol \Lambda_y \boldsymbol \eta + \boldsymbol \epsilon \\
+\mathbf x = \boldsymbol \Lambda_x \boldsymbol \xi + \boldsymbol \delta \\
+\boldsymbol \eta = \mathbf B \boldsymbol \eta + \boldsymbol \Gamma \boldsymbol \xi + \boldsymbol \zeta
+\end{array}
+\right.
+$$​
+
+where $\mathbf y$ is a vector of endogenous observed variables, $\mathbf x$ is a vector of exogenous observed variables, $\boldsymbol \Lambda_\mathbf y$ is the factor loadings matrix for endogenous observed variables, $\boldsymbol \Lambda_\mathbf x$ is the factor loadings matrix for exogenous observed variables, $\boldsymbol \epsilon$ is the measurement error vector for endogenous observed variables, $\boldsymbol \delta$ is the measurement error vector for exogenous observed variables, $\boldsymbol \eta$ is a vector of endogenous latent variables, $\boldsymbol \xi$ is a vector of exogenous latent variables, $\mathbf B$ is the path coefficients matrix for endogenous latent variables, $\boldsymbol \Gamma$ is the effects matrix for the influence of exogenous latent variables on endogenous latent variables, $\boldsymbol \zeta$ is the residual vector for endogenous latent variables.
+
+<div>
+
+<a href="datasets/ex26-01.csv" download="ex26-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex26-01.csv", show_col_types = F) 
+```
+
+```{r}
+m_model <- '
+  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7
+  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5
+'
+s_model <- '
+  ANX ~ SOS
+'
+
+full_model <- c(m_model, s_model)
+
+res.cfa <- cfa(m_model, df)
+res.sem <- sem(full_model, df)
+
+semPaths(
+  res.sem, what = "std", residuals = T, rotation = 2, edge.label.cex = 0.8,
+  fade = F, layout = "tree", intercepts = F)
+```
+
+```{r}
+m_model <- '
+  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7
+  COG =~ PHD8 + PHD9 + PHD10 + PHD11
+  VEC =~ PHD12 + PHD13 + PHD14 + PHD15
+  SHS =~ PHD16 + PHD17 + PHD18 + PHD19 + PHD20
+  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5
+  DEP =~ PSD6 + PSD7 + PSD8 + PSD9 + PSD10
+  AVO =~ PSD11 + PSD12 + PSD13 + PSD14
+'
+s_model <- '
+  ANX ~ SOS
+'
+
+full_model <- c(m_model, s_model)
+
+res.cfa <- cfa(m_model, df)
+res.sem <- sem(full_model, df)
+
+semPaths(res.cfa, "std", edge.label.cex = 0.8, fade = F)
+semPaths(res.sem, what = "std", residuals = T, rotation = 2, edge.label.cex = 0.8,
+  fade = F, layout = "tree", intercepts = F)
+```
+
+```{r}
+# Define a theoretical SEM model
+model <- '
+  # Measurement model
+  xi1 =~ X1 + X2 + X3
+  xi2 =~ X4 + X5 + X6
+  eta1 =~ Y1 + Y2
+  eta2 =~ Y3 + Y4
+
+  # Structural relationships
+  eta1 ~ xi1 + xi2
+  eta2 ~ eta1 + xi2
+  xi1 ~~ xi2
+  eta1 ~~ eta2
+'
+```
+
+## Evaluation of construct validity
+
+CFA is essentially a measurement model within SEM and is often used to assess the construct validity of a measure or scale, ensuring its accuracy in measuring the intended constructs.
+
+The key steps involved in CFA are as follows:
+
+1.  Model specification: Based on existing theory or hypotheses, the relationships between latent variables and observed variables are defined.
+2.  Parameter estimation: Statistical methods (such as maximum likelihood estimation) are used to estimate the parameters of the model, determining the associations between latent and observed variables.
+3.  Model evaluation: Various fit indices (e.g., Chi-square test, CFI, TLI, RMSEA) are used to evaluate whether the model fits the data well.
+4.  Model modification: Based on the evaluation results, adjustments may be made to improve the model’s fit.
+5.  Interpretation of results: The path coefficients and relationships between latent variables are analyzed to interpret the measurement results.
+
+::: example
+Use CFA to evaluate the construct validity of the Stroke-PROM scale in the physiological domain, i.e. SOS, COG, VEC, and SHS. This domain consists of four dimensions, corresponding to four latent factors. R software was used for modeling, the maximum likelihood estimation method was used to assess the construct validity of the different dimensions of the scale.
+:::
+
+<div>
+
+<a href="datasets/ex26-02.csv" download="ex26-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex26-02.csv", show_col_types = F) 
+ordered()
+```
+
+The Stroke-PROM scale in the physiological domain includes four latent variables, i.e. SOS, COG, VEC, and SHS. Each latent variable is measured by multiple observed variables (i.e., the individual items or questions in the scale).
+
+Using the `lavaan` package, you can define and evaluate the model. First, define the relationships between the latent variables and their observed variables. Then use the `cfa()` function to fit the model use your data.
+
+```{r}
+model <- '
+  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7
+  COG =~ PHD8 + PHD9 + PHD10 + PHD11
+  VEC =~ PHD12 + PHD13 + PHD14 + PHD15
+  SHS =~ PHD16 + PHD17 + PHD18 + PHD19 + PHD20
+'
+fit.cfa <- cfa(model, data = df)
+```
+
+Assess the goodness-of-fit using indices such as:
+
+-   Chi-square test: A significant value suggests a misfit, but it’s sensitive to large sample sizes.
+-   CFI (comparative fit index): Values \> 0.90 or 0.95 indicate a good fit.
+-   TLI (Tucker-Lewis index): Values \> 0.90 or 0.95 are desirable.
+-   RMSEA (root mean square error of approximation): Values \< 0.08 indicate acceptable fit; \< 0.05 indicates a good fit.
+-   SRMR (standardized root mean square residual): Values \< 0.08 are considered acceptable.
+
+```{r}
+fit.cfa |> fitMeasures(c("chisq", "cfi", "tli", "rmsea", "srmr"))
+```
+
+Check if each observed variable loads significantly on its corresponding latent factor.
+
+```{r}
+#| output: false
+fit.cfa |> summary(standardized = T, rsquare = T)    # <1>
+fit.cfa |> standardizedSolution(output = "text")     # <2>
+```
+
+1.  Note that *SE*s and tests are still based on unstandardized estimates.
+2.  Use `standardizedSolution()` to obtain *SE*s and test statistics for standardized estimates.
+
+Visualize the relationships between latent and observed variables using `semPaths(`) function from `semPlot` package:
+
+```{r}
+#| echo: false
+#| fig-height: 2.5
+#| fig-width: 8.5
+fit.cfa |> semPaths(
+  what = "std", style = "lisrel", residuals = T, edge.label.cex = 0.45, 
+  fade = F, layout = "tree", intercepts = F, rotation = 1,
+  sizeMan = 4, sizeLat = 6, sizeLat2 = 4, residScale = 6
+  ) 
+```
+
+If the model fit is not adequate, consider modifying the model based on the modification indices, which suggest potential areas for improvement:
+
+```{r}
+fit.cfa |> modindices(sort. = T, power = T, maximum.number = 10)
+```
+
+By conducting CFA on the Stroke-PROM scale, you can determine whether the physiological domain’s structure, consisting of SOS, COG, VEC, and SHS, demonstrates construct validity.
+
+## SEM analysis
+
+### Simple SEM
+
+::: example
+Construct a structural equation model using the somatic symptoms (SOS) from the physiological domain and anxiety (ANX) from the psychological domain of the Stroke-PROM scale. The model includes only one exogenous latent variable and one endogenous latent variable.
+:::
+
+```{r}
+df <- read_csv("datasets/ex26-03.csv", show_col_types = F) 
+```
+
+```{r}
+model <- '
+  # Measurement model
+  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7
+  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5
+  # Structural relationships
+  ANX ~ SOS
+'
+fit.sem <- sem(model, df)
+```
+
+```{r}
+#| output: false
+fit.sem |> summary(standardized = T, rsquare = T) 
+fit.sem |> standardizedSolution(output = "text") 
+```
+
+```{r}
+res.sem |> fitMeasures(c("chisq", "rmsea", "aic", "gfi", "cfi"))
+```
+
+```{r}
+fit.sem |> semPaths(
+  what = "std", style = "lisrel", residuals = T, edge.label.cex = 0.6, 
+  fade = F, layout = "tree", intercepts = T, rotation = 1,
+  sizeMan = 3, sizeLat = 8, sizeLat2 = 6, residScale = 6
+  ) 
+```
+
+```{r}
+fit.sem |> modindices(sort. = T, power = T, maximum.number = 10)
+```
+
+### Complete SEM
+
+::: example
+Construct a structural equation model using the somatic symptoms (SOS) from the physiological domain and anxiety (ANX) from the psychological domain of the Stroke-PROM scale. The model includes only one exogenous latent variable and one endogenous latent variable.
+:::
+
+```{r}
+df <- read_csv("datasets/ex26-04.csv", show_col_types = F) 
+```
+
+```{r}
+model <- '
+  # Measurement model
+  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7
+  COG =~ PHD8 + PHD9 + PHD10 + PHD11
+  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5
+  DEP =~ PSD6 + PSD7 + PSD8 + PSD9 + PSD10
+  AVO =~ PSD11 + PSD12 + PSD13 + PSD14
+  # Structural relationships
+  ANX ~ SOS
+  DEP ~ COG
+  DEP ~ AVO
+  DEP ~ ANX
+  AVO ~ COG
+  AVO ~ ANX
+'
+res.sem <- sem(model, df)
+res.sem
+```
+
+```{r}
+res.sem |> fitMeasures(c("chisq", "rmsea", "aic", "gfi", "cfi"))
+```
+
+```{r}
+res.sem |> semPaths(
+  what = "std", style = "lisrel", residuals = T, edge.label.cex = 0.6, 
+  fade = F, layout = "tree", intercepts = T, rotation = 1,
+  sizeMan = 3, sizeLat = 8, sizeLat2 = 6, residScale = 6
+  ) 
+```
+
+```{r}
+res.sem |> modindices(sort. = T, power = T, maximum.number = 10)
+```
+
+Here we write a function named `extract_sem_eq()`, to directly extract the measurement model and the structural model from the structural equation model, and format it into a readable equation.
+
+```{r}
+extract_sem_eq <- function(object, std = TRUE, digits = 2) {
+  # Extract parameter estimates
+  params <- parameterEstimates(object, standardized = std)
+  
+  # Filter for measurement model (latent =~ observed)
+  m_model <- params[params$op == "=~", ]
+  
+  # Filter for structural model (latent ~ latent or observed ~ latent)
+  s_model <- params[params$op == "~", ]
+  
+  # Generate measurement model equations
+  cat("Measurement Model Equations:\n")
+  for (lhs_var in unique(m_model$lhs)) {
+    # Get all rows corresponding to the lhs variable (latent variable)
+    eq_rows <- m_model[m_model$lhs == lhs_var, ]
+    
+    # Create the equation for this latent variable
+    equation <- paste0(lhs_var, " = ")
+    
+    # Loop over each observed variable (rhs) and its coefficient
+    for (i in 1:nrow(eq_rows)) {
+      rhs_var <- eq_rows$rhs[i]
+      coef <- round(eq_rows$std.all[i], digits)
+      
+      # Add the term to the equation
+      equation <- paste0(equation, coef, " ", rhs_var)
+      
+      # Add a plus sign if not the last term
+      if (i < nrow(eq_rows)) {
+        equation <- paste0(equation, " + ")
+      }
+    }
+    
+    # Output the equation
+    cat(equation, "\n")
+  }
+  
+  # Generate structural model equations
+  cat("\nStructural Model Equations:\n")
+  for (lhs_var in unique(s_model$lhs)) {
+    # Get all rows corresponding to the lhs variable
+    eq_rows <- s_model[s_model$lhs == lhs_var, ]
+    
+    # Create the equation for this lhs variable
+    equation <- paste0(lhs_var, " = ")
+    
+    # Loop over each predictor (rhs) and its coefficient
+    for (i in 1:nrow(eq_rows)) {
+      rhs_var <- eq_rows$rhs[i]
+      coef <- round(eq_rows$std.all[i], digits)
+      
+      # Add the term to the equation
+      equation <- paste0(equation, coef, " ", rhs_var)
+      
+      # Add a plus sign if not the last term
+      if (i < nrow(eq_rows)) {
+        equation <- paste0(equation, " + ")
+      }
+    }
+    
+    # Output the equation
+    cat(equation, "\n")
+  }
+}
+```
+
+```{r}
+res.sem |> extract_sem_eq()
+```
+
+## Issues need consideration
+
+When applying SEM, several key issues must be considered to ensure the model’s validity, reliability, and interpretability:
+
+### Theoretical foundation
+
+The strength SEM lies in testing complex theoretical hypothesis. Therefore, model construction must be supported by strong theoretical foundations, including relationships between latent and observed variables, as well as causal paths between latent variables. The causal relationships within the model should be logical and theoretically justified, avoiding meaningless or unexplained paths.
+
+### Model identifiability
+
+The identifiability determines whether model parameters can be uniquely estimated. An identifiable model requires sufficient observed data to estimate all parameters. A general rule is to have enough observed variables (typically at least three to four) for each latent variable to ensure that the parameters are estimable.
+
+### Sample size
+
+SEM is a complex statistical technique that generally requires a large sample size for robust results. Too small a sample size may lead to unstable models and biased parameter estimates. Relationship between sample size and model complexity: More complex models typically require larger sample sizes. A general guideline is to have at least 10–20 observations per free parameter.
+
+### Data characteristics
+
+SEM typically assumes multivariate normality. If the data significantly deviate from normality, robust estimation methods or techniques like bootstrapping may be required. Missing data is a critical issue in SEM. Common approaches include full information maximum likelihood (FIML), mean imputation, or other missing data techniques. Proper handling of missing data is crucial to avoid biased results.
+
+### Path coefficients
+
+Test whether the path coefficients in the model are statistically significant by examining the standard errors and p-values. Significant paths indicate meaningful relationships between latent variables. In the measurement model, ensure that the factor loadings are significant and of reasonable magnitude (typically between 0.4 and 0.7).
+
+### Model modification
+
+Modification indices can suggest potential improvements to the model, but changes should be theory-driven. Overreliance on modification indices may lead to a model that deviates from the original theoretical framework. Be cautious when modifying the model by adding or removing paths, especially if they are not supported by theory, as this can lead to overfitting.
+
+### Types of effects
+
+The concepts of direct effects, indirect effects, and total effects are key to understanding how variables influence one another within a model.
+
+**Direct effect:** The direct effect refers to the immediate impact of one variable on another without any intervening variables. It is represented by a single path (or arrow) in the model. For example, in a model where variable $X$ directly affects variable $Y$, the direct effect is the influence of $X$ on $Y$ without any mediation. If $X$ directly affects $Y$, the direct effect measures how much a change in stress levels immediately influences health outcomes.
+
+**Indirect effect:** The indirect effect occurs when the relationship between two variables is mediated by one or more intervening variables. This effect is calculated by multiplying the coefficients of the paths that link the two variables through the mediator(s). For instance, if $X$ affects $M$ (a mediator) and $M$, in turn, affects $Y$, the indirect effect is the product of the path coefficients from $X$ to $M$ and from $M$ to $Y$.
+
+**Total effect:** The total effect is the sum of the direct and indirect effects. It represents the overall impact of one variable on another, including both the direct influence and any mediated (indirect) pathways. The total effect can be thought of as the complete influence of $X$ on $Y$, accounting for all possible paths, whether direct or mediated.
+
+Example: If $X$ (parental support) directly affects $Y$ (academic performance) and also indirectly affects $Y$ through $M$ (self-esteem), the total effect captures both the direct influence of parental support on academic performance and its indirect effect through self-esteem.
+
+### Model interpretability
+
+SEM results can be complex, especially with many path coefficients. When interpreting the results, focus on the main effects and relationships while keeping the explanation concise and clear. Supplement quantitative findings with qualitative insights from the research context can improve the interpretation of SEM results.

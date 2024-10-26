@@ -1,0 +1,250 @@
+# Multilevel model
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+A multilevel model (also known as hierarchical linear modeling or mixed-effects modeling) is a statistical approach used when data are organized at more than one level. This type of model is particularly useful when the assumptions of independence between observations are violated, which often happens when data are grouped or clustered.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(lmerTest)
+library(brms)
+library(metafor)
+```
+
+## Mixed model
+
+A mixed model (or mixed-effects model) is a statistical model that combines both fixed effects and random effects. These models are often used when data have a hierarchical or grouped structure, allowing for correlation within groups and enabling analysis across multiple levels of data. Mixed models are common in fields like psychology, biology, and medical research, where data may involve repeated measures or nested data structures.
+
+Key components of a mixed model:
+
+1.  Fixed effects: Parameters that apply consistently across all individuals or experimental units, such as a treatment effect or a general time effect.
+2.  Random effects: Parameters that vary across levels of a grouping variable (such as participants or regions), accounting for individual differences or group-specific deviations. Random effects help control for variability due to these groupings.
+3.  Residual variability: Captures the unexplained variability within each level of the grouping structure.
+
+A mixed model can be expressed as:
+
+$$
+Y_{ij} = \beta_0 + \beta_1 X_{ij} + u_{0j} + u_{1j}X_{ij} + \epsilon_{ij} 
+$$
+
+where $Y_{ij}$ is the response variable for observation $i$ in group $j$, $\beta_0$ and $\beta_1$ are fixed effects coefficients*,* $X_{ij}$is the predictor variable for observation $i$ in group $j$, $u_{0j}$ is the random intercept for group $j$, capturing random differences in initial levels between groups and typically assumed to follow a normal distribution with mean 0 and variance $\sigma_u^2$, $u_{ij}$ is the random slope for group $j$, allowing the effect of the predictor $X_{ij}$ to vary across groups,$\epsilon_{ij}$ is the residual error for each observation.
+
+Applications of mixed models:
+
+1.  Repeated measures: Analyzing data collected from the same individuals at multiple time points.
+2.  Hierarchical data: For data that involve multiple nested levels, such as patients within hospitals.
+3.  Random intercepts and slopes: Random intercepts allow different groups to have different baseline levels, while random slopes allow for different relationships between predictors and outcomes within each group.
+
+::: example
+A researcher randomly selected 10 patients with mild hypertension and measured their diastolic blood pressure before and after taking a medication. Analyze the changes in diastolic blood pressure before and after treatment.
+:::
+
+<div>
+
+<a href="datasets/ex27-01.csv" download="ex27-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex27-01.csv", show_col_types = F)
+```
+
+```{r}
+fit <- lmer(bp ~ state + (1 |subject ), data = df) 
+fit |> summary()
+```
+
+```{r}
+fit |> equatiomatic::extract_eq(mean_separate = T, use_coefs = T)
+```
+
+::: callout-tip
+## Packages for linear mixed models
+
+The `nlme`, `lme4` and `lmerTest` packages are all used for fitting linear mixed-effects models, but they serve different purposes and offer distinct functionalities. Here’s a detailed comparison:
+:::
+
+| Feature | **`nlme`** | **`lme4`** | **`lmerTest`** |
+|------------------|-------------------|------------------|------------------|
+| **Model types** | Supports both **linear** and **nonlinear** mixed-effects models. | Supports **linear** mixed-effects models (no nonlinear support). | Same as `lme4`, but with added p-values and ANOVA tables for hypothesis testing. |
+| **Optimization** | Uses **maximum likelihood (ML)** or **restricted maximum likelihood (REML)** for estimation, but optimization methods are generally slower. | Also uses **ML** and **REML**, but employs **faster** and more efficient optimization methods, particularly for large datasets. | Same as `lme4` (uses `lme4` for model fitting). |
+| **Nonlinear modeling** | **Supports nonlinear mixed-effects models**, making it more flexible for modeling complex, nonlinear relationships. | Does not support nonlinear models, limited to linear mixed-effects models. | Same as `lme4`, limited to linear mixed-effects models. |
+| **Correlation structures** | Can handle **more complex correlation structures** (e.g., autocorrelation, spatial correlation, heteroscedasticity). | Limited support for correlation structures, primarily for random effects. | Same as `lme4`. |
+| **Handling of missing data** | Can handle **missing data** via the **`na.action`** argument and imputation methods. | Requires complete data, no built-in missing data handling beyond the standard options. | Same as `lme4`. |
+| **Grouping levels** | Offers greater flexibility for **nested or crossed random effects** at multiple levels. | Supports nested and crossed random effects, but not as flexible in terms of specifying correlation structures. | Same as `lme4`. |
+| **p-values for fixed effects** | Provides **p-values** for fixed effects by default. | Does **not** provide p-values by default (as it's debated in the mixed-effects model community). | **Provides p-values** for fixed effects using Satterthwaite’s or Kenward-Roger’s approximation. |
+| **Model complexity** | Better for handling more complex models with **nonlinear effects** and **autocorrelated errors**. | Faster for simpler, large linear mixed-effects models. | Same as `lme4` but adds hypothesis testing tools like p-values and ANOVA. |
+| **Performance** | Slower, especially with large datasets and complex models. | Faster and more efficient, particularly with large datasets. | Same as `lme4`. |
+| **User interface** | Slightly more complicated interface (uses `lme()` for linear models and `nlme()` for nonlinear). | Simpler syntax for linear mixed-effects models (uses `lmer()`). | Same as `lme4`. |
+| **Model comparison** | Allows comparison using likelihood ratio tests (e.g., `anova()` for nested models). | Supports model comparison but does not provide p-values. | Same as `lme4`, but includes p-values for hypothesis testing. |
+| **Diagnostic plots** | **More diagnostic plots** available for assessing model fit, residuals, and random effects. | Fewer built-in diagnostic plots, but can be extended with additional functions. | Same as `lme4`. |
+
+In general, use `lme4` for large, linear mixed-effects models; use `lmerTest` for p-values and hypothesis testing; and use `nlme` for more complex models, particularly nonlinear ones or those requiring advanced correlation structures.
+
+The `brm()` function from `brms` package can fit a Bayesian generalized linear multivariate multilevel model. The `brms` is a high-level package that provides an intuitive interface for fitting Bayesian models using Stan on the backend, abstracting away the need to write Stan code manually. It’s similar to the lme4 package but for Bayesian models.
+
+```{r}
+bayes_fit <- brm(bp ~ state + (1 |subject), data = df)
+bayes_fit |> summary() 
+```
+
+## Variance component model
+
+A variance component model is used to handle multilevel data, particularly when the data exhibits clear within-group and between-group variability. The primary objective of this model is to decompose the total variance into different variance components, often used to measure variability at different levels.
+
+A random intercept model is a specific type of variance component model. In a random intercept model, each group has its own intercept, which represents the group-specific deviation from the overall mean. However, the slope (relationship between predictors and the outcome) is assumed to be fixed across groups. The random intercept introduces between-group variation, which is one of the variance components in the model.
+
+Variance component models are typically a special case of mixed-effects models. In these models, random effects capture variability across different levels (such as individual or group-level differences), while fixed effects describe the average relationship between variables.
+
+A variance component model can be expressed as:
+
+$$
+Y_{ij} = \mu + u_j + e_{ij}
+$$
+
+where $Y_{ij}$ is a observation $i$ within group $j$, $\mu$ is overall mean, $u_j$ is random effect for group $j$, representing the variability between groups, assumed to follow $u_j \sim N(0, \sigma_u^2)$*,* $e_{ij}$ is residual (within-group error), assumed to follow $e_{ij} \sim N(0, \sigma_e^2)$.
+
+The total variance $S_{Y_{ij}}$ is decomposed into two parts:
+
+$$
+S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
+$$
+
+where $\sigma_u^2$ is the variance between groups (random effect), $\sigma_e^2$ is the variance within groups (residual error).
+
+Variance component models are widely used in the analysis of nested data. For example:
+
+> Patients (individuals) are nested within hospitals (groups). The total variance can be separated into hospital-level variation and patient-level variation.
+
+Variance component models are typically estimated using maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML). The packages like lme4 or nlme are used to fit variance component models.
+
+::: example
+A researcher intends to use a meta-analysis to understand the effect of migraines on adult depression. The literature search was conducted up and 16 eligible studies were included. Each study was independent and had the same research hypothesis. The available data include the odds ratios (OR) for each study, as well as study-level explanatory variables such as sample size, whether adjustments for education level were made, and study region, as shown in the data file. Please use R to perform a variance components model analysis.
+:::
+
+<div>
+
+<a href="datasets/ex27-02.csv" download="ex27-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex27-02.csv", col_types = list(id = col_factor())) 
+```
+
+```{r}
+rma(yi = log(or), vi = sqrt(1/n_sample), data = tb, mods = ~ edu_adj + study_rgn, method = "REML")
+```
+
+Variance component models can be extended to more complex multilevel models. For example, in data with multiple nested levels, the model can be expanded to account for three or more levels, capturing additional random effects.
+
+## Random coefficient model
+
+A random coefficient model (also known as a random slopes model) is an extension of a random intercept model. In a random intercept model, only the intercept varies between groups, while the slope (relationship between predictors and the response) is fixed. In a random coefficient model, both the intercept and the slope can vary between groups, which allows for capturing the different relationships between predictors and the response across groups.
+
+Suppose we have data where measurements are taken on individuals across different time points, and we want to model not only the overall trend (intercept) but also allow the effect of time to vary by individual (random slopes). A random coefficient model with a random slope can be written as:
+
+$$
+Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
+$$
+
+where$Y_{ij}$ is the outcome for individual $i$ at time $i$, $\beta_0$is the fixed intercept (average starting point),$b_{0i}$ is the random intercept for individual $i$, $\beta_1$ *is the* fixed slope (average rate of change over time), $b_{1i}$ is the random slope for individual $i$ (individual variation in the rate of change), $X_{ij}$ is the time variable for individual $i$ at time $j$, $\epsilon_{ij}$ is the residual error.
+
+::: example
+To study the efficacy of treatments A and B on patients with leukopenia, a random method was used. 50 patients first received treatment A, followed by a break, and then received treatment B. Another 50 patients received treatment B first, followed by the same interval, and then treatment A. White blood cell counts were recorded after each treatment, as shown in the data.
+:::
+
+<div>
+
+<a href="datasets/ex27-03.csv" download="ex27-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv(
+  "datasets/ex27-03.csv", 
+  col_types = list(
+    id = col_factor(), period = col_factor(), treat = col_factor()
+  )) 
+```
+
+You can use the `lmer()` function from the `lmerTest` package to fit a random coefficient model:
+
+```{r}
+fit1 <- lmer(wbc ~ treat + period + (1 + dummy(period) || id), data = tb)
+fit1
+fit2 <- lmer(wbc ~ treat + period + (0 + dummy(period) || id), data = tb)
+fit2
+```
+
+In this example code block:
+
+-   The `0 +` notation removes the intercept in random effects, so only random slopes are modeled.
+-   The `1 +` notation adds a random intercept along with the random slopes.
+-   The `||` notation specifies that random slopes are uncorrelated, which can help if the model is too complex and causing convergence issues.
+
+You might want to compare a random intercept model with a random coefficient model to see if adding random slopes improves the fit. This can be done with a likelihood ratio test:
+
+```{r}
+#| message: false
+anova(fit1, fit2)
+```
+
+If the random coefficient model significantly improves the fit compared to the random intercept model, it suggests that there is substantial individual variability in the slopes (i.e., the effect of time varies by individual).
+
+Using `period + treat || id` treats both *period* and *treat* as uncorrelated random slopes within each id.
+
+```{r}
+#| message: false
+lmer(wbc ~ treat + period + (0 + dummy(treat)  + dummy(period) || id), data = tb)
+lmer(wbc ~ treat + period + (1 + dummy(treat)  + dummy(period) || id), data = tb)
+```
+
+You can also fit a random coefficient model with the `nlme` package, though syntax differs slightly. If you prefer a Bayesian approach, the `brms` package also supports random coefficient models.
+
+This random coefficient model is especially useful in longitudinal studies or hierarchical data, where you expect individual-level differences in how predictors affect the outcome.
+
+## Multilevel model of discrete data
+
+For discrete data in a multilevel model, generalized linear mixed models (GLMMs) are commonly used. GLMMs extend linear mixed models to handle non-continuous outcomes, such as binary or multinomial responses.
+
+The general form of a GLMM is:
+
+$$
+\text{link}(\mathbb{E}(Y)) = X\beta + Zb
+$$
+
+where $Y$ is the discrete dependent variable (e.g., binary 0 or 1), $X \beta$ is fixed effects, $Zb$ is random effects, $\text {link}()$ is a link function to handle non-normality in discrete data, such as $\text {logit}$ (for logistic regression) or $\text {log}$ (for Poisson regression).
+
+You can use the `glmer()` function from the lme4 package to fit these models. For a binary outcome (e.g., success/failure), you can use the $\text {logit}$ link function. For categorical outcomes with more than two categories, a multinomial (multiclass) model is appropriate. Since `glmer()` doesn’t directly support multinomial regression, you can use `nnet::multinom()` or `brms::brm()` for Bayesian multinomial mixed models. For count data, you can use a Poisson or negative binomial distribution.
+
+::: example
+Below is a questionnaire survey data, conducted by 20 investigators on 135 rural community doctors, analyzed responses to the following three questions:
+
+1.  “Patients often ask doctors to prescribe a specific antibiotic, have you encountered this situation?”
+2.  “If a patient requests a specific antibiotic, do you agree to prescribe it?”
+3.  “Some doctors believe that for patients whose medication costs are not reimbursable, they should prescribe more antibiotics or more expensive antibiotics. Do you agree with this opinion?”
+
+Responses to each question are binary (“Yes” or “No”), with no repeated measures for the questions. The number of doctors surveyed by each investigator varies, meaning the data are unbalanced.
+:::
+
+<div>
+
+<a href="datasets/ex27-04.csv" download="ex27-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+tb <- read_csv("datasets/ex27-04.csv", show_col_types = F) |> 
+  mutate(across(contains(c("id", "que")), as.factor))
+```
+
+```{r}
+glmer(que1 ~ doc_exp + (1 + doc_exp || ivt_id), data = tb, family = binomial(link = "logit")) 
+```
