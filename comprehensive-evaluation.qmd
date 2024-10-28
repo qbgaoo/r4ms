@@ -1,0 +1,418 @@
+# Comprehensive evaluation methods
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Comprehensive evaluation methods are a set of techniques used to assess complex systems or subjects by integrating multiple indicators or criteria into a single evaluation. This type of evaluation is often used in complex contexts where different factors contribute to the outcome, making a holistic measure more informative than individual indicators alone. These methods are especially useful for evaluating patient health, treatment efficacy and healthcare quality.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(MCDA)
+library(visNetwork)
+```
+
+## Overview
+
+### Classifications of comprehensive evaluation
+
+Comprehensive evaluation methods can be classified based on different criteria. Here are some common classifications:
+
+1.  Based on data type
+
+Quantitative evaluation: Uses numerical data to calculate scores, often involving statistical or mathematical techniques. Common methods include the weighted sum model, analytic hierarchy process, and principal component analysis.
+
+Qualitative evaluation: Relies on non-numerical data, often from expert judgments or subjective opinions. Methods like the Delphi method, expert scoring, and case studies are typically used.
+
+Mixed methods evaluation: Combines quantitative and qualitative data to provide a more complete assessment. Examples include the comprehensive scoring method and fuzzy comprehensive evaluation.
+
+2.  Based on evaluation objective
+
+Single-objective evaluation: Focuses on one primary goal, such as cost reduction or quality improvement. It’s commonly used in specific project evaluations or performance assessments.
+
+Multi-objective evaluation: Assesses multiple objectives or criteria simultaneously, such as cost, quality, and efficiency. Methods include the Weighted Scoring Method, analytic hierarchy process, and grey relational analysis.
+
+3.  Based on model structure
+
+Additive models: Use additive techniques, where scores for different criteria are weighted and summed to obtain a final score. The weighted sum model is an example.
+
+Multiplicative models: Combine criteria by multiplication, which can be effective when criteria are dependent. For example, multiplicative utility functions are sometimes used in economic and decision analysis.
+
+Hybrid models: Use both additive and multiplicative elements or other transformations to aggregate scores. Fuzzy comprehensive evaluation often combines both approaches.
+
+4.  Based on weighting mechanism
+
+Equal weighting: All criteria are given the same weight, often used when there is no clear prioritization among criteria.
+
+Subjective Weighting: Weights are determined based on expert judgment or subjective preferences, such as in Delphi studies or scoring based on stakeholder input.
+
+Objective Weighting: Weights are determined based on the variability or statistical properties of the data, such as in entropy weighting and principal component analysis.
+
+5.  **Based on complexity**
+
+Simple scoring models: Use straightforward calculations, like the weighted Sum Model, suitable for cases with fewer criteria and simpler data.
+
+Complex multi-criteria decision models: Involve more advanced mathematical and statistical techniques, such as analytic hierarchy process, fuzzy comprehensive evaluation, and grey relational analysis, suitable for complex, large-scale evaluations with interrelated criteria.
+
+### Steps for evaluation
+
+The process of comprehensive evaluation typically follows these key steps, which help ensure that the evaluation is systematic, reliable, and meaningful.
+
+1.  Define the evaluation objective and criteria
+
+    Clearly outline the goal of the evaluation, such as assessing healthcare quality, treatment effectiveness, or patient satisfaction. Identify and define the specific criteria or indicators that will be evaluated. For instance, in healthcare, these could include mortality rates, patient recovery times, or resource utilization.
+
+2.  Select or design the evaluation method
+
+    Choose an appropriate evaluation method based on the data type, goal, and context. Define how each criterion will be measured and, if needed, create a scoring scale for qualitative criteria.
+
+3.  Collect and standardize data
+
+    Gather data for each criterion across all entities or individuals being evaluated (e.g., hospitals, patients). Standardize the data if indicators are measured on different scales, such as z-scores or min-max normalization. This ensures comparability across criteria.
+
+4.  Determine the weight of each criterion
+
+    Assign weights to each criterion to reflect its relative importance. Weights can be determined using methods like expert judgment, entropy method, or analytic hierarchy process (AHP). In some cases, all criteria may be weighted equally, depending on the evaluation objective.
+
+5.  Calculate the composite score
+
+    Using the selected evaluation method, calculate the synthetic (composite) score for each entity by combining the weighted criteria scores. Methods such as weighted sum or TOPSIS involve aggregating the scores, while PCA involve transformation or efficiency measures.
+
+6.  Analyze and rank results
+
+    Interpret the scores to rank or categorize the entities based on their performance or risk. For example, high composite scores might indicate high-quality healthcare facilities, while lower scores may indicate areas needing improvement.
+
+7.  Validate the results
+
+    Check the consistency and reliability of the results through sensitivity analysis or validation with external data if available. Ensure that the scores align with real-world expectations and that the weighting and criteria selection do not introduce bias.
+
+8.  Report and make recommendations
+
+    Present the results in a clear format, using visual aids like tables, charts, or maps if necessary. Provide actionable insights or recommendations based on the evaluation. For instance, high-ranking facilities can serve as models, while lower-ranking ones can target specific areas for improvement.
+
+Each step is essential in creating a robust, transparent, and actionable synthetic evaluation. These evaluations provide a holistic view, supporting decision-makers in fields like healthcare, education, and public policy.
+
+### Indicators selection
+
+The selection of evaluation indicators is crucial to ensure that assessments are accurate, relevant, and actionable. The process typically involves several steps to ensure that chosen indicators align with the objectives of the evaluation and reflect important dimensions of the program.
+
+Here are some commonly used methods to ensure that selected indicators are robust, meaningful, and actionable:
+
+1.  Literature review
+
+Identifying commonly used indicators from published studies, reviews, or meta-analyses in related fields. This provides a foundation of validated indicators that have proven effective. This is effective as an initial selection method to identify potential indicators and ensure consistency with existing research standards.
+
+2.  Delphi method
+
+A structured, iterative approach using expert panels to gain consensus on the most relevant indicators through multiple rounds of surveys. This i useful when expert consensus is required, especially when indicators are subjective or context-specific, such as patient-reported outcomes or community health metrics. Surveys and rounds of consensus-building, often conducted manually or through survey software.
+
+3.  Correlation analysis
+
+Examines the correlation between potential indicators and the target outcome, removing indicators with low correlation or multicollinearity. R functions like `cor()` for correlation matrices and `cor.test()` for testing significance.
+
+4.  Factor analysis or PCA
+
+Reduces the dimensionality of indicator sets, grouping them based on shared variance and identifying key factors or principal components. This is suitable for identifying core indicators in large datasets where indicators might overlap in meaning or measure similar constructs. The `prcomp()` for PCA, `factanal()` for factor analysis, and `PCA()` from the FactoMineR package.
+
+5.  Regression analysis
+
+Using linear or logistic regression models to identify indicators that significantly predict a target outcome. Indicators with insignificant or low coefficients may be excluded. This is effective when evaluating predictive power for a specific outcome, often used in epidemiological or clinical research. R functions like `lm()` and `glm()` for linear or logistic regression.
+
+6.  Entropy method
+
+An objective approach based on information entropy, where indicators with high information variability (entropy) are prioritized. This is useful when unbiased, data-driven indicator selection is required, commonly in fields like environmental health or social sciences. You can use `entropy()` function from the `infotheo` package to calculate entropy.
+
+7.  Indicator scoring and ranking
+
+Indicators are scored and ranked based on pre-defined criteria (e.g., relevance, reliability, cost-effectiveness), sometimes using weighted scores. This is frequently used in public health assessments, allowing for balanced consideration of multiple selection criteria. Scoring and ranking can be implemented by creating score functions or using simple calculations.
+
+8.  Sensitivity analysis
+
+Evaluates how changes in indicators affect the outcome, helping to determine the indicators that most influence results. This is applied in risk assessments and health economics to filter out indicators with minimal influence on the evaluation system. You can use the sensitivity analysis packages like `sensitivity`.
+
+9.  Cluster analysis
+
+Groups similar indicators into clusters, allowing the selection of representative indicators from each cluster. This is particularly useful when working with a high number of indicators with similar characteristics, often in large-scale health studies. You can use the `kmeans()` function for k-means clustering or `hclust()` for hierarchical clustering.
+
+Each method has specific advantages and is chosen based on factors like the complexity of the evaluation, data availability, stakeholder involvement, and the evaluation’s objectives. Often, a combination of these methods is used to ensure a thorough and well-rounded selection process.
+
+### Indicator weights estimation
+
+The estimation of weights for comprehensive evaluation indicators is essential in multi-criteria decision-making, public health assessments, and clinical research, as it ensures the relative importance of each indicator is accurately reflected. Here are common methods for estimating these weights:
+
+1.  Analytic hierarchy process
+
+In analytic hierarchy process, indicators are compared pairwise based on expert judgment. Each comparison provides a relative importance score, from which a matrix is constructed. Eigenvalues and eigenvectors of this matrix are used to derive indicator weights. This is often used in complex decision-making scenarios where expert opinions are available, such as healthcare assessments. R packages like `ahpsurvey` or manually calculating eigenvectors can implement AHP.
+
+2.  Delphi method
+
+Experts estimate weights through a structured, multi-round feedback process. Each round refines the weights based on group feedback until consensus is reached. This is useful for subjective or context-specific indicators, particularly when consensus is necessary (e.g., community health metrics). It is typically conducted through surveys.
+
+3.  Entropy weight method
+
+This objective method calculates entropy based on indicator variability. Indicators with greater variability (higher entropy) contribute more information and receive higher weights. This method is effective for objective weighting in studies where variability reflects importance, like environmental health or epidemiology.
+
+4.  Regression coefficient method
+
+In this method, indicators are regressed against an outcome variable. The resulting regression coefficients are standardized to obtain weights, with larger coefficients indicating greater influence. This method is useful when a target outcome exists (e.g., mortality rate) and can be predicted by the indicators.
+
+5.  Data envelopment analysis
+
+Data envelopment analysis calculates efficiency scores based on the optimization of each observation relative to others. Weights are derived based on the efficiency maximization process. This method is commonly used in performance and efficiency studies, such as hospital productivity evaluations. The function `dea()` from the `Benchmarking` package can be used for this purpose.
+
+6.  Weighted scoring or weighted sum model
+
+Weights are assigned based on expert judgment or historical data, with the final score being a weighted sum of indicators. This method is often applied in decision-making scenarios where indicators have known relative importance.
+
+7.  Principal component analysis
+
+Principal component analysis (PCA) identifies the main components that explain the most variance in the data, which are then used to derive indicator weights based on component loadings. This method is suitable for large datasets where indicators may overlap in information; used widely in epidemiology and psychology.
+
+8.  Factor analysis
+
+Similar to PCA but with latent factors that group related indicators. Weights are derived from factor loadings, reflecting the relative importance of each indicator within factors. This method is applied when indicators are believed to correlate, such as in psychological or socio-economic assessments.
+
+9.  Simple equal weights (uniform weighting)
+
+When all indicators are considered equally important, each indicator is assigned the same weight. This approach is straightforward and minimizes bias when there’s no clear rationale for differentiation. This is useful as a baseline method in exploratory studies or when no weight differentiation is justified.
+
+Selecting the right method depends on the availability of data, the need for subjective versus objective weighting, and the specific goals of the evaluation.
+
+There are several functions and packages are available to support indicator selection and weight estimation for comprehensive evaluation:
+
+There are several functions from `MCAD` package, such as `weightedSum()`, `weightedProduct()`, `AHP()` and `TOPSIS()` are used to apply weights to indicators and aggregate them based on MCDA criteria.
+
+```{r}
+#| eval: false
+data <- data.frame(
+  hospital = c("A", "B", "C"),
+  patient_satisfaction = c(80, 85, 90),   # scale 0-100
+  treatment_success = c(70, 75, 95),      # scale 0-100
+  readmission_rate = c(0.15, 0.10, 0.05), # scale 0-1, lower is better
+  row.names = 1
+)
+weights <- c(0.3, 0.5, 0.2)
+weightedSum(data, weights)
+```
+
+## Comprehensive scoring method
+
+Comprehensive scoring method, or weighted sum model, is a commonly used technique in evaluation and decision-making. This method allows for a synthetic assessment by combining multiple criteria into a single score.
+
+In comprehensive evaluations, different scoring methods are applied based on the context and characteristics of the indicators. Here are some commonly used methods:
+
+1.  Cumulative addition method: Adds up the raw scores of each indicator to obtain a total score. Best suited for cases where all indicators share the same units and are of equal or similar importance.
+
+    $$
+    \text{Score} = \sum_{i=1}^{n} X_i
+    $$where $X_i$ is the score for the $i$-th indicator.
+
+2.  Multiplicative method: Multiplies the raw scores of each indicator to produce the total score, emphasizing the interdependence of indicators. Used when high scores are required across all indicators to achieve a high overall score (e.g., if any indicator score is zero, the total score becomes zero).
+
+$$
+\text{Score} = \prod_{i=1}^{n} X_i
+$$
+
+3.  Additive-multiplicative method: Combines addition and multiplication, where certain indicators are added together and others are multiplied. Suitable for grouped weighting or where different sets of indicators have distinct weight considerations.
+
+    $$
+    \text{Score} = (X_1 + X_2) \times (X_3 + X_4)
+    $$
+
+    or
+
+    $$
+    \text{Score} = X_1 \times X_2 + X_3 \times X_4
+    $$
+
+4.  Weighted addition method: Assigns a weight to each indicator and calculates the weighted sum of the scores. Ideal for cases where indicators have varying levels of importance, making this one of the most widely used methods.
+
+    $$
+    \text{Score} = \sum_{i=1}^{n} W_i \times X_i
+    $$
+
+    where $W_i$ is the weight of the $i$-th indicator and $X_i$ is its score.
+
+5.  Weighted additive-multiplicative method: Combines weighted addition and multiplication, where more heavily weighted indicators are multiplied, and less significant indicators are added, yielding a total score that reflects both weighting and indicator group characteristics. Applied in cases with clear weight disparities across groups of indicators.
+
+    $$
+    \text{Score} = (W_1 \times X_1 \times X_2) + (W_2 \times X_3)
+    $$
+
+where $W_1$ and $W_2$ are the weights for different groups of indicators.
+
+Cumulative Addition is ideal for straightforward summing but may fail to account for differences across indicators. Multiplicative Method is suitable for situations where the dependency among indicators is crucial, especially when a low score in one indicator significantly impacts the total. Weighted Addition Method is the most commonly used, particularly in scenarios with clear weight distribution across indicators. Weighted Additive-Multiplicative Method works well for cases where groups of indicators have distinct weights, balancing both additive and multiplicative effects. Selecting the best method according to the evaluation goals and specific circumstances ensures that the results are both reasonable and scientifically valid.
+
+Here’s an example to calculate the comprehensive score for hospitals based on three criteria.
+
+```{r}
+tb <- data.frame(
+  hospital = c("A", "B", "C"),
+  patient_satisfaction = c(80, 85, 90),   # scale 0-100
+  treatment_success = c(70, 75, 95),      # scale 0-100
+  readmission_rate = c(0.15, 0.10, 0.05), # scale 0-1, lower is better
+  row.names = 1
+)
+
+weights <- c(0.4, 0.4, 0.2) # sum should equal 1
+tb |> 
+  mutate(
+    readmission_rate = (1 - readmission_rate) * 100) |>   # scale 0-100
+    weightedSum(weights)
+
+tb |> 
+  mutate(
+    readmission_rate = (1 - readmission_rate) * 100) |>   # scale 0-100
+  apply(1, \(x) sum(x * weights))
+```
+
+## Comprehensive index method
+
+The comprehensive index method, also known as the synthetic index method, is commonly used for multi-criteria evaluation by calculating an overall score or index that reflects the performance across various indicators. This method is widely used in fields like healthcare, environmental studies, and social sciences to assess overall quality, risk, or effectiveness.
+
+For example , the hospital work efficiency index (HWEI) is a metric used to evaluate the productivity and efficiency of hospital operations. This index typically integrates several performance indicators, including resource utilization, service quality, and operational costs, to provide a holistic measure of a hospital’s effectiveness in delivering healthcare.
+
+The specific formula for the HWEI may vary depending on available data and organizational priorities, but it generally involves aggregating weighted scores for each component. Assume you have a data for three hospitals, with indicators normalized on a scale from 0 to 1:
+
+1.  Resource utilization score (e.g., occupancy rates and equipment usage)
+2.  Service quality score (e.g., patient satisfaction, readmission rates)
+3.  Cost efficiency score (e.g., cost per patient and cost per unit revenue)
+
+Here’s how you might calculate a HWEI:
+
+```{r}
+data <- data.frame(
+  Hospital = c("A", "B", "C"),
+  Resource_Utilization = c(0.8, 0.7, 0.9),
+  Service_Quality = c(0.85, 0.65, 0.9),
+  Cost_Efficiency = c(0.75, 0.8, 0.7),
+  row.names = 1
+) 
+weights <- c(0.4, 0.4, 0.2)
+
+weightedSum(data, weights)
+```
+
+The result give a single work efficiency index score for each hospital, making it easier to assess and compare their efficiency levels.
+
+## Analytic hierarchy process
+
+The analytic hierarchy process (AHP) is a structured decision-making framework used to rank and prioritize complex decisions by decomposing them into a hierarchy of criteria and alternatives. Created by Thomas Saaty in the 1970s, AHP is especially useful in situations where qualitative and quantitative aspects must be considered together. AHP involves breaking down the decision problem, evaluating each component using pairwise comparisons, and calculating weights for each criterion and alternative to find an optimal solution.
+
+Steps in the AHP:
+
+1.  Define the problem and goal: Clearly state the decision to be made and establish the overall goal.
+2.  Structure the hierarchy: Decompose the decision problem into a hierarchy, with the goal at the top level, criteria and sub-criteria (if applicable) in the middle, and alternatives at the bottom.
+3.  Pairwise comparison and priority calculation: Conduct pairwise comparisons of the criteria and alternatives at each level of the hierarchy. Use a scale of importance (usually 1 to 9, where 1 means equal importance and 9 indicates extreme importance of one element over another). For each criterion or alternative, calculate a priority vector (weight) based on the comparison results.
+4.  Consistency check: AHP includes a consistency index and consistency ratio to ensure judgments are not random or contradictory. The consistency ratio should typically be below 0.1 for the decision process to be considered reliable.
+5.  Calculate final scores: Combine the weights of each level to derive a final score for each alternative, helping to identify the best choice.
+
+::: example
+To evaluate the work quality of a hospital, the supervising department selects medical criteria, nursing criteria, and dietary criteria, to represent the overall goal. Each of these three sub-criteria is further represented by their sub-criteria. Figure 1 shows the target hierarchy for hospital work quality. Based on the data to assess the work quality of each hospital.
+:::
+
+<div>
+
+<a href="datasets/ex28-01.csv" download="ex28-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+To create a hierarchical diagram, you can use the `visNetwork` package, which supports building hierarchical diagrams or tree structures for visualizing evaluation frameworks.
+
+```{r}
+#| label: fig-tree-diagram
+#| fig-cap: Hierarchical diagram of hospital work quality evaluation
+nodes <- data.frame(
+  id = 1:15, 
+  label = c("Hospital Work Quality", 
+    "Dietary Services", "Nursing Work", "Medical Services",
+    "Dietary Service Quality", "Nursing System", "Medical System",   
+    "Medical Service Quality", "Bed Utilization",      
+    "Food Quality Rate", "Execution Excellence Rate", "Execution Excellence Rate",
+    "ICU Admission Rate", "Clinical Efficacy Rate", "Bed Occupancy Rate"
+  ),
+  shape = c("ellipse", rep("box", 14)),
+  group = c("A", rep("B", 3), rep("C", 5), rep("D", 6)),
+  size = c(10, rep(30, 3), rep(30, 5), rep(20, 6))
+)
+
+edges <- data.frame(
+  from = c(1, 1, 1, 2, 3, 4, 4, 4, 5, 6, 7, 8, 8, 9),
+  to   = c(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15),
+  arrows = "to"
+)
+
+# Render the network
+visNetwork(nodes, edges) |> 
+  visHierarchicalLayout(
+    levelSeparation = 70,
+    sortMethod = "directed"
+  ) |> 
+  visOptions(highlightNearest = list(enabled = T, degree = 1, hover = T)) 
+```
+
+```{r}
+df <- read_csv("datasets/ex28-01.csv", show_col_types = F) |> 
+  column_to_rownames(var = "hosptl_code")
+```
+
+```{r}
+# 构建成对比较矩阵
+# 第一级：总目标
+criteria <- c("Dietary", "Nursing", "Medical")
+criteriaMatrix <- matrix(c(
+  1,   1/3, 3,
+  3,   1,   5,
+  1/3, 1/5, 1
+), nrow = 3, byrow = TRUE, dimnames = list(criteria, criteria))
+
+# 第二级：子目标矩阵
+# 膳食服务下的成对比较矩阵
+dietaryMatrix <- matrix(c(
+  1), nrow = 1, dimnames = list("Food Quality Rate", "Food Quality Rate"))
+
+# 护理工作下的成对比较矩阵
+nursingMatrix <- matrix(c(
+  1), nrow = 1, dimnames = list("Execution Excellence Rate", "Execution Excellence Rate"))
+
+
+# 医疗服务下的成对比较矩阵
+subCriteria <- c("Medical System", "Medical Service Quality", "Bed Utilization")
+medicalMatrix <- matrix(c(
+  1,   3, 5,
+  1/3, 1, 3,
+  1/5, 1/3, 1
+), nrow = 3, byrow = TRUE, dimnames = list(subCriteria, subCriteria))
+
+
+# 第三级：具体评价指标矩阵
+# 医疗质量下的成对比较矩阵
+subCriteria <- c("ICU Admission Rate", "Clinical Efficacy Rate")
+medicalServiceQualityMatrix <- matrix(c(
+  1,   1/3,
+  3,   1
+), nrow = 2, byrow = TRUE, dimnames = list(subCriteria, subCriteria))
+
+# 构建替代方案的成对比较矩阵
+alternativesData <- df
+
+# 替代方案的成对比较矩阵列表
+alternativesList <- list(
+  FoodQuality = alternativesData$food_qulity,
+  NursingExcellence = alternativesData$nurs_complic,
+  MedicalExcellence = alternativesData$complic_excelnc,
+  ICUAdmission = alternativesData$icu_admsin,
+  ClinicalEfficacy = alternativesData$clinicl_eficacy,
+  BedOccupancy = alternativesData$bed_ocupacy
+)
+
+
+```
+
+## TOPSIS
+
+Technique for Order Preference by Similarity to Ideal Solution

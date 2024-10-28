@@ -90,7 +90,7 @@ In general, use `lme4` for large, linear mixed-effects models; use `lmerTest` fo
 The `brm()` function from `brms` package can fit a Bayesian generalized linear multivariate multilevel model. The `brms` is a high-level package that provides an intuitive interface for fitting Bayesian models using Stan on the backend, abstracting away the need to write Stan code manually. It’s similar to the lme4 package but for Bayesian models.
 
 ```{r}
-bayes_fit <- brm(bp ~ state + (1 |subject), data = df)
+bayes_fit <- brm(bp ~ state + (1 |subject), data = df, silent = 2)
 bayes_fit |> summary() 
 ```
 

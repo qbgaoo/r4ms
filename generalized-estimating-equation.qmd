@@ -20,12 +20,12 @@ A researcher randomly selected 149 patients who used a pain relief pump after gy
 
 <div>
 
-<a href="datasets/ex28-01.csv" download="ex28-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex30-01.csv" download="ex30-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
 
 ```{r}
-df <- read_csv("datasets/ex28-01.csv", , show_col_types = F) 
+df <- read_csv("datasets/ex30-01.csv", , show_col_types = F) 
 ```
 
 The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.

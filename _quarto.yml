@@ -46,6 +46,7 @@ book:
         - canonical-correlation.qmd
         - structural-equation.qmd
         - multilevel-model.qmd
+        - comprehensive-evaluation.qmd
         - generalized-estimating-equation.qmd
         
     - part: stat-anal-report.qmd
