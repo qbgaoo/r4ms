@@ -120,6 +120,34 @@
       ],
       "Hash": "3cdd73c0534df2123efc25236ec23295"
     },
+    "DiagrammeR": {
+      "Package": "DiagrammeR",
+      "Version": "1.0.11",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "RColorBrewer",
+        "cli",
+        "dplyr",
+        "glue",
+        "htmltools",
+        "htmlwidgets",
+        "igraph",
+        "magrittr",
+        "purrr",
+        "readr",
+        "rlang",
+        "rstudioapi",
+        "scales",
+        "stringr",
+        "tibble",
+        "tidyr",
+        "viridisLite",
+        "visNetwork"
+      ],
+      "Hash": "584c1e1cbb6f9b6c3b0f4ef0ad960966"
+    },
     "DoE.base": {
       "Package": "DoE.base",
       "Version": "1.2-4",
@@ -676,6 +704,25 @@
         "nlme"
       ],
       "Hash": "f00dd33a22c15e857500ec0c49952bbf"
+    },
+    "ahp": {
+      "Package": "ahp",
+      "Version": "0.2.12",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "ahp",
+      "RemoteUsername": "gluc",
+      "RemoteSha": "4a85f6e8769b7e15fe3911c79ba21b4da44af270",
+      "Requirements": [
+        "DiagrammeR",
+        "R",
+        "data.tree",
+        "formattable",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "bf52fb4f5e8f0a81a385ffa38420450f"
     },
     "arm": {
       "Package": "arm",
@@ -1339,6 +1386,19 @@
       ],
       "Hash": "2e00b378fc3be69c865120d9f313039a"
     },
+    "data.tree": {
+      "Package": "data.tree",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "methods",
+        "stringi"
+      ],
+      "Hash": "d7602f0f55e0335b83f2353337848d6f"
+    },
     "dbplyr": {
       "Package": "dbplyr",
       "Version": "2.5.0",
@@ -1731,6 +1791,21 @@
         "utils"
       ],
       "Hash": "81fc09bdeab0077a73927ed1243404b6"
+    },
+    "formattable": {
+      "Package": "formattable",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "htmltools",
+        "htmlwidgets",
+        "knitr",
+        "methods",
+        "rmarkdown"
+      ],
+      "Hash": "870d6d5d39b23923d0c816f904075b4c"
     },
     "fs": {
       "Package": "fs",
