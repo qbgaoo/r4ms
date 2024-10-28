@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./generalized-estimating-equation.html" rel="next">
+<link href="./comprehensive-evaluation.html" rel="next">
 <link href="./structural-equation.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -386,8 +386,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./comprehensive-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Comprehensive evaluation methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
       </ul>
@@ -404,19 +410,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -656,19 +662,13 @@ Packages for linear mixed models
 <p>In general, use <code>lme4</code> for large, linear mixed-effects models; use <code>lmerTest</code> for p-values and hypothesis testing; and use <code>nlme</code> for more complex models, particularly nonlinear ones or those requiring advanced correlation structures.</p>
 <p>The <code>brm()</code> function from <code>brms</code> package can fit a Bayesian generalized linear multivariate multilevel model. The <code>brms</code> is a high-level package that provides an intuitive interface for fitting Bayesian models using Stan on the backend, abstracting away the need to write Stan code manually. It’s similar to the lme4 package but for Bayesian models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bayes_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(bp <span class="sc">~</span> state <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>subject), <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Compiling Stan program...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Start sampling</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bayes_fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(bp <span class="sc">~</span> state <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span>subject), <span class="at">data =</span> df, <span class="at">silent =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5.2e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.
+#&gt; Chain 1: Gradient evaluation took 0.000114 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.14 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -685,15 +685,15 @@ Packages for linear mixed models
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.124 seconds (Warm-up)
-#&gt; Chain 1:                0.05 seconds (Sampling)
-#&gt; Chain 1:                0.174 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.147 seconds (Warm-up)
+#&gt; Chain 1:                0.075 seconds (Sampling)
+#&gt; Chain 1:                0.222 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 6e-06 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
+#&gt; Chain 2: Gradient evaluation took 9e-06 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -710,15 +710,15 @@ Packages for linear mixed models
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.084 seconds (Warm-up)
-#&gt; Chain 2:                0.048 seconds (Sampling)
-#&gt; Chain 2:                0.132 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.104 seconds (Warm-up)
+#&gt; Chain 2:                0.054 seconds (Sampling)
+#&gt; Chain 2:                0.158 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4e-06 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#&gt; Chain 3: Gradient evaluation took 6e-06 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -735,15 +735,15 @@ Packages for linear mixed models
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.082 seconds (Warm-up)
-#&gt; Chain 3:                0.045 seconds (Sampling)
-#&gt; Chain 3:                0.127 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.087 seconds (Warm-up)
+#&gt; Chain 3:                0.057 seconds (Sampling)
+#&gt; Chain 3:                0.144 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 4e-06 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#&gt; Chain 4: Gradient evaluation took 9e-06 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -760,12 +760,12 @@ Packages for linear mixed models
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.106 seconds (Warm-up)
-#&gt; Chain 4:                0.052 seconds (Sampling)
-#&gt; Chain 4:                0.158 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.109 seconds (Warm-up)
+#&gt; Chain 4:                0.061 seconds (Sampling)
+#&gt; Chain 4:                0.17 seconds (Total)
 #&gt; Chain 4:</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bayes_fit <span class="sc">|&gt;</span> <span class="fu">summary</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bayes_fit <span class="sc">|&gt;</span> <span class="fu">summary</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;  Family: gaussian 
 #&gt;   Links: mu = identity; sigma = identity 
@@ -822,20 +822,20 @@ S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
 <p><a href="datasets/ex27-02.csv" download="ex27-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">edu_adj =</span> <span class="fu">as.factor</span>(edu_adj),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">study_rgn =</span> <span class="fu">as.factor</span>(study_rgn)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">as.factor</span>(id),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">edu_adj =</span> <span class="fu">as.factor</span>(edu_adj),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">study_rgn =</span> <span class="fu">as.factor</span>(study_rgn)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rma</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">yi =</span> <span class="fu">log</span>(or),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vi =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n_sample), </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb, </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mods =</span> <span class="sc">~</span> edu_adj <span class="sc">+</span> study_rgn , </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"REML"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rma</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">yi =</span> <span class="fu">log</span>(or),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">vi =</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">sqrt</span>(n_sample), </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mods =</span> <span class="sc">~</span> edu_adj <span class="sc">+</span> study_rgn , </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"REML"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Mixed-Effects Model (k = 16; tau^2 estimator: REML)
@@ -881,16 +881,16 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 <p><a href="datasets/ex27-03.csv" download="ex27-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex27-03.csv"</span>, </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">col_factor</span>(), <span class="at">period =</span> <span class="fu">col_factor</span>(), <span class="at">treat =</span> <span class="fu">col_factor</span>()</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"datasets/ex27-03.csv"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">list</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="fu">col_factor</span>(), <span class="at">period =</span> <span class="fu">col_factor</span>(), <span class="at">treat =</span> <span class="fu">col_factor</span>()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  )) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can use the <code>lmer()</code> function from the <code>lmerTest</code> package to fit a random coefficient model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fit1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Linear mixed model fit by REML ['lmerModLmerTest']
 #&gt; Formula: wbc ~ treat + period + (1 + dummy(period) || id)
@@ -906,8 +906,8 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 #&gt; (Intercept)       treatA      period2  
 #&gt;      6.9358      -0.1889      -0.5024</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Linear mixed model fit by REML ['lmerModLmerTest']
 #&gt; Formula: wbc ~ treat + period + (0 + dummy(period) || id)
@@ -931,7 +931,7 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 </ul>
 <p>You might want to compare a random intercept model with a random coefficient model to see if adding random slopes improves the fit. This can be done with a likelihood ratio test:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit1, fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Data: tb
 #&gt; Models:
@@ -945,7 +945,7 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 <p>If the random coefficient model significantly improves the fit compared to the random intercept model, it suggests that there is substantial individual variability in the slopes (i.e., the effect of time varies by individual).</p>
 <p>Using <code>period + treat || id</code> treats both <em>period</em> and <em>treat</em> as uncorrelated random slopes within each id.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> <span class="fu">dummy</span>(treat)  <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">0</span> <span class="sc">+</span> <span class="fu">dummy</span>(treat)  <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Linear mixed model fit by REML ['lmerModLmerTest']
 #&gt; Formula: wbc ~ treat + period + (0 + dummy(treat) + dummy(period) || id)
@@ -962,7 +962,7 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 #&gt;      6.9359      -0.1892      -0.5024  
 #&gt; optimizer (nloptwrap) convergence code: 0 (OK) ; 0 optimizer warnings; 1 lme4 warnings</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">dummy</span>(treat)  <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lmer</span>(wbc <span class="sc">~</span> treat <span class="sc">+</span> period <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">dummy</span>(treat)  <span class="sc">+</span> <span class="fu">dummy</span>(period) <span class="sc">||</span> id), <span class="at">data =</span> tb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Linear mixed model fit by REML ['lmerModLmerTest']
 #&gt; Formula: wbc ~ treat + period + (1 + dummy(treat) + dummy(period) || id)
@@ -1007,11 +1007,11 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 <p><a href="datasets/ex27-04.csv" download="ex27-04.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"que"</span>)), as.factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex27-04.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"que"</span>)), as.factor))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glmer</span>(que1 <span class="sc">~</span> doc_exp <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> doc_exp <span class="sc">||</span> ivt_id), <span class="at">data =</span> tb, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glmer</span>(que1 <span class="sc">~</span> doc_exp <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> doc_exp <span class="sc">||</span> ivt_id), <span class="at">data =</span> tb, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
 #&gt;   Approximation) [glmerMod]
@@ -1662,8 +1662,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./generalized-estimating-equation.html" class="pagination-link" aria-label="Generalized estimating equation">
-        <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./comprehensive-evaluation.html" class="pagination-link" aria-label="Comprehensive evaluation methods">
+        <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Comprehensive evaluation methods</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
