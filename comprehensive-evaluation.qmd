@@ -312,7 +312,7 @@ Steps in the AHP:
 5.  Calculate final scores: Combine the weights of each level to derive a final score for each alternative, helping to identify the best choice.
 
 ::: example
-To evaluate the work quality of a hospital, the supervising department selects medical criteria, nursing criteria, and dietary criteria, to represent the overall goal. Each of these three sub-criteria is further represented by their sub-criteria. Figure 1 shows the target hierarchy for hospital work quality. Based on the data to assess the work quality of each hospital.
+To evaluate the work quality of a hospital, the supervising department selects medical criteria, nursing criteria, and dietary criteria, to represent the overall goal. Each of these three sub-criteria is further represented by their sub-criteria. Figure 1 shows the target hierarchy for hospital work quality. Based on the data to assess the work quality of a hospital.
 :::
 
 <div>
@@ -360,61 +360,23 @@ df <- read_csv("datasets/ex28-01.csv", show_col_types = F) |>
   column_to_rownames(var = "hosptl_code")
 ```
 
+This package lets you model and analyse complex decision making problems according to the AHP framework.
+
 ```{r}
-# 构建成对比较矩阵
-# 第一级：总目标
-criteria <- c("Dietary", "Nursing", "Medical")
-criteriaMatrix <- matrix(c(
-  1,   1/3, 3,
-  3,   1,   5,
-  1/3, 1/5, 1
-), nrow = 3, byrow = TRUE, dimnames = list(criteria, criteria))
-
-# 第二级：子目标矩阵
-# 膳食服务下的成对比较矩阵
-dietaryMatrix <- matrix(c(
-  1), nrow = 1, dimnames = list("Food Quality Rate", "Food Quality Rate"))
-
-# 护理工作下的成对比较矩阵
-nursingMatrix <- matrix(c(
-  1), nrow = 1, dimnames = list("Execution Excellence Rate", "Execution Excellence Rate"))
-
-
-# 医疗服务下的成对比较矩阵
-subCriteria <- c("Medical System", "Medical Service Quality", "Bed Utilization")
-medicalMatrix <- matrix(c(
-  1,   3, 5,
-  1/3, 1, 3,
-  1/5, 1/3, 1
-), nrow = 3, byrow = TRUE, dimnames = list(subCriteria, subCriteria))
-
-
-# 第三级：具体评价指标矩阵
-# 医疗质量下的成对比较矩阵
-subCriteria <- c("ICU Admission Rate", "Clinical Efficacy Rate")
-medicalServiceQualityMatrix <- matrix(c(
-  1,   1/3,
-  3,   1
-), nrow = 2, byrow = TRUE, dimnames = list(subCriteria, subCriteria))
-
-# 构建替代方案的成对比较矩阵
-alternativesData <- df
-
-# 替代方案的成对比较矩阵列表
-alternativesList <- list(
-  FoodQuality = alternativesData$food_qulity,
-  NursingExcellence = alternativesData$nurs_complic,
-  MedicalExcellence = alternativesData$complic_excelnc,
-  ICUAdmission = alternativesData$icu_admsin,
-  ClinicalEfficacy = alternativesData$clinicl_eficacy,
-  BedOccupancy = alternativesData$bed_ocupacy
-)
-
-
+#| warning: false
+library(ahp)
+hospitalAHP <- Load("appendix/hospitl_quality_ahp.yml") 
+Calculate(hospitalAHP)
+Visualize(hospitalAHP)
 ```
 
 ```{r}
-library(ahp)
+#| warning: false
+carAHP <- Load("appendix/car.ahp")
+Calculate(carAHP)
+Visualize(carAHP)
+Analyze(carAHP)
+AnalyzeTable(carAHP)
 ```
 
 ## TOPSIS
