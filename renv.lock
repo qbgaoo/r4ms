@@ -4659,6 +4659,13 @@
       ],
       "Hash": "9db859e8aabbb474293dde3097839420"
     },
+    "topsis": {
+      "Package": "topsis",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3ecd9c5be8520f4cd05babcd778d1c22"
+    },
     "triangle": {
       "Package": "triangle",
       "Version": "1.0",

@@ -12,8 +12,8 @@ Comprehensive evaluation methods are a set of techniques used to assess complex 
 ```{r}
 #| message: false
 library(tidyverse)
-library(MCDA)
 library(visNetwork)
+library(ahp)
 ```
 
 ## Overview
@@ -196,7 +196,7 @@ data <- data.frame(
   row.names = 1
 )
 weights <- c(0.3, 0.5, 0.2)
-weightedSum(data, weights)
+MCDA::weightedSum(data, weights)
 ```
 
 ## Comprehensive scoring method
@@ -262,7 +262,7 @@ weights <- c(0.4, 0.4, 0.2) # sum should equal 1
 tb |> 
   mutate(
     readmission_rate = (1 - readmission_rate) * 100) |>   # scale 0-100
-    weightedSum(weights)
+    MCDA::weightedSum(weights)
 
 tb |> 
   mutate(
@@ -294,7 +294,7 @@ data <- data.frame(
 ) 
 weights <- c(0.4, 0.4, 0.2)
 
-weightedSum(data, weights)
+MCDA::weightedSum(data, weights)
 ```
 
 The result give a single work efficiency index score for each hospital, making it easier to assess and compare their efficiency levels.
@@ -364,21 +364,273 @@ This package lets you model and analyse complex decision making problems accordi
 
 ```{r}
 #| warning: false
-library(ahp)
-hospitalAHP <- Load("appendix/hospitl_quality_ahp.yml") 
-Calculate(hospitalAHP)
+hospitalAHP <- Load("appendix/hospitl_quality.yml") 
+#Calculate(hospitalAHP)
+#Analyze(hospitalAHP) 
 Visualize(hospitalAHP)
 ```
 
 ```{r}
 #| warning: false
-carAHP <- Load("appendix/car.ahp")
+carAHP <- Load("appendix/car1.yml")
 Calculate(carAHP)
-Visualize(carAHP)
-Analyze(carAHP)
-AnalyzeTable(carAHP)
+#Visualize(carAHP)
+#AnalyzeTable(carAHP) 
+Analyze(carAHP) |> knitr::kable()
 ```
 
 ## TOPSIS
 
-Technique for Order Preference by Similarity to Ideal Solution
+TOPSIS (Technique for Order Preference by Similarity to an Ideal Solution) is a multi-criteria decision analysis technique designed to help decision-makers select the best option among several by comparing each option’s closeness to an ideal solution and a negative-ideal solution. The ideal solution is defined as the best possible value for each criterion, and the negative-ideal solution as the worst possible value.
+
+Steps of TOPSIS：
+
+1\. Construct the decision matrix: Create a matrix where rows represent different alternatives and columns represent criteria to be evaluated.
+
+2\. Normalize the decision matrix: To eliminate the effect of different units among criteria, normalize the matrix, typically using vector normalization:
+
+$$
+r_{ij} = \frac{X_{ij}}{\sqrt{\sum_{i=1}^m X_{ij}^2}}
+$$
+
+where $r_{ij}$ is the normalized value, $x_{ij}$ is the original score, and m is the number of alternatives.
+
+3\. Create the weighted normalized matrix: Apply weights $w_j$ to each criterion to reflect their relative importance:
+
+$$
+v_{ij} = w_j \cdot r_{ij}
+$$
+
+4\. Determine the ideal and negative-ideal solutions: The ideal solution $A^+$is maximum value for benefit-type criteria and minimum for cost-type criteria. The negative-ideal solution $A^-$ is minimum value for benefit-type criteria and maximum for cost-type criteria.
+
+5\. Calculate distance to ideal and negative-ideal solutions: Compute the Euclidean distance of each alternative $i$ from the ideal $A^+$ and negative-ideal $A^-$ solutions:
+
+$$
+S_i^+ = \sqrt{\sum_{j=1}^n (v_{ij} - A_j^+)^2}
+$$
+
+$$
+S_i^- = \sqrt{\sum_{j=1}^n (v_{ij} - A_j^-)^2}
+$$
+
+6\. Calculate the relative closeness: Evaluate each alternative’s relative closeness $C_i$ to the ideal solution:
+
+$$
+C_i = \frac{S_i^-}{S_i^+ + S_i^-}
+$$
+
+A value closer to 1 indicates a better option closer to the ideal solution.
+
+7\. Rank alternatives: Rank alternatives by their $C_i$ values, where the highest score indicates the best choice.
+
+::: example
+The data below is from six districts of a city in 2018 on the quality of emergency response work for public health incidents. Please conduct a comprehensive evaluation using the 4 indicators: event discovery sensitivity, disposal effect index, standardized report index, and report timeliness.
+:::
+
+<div>
+
+<a href="datasets/ex28-02.csv" download="ex28-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex28-02.csv", show_col_types = F) |> 
+  column_to_rownames("district")
+```
+
+```{r}
+weights <- c(0.25, 0.25, 0.25, 0.25)  
+impacts <- c("-", "-", "+", "-") 
+
+topsis::topsis(as.matrix(df), weights, impacts)
+```
+
+```{r}
+topsis.m <- function (data = NULL, weights = NULL, benefits = NULL, method = "recip") {
+  # Argument checks
+  if (missing(data)) 
+    stop("'data' must be provided and should be a numeric matrix or data frame")
+  if (!is.matrix(data) & !is.data.frame(data)) 
+    data <- as.matrix(data)
+  if (is.null(rownames(data)))
+    rownames(data) <- paste0("Sample_", 1:n)
+  if (missing(benefits)) 
+    stop("'benefits' must be provided as a character vector")
+  if (length(weights) != ncol(data)) 
+    stop("The length of 'weights' must equal the number of columns in 'data'")
+  if (length(benefits) != ncol(data)) 
+    stop("The length of 'benefits' must equal the number of columns in 'data'")
+  if (!all(weights > 0)) 
+    stop("All 'weights' must be positive numbers")
+  if (!all(benefits %in% c("+", "-"))) 
+    stop("'benefits' must contain only '+' (benefit) or '-' (cost) indicators")
+  
+  # Define normalization functions
+  recip_norm <- function(x, flag) {
+    lapply(seq_along(x), function(i) if (flag[i] == "+") x[[i]] else 1 / x[[i]])
+  }
+
+  iqr_norm <- function(x, flag) {
+    lapply(seq_along(x), function(i) {
+      q1 <- quantile(x[[i]], 0.25, na.rm = TRUE)
+      q3 <- quantile(x[[i]], 0.75, na.rm = TRUE)
+      if (flag[i] == "+") (x[[i]] - q1) / (q3 - q1) 
+      else (q3 - x[[i]]) / (q3 - q1)
+    })
+  }
+  
+  range_norm <- function(x, flag) {
+    lapply(seq_along(x), function(i) {
+      if (flag[i] == "+") (x[[i]] - min(x[[i]])) / diff(range(x[[i]])) 
+      else (max(x[[i]]) - x[[i]]) / diff(range(x[[i]]))
+    })
+  }
+  
+  # Apply chosen normalization method
+  norm_data <- switch(
+    method,
+    recip = recip_norm(data, benefits),
+    iqr = iqr_norm(data, benefits),
+    range = range_norm(data, benefits),
+    stop("Unknown method specified")
+  )
+  
+  norm_data <- as.matrix(do.call(cbind, norm_data))  # Convert to matrix for calculations
+
+  # Compute weighted normalized matrix
+  A <- sweep(norm_data, 2, sqrt(colSums(norm_data^2)), "/")
+  
+  weights <- weights / sum(weights)  # Normalize weights
+  weightedA <- A * weights
+
+  # Calculate positive and negative ideal solutions
+  u <- apply(weightedA, 2, max)
+  l <- apply(weightedA, 2, min)
+
+  # Distance functions for positive and negative ideals
+  du <- apply(weightedA, 1, function(x) sqrt(sum((x - u)^2)))
+  dl <- apply(weightedA, 1, function(x) sqrt(sum((x - l)^2)))
+
+  # TOPSIS score and ranking
+  score <- dl / (dl + du)
+  
+  return(data.frame(
+    name = rownames(data),
+    score = score, 
+    rank = rank(-score)))
+}
+```
+
+The `topsis.m()` function is ready to execute the TOPSIS method with customizable normalization methods (*recip*, *iqr*, and *range*).
+
+```{r}
+weights <- c(0.25, 0.25, 0.25, 0.25)  
+benefits <- c("-", "-", "+", "-") 
+topsis.m(df, weights, benefits, method = "recip")
+```
+
+## Rank sum ratio
+
+The rank sum ratio (RSR) method is a multi-criteria decision-making technique often used to evaluate and rank objects based on multiple indicators or criteria. The method works by ranking each object on each criterion, calculating a total rank for each object, and then normalizing these totals to produce a ratio between 0 and 1. This ratio is called the RSR, and it is a relative measure of how each object performs across the criteria. Here’s a step-by-step breakdown of how the RSR method works:
+
+1\. Calculate ranks
+
+Assume there are $m$ indicators and $n$ evaluation objects, forming an $n \times m$ data matrix $\mathbf X = [X_{ij}]$ , where $X_{ij}$ represents the value of the $i$-th object on the $j$-th indicator. Obtain ranks $R_{ij}$ for each indicator in the matrix $\mathbf X = [X_{ij}]$, which indicates the rank of the $i$-th object under the $j$-th indicator.
+
+2\. Calculate weighted rank sum
+
+Multiply each rank by its corresponding weight (if weights are assigned to indicators). Sum the weighted ranks for each sample:, yielding a total rank $R_i$:
+
+$$
+R_i = \sum_{j=1}^{m} w_jR_{ij}
+$$
+
+3\. Calculate the rank sum ratio
+
+Normalize the rank sum by dividing by the product of the sample count and the total weight sum. The RSR for each sample is:
+
+$$
+RSR_i = \frac{R_i}{n \cdot \sum_{j=1}^m w_j}
+$$
+
+This gives an $RSR_i$ value on a $[0, 1]$ scale, facilitating comparison and interpretation.
+
+5.  Ranking and evaluation
+
+Objects are ranked and categorized based on $RSR_i$ values; a higher value indicates a better overall performance across indicators.
+
+::: example
+The data below is collected from a province for a given year, including prenatal check-up rate X1 (%), maternal mortality rate X2 (per 100,000), and perinatal mortality rate X3 (‰) across 10 regions. Perform a comprehensive evaluation based on the three indicators.
+:::
+
+<div>
+
+<a href="datasets/ex28-03.csv" download="ex28-03.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex28-03", show_col_types = F) |> 
+  column_to_rownames(var = "area")
+```
+
+There is no built-in function in R for RSR, here we write a function named `rsr()` to implement RSR:
+
+```{r}
+rsr <- function(data, weights = NULL, direction = c("+", "-"), grades = 3) {
+  if (!is.data.frame(data)) {
+    stop("Input data must be a data frame.")
+  }
+  
+  n <- nrow(data)
+  m <- ncol(data)
+  
+  # Assign row names if not provided
+  if (is.null(rownames(data))) rownames(data) <- paste0("Sample_", 1:n)
+  
+  # Handle weights
+  weights <- if (is.null(weights)) rep(1 / m, m) else weights / sum(weights)
+  if (length(weights) != m) 
+    stop("Length of weights must match the number of columns in data.")
+  
+  # Direction ("+" means bigger is better, "-" means smaller is better)
+  direction <- rep(direction, length.out = m)
+  
+  # Calculate the rank of each indicator
+  ranks <- lapply(1:m, function(j) {
+    if (direction[j] == "+") rank(data[[j]]) else rank(-data[[j]])
+  })
+  
+  # Convert a list to a matrix
+  ranks <- do.call(cbind, ranks)
+  
+  # Calculate the weighted rank sum
+  weighted_ranks <- sweep(ranks, 2, weights, "*")
+  rsr <- rowSums(weighted_ranks)
+  
+  # Standardize RSR values
+  rsr <- rsr / (n * sum(weights))
+  sort <- rank(-rsr)
+  # Adjust tie ranking
+  adjust_ties <- function(x){
+    unique_x <- sort(unique(x))
+    return(match(x, unique_x)) 
+  }
+  sort <- adjust_ties(sort)
+  # sort by grading
+  bucket_lbl <- cut(-rsr, breaks = grades, labels = F, include.lowest = T)
+  
+  result <- data.frame(
+    name = rownames(data), ranks = ranks, rsr = rsr, 
+    sort = sort, grade = bucket_lbl
+  )
+  
+  class(result) <- c("rsr", "data.frame")  # 为结果添加类
+  return(result)
+}
+```
+
+```{r}
+directions <- c("+", "-", "-")
+rsr(df, direction = directions)
+```

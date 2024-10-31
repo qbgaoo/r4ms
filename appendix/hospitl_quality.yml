@@ -1,6 +1,8 @@
-Version: 1.0
+Version: 2.0
+
 #########################
 # Alternatives Section
+#
 Alternatives: &alternatives
 # Here, we list all the alternatives, together with their attributes.
   hospital.A:
@@ -59,52 +61,90 @@ Goal:
   name: Hospital Work Quality
   description: Evaluating the quality of hospital work based on multiple criteria.
   author: Frank Gao
-  preference:
-    # preferences are typically defined pairwise
-    # 1 means: A is equal to B
-    # 9 means: A is highly preferrable to B
-    # 1/9 means: B is highly preferrable to A
+  preferences:
     pairwise:
-      - [Medical Work, Dietary Supply, 5]
-      - [Medical Work, Nursing Work, 3]
-      - [Nursing Work, Dietary Supply, 1]
+      - [Medical Work, Dietary Supply, 6]
+      - [Medical Work, Nursing Work, 4]
+      - [Nursing Work, Dietary Supply, 2]
   children:
-    Medical  Work:
-      preference:
+    Medical Work:
+      preferences:
         pairwise:
           - [Medical Quality, Medical System, 7]
-          - [Medical Quality, Bed Occupancy, 5]
+          - [Medical Quality, Bed Occupancy, 3]
           - [Bed Occupancy, Medical System, 2]
       children:
         Medical System:
           children: 
             Excellent Execution Rate:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
         Medical Quality:
-          preference:
+          preferences:
             pairwise: 
               - [Clinical Efficacy, ICU Admission, 4]
           children: 
             Clinical Efficacy:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
             ICU Admission:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
         Bed Occupancy:
           children: 
             Bed Occupancy Rate:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
     Dietary Supply:
       children: 
         Dietary Quality:
           children: 
             Excellent Supply Rate:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
     Nursing Work:
       children: 
         Nursing System:
           children: 
             Excellent Execution Rate:
+              preferences:
+                pairwise:
+                  - [hospital.A, hospital.B, 1]
+                  - [hospital.A, hospital.C, 1/2]
+                  - [hospital.A, hospital.D, 1]
+                  - [hospital.A, hospital.E, 3]
+                  - [hospital.A, hospital.F, 1/2]
               children: *alternatives
-#
+
 # End of Goal Section
 #####################################
