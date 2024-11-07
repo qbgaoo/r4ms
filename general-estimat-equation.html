@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>15&nbsp; Repeated measures ANOVA – R for Medical Statistics</title>
+<title>32&nbsp; Generalized estimating equation – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./general-linear-model.html" rel="next">
-<link href="./multifactor-anova.html" rel="prev">
+<link href="./stat-anal-report.html" rel="next">
+<link href="./meta-analysis.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./repeated-measurement.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-estimat-equation.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./repeated-measurement.html" class="sidebar-item-text sidebar-link active">
+  <a href="./repeated-measurement.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
   </div>
 </li>
@@ -367,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./general-estimat-equation.html" class="sidebar-item-text sidebar-link">
+  <a href="./general-estimat-equation.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
@@ -412,19 +412,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">15.1</span> Prerequisite</a></li>
-  <li><a href="#x2-repeated-measures" id="toc-x2-repeated-measures" class="nav-link" data-scroll-target="#x2-repeated-measures"><span class="header-section-number">15.2</span> 2x2 repeated measures</a></li>
-  <li><a href="#ixj-repeated-measures" id="toc-ixj-repeated-measures" class="nav-link" data-scroll-target="#ixj-repeated-measures"><span class="header-section-number">15.3</span> IxJ repeated measures</a></li>
-  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">15.4</span> Considerations</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">32.1</span> Prerequisites</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/repeated-measurement.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-estimat-equation.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./repeated-measurement.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./general-estimat-equation.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></h1>
+<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></h1>
 </div>
 
 
@@ -441,376 +438,221 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Repeated measures is a type of experimental design where the same subjects are observed under multiple conditions or over multiple time points. This approach is commonly used in research to analyze changes within subjects, making it more efficient and powerful compared to between-subject designs, where different subjects are used for each condition.</p>
-<ul>
-<li><strong>Advantages of repeated measures</strong>
-<ul>
-<li>Control for individual differences: Since the same subjects are measured multiple times, individual differences (like age, sex, etc.) are accounted for, reducing error variance.</li>
-<li>Efficiency: Fewer subjects are needed compared to between-subject designs because each subject serves as their own control.</li>
-<li>Increased statistical power: By controlling for between-subject variability, repeated measures designs increase the ability to detect effects.</li>
-</ul></li>
-<li><strong>When to use repeated measures</strong>
-<ul>
-<li>Longitudinal studies: Tracking changes over time (e.g., monitoring patients’ blood pressure at different stages of treatment).</li>
-<li>Crossover designs: Comparing multiple treatments within the same subjects.</li>
-<li>Pretest-posttest designs: Measuring a dependent variable before and after an intervention.</li>
-</ul></li>
-</ul>
-<p>Repeated measures ANOVA (RM-ANOVA) is a statistical test used to compare means when the same subjects are measured under different conditions or multiple time points. It helps to determine if there are significant differences between conditions or time points while accounting for the correlation within subjects.</p>
-<section id="prerequisite" class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">15.1</span> Prerequisite</h2>
+<section id="prerequisites" class="level2" data-number="32.1">
+<h2 data-number="32.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">32.1</span> Prerequisites</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="x2-repeated-measures" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="x2-repeated-measures"><span class="header-section-number">15.2</span> 2x2 repeated measures</h2>
-<p>A 2x2 repeated measures ANOVA is used when you want to test for the effects of two within-subjects factors, each having two levels, on a dependent variable. It allows you to assess both the main effects of each factor and any interaction effect between them, while accounting for within-subject variability.</p>
 <div class="example">
 <strong>Example 1:</strong> 
-<p>To evaluate whether a new drug significantly affects blood pressure in patients with mild hypertension, 20 patients were randomly assigned to either the treatment group or the control group. Blood pressure is measured before and after the intervention. Analyze the difference of blood pressure between treatment and control group.</p>
+<p>A researcher randomly selected 149 patients who used a pain relief pump after gynecological abdominal surgery. The subjects were randomly divided them into a control group and an treatment group, with different postoperative care methods applied. The researcher observed the patients’ pain at five different time points and assessed the pain levels using a numerical rating scale. The question is whether the two methods differ in their effectiveness in relieving the patients’ pain.</p>
 </div>
 <div>
-<p><a href="datasets/ex15-01.csv" download="ex15-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex31-01.csv" download="ex31-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex15-01.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex32-01.csv"</span>, , <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Here is the code conducting repeated measures ANOVA:</p>
+<p>The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.</p>
+<p>The following table shows the results of model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(pretest, posttest),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"t"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"pain"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"t"</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">factor</span>(time, , <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"pretest"</span>, <span class="st">"posttest"</span>)),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"trt"</span>, <span class="st">"ctl"</span>))</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(response <span class="sc">~</span> group <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">Error</span>(id<span class="sc">/</span>(time)), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subject =</span> <span class="fu">as.integer</span>(subject),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"ctrl"</span>, <span class="st">"trt"</span>)),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">as.integer</span>(time)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">geeglm</span>(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  pain <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"ar1"</span>, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
-#&gt; Error: id
-#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)
-#&gt; group      1  202.5   202.5   1.574  0.226
-#&gt; Residuals 18 2315.4   128.6               
+#&gt; Call:
+#&gt; geeglm(formula = pain ~ time + group + time:group, data = data, 
+#&gt;     id = subject, corstr = "ar1")
 #&gt; 
-#&gt; Error: id:time
-#&gt;            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-#&gt; time        1 1020.1  1020.1   55.01 7.08e-07 ***
-#&gt; group:time  1  348.1   348.1   18.77 0.000401 ***
-#&gt; Residuals  18  333.8    18.5                     
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-</div>
-<p>An alternative method using mixed-effect model:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lme</span>(response <span class="sc">~</span> group <span class="sc">*</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> id, <span class="at">data =</span> tb) </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt;             numDF denDF  F-value p-value
-#&gt; (Intercept)     1    18 4511.476  &lt;.0001
-#&gt; group           1    18    1.574  0.2256
-#&gt; time            1    18   55.009  &lt;.0001
-#&gt; group:time      1    18   18.771  0.0004</code></pre>
-</div>
-</div>
-<p>The model results indicate that time has a significant effect on the response variable (p &lt; .0001), while the main effect of the group is not significant (p = 0.2256). The interaction between group and time is significant (p = 0.0004), which means that the response to the treatment varies depending on the time point being measured.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>When there is a significant interaction effect, the focus should shift to understanding the interaction rather than interpreting the main effects in isolation, because when an interaction is present, the main effects do not tell the whole story. The interaction suggests that the relationship between the factors is complex, and the effects of each factor depend on the other factor. Visualizing the interaction or conducting post-hoc analysis can help you better understand how the factors influence each other.</p>
-</div>
-</div>
-<ol type="1">
-<li><p><strong>Visualize the interaction effect</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> response, <span class="at">color =</span> group, <span class="at">group =</span> group)) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Mean of blood pressure"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="repeated-measurement_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div></li>
-<li><p><strong>Post-hoc analysis (simple effects)</strong></p>
-<p>The <code>emmeans</code> package makes simple effect analysis easier by providing marginal means and allowing you to compare them across different levels of factors.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-1" class="code-annotation-target"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(model, <span class="sc">~</span> group <span class="sc">|</span> time) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-12" data-code-lines="1" data-code-annotation="1">Effect of group at each time point</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; time = pretest:
-#&gt;  contrast  estimate   SE df t.ratio p.value
-#&gt;  trt - ctl      1.4 3.84 18   0.365  0.7194
-#&gt; 
-#&gt; time = posttest:
-#&gt;  contrast  estimate   SE df t.ratio p.value
-#&gt;  trt - ctl    -10.4 3.84 18  -2.711  0.0143
-#&gt; 
-#&gt; Degrees-of-freedom method: containment</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(model, <span class="sc">~</span> time <span class="sc">|</span> group) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-annotation">
-<dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="1" data-code-annotation="1">Effect of time in each group</span>
-</dd>
-</dl>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; group = trt:
-#&gt;  contrast           estimate   SE df t.ratio p.value
-#&gt;  pretest - posttest     16.0 1.93 18   8.308  &lt;.0001
-#&gt; 
-#&gt; group = ctl:
-#&gt;  contrast           estimate   SE df t.ratio p.value
-#&gt;  pretest - posttest      4.2 1.93 18   2.181  0.0427
-#&gt; 
-#&gt; Degrees-of-freedom method: containment</code></pre>
-</div>
-</div></li>
-</ol>
-<p>Further exploration of the interaction between treatment group and time revealed that the mean blood pressure response differed significantly at specific time points. Simple effects analysis indicate that there is no statistical difference in baseline between the treatment and control groups, and the treatment group shows a better effect in blood pressure reduction compared to the control group.</p>
-<p>By conducting these analysis and visualizations, you’ll gain deeper insights into how different groups respond over time, informing your conclusions and potential interventions based on your study’s outcomes.</p>
-</section>
-<section id="ixj-repeated-measures" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="ixj-repeated-measures"><span class="header-section-number">15.3</span> IxJ repeated measures</h2>
-<p>An IxJ repeated measures is a generalization of the 2x2 design, where there are I levels of a between-subjects factor and J levels of a within-subjects factor. This design allows you to investigate how multiple levels of both a between-subjects factor and a within-subjects factor interact over time or different conditions.</p>
-<div class="example">
-<strong>Example 2:</strong> 
-<p>To evaluate whether a new drug significantly affects blood pressure in patients with mild hypertension, 20 patients were randomly assigned to either the treatment group or the control group. Blood pressure is measured before and after the intervention. Analyze the difference of blood pressure between treatment and control group.</p>
-</div>
-<div>
-<p><a href="datasets/ex15-02.csv" download="ex15-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex15-02.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Here is an example code conducting repeated measures ANOVA:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"T"</span>),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(response <span class="sc">~</span> drug <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">Error</span>(id<span class="sc">/</span>(time)), <span class="at">data =</span> tb) <span class="sc">|&gt;</span> </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Error: id
-#&gt;           Df Sum Sq Mean Sq F value Pr(&gt;F)  
-#&gt; drug       2  24.97  12.487   5.527 0.0199 *
-#&gt; Residuals 12  27.11   2.259                 
+#&gt;  Coefficients:
+#&gt;               Estimate  Std.err     Wald Pr(&gt;|W|)    
+#&gt; (Intercept)    2.48042  0.05591 1967.895  &lt; 2e-16 ***
+#&gt; time          -0.47973  0.02232  462.027  &lt; 2e-16 ***
+#&gt; grouptrt      -0.26915  0.09328    8.325  0.00391 ** 
+#&gt; time:grouptrt  0.04365  0.03478    1.575  0.20946    
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
-#&gt; Error: id:time
-#&gt;           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-#&gt; time       4 232.98   58.25   344.3  &lt; 2e-16 ***
-#&gt; drug:time  8  24.50    3.06    18.1 4.13e-12 ***
-#&gt; Residuals 48   8.12    0.17                     
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+#&gt; Correlation structure = ar1 
+#&gt; Estimated Scale Parameters:
+#&gt; 
+#&gt;             Estimate Std.err
+#&gt; (Intercept)   0.4798  0.0302
+#&gt;   Link = identity 
+#&gt; 
+#&gt; Estimated Correlation Parameters:
+#&gt;       Estimate Std.err
+#&gt; alpha   0.5355 0.03477
+#&gt; Number of clusters:   149  Maximum cluster size: 5</code></pre>
 </div>
 </div>
-<p>Here is an alternative method using <code>anova_test()</code> function from rstatix package:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rstatix<span class="sc">::</span><span class="fu">anova_test</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> tb,           </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dv =</span> response,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">wid =</span> id,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">within =</span> time,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">between =</span> drug</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ordgee</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"independence"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; ANOVA Table (type II tests)
+<pre><code>#&gt; 
+#&gt; Call:
+#&gt; ordgee(formula = ordered(pain) ~ time + group + time:group, id = subject, 
+#&gt;     data = data, corstr = "independence")
 #&gt; 
-#&gt; $ANOVA
-#&gt;      Effect DFn DFd       F        p p&lt;.05   ges
-#&gt; 1      drug   2  12   5.527 2.00e-02     * 0.415
-#&gt; 2      time   4  48 344.299 1.10e-34     * 0.869
-#&gt; 3 drug:time   8  48  18.105 4.13e-12     * 0.410
+#&gt; Mean Model:
+#&gt;  Mean Link:                 logit 
+#&gt;  Variance to Mean Relation: binomial 
 #&gt; 
-#&gt; $`Mauchly's Test for Sphericity`
-#&gt;      Effect     W     p p&lt;.05
-#&gt; 1      time 0.511 0.643      
-#&gt; 2 drug:time 0.511 0.643      
+#&gt;  Coefficients:
+#&gt;                 estimate san.se wald p
+#&gt; Inter:0       -4.903e+01      0  Inf 0
+#&gt; Inter:1       -6.340e+01      0  Inf 0
+#&gt; Inter:2       -7.956e+01      0  Inf 0
+#&gt; Inter:3       -4.485e+15      0  Inf 0
+#&gt; time           2.517e+00      0  Inf 0
+#&gt; grouptrt      -1.438e+02      0  Inf 0
+#&gt; time:grouptrt  3.266e+01      0  Inf 0
 #&gt; 
-#&gt; $`Sphericity Corrections`
-#&gt;      Effect   GGe      DF[GG]    p[GG] p[GG]&lt;.05   HFe      DF[HF]    p[HF]
-#&gt; 1      time 0.754 3.02, 36.21 1.07e-26         * 1.036 4.14, 49.74 1.10e-34
-#&gt; 2 drug:time 0.754 6.04, 36.21 1.34e-09         * 1.036 8.29, 49.74 4.13e-12
-#&gt;   p[HF]&lt;.05
-#&gt; 1         *
-#&gt; 2         *</code></pre>
+#&gt; Scale is fixed.
+#&gt; 
+#&gt; Correlation Model:
+#&gt;  Correlation Structure:     independence 
+#&gt; 
+#&gt; Returned Error Value:    0 
+#&gt; Number of clusters:   149   Maximum cluster size: 5</code></pre>
 </div>
 </div>
-<p>An alternative method using mixed-effect model:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lme</span>(response <span class="sc">~</span> drug <span class="sc">*</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> id, <span class="at">data =</span> tb) </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt;             numDF denDF   F-value p-value
-#&gt; (Intercept)     1    48 17516.945  &lt;.0001
-#&gt; drug            2    12     5.527  0.0199
-#&gt; time            4    48   344.299  &lt;.0001
-#&gt; drug:time       8    48    18.105  &lt;.0001</code></pre>
-</div>
-</div>
-<p>The model results indicate that time has a significant effect on the response variable (p &lt; .0001), while the main effect of the drug is not significant (p = 0.2256). The interaction between group and time is significant (p &lt; .0001), which means that the response to the treatment varies depending on the time point being measured.</p>
-<p>To further explore the interaction between groups and time points, consider the following steps:</p>
+<p>The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :</p>
 <ol type="1">
-<li><p><strong>Visualize the interaction effect</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tb <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> response, <span class="at">color =</span> drug, <span class="at">group =</span> drug)) <span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>) <span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">y =</span> <span class="st">"Mean of weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="repeated-measurement_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div></li>
-<li><p><strong>Post-hoc analysis (simple effects)</strong></p>
-<p>Effect of drug at each time point:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(model, <span class="sc">~</span> drug <span class="sc">|</span> time) <span class="sc">|&gt;</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; time = T0:
-#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B      -0.032 0.485 12  -0.066  0.9976
-#&gt;  A - C      -0.898 0.485 12  -1.853  0.1947
-#&gt;  B - C      -0.866 0.485 12  -1.787  0.2153
-#&gt; 
-#&gt; time = T1:
-#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B      -1.068 0.485 12  -2.204  0.1109
-#&gt;  A - C      -1.534 0.485 12  -3.165  0.0206
-#&gt;  B - C      -0.466 0.485 12  -0.962  0.6137
-#&gt; 
-#&gt; time = T2:
-#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B       0.072 0.485 12   0.149  0.9879
-#&gt;  A - C      -0.030 0.485 12  -0.062  0.9979
-#&gt;  B - C      -0.102 0.485 12  -0.210  0.9759
-#&gt; 
-#&gt; time = T3:
-#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B      -0.418 0.485 12  -0.862  0.6730
-#&gt;  A - C      -2.900 0.485 12  -5.984  0.0002
-#&gt;  B - C      -2.482 0.485 12  -5.121  0.0007
-#&gt; 
-#&gt; time = T4:
-#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B      -2.484 0.485 12  -5.125  0.0007
-#&gt;  A - C      -1.690 0.485 12  -3.487  0.0116
-#&gt;  B - C       0.794 0.485 12   1.638  0.2681
-#&gt; 
-#&gt; Degrees-of-freedom method: containment 
-#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-</div>
-</div>
-<p>Effect of time in each drug:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">emmeans</span>(model, <span class="sc">~</span> time <span class="sc">|</span> drug) <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">contrast</span>(<span class="at">method =</span> <span class="st">"dunnett"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; drug = A:
-#&gt;  contrast estimate   SE df t.ratio p.value
-#&gt;  T1 - T0    -0.256 0.26 48  -0.984  0.6967
-#&gt;  T2 - T0     1.154 0.26 48   4.436  0.0002
-#&gt;  T3 - T0     3.126 0.26 48  12.017  &lt;.0001
-#&gt;  T4 - T0     2.864 0.26 48  11.010  &lt;.0001
-#&gt; 
-#&gt; drug = B:
-#&gt;  contrast estimate   SE df t.ratio p.value
-#&gt;  T1 - T0     0.780 0.26 48   2.998  0.0156
-#&gt;  T2 - T0     1.050 0.26 48   4.036  0.0007
-#&gt;  T3 - T0     3.512 0.26 48  13.501  &lt;.0001
-#&gt;  T4 - T0     5.316 0.26 48  20.436  &lt;.0001
-#&gt; 
-#&gt; drug = C:
-#&gt;  contrast estimate   SE df t.ratio p.value
-#&gt;  T1 - T0     0.380 0.26 48   1.461  0.4029
-#&gt;  T2 - T0     0.286 0.26 48   1.099  0.6251
-#&gt;  T3 - T0     5.128 0.26 48  19.713  &lt;.0001
-#&gt;  T4 - T0     3.656 0.26 48  14.054  &lt;.0001
-#&gt; 
-#&gt; Degrees-of-freedom method: containment 
-#&gt; P value adjustment: dunnettx method for 4 tests</code></pre>
-</div>
-</div>
-<p>Comparing time trends</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"T"</span>),</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"time"</span>,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"T"</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"response"</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">as.numeric</span>(time)) <span class="sc">|&gt;</span> </span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lme</span>(response <span class="sc">~</span> drug <span class="sc">*</span> time, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span> <span class="sc">|</span> id, <span class="at">data =</span> _) <span class="sc">|&gt;</span> </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">emtrends</span>(<span class="at">specs =</span> <span class="sc">~</span> drug, <span class="at">var =</span> <span class="st">"time"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  contrast estimate    SE df t.ratio p.value
-#&gt;  A - B      -0.425 0.209 57  -2.038  0.1124
-#&gt;  A - C      -0.295 0.209 57  -1.413  0.3409
-#&gt;  B - C       0.130 0.209 57   0.625  0.8072
-#&gt; 
-#&gt; Degrees-of-freedom method: containment 
-#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
-</div>
-</div>
-<p>Comparing time trends in repeated measures designs allows you to understand the dynamic response of subjects over time and how different experimental conditions (e.g., treatment vs.&nbsp;control) affect these trends. It’s essential for determining whether certain groups experience more significant changes over time, providing insights into the time-dependent effectiveness of interventions.</p></li>
+<li>(Intercept)</li>
 </ol>
-</section>
-<section id="considerations" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="considerations"><span class="header-section-number">15.4</span> Considerations</h2>
-<p>Repeated measures designs are useful for analyzing within-subject changes over time or under different conditions. By reducing variability between subjects, they provide more statistical power. RM-ANOVA and mixed-effects models are commonly used to analyze repeated measures data, each offering different benefits based on the assumptions of the data.</p>
-<p>RM-ANOVA assumes equal variances (sphericity) for the differences between all pairs of repeated measures. If this assumption is violated, corrections like Greenhouse-Geisser or Huynh-Feldt adjustments are applied.</p>
-<p>Mixed-effects models like those implemented with <code>lme()</code> are more robust to missing data than traditional RM-ANOVA.</p>
+<p>• Estimate: 2.565 • Standard Error: 0.055 • Statistic: 2,182.131 • p-value: 0.000</p>
+<p>Interpretation: The intercept represents the estimated average level of the response variable pain when both time and group are at their reference levels (e.g., at the baseline time point and in the control group). The p-value indicates that this estimate is highly statistically significant, meaning there’s strong evidence that the intercept is different from zero.</p>
+<ol start="2" type="1">
+<li>time</li>
+</ol>
+<p>• Estimate: -0.480 • Standard Error: 0.023 • Statistic: 422.960 • p-value: 0.000</p>
+<p>Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant (p-value = 0.000).</p>
+<ol start="3" type="1">
+<li>group</li>
+</ol>
+<p>• Estimate: -0.304 • Standard Error: 0.090 • Statistic: 11.386 • p-value: 0.001</p>
+<p>Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value = 0.001).</p>
+<ol start="4" type="1">
+<li>time:group</li>
+</ol>
+<p>• Estimate: 0.038 • Standard Error: 0.035 • Statistic: 1.181 • p-value: 0.277</p>
+<p>Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.277 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.</p>
+<p>Summary</p>
+<p>• Main Effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. • Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; formula: ordered(pain) ~ time * group
+#&gt; data:    data
+#&gt; 
+#&gt;  link  threshold nobs logLik  AIC     niter max.grad cond.H 
+#&gt;  logit flexible  745  -696.28 1406.57 7(0)  1.24e-08 5.8e+02
+#&gt; 
+#&gt; Coefficients:
+#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; time           -1.4000     0.0929  -15.07   &lt;2e-16 ***
+#&gt; grouptrt       -0.8344     0.2703   -3.09    0.002 ** 
+#&gt; time:grouptrt   0.0953     0.1069    0.89    0.373    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Threshold coefficients:
+#&gt;     Estimate Std. Error z value
+#&gt; 0|1   -5.274      0.292  -18.05
+#&gt; 1|2   -3.755      0.256  -14.67
+#&gt; 2|3    0.209      0.186    1.13
+#&gt; 3|4    3.777      0.593    6.37</code></pre>
+</div>
+</div>
+<p>The choice between cumulative link mixed models (CLMM) and generalized estimating equations (GEE) depends on the specifics of your data and the goals of your analysis. Both methods are used for analyzing clustered or repeated measures data with ordinal outcomes, but they have different strengths and weaknesses.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clmm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subject), <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Cumulative Link Mixed Model fitted with the Laplace approximation
+#&gt; 
+#&gt; formula: ordered(pain) ~ time * group + (1 | subject)
+#&gt; data:    data
+#&gt; 
+#&gt;  link  threshold nobs logLik  AIC     niter     max.grad cond.H 
+#&gt;  logit flexible  745  -633.82 1283.64 484(1456) 3.41e-05 3.4e+02
+#&gt; 
+#&gt; Random effects:
+#&gt;  Groups  Name        Variance Std.Dev.
+#&gt;  subject (Intercept) 2.89     1.7     
+#&gt; Number of groups:  subject 149 
+#&gt; 
+#&gt; Coefficients:
+#&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; time            -1.970      0.131  -15.03   &lt;2e-16 ***
+#&gt; grouptrt        -1.247      0.417   -2.99   0.0028 ** 
+#&gt; time:grouptrt    0.123      0.122    1.01   0.3135    
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Threshold coefficients:
+#&gt;     Estimate Std. Error z value
+#&gt; 0|1   -7.539      0.491  -15.37
+#&gt; 1|2   -5.397      0.420  -12.87
+#&gt; 2|3    0.252      0.295    0.85
+#&gt; 3|4    4.777      0.696    6.87</code></pre>
+</div>
+</div>
+<p>Cumulative Link Mixed Models (CLMM)</p>
+<p>Pros:</p>
+<p>• Random Effects: CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects. • Interpretation: CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns. • Likelihood-Based: CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met.</p>
+<p>Cons:</p>
+<p>• Computationally Intensive: CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects. • Assumptions: CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.</p>
+<p>Generalized Estimating Equations (GEE)</p>
+<p>Pros:</p>
+<p>• Robustness: GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met. • Less Computationally Intensive: GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets. • Flexibility: GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.</p>
+<p>Cons:</p>
+<p>• No Random Effects: GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.</p>
+<p>When to Choose Which:</p>
+<p>• Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable. • Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.</p>
+<p>In summary, if your primary interest is in understanding individual-level variability and you can handle the computational load, CLMM might be the better choice. If you’re more interested in population-level trends and want a more robust approach with less concern for the specific correlation structure, GEE would be a better option.</p>
+<p>ordgee and geeglm are both functions in R used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.</p>
+<p>ordgee (Ordinal Generalized Estimating Equations)</p>
+<p>• Purpose: ordgee is specifically designed for fitting Generalized Estimating Equations (GEE) models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data. • Model: ordgee accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes. • Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes. • Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.</p>
+<p>geeglm (Generalized Estimating Equations for Generalized Linear Models)</p>
+<p>• Purpose: geeglm is a more general function that fits Generalized Estimating Equations (GEE) models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM). • Model: geeglm allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects. • Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data. • Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.</p>
+<p>Key Differences:</p>
+<ol type="1">
+<li>Outcome Type: • ordgee: Specifically for ordinal outcomes. • geeglm: For a wide range of outcome types (continuous, binary, count, etc.).</li>
+<li>Link Functions: • ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). • geeglm: Allows specification of various link functions depending on the distribution of the response variable.</li>
+<li>Flexibility: • ordgee: More specialized, focusing on ordinal outcomes. • geeglm: More flexible, applicable to various types of response variables.</li>
+<li>Interpretation: • ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. • geeglm: Focuses on population-averaged effects across the levels of the outcome.</li>
+</ol>
+<p>When to Use Which:</p>
+<p>• Use ordgee when you have ordinal response data and need to account for repeated measures or clustering. • Use geeglm when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering.</p>
 
 
 </section>
@@ -1421,13 +1263,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./multifactor-anova.html" class="pagination-link" aria-label="Multifactor ANOVA">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span>
+      <a href="./meta-analysis.html" class="pagination-link" aria-label="Meta analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Meta analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./general-linear-model.html" class="pagination-link" aria-label="General linear model">
-        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./stat-anal-report.html" class="pagination-link" aria-label="Communication">
+        <span class="nav-page-text">Communication</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1436,5 +1278,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/repeated-measurement.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-estimat-equation.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
