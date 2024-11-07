@@ -1,0 +1,18 @@
+# Meta analysis
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+research, and patient self-assessments to provide objective data that can inform diagnoses, monitor changes over time, evaluate treatment outcomes, and enhance communication between healthcare providers and patients.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(metafor)
+```
+
+## OR

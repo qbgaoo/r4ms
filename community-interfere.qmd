@@ -1,0 +1,19 @@
+# Community interfere
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+health, treatment efficacy and healthcare quality.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+library(visNetwork)
+library(ahp)
+```
+
+## Overvie

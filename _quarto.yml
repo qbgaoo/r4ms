@@ -47,7 +47,10 @@ book:
         - structural-equation.qmd
         - multilevel-model.qmd
         - comprehensive-evaluation.qmd
-        - generalized-estimating-equation.qmd
+        - community-interfere.qmd
+        - scale-develop.qmd
+        - meta-analysis.qmd
+        - general-estimat-equation.qmd
         
     - part: stat-anal-report.qmd
       chapters: 

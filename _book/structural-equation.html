@@ -381,13 +381,31 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">multilevel-model.html</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multilevel model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comprehensive-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Comprehensive evaluation methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./community-interfere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community interfere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scale-develop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Medical scales</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-estimating-equation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
   </div>
 </li>
       </ul>
@@ -404,19 +422,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -703,22 +721,6 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a theoretical SEM model</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">  xi1 =~ X1 + X2 + X3</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">  xi2 =~ X4 + X5 + X6</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">  eta1 =~ Y1 + Y2</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">  eta2 =~ Y3 + Y4</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural relationships</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">  eta1 ~ xi1 + xi2</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">  eta2 ~ eta1 + xi2</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">  xi1 ~~ xi2</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">  eta1 ~~ eta2</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 </section>
 <section id="evaluation-of-construct-validity" class="level2" data-number="26.3">
@@ -740,23 +742,18 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 <p><a href="datasets/ex26-02.csv" download="ex26-02.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-02.csv"</span>, <span class="at">show_col_types =</span> F) </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ordered</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; ordered()
-#&gt; Levels:</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-02.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The Stroke-PROM scale in the physiological domain includes four latent variables, i.e.&nbsp;SOS, COG, VEC, and SHS. Each latent variable is measured by multiple observed variables (i.e., the individual items or questions in the scale).</p>
 <p>Using the <code>lavaan</code> package, you can define and evaluate the model. First, define the relationships between the latent variables and their observed variables. Then use the <code>cfa()</code> function to fit the model use your data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">  COG =~ PHD8 + PHD9 + PHD10 + PHD11</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">  VEC =~ PHD12 + PHD13 + PHD14 + PHD15</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">  SHS =~ PHD16 + PHD17 + PHD18 + PHD19 + PHD20</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">  COG =~ PHD8 + PHD9 + PHD10 + PHD11</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">  VEC =~ PHD12 + PHD13 + PHD14 + PHD15</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">  SHS =~ PHD16 + PHD17 + PHD18 + PHD19 + PHD20</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="ot">&lt;-</span> <span class="fu">cfa</span>(model, <span class="at">data =</span> df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Assess the goodness-of-fit using indices such as:</p>
 <ul>
@@ -767,7 +764,7 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 <li>SRMR (standardized root mean square residual): Values &lt; 0.08 are considered acceptable.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"cfi"</span>, <span class="st">"tli"</span>, <span class="st">"rmsea"</span>, <span class="st">"srmr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"cfi"</span>, <span class="st">"tli"</span>, <span class="st">"rmsea"</span>, <span class="st">"srmr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;   chisq     cfi     tli   rmsea    srmr 
 #&gt; 630.894   0.867   0.846   0.098   0.082</code></pre>
@@ -775,17 +772,17 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 </div>
 <p>Check if each observed variable loads significantly on its corresponding latent factor.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1">1</button><span id="annotated-cell-9-1" class="code-annotation-target"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">standardized =</span> T, <span class="at">rsquare =</span> T)</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2">2</button><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">standardizedSolution</span>(<span class="at">output =</span> <span class="st">"text"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1">1</button><span id="annotated-cell-8-1" class="code-annotation-target"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">standardized =</span> T, <span class="at">rsquare =</span> T)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2">2</button><span id="annotated-cell-8-2" class="code-annotation-target"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">standardizedSolution</span>(<span class="at">output =</span> <span class="st">"text"</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="1" data-code-annotation="1">Note that <em>SE</em>s and tests are still based on unstandardized estimates.</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="1" data-code-annotation="1">Note that <em>SE</em>s and tests are still based on unstandardized estimates.</span>
 </dd>
-<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="2">Use <code>standardizedSolution()</code> to obtain <em>SE</em>s and test statistics for standardized estimates.</span>
+<span data-code-cell="annotated-cell-8" data-code-lines="2" data-code-annotation="2">Use <code>standardizedSolution()</code> to obtain <em>SE</em>s and test statistics for standardized estimates.</span>
 </dd>
 </dl>
 </div>
@@ -795,14 +792,14 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="structural-equation_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="816"></p>
+<p><img src="structural-equation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="816"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>If the model fit is not adequate, consider modifying the model based on the modification indices, which suggest potential areas for improvement:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit.cfa <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;       lhs op   rhs     mi    epc sepc.all delta   ncp power decision
 #&gt; 280 PHD14 ~~ PHD15 84.094  0.428    0.612   0.1 4.583 0.572  **(m)**
@@ -828,45 +825,45 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 <p>Construct a structural equation model using the somatic symptoms (SOS) from the physiological domain and anxiety (ANX) from the psychological domain of the Stroke-PROM scale. The model includes only one exogenous latent variable and one endogenous latent variable.</p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-03.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-03.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural relationships</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX ~ SOS</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="ot">&lt;-</span> <span class="fu">sem</span>(model, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural relationships</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX ~ SOS</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="ot">&lt;-</span> <span class="fu">sem</span>(model, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">standardized =</span> T, <span class="at">rsquare =</span> T) </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">standardizedSolution</span>(<span class="at">output =</span> <span class="st">"text"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">standardized =</span> T, <span class="at">rsquare =</span> T) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">standardizedSolution</span>(<span class="at">output =</span> <span class="st">"text"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"rmsea"</span>, <span class="st">"aic"</span>, <span class="st">"gfi"</span>, <span class="st">"cfi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"rmsea"</span>, <span class="st">"aic"</span>, <span class="st">"gfi"</span>, <span class="st">"cfi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;     chisq     rmsea       aic       gfi       cfi 
 #&gt;  1472.818     0.080 27602.396     0.766     0.856</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">semPaths</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">style =</span> <span class="st">"lisrel"</span>, <span class="at">residuals =</span> T, <span class="at">edge.label.cex =</span> <span class="fl">0.6</span>, </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> F, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">intercepts =</span> T, <span class="at">rotation =</span> <span class="dv">1</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sizeMan =</span> <span class="dv">3</span>, <span class="at">sizeLat =</span> <span class="dv">8</span>, <span class="at">sizeLat2 =</span> <span class="dv">6</span>, <span class="at">residScale =</span> <span class="dv">6</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">semPaths</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">style =</span> <span class="st">"lisrel"</span>, <span class="at">residuals =</span> T, <span class="at">edge.label.cex =</span> <span class="fl">0.6</span>, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> F, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">intercepts =</span> T, <span class="at">rotation =</span> <span class="dv">1</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sizeMan =</span> <span class="dv">3</span>, <span class="at">sizeLat =</span> <span class="dv">8</span>, <span class="at">sizeLat2 =</span> <span class="dv">6</span>, <span class="at">residScale =</span> <span class="dv">6</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="structural-equation_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="structural-equation_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fit.sem <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;      lhs op  rhs     mi    epc sepc.all delta   ncp power decision
 #&gt; 78  PHD5 ~~ PHD6 60.918  0.346    0.823   0.1 5.090 0.616  **(m)**
@@ -889,26 +886,26 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 <p>Construct a structural equation model using the somatic symptoms (SOS) from the physiological domain and anxiety (ANX) from the psychological domain of the Stroke-PROM scale. The model includes only one exogenous latent variable and one endogenous latent variable.</p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-04.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex26-04.csv"</span>, <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">  COG =~ PHD8 + PHD9 + PHD10 + PHD11</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP =~ PSD6 + PSD7 + PSD8 + PSD9 + PSD10</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO =~ PSD11 + PSD12 + PSD13 + PSD14</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural relationships</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX ~ SOS</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ COG</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ AVO</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ ANX</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO ~ COG</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO ~ ANX</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>res.sem <span class="ot">&lt;-</span> <span class="fu">sem</span>(model, df)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>res.sem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="st">'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">  # Measurement model</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">  SOS =~ PHD1 + PHD2 + PHD3 + PHD4 + PHD5 + PHD6 + PHD7</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">  COG =~ PHD8 + PHD9 + PHD10 + PHD11</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX =~ PSD1 + PSD2 + PSD3 + PSD4 + PSD5</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP =~ PSD6 + PSD7 + PSD8 + PSD9 + PSD10</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO =~ PSD11 + PSD12 + PSD13 + PSD14</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st">  # Structural relationships</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st">  ANX ~ SOS</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ COG</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ AVO</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="st">  DEP ~ ANX</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO ~ COG</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="st">  AVO ~ ANX</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="st">'</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>res.sem <span class="ot">&lt;-</span> <span class="fu">sem</span>(model, df)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>res.sem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; lavaan 0.6-19 ended normally after 41 iterations
 #&gt; 
@@ -926,28 +923,28 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"rmsea"</span>, <span class="st">"aic"</span>, <span class="st">"gfi"</span>, <span class="st">"cfi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>(<span class="fu">c</span>(<span class="st">"chisq"</span>, <span class="st">"rmsea"</span>, <span class="st">"aic"</span>, <span class="st">"gfi"</span>, <span class="st">"cfi"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;     chisq     rmsea       aic       gfi       cfi 
 #&gt;   747.369     0.078 20129.701     0.828     0.891</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">semPaths</span>(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">style =</span> <span class="st">"lisrel"</span>, <span class="at">residuals =</span> T, <span class="at">edge.label.cex =</span> <span class="fl">0.6</span>, </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> F, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">intercepts =</span> T, <span class="at">rotation =</span> <span class="dv">1</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sizeMan =</span> <span class="dv">3</span>, <span class="at">sizeLat =</span> <span class="dv">8</span>, <span class="at">sizeLat2 =</span> <span class="dv">6</span>, <span class="at">residScale =</span> <span class="dv">6</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">semPaths</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">what =</span> <span class="st">"std"</span>, <span class="at">style =</span> <span class="st">"lisrel"</span>, <span class="at">residuals =</span> T, <span class="at">edge.label.cex =</span> <span class="fl">0.6</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fade =</span> F, <span class="at">layout =</span> <span class="st">"tree"</span>, <span class="at">intercepts =</span> T, <span class="at">rotation =</span> <span class="dv">1</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sizeMan =</span> <span class="dv">3</span>, <span class="at">sizeLat =</span> <span class="dv">8</span>, <span class="at">sizeLat2 =</span> <span class="dv">6</span>, <span class="at">residScale =</span> <span class="dv">6</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="structural-equation_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="structural-equation_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">modindices</span>(<span class="at">sort. =</span> T, <span class="at">power =</span> T, <span class="at">maximum.number =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;       lhs op   rhs     mi    epc sepc.all delta    ncp power decision
 #&gt; 457 PSD11 ~~ PSD12 81.374  0.369    1.141   0.1  5.966 0.685  **(m)**
@@ -964,73 +961,73 @@ Table&nbsp;26.1: Brief description of Stroke-PROM structure
 </div>
 <p>Here we write a function named <code>extract_sem_eq()</code>, to directly extract the measurement model and the structural model from the structural equation model, and format it into a readable equation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>extract_sem_eq <span class="ot">&lt;-</span> <span class="cf">function</span>(object, <span class="at">std =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">2</span>) {</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract parameter estimates</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  params <span class="ot">&lt;-</span> <span class="fu">parameterEstimates</span>(object, <span class="at">standardized =</span> std)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for measurement model (latent =~ observed)</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  m_model <span class="ot">&lt;-</span> params[params<span class="sc">$</span>op <span class="sc">==</span> <span class="st">"=~"</span>, ]</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for structural model (latent ~ latent or observed ~ latent)</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  s_model <span class="ot">&lt;-</span> params[params<span class="sc">$</span>op <span class="sc">==</span> <span class="st">"~"</span>, ]</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate measurement model equations</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Measurement Model Equations:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (lhs_var <span class="cf">in</span> <span class="fu">unique</span>(m_model<span class="sc">$</span>lhs)) {</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get all rows corresponding to the lhs variable (latent variable)</span></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    eq_rows <span class="ot">&lt;-</span> m_model[m_model<span class="sc">$</span>lhs <span class="sc">==</span> lhs_var, ]</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the equation for this latent variable</span></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(lhs_var, <span class="st">" = "</span>)</span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop over each observed variable (rhs) and its coefficient</span></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(eq_rows)) {</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>      rhs_var <span class="ot">&lt;-</span> eq_rows<span class="sc">$</span>rhs[i]</span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> <span class="fu">round</span>(eq_rows<span class="sc">$</span>std.all[i], digits)</span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add the term to the equation</span></span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>      equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, coef, <span class="st">" "</span>, rhs_var)</span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add a plus sign if not the last term</span></span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (i <span class="sc">&lt;</span> <span class="fu">nrow</span>(eq_rows)) {</span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>        equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, <span class="st">" + "</span>)</span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Output the equation</span></span>
-<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(equation, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate structural model equations</span></span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Structural Model Equations:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (lhs_var <span class="cf">in</span> <span class="fu">unique</span>(s_model<span class="sc">$</span>lhs)) {</span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get all rows corresponding to the lhs variable</span></span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>    eq_rows <span class="ot">&lt;-</span> s_model[s_model<span class="sc">$</span>lhs <span class="sc">==</span> lhs_var, ]</span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the equation for this lhs variable</span></span>
-<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>    equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(lhs_var, <span class="st">" = "</span>)</span>
-<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop over each predictor (rhs) and its coefficient</span></span>
-<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(eq_rows)) {</span>
-<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>      rhs_var <span class="ot">&lt;-</span> eq_rows<span class="sc">$</span>rhs[i]</span>
-<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> <span class="fu">round</span>(eq_rows<span class="sc">$</span>std.all[i], digits)</span>
-<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add the term to the equation</span></span>
-<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>      equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, coef, <span class="st">" "</span>, rhs_var)</span>
-<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add a plus sign if not the last term</span></span>
-<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (i <span class="sc">&lt;</span> <span class="fu">nrow</span>(eq_rows)) {</span>
-<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>        equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, <span class="st">" + "</span>)</span>
-<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Output the equation</span></span>
-<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(equation, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>extract_sem_eq <span class="ot">&lt;-</span> <span class="cf">function</span>(object, <span class="at">std =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">2</span>) {</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract parameter estimates</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  params <span class="ot">&lt;-</span> <span class="fu">parameterEstimates</span>(object, <span class="at">standardized =</span> std)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for measurement model (latent =~ observed)</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  m_model <span class="ot">&lt;-</span> params[params<span class="sc">$</span>op <span class="sc">==</span> <span class="st">"=~"</span>, ]</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for structural model (latent ~ latent or observed ~ latent)</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  s_model <span class="ot">&lt;-</span> params[params<span class="sc">$</span>op <span class="sc">==</span> <span class="st">"~"</span>, ]</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate measurement model equations</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Measurement Model Equations:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (lhs_var <span class="cf">in</span> <span class="fu">unique</span>(m_model<span class="sc">$</span>lhs)) {</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get all rows corresponding to the lhs variable (latent variable)</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    eq_rows <span class="ot">&lt;-</span> m_model[m_model<span class="sc">$</span>lhs <span class="sc">==</span> lhs_var, ]</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the equation for this latent variable</span></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(lhs_var, <span class="st">" = "</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop over each observed variable (rhs) and its coefficient</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(eq_rows)) {</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>      rhs_var <span class="ot">&lt;-</span> eq_rows<span class="sc">$</span>rhs[i]</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> <span class="fu">round</span>(eq_rows<span class="sc">$</span>std.all[i], digits)</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add the term to the equation</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>      equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, coef, <span class="st">" "</span>, rhs_var)</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add a plus sign if not the last term</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (i <span class="sc">&lt;</span> <span class="fu">nrow</span>(eq_rows)) {</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>        equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, <span class="st">" + "</span>)</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Output the equation</span></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(equation, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate structural model equations</span></span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Structural Model Equations:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (lhs_var <span class="cf">in</span> <span class="fu">unique</span>(s_model<span class="sc">$</span>lhs)) {</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get all rows corresponding to the lhs variable</span></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>    eq_rows <span class="ot">&lt;-</span> s_model[s_model<span class="sc">$</span>lhs <span class="sc">==</span> lhs_var, ]</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the equation for this lhs variable</span></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>    equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(lhs_var, <span class="st">" = "</span>)</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop over each predictor (rhs) and its coefficient</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(eq_rows)) {</span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>      rhs_var <span class="ot">&lt;-</span> eq_rows<span class="sc">$</span>rhs[i]</span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>      coef <span class="ot">&lt;-</span> <span class="fu">round</span>(eq_rows<span class="sc">$</span>std.all[i], digits)</span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add the term to the equation</span></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>      equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, coef, <span class="st">" "</span>, rhs_var)</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Add a plus sign if not the last term</span></span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (i <span class="sc">&lt;</span> <span class="fu">nrow</span>(eq_rows)) {</span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>        equation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(equation, <span class="st">" + "</span>)</span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Output the equation</span></span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(equation, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">extract_sem_eq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>res.sem <span class="sc">|&gt;</span> <span class="fu">extract_sem_eq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Measurement Model Equations:
 #&gt; SOS = 0.47 PHD1 + 0.52 PHD2 + 0.47 PHD3 + 0.78 PHD4 + 0.82 PHD5 + 0.81 PHD6 + 0.59 PHD7 
@@ -1701,8 +1698,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./multilevel-model.html" class="pagination-link" aria-label="multilevel-model.html">
-        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">multilevel-model.html</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./multilevel-model.html" class="pagination-link" aria-label="Multilevel model">
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multilevel model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
