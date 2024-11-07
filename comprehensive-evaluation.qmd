@@ -570,7 +570,7 @@ The data below is collected from a province for a given year, including prenatal
 </div>
 
 ```{r}
-df <- read_csv("datasets/ex28-03", show_col_types = F) |> 
+df <- read_csv("datasets/ex28-03.csv", show_col_types = F) |> 
   column_to_rownames(var = "area")
 ```
 
