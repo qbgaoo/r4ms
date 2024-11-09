@@ -269,14 +269,14 @@ extract_eq(
 Alternatively, `stepwise()` function from `StepReg` package is another useful and convenient tool to select a optimal model using various stepwise regression strategies.
 
 ```{r}
-StepReg::stepwise(
-  y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8,
-  df,
-  type = "logit",
-  strategy = "bidirection",
-  metric = "SBC",
-  num_digits = 5
-)
+# StepReg::stepwise(
+#   y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8,
+#   df,
+#   type = "logit",
+#   strategy = "bidirection",
+#   metric = "SBC",
+#   num_digits = 5
+# )
 ```
 
 Stepwise methods can sometimes lead to overfitting, especially if the dataset is small. It may be slower for larger models or datasets compared to penalized regression methods like Lasso.
