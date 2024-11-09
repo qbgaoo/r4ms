@@ -53,6 +53,13 @@
       "Repository": "CRAN",
       "Hash": "6ed6104c49e4bd15de694fd60d29534b"
     },
+    "CompQuadForm": {
+      "Package": "CompQuadForm",
+      "Version": "1.4.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4594a396b693b8705d8dbb5491aca887"
+    },
     "DBI": {
       "Package": "DBI",
       "Version": "1.2.3",
@@ -93,7 +100,7 @@
     },
     "DescTools": {
       "Package": "DescTools",
-      "Version": "0.99.57",
+      "Version": "0.99.58",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -109,6 +116,7 @@
         "gld",
         "grDevices",
         "graphics",
+        "haven",
         "httr",
         "methods",
         "mvtnorm",
@@ -118,7 +126,7 @@
         "utils",
         "withr"
       ],
-      "Hash": "3cdd73c0534df2123efc25236ec23295"
+      "Hash": "05a7a9c2329ea71842bc234d3596e1a3"
     },
     "DiagrammeR": {
       "Package": "DiagrammeR",
@@ -463,7 +471,7 @@
     },
     "R.oo": {
       "Package": "R.oo",
-      "Version": "1.26.0",
+      "Version": "1.27.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -472,7 +480,7 @@
         "methods",
         "utils"
       ],
-      "Hash": "4fed809e53ddb5407b3da3d0f572e591"
+      "Hash": "6ac79ff194202248cf946fe3a5d6d498"
     },
     "R.utils": {
       "Package": "R.utils",
@@ -537,14 +545,14 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.13",
+      "Version": "1.0.13-1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "methods",
         "utils"
       ],
-      "Hash": "f27411eb6d9c3dada5edd444b8416675"
+      "Hash": "6b868847b365672d6c1677b1608da9ed"
     },
     "RcppArmadillo": {
       "Package": "RcppArmadillo",
@@ -1465,13 +1473,13 @@
     },
     "curl": {
       "Package": "curl",
-      "Version": "5.2.3",
+      "Version": "6.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "d91263322a58af798f6cf3b13fd56dde"
+      "Hash": "ff51697d9205fe715f29e7171e874c6e"
     },
     "data.table": {
       "Package": "data.table",
@@ -2754,7 +2762,7 @@
     },
     "knitr": {
       "Package": "knitr",
-      "Version": "1.48",
+      "Version": "1.49",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2766,7 +2774,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "acf380f300c721da9fde7df115a5f86f"
+      "Hash": "9fcb189926d93c636dea94fbe4f44480"
     },
     "kutils": {
       "Package": "kutils",
@@ -3128,6 +3136,28 @@
       ],
       "Hash": "e2817ccf4a065c5d9d7f2cfbe7c1d78c"
     },
+    "meta": {
+      "Package": "meta",
+      "Version": "8.0-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "CompQuadForm",
+        "R",
+        "dplyr",
+        "grid",
+        "lme4",
+        "magrittr",
+        "metadat",
+        "metafor",
+        "methods",
+        "purrr",
+        "readr",
+        "stringr",
+        "xml2"
+      ],
+      "Hash": "05e7317ef6ad091d5994612794ec3a49"
+    },
     "metadat": {
       "Package": "metadat",
       "Version": "1.2-0",
@@ -3305,7 +3335,7 @@
     },
     "msm": {
       "Package": "msm",
-      "Version": "1.8.1",
+      "Version": "1.8.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -3315,7 +3345,7 @@
         "survival",
         "tibble"
       ],
-      "Hash": "b2d9037f1da01e6d51d2d6adcb875862"
+      "Hash": "8d75f0669b1fb93885d39b9281672c5e"
     },
     "multcomp": {
       "Package": "multcomp",
@@ -3356,14 +3386,14 @@
     },
     "mvtnorm": {
       "Package": "mvtnorm",
-      "Version": "1.3-1",
+      "Version": "1.3-2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "stats"
       ],
-      "Hash": "77c61d51ce0f36e3c1a76e6b295aab31"
+      "Hash": "9e8405eacb262c0a939e121650247f4b"
     },
     "nleqslv": {
       "Package": "nleqslv",
@@ -3437,7 +3467,7 @@
     },
     "olsrr": {
       "Package": "olsrr",
-      "Version": "0.6.0",
+      "Version": "0.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -3452,7 +3482,7 @@
         "utils",
         "xplorerr"
       ],
-      "Hash": "fc700aca442f1467f237803f5b0387c8"
+      "Hash": "0353505766f568f1b891b61e7c1eb595"
     },
     "openssl": {
       "Package": "openssl",
@@ -3513,7 +3543,7 @@
     },
     "parallelly": {
       "Package": "parallelly",
-      "Version": "1.38.0",
+      "Version": "1.39.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -3521,7 +3551,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "6e8b139c1904f5e9e14c69db64453bbe"
+      "Hash": "1d60a6e27e3f1753945cf305735dda19"
     },
     "parameters": {
       "Package": "parameters",
@@ -4157,12 +4187,9 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.11",
-      "Source": "Repository",
+      "OS_type": null,
       "Repository": "CRAN",
-      "Requirements": [
-        "utils"
-      ],
-      "Hash": "47623f66b4e80b3b0587bc5d7b309888"
+      "Source": "Repository"
     },
     "reprex": {
       "Package": "reprex",
@@ -4223,7 +4250,7 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.28",
+      "Version": "2.29",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -4242,7 +4269,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "062470668513dcda416927085ee9bdc7"
+      "Hash": "df99277f63d01c34e95e3d2f06a79736"
     },
     "rms": {
       "Package": "rms",
@@ -4969,13 +4996,13 @@
     },
     "tinytex": {
       "Package": "tinytex",
-      "Version": "0.53",
+      "Version": "0.54",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "xfun"
       ],
-      "Hash": "9db859e8aabbb474293dde3097839420"
+      "Hash": "3ec7e3ddcacc2d34a9046941222bf94d"
     },
     "topsis": {
       "Package": "topsis",
@@ -5163,7 +5190,7 @@
     },
     "waldo": {
       "Package": "waldo",
-      "Version": "0.5.3",
+      "Version": "0.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -5172,11 +5199,9 @@
         "diffobj",
         "glue",
         "methods",
-        "rematch2",
-        "rlang",
-        "tibble"
+        "rlang"
       ],
-      "Hash": "16aa934a49658677d8041df9017329b9"
+      "Hash": "52f574062a7b66e56926988c3fbdb3b7"
     },
     "withr": {
       "Package": "withr",
@@ -5192,7 +5217,7 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.48",
+      "Version": "0.49",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -5201,7 +5226,7 @@
         "stats",
         "tools"
       ],
-      "Hash": "89e455b87c84e227eb7f60a1b4e5fe1f"
+      "Hash": "8687398773806cfff9401a2feca96298"
     },
     "xml2": {
       "Package": "xml2",

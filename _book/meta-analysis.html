@@ -107,6 +107,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -413,7 +456,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">31.1</span> Prerequisite</a></li>
-  <li><a href="#or" id="toc-or" class="nav-link" data-scroll-target="#or"><span class="header-section-number">31.2</span> OR</a></li>
+  <li><a href="#introduction-to-meta-analysis" id="toc-introduction-to-meta-analysis" class="nav-link" data-scroll-target="#introduction-to-meta-analysis"><span class="header-section-number">31.2</span> Introduction to meta-analysis</a>
+  <ul class="collapse">
+  <li><a href="#steps-in-a-meta-analysis" id="toc-steps-in-a-meta-analysis" class="nav-link" data-scroll-target="#steps-in-a-meta-analysis"><span class="header-section-number">31.2.1</span> Steps in a meta-analysis</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">31.2.2</span> R packages</a></li>
+  </ul></li>
+  <li><a href="#pooling-odds-ratios" id="toc-pooling-odds-ratios" class="nav-link" data-scroll-target="#pooling-odds-ratios"><span class="header-section-number">31.3</span> Pooling odds ratios</a>
+  <ul class="collapse">
+  <li><a href="#metafor-package" id="toc-metafor-package" class="nav-link" data-scroll-target="#metafor-package"><span class="header-section-number">31.3.1</span> metafor package</a></li>
+  <li><a href="#meta-package" id="toc-meta-package" class="nav-link" data-scroll-target="#meta-package"><span class="header-section-number">31.3.2</span> meta package</a></li>
+  </ul></li>
+  <li><a href="#pooling-risk-difference" id="toc-pooling-risk-difference" class="nav-link" data-scroll-target="#pooling-risk-difference"><span class="header-section-number">31.4</span> pooling risk difference</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/meta-analysis.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -439,16 +492,500 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>research, and patient self-assessments to provide objective data that can inform diagnoses, monitor changes over time, evaluate treatment outcomes, and enhance communication between healthcare providers and patients.</p>
+<p>Meta-analysis is a statistical technique used to combine results from multiple studies on the same topic, often in medicine or psychology to achieve a more accurate and comprehensive conclusion. By aggregating findings, meta-analysis allows researchers to identify patterns, assess overall effects, and make generalizations that may be more robust than results from any single study.</p>
 <section id="prerequisite" class="level2" data-number="31.1">
 <h2 data-number="31.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">31.1</span> Prerequisite</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(metafor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(metafor)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(meta)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="or" class="level2" data-number="31.2">
-<h2 data-number="31.2" class="anchored" data-anchor-id="or"><span class="header-section-number">31.2</span> OR</h2>
+<section id="introduction-to-meta-analysis" class="level2" data-number="31.2">
+<h2 data-number="31.2" class="anchored" data-anchor-id="introduction-to-meta-analysis"><span class="header-section-number">31.2</span> Introduction to meta-analysis</h2>
+<p>Meta-analysis offers a comprehensive overview of a particular research question by quantitatively integrating data from individual studies. By pooling results, meta-analysis enhances statistical power and provides a more precise estimate of the overall effect.</p>
+<section id="steps-in-a-meta-analysis" class="level3" data-number="31.2.1">
+<h3 data-number="31.2.1" class="anchored" data-anchor-id="steps-in-a-meta-analysis"><span class="header-section-number">31.2.1</span> Steps in a meta-analysis</h3>
+<p>Below are the key steps involved in conducting a meta-analysis, outlining a systematic approach that ensures reliability and rigor.</p>
+<p>1. Formulating the research question and defining inclusion criteria</p>
+<p>The process begins by formulating a clear and focused research question. This typically includes specifying the population, intervention, comparison, and outcomes (PICO) of interest. Next, inclusion and exclusion criteria are established to determine which studies are relevant to the meta-analysis. These criteria may be based on study design, population characteristics, type of intervention, and outcome measures. Clear criteria at the outset help ensure consistency and relevance throughout the analysis.</p>
+<p>2. Conducting a comprehensive literature search</p>
+<p>A thorough literature search is conducted across relevant databases (such as PubMed, Cochrane Library, PsycINFO, and Google Scholar) to identify all studies that meet the inclusion criteria. Grey literature, including unpublished studies, dissertations, and conference abstracts, is also reviewed to reduce publication bias. Every search strategy and its outcomes are documented to provide transparency in the search process.</p>
+<p>3. Screening studies and assessing eligibility</p>
+<p>After collecting potential studies, an initial screening of titles and abstracts is performed to identify eligible studies. Full-text reviews follow for studies that pass the initial screen, applying inclusion and exclusion criteria rigorously. Throughout this stage, it’s essential to maintain a record of excluded studies along with the reasons for their exclusion.</p>
+<p>4. Extracting data</p>
+<p>Data extraction entails gathering key information from each study, such as sample sizes, effect sizes, standard deviations, p-values, and any other relevant characteristics. A structured data extraction form helps ensure accuracy and consistency. This step may also involve collecting study design information and indicators of study quality to support subsequent analyses.</p>
+<p>5. Assessing study quality and risk of bias</p>
+<p>Study quality and risk of bias are evaluated to assess the reliability of each included study. Standard tools such as the Cochrane risk of bias tool (for randomized trials) or the Newcastle-Ottawa scale (for observational studies) are commonly used for this purpose. Evaluating study quality helps interpret the results accurately, highlighting potential sources of bias that may affect the analysis.</p>
+<p>6. Selecting a meta-analytic model</p>
+<p>The fixed-effect model assumes that all studies share the same true effect size. A weighted average is calculated using weights that are the inverse of the standard error. The fixed-effect model is appropriate when heterogeneity among studies is low. The random-effects model assumes study-specific effect sizes vary randomly around a mean effect, which may arise from differences in populations, interventions, or conditions. The weighting incorporates both within-study and between-study variance.</p>
+<p>If heterogeneity is substantial (e.g., I² &gt; 50%), the random-effects model is typically chosen. A random-effects model is often preferred for meta-analyses as it allows for generalizing results across varied studies.</p>
+<p>7. Calculating effect sizes</p>
+<p>Each study’s effect size is calculated and standardized to allow for consistent comparisons across studies. Effect sizes such as Cohen’s d (for continuous outcomes), odds ratios or relative risk, or correlation coefficients (for correlational studies) are common choices. These effect sizes, along with their variances, are essential for combining study results in the next steps.</p>
+<p>8. Pooling results</p>
+<p>The calculated effect sizes are then pooled to obtain an overall effect estimate. Statistical software can be used to perform this pooling, applying weights based on study precision or sample size, giving greater influence to more reliable studies. This pooling provides a summary effect size that reflects the cumulative evidence across studies.</p>
+<p>9. Assessing heterogeneity</p>
+<p>Heterogeneity, or the variation in study outcomes, is assessed using statistical tests. Cochran’s Q test determines if variability is likely due to chance, while the I² statistic quantifies the proportion of variability due to heterogeneity rather than random error. High heterogeneity suggests differences in study populations, interventions, or methodologies, indicating a need for further investigation or subgroup analysis.</p>
+<p>A large Q and a p-value &lt; 0.05 suggest significant heterogeneity. An I² of 0-40% suggests low heterogeneity, 30-60% moderate, 50-90% substantial, and 75-100% considerable heterogeneity.</p>
+<p>10. Checking for publication bias</p>
+<p>Publication bias is assessed to ensure that the meta-analysis results are not skewed by the absence of unpublished or null-result studies. Funnel plots visually display asymmetry, indicating potential bias, while statistical tests like Egger’s test further evaluate its likelihood. Addressing publication bias strengthens the validity of the results.</p>
+<p>11. Performing sensitivity and subgroup analyses</p>
+<p>Sensitivity analyses test the robustness of the results by excluding certain studies (e.g., high-risk studies or outliers) to evaluate their influence on the overall findings. Subgroup analyses examine differences in effects across categories, such as age, gender, or intervention type, providing insights into how study characteristics may impact results.</p>
+<p>12. Interpreting results</p>
+<p>The results of the meta-analysis are interpreted with attention to the effect size, confidence intervals, heterogeneity, and potential biases. The overall significance of the findings is discussed, and the practical implications of the effect size are considered, not just its statistical significance. Any limitations of the analysis are also acknowledged.</p>
+<p>13. Reporting findings</p>
+<p>A final report or publication is prepared, summarizing the research question, methodology, results, and conclusions. Following guidelines such as PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses) ensures a transparent and complete presentation. This report allows others to understand, evaluate, and replicate the findings, further enhancing the impact of the meta-analysis.</p>
+<p>In conclusion, a well-conducted meta-analysis offers valuable insights by systematically integrating findings from multiple studies. Through careful planning and rigorous methodology, it provides a powerful tool for synthesizing evidence, informing practice, and guiding future research.</p>
+</section>
+<section id="r-packages" class="level3" data-number="31.2.2">
+<h3 data-number="31.2.2" class="anchored" data-anchor-id="r-packages"><span class="header-section-number">31.2.2</span> R packages</h3>
+<p>There are several packages in R that facilitate meta-analysis. The <code>meta</code> is a comprehensive package for conducting meta-analyses, including fixed- and random-effects models, subgroup analysis, and meta-regression. The <code>metafor</code> offers advanced functionalities, including different effect size calculations, mixed-effects models, and meta-regression. The <code>robumeta</code> supports robust variance estimation for meta-analyses where there are dependent effect sizes.</p>
+</section>
+</section>
+<section id="pooling-odds-ratios" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="pooling-odds-ratios"><span class="header-section-number">31.3</span> Pooling odds ratios</h2>
+<p>Pooling odds ratios is a common approach in meta-analysis, especially for binary outcomes in case-control studies. The process involves selecting effect sizes, here is odds rations, testing for heterogeneity, choosing an appropriate model, and calculating a combined effect size.</p>
+<p>For each study, calculate the odds ratio between the case and control groups, which reflects the association strength between exposure and outcome.</p>
+<p><span class="math display">
+\text{OR} = \frac{\text{odds of event in exposed group}}{\text{odds of event in control group}} = \frac{\frac{a}{b}}{\frac{c}{d}} = \frac{a \cdot d}{b \cdot c}
+</span></p>
+<p>where <span class="math inline">a</span> is the number of cases with exposure and outcome, <span class="math inline">b</span> is the number of cases with exposure but no outcome, <span class="math inline">c</span> is the number of cases without exposure but with outcome, <span class="math inline">d</span> is the number of cases without exposure and without outcome.</p>
+<p>For ease in calculations and to meet normality assumptions, the OR is transformed to its natural logarithm, resulting in a log OR. Calculate the standard error for the log OR as well.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>Perform a meta-analysis on the 9 case-control studies of the relationship between extremely low-frequency electromagnetic fields and childhood leukemia in <a href="#tbl-or-meta" class="quarto-xref">Table&nbsp;<span>31.1</span></a> .</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex31-01.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), <span class="at">.before =</span> <span class="dv">1</span>) </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-or-meta" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-or-meta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;31.1: Data of 9 case-control studies
+</figcaption>
+<div aria-describedby="tbl-or-meta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">id</th>
+<th style="text-align: center;">a</th>
+<th style="text-align: center;">b</th>
+<th style="text-align: center;">c</th>
+<th style="text-align: center;">d</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">63</td>
+<td style="text-align: center;">92</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">126</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">103</td>
+<td style="text-align: center;">95</td>
+<td style="text-align: center;">113</td>
+<td style="text-align: center;">112</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">218</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">195</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">162</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">252</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">52</td>
+<td style="text-align: center;">207</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">126</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">52</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">61</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">122</td>
+<td style="text-align: center;">89</td>
+<td style="text-align: center;">92</td>
+<td style="text-align: center;">113</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">74</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<section id="metafor-package" class="level3" data-number="31.3.1">
+<h3 data-number="31.3.1" class="anchored" data-anchor-id="metafor-package"><span class="header-section-number">31.3.1</span> metafor package</h3>
+<p>The <code>metafor</code> package can be used for OR pooling. Here we use the <code>escalc()</code> function to calculate the log odds ratios and their standard errors from the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">"OR"</span>, <span class="at">ai =</span> a, <span class="at">bi =</span> b, <span class="at">ci =</span> c, <span class="at">di =</span> d, <span class="at">data =</span> df) </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;   id   a   b   c   d     yi     vi 
+#&gt; 1  1  63  92  29 126 1.0903 0.0692 
+#&gt; 2  2 103  95 113 112 0.0720 0.0380 
+#&gt; 3  3  25 218  17 195 0.2742 0.1085 
+#&gt; 4  4  18 162  25 252 0.1133 0.1057 
+#&gt; 5  5  27  70  52 207 0.4288 0.0754 
+#&gt; 6  6  14  70  15 126 0.5188 0.1603 
+#&gt; 7  7  29  52  16  61 0.7543 0.1326 
+#&gt; 8  8 122  89  92 113 0.5210 0.0392 
+#&gt; 9  9  49  55  30  74 0.7874 0.0854</code></pre>
+</div>
+</div>
+<p>This function calculates various effect sizes or outcome measures (with argument <code>measure = "OR"</code>) and the corresponding sampling variances that are commonly used in meta-analysis.</p>
+<p>Then use the <code>rma()</code> function to conduct a meta-analysis. You can choose a fixed-effects model (<code>method="FE"</code>) or a random-effects model (e.g.&nbsp;<code>method="REML"</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data =</span> dat, <span class="at">slab =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat), <span class="at">method =</span> <span class="st">"FE"</span>) </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; Fixed-Effects Model (k = 9)
+#&gt; 
+#&gt;   logLik  deviance       AIC       BIC      AICc   
+#&gt;  -3.5880   13.1805    9.1760    9.3732    9.7474   
+#&gt; 
+#&gt; I^2 (total heterogeneity / total variability):   39.30%
+#&gt; H^2 (total variability / sampling variability):  1.65
+#&gt; 
+#&gt; Test for Heterogeneity:
+#&gt; Q(df = 8) = 13.1805, p-val = 0.1058
+#&gt; 
+#&gt; Model Results:
+#&gt; 
+#&gt; estimate      se    zval    pval   ci.lb   ci.ub      
+#&gt;   0.4719  0.0899  5.2494  &lt;.0001  0.2957  0.6481  *** 
+#&gt; 
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Here’s a breakdown of the meta-analysis results using the <code>metafor</code> package:</p>
+<blockquote class="blockquote">
+<p>Model summary:</p>
+<ol type="1">
+<li>Model type: A fixed-effects model was used, based on data from 9 studies (k = 9).</li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li>Log likelihood and deviance
+<ul>
+<li>logLik: -3.5880 – the log likelihood of the model.</li>
+<li>Deviance: 13.1805 – measures the goodness of fit, where lower deviance values indicate better fit.</li>
+<li>AIC (Akaike Information Criterion): 9.1760 – a measure for model comparison, where lower values are generally preferred.</li>
+<li>BIC (Bayesian Information Criterion): 9.3732 – similar to AIC but penalizes model complexity more, with lower values indicating better fit.</li>
+<li>AICc: 9.7474 – a corrected AIC value for small sample sizes.</li>
+</ul></li>
+</ol>
+<p>Heterogeneity assessment:</p>
+<ol type="1">
+<li>I² (39.30%): This indicates that approximately 39.3% of the total variability in effect sizes is due to heterogeneity (differences between studies) rather than sampling error. This value suggests some moderate heterogeneity across studies.</li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li>H² (1.65): Reflects the ratio of total variability to sampling variability. A value of 1.65 indicates that the total variability is moderately higher than sampling variability, which aligns with the I² result.</li>
+<li>Test for heterogeneity: Q-statistic: 13.1805, with a p-value of 0.1058. Since the p-value is above 0.05, there isn’t statistically significant evidence of heterogeneity among studies. This suggests that the studies’ effect sizes are relatively similar.</li>
+</ol>
+<p>Model results:</p>
+<ol type="1">
+<li>Estimate: 0.4719 – This is the log odds ratio, indicating the overall estimated effect across studies.</li>
+<li>Standard Error (SE): 0.0899 – Measures the precision of the overall estimate. Lower SE values indicate more precise estimates.</li>
+<li>z-value: 5.2494 – Measures the significance of the estimate. A high z-value indicates a strong effect.</li>
+<li>p-value: &lt; 0.0001 – This is highly significant, meaning that the overall effect is statistically significant.</li>
+<li>95% Confidence interval (CI): [0.2957, 0.6481] – The interval suggests that the true log odds ratio lies between 0.2957 and 0.6481 with 95% confidence.</li>
+</ol>
+<p>Given the highly significant p-value and positive confidence interval bounds, this suggests a positive effect, with evidence that there is a statistically significant association or effect size across the studies analyzed.</p>
+</blockquote>
+<p>You can create a forest plot to visualize individual and overall effect sizes and confidence intervals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">atransf=</span> exp, <span class="at">addpred =</span> T, <span class="at">refline =</span> <span class="dv">0</span>, <span class="at">xlab =</span> <span class="st">"Odds Ratio"</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">border =</span> <span class="st">"blue"</span>, <span class="at">mlab =</span> <span class="st">"Pooling"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">header  =</span> <span class="fu">c</span>(<span class="st">"Study"</span>, <span class="st">"OR [95% CI]"</span>), <span class="at">ilab =</span> <span class="fu">cbind</span>(a, b, c, d), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">ilab.xpos =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.1</span>,<span class="sc">-</span><span class="fl">2.7</span>,<span class="sc">-</span><span class="fl">2.3</span>,<span class="sc">-</span><span class="fl">1.9</span>), <span class="at">shade=</span><span class="st">"zebra"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="fl">3.1</span>,<span class="sc">-</span><span class="fl">2.7</span>,<span class="sc">-</span><span class="fl">2.3</span>,<span class="sc">-</span><span class="fl">1.9</span>), <span class="dv">11</span>, <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>), <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">font=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpreting the forest plot:</p>
+<ol type="1">
+<li>Individual studies: Each row represents a study, with the study’s effect size and confidence interval displayed as a horizontal line.</li>
+<li>Overall effect: The diamond shape at the bottom shows the pooled effect size from the meta-analysis.</li>
+<li>Line of no effect: This is often set to 1 for odds ratios (or 0 for mean differences). Points that cross this line are not statistically significant individually.</li>
+</ol>
+<p>The pooled OR indicates the overall risk in the exposed group relative to the control group. If OR &gt; 1, the exposure is associated with a higher risk; if OR &lt; 1, it’s associated with a lower risk. Results are statistically significant if the confidence interval does not include 1.</p>
+<p>To create a funnel plot, you can use the <code>funnel()</code> function on your meta-analysis model object. The funnel plot helps to visually assess publication bias by plotting each study’s effect size against its standard error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">yaxis =</span> <span class="st">"sei"</span>, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">label =</span> T, <span class="at">legend =</span> F, <span class="at">cex =</span> <span class="fl">0.8</span>,  </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, <span class="at">atransf=</span> exp, <span class="at">xlab =</span> <span class="st">"Odds Ratio"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpreting the funnel plot:</p>
+<ol type="1">
+<li>Symmetry: In a funnel plot, symmetric patterns (a balanced “inverted funnel” shape) typically indicate low publication bias.</li>
+<li>Asymmetry: If the plot is asymmetric, with more studies clustered on one side, it might suggest the presence of publication bias or small-study effects.</li>
+<li>Scatter: Points closer to the top of the funnel (representing studies with smaller standard errors and larger sample sizes) tend to be more concentrated around the overall effect estimate, while points further down (with larger standard errors) are expected to be more spread out.</li>
+</ol>
+<p>If you notice asymmetry in your funnel plot, you may consider conducting further statistical tests for publication bias, such as Egger’s test or the trim-and-fill method.</p>
+</section>
+<section id="meta-package" class="level3" data-number="31.3.2">
+<h3 data-number="31.3.2" class="anchored" data-anchor-id="meta-package"><span class="header-section-number">31.3.2</span> meta package</h3>
+<p>The <code>meta</code> package is widely used for conducting meta-analysis, offering a variety of functions to analyze different types of data, such as binary data and continuous data. The <code>metabin()</code> function is used for binary (event/non-event) data, allowing estimation of odds ratio (OR), risk ratio (RR), or risk difference (RD).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">metabin</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">event.e =</span> a, <span class="at">n.e =</span> a <span class="sc">+</span> b, <span class="at">event.c =</span> c, <span class="at">n.c =</span> c <span class="sc">+</span> d,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sm =</span> <span class="st">"OR"</span>, <span class="at">method =</span> <span class="st">"Inverse"</span>, <span class="at">data =</span> df, <span class="at">studlab =</span> id)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;       OR           95%-CI %W(common) %W(random)
+#&gt; 1 2.9753 [1.7769; 4.9817]       11.7       12.1
+#&gt; 2 1.0746 [0.7333; 1.5748]       21.3       16.2
+#&gt; 3 1.3154 [0.6897; 2.5090]        7.4        9.2
+#&gt; 4 1.1200 [0.5922; 2.1181]        7.6        9.3
+#&gt; 5 1.5354 [0.8964; 2.6299]       10.7       11.5
+#&gt; 6 1.6800 [0.7665; 3.6824]        5.0        6.9
+#&gt; 7 2.1262 [1.0414; 4.3408]        6.1        8.0
+#&gt; 8 1.6837 [1.1424; 2.4813]       20.6       16.0
+#&gt; 9 2.1976 [1.2392; 3.8971]        9.5       10.7
+#&gt; 
+#&gt; Number of studies: k = 9
+#&gt; Number of observations: o = 3008 (o.e = 1353, o.c = 1655)
+#&gt; Number of events: e = 839
+#&gt; 
+#&gt;                          OR           95%-CI    z  p-value
+#&gt; Common effect model  1.6031 [1.3441; 1.9120] 5.25 &lt; 0.0001
+#&gt; Random effects model 1.6367 [1.2891; 2.0781] 4.04 &lt; 0.0001
+#&gt; 
+#&gt; Quantifying heterogeneity (with 95%-CIs):
+#&gt;  tau^2 = 0.0534 [0.0000; 0.3306]; tau = 0.2310 [0.0000; 0.5750]
+#&gt;  I^2 = 39.3% [0.0%; 72.1%]; H = 1.28 [1.00; 1.89]
+#&gt; 
+#&gt; Test of heterogeneity:
+#&gt;      Q d.f. p-value
+#&gt;  13.18    8  0.1058
+#&gt; 
+#&gt; Details of meta-analysis methods:
+#&gt; - Inverse variance method
+#&gt; - Restricted maximum-likelihood estimator for tau^2
+#&gt; - Q-Profile method for confidence interval of tau^2 and tau
+#&gt; - Calculation of I^2 based on Q</code></pre>
+</div>
+</div>
+<p>The forest plot is commonly used in meta-analysis to display the effect size of each study along with the overall effect size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">layout =</span> <span class="st">"RevMan5"</span>, <span class="at">random =</span> F, <span class="at">common =</span> T, <span class="at">prediction =</span> T, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">text.predict =</span> <span class="st">"Prediction CI"</span>, <span class="at">pooled.events =</span> T, <span class="at">pooled.totals =</span> T,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Odds Ratio"</span>, <span class="at">ref =</span> <span class="dv">1</span>, <span class="at">header.line =</span> <span class="st">"below"</span>, <span class="at">details =</span> T,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fontsize =</span> <span class="dv">10</span>, <span class="at">fs.details =</span> <span class="dv">8</span>, <span class="at">squaresize =</span> <span class="fl">0.5</span>, <span class="at">colgap =</span> <span class="st">"2mm"</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">just =</span> <span class="st">"center"</span>, <span class="at">just.studlab =</span> <span class="st">"center"</span>, <span class="at">col.diamond.common =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A funnel plot is used to assess publication bias. A symmetric funnel plot suggests low publication bias, whereas asymmetry indicates potential bias.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel</span>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">type =</span> <span class="st">"standard"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">studlab =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pooling-risk-difference" class="level2" data-number="31.4">
+<h2 data-number="31.4" class="anchored" data-anchor-id="pooling-risk-difference"><span class="header-section-number">31.4</span> pooling risk difference</h2>
+<p>Pooling risk difference is commonly used in meta-analysis to summarize the absolute effect of an intervention across various study populations. The risk difference itself measures the absolute difference in the probability of an event occurring between two groups, often an intervention group and a control group.</p>
+<p>The risk difference (RD), also known as the absolute risk reduction, is calculated as the difference between the event rates (probabilities of an outcome) in two groups: the intervention group and the control group. This can be further expressed as:</p>
+<p><span class="math display">
+\text{RD} = \frac{a}{a + b} - \frac{c}{c + d}
+</span></p>
+<p>where <span class="math inline">a</span>is the number of events in the intervention group, <span class="math inline">b</span> is the number of non-events in the intervention group, <span class="math inline">c</span> is the number of events in the control group, and <span class="math inline">d</span> is the number of non-events in the control group.</p>
+<p>RD &gt; 0 indicates a higher risk (or probability of the event) in the intervention group than in the control group. RD &lt; 0 indicates a lower risk in the intervention group than in the control group. RD = 0 suggests no difference in risk between the two groups. For example, if RD = 0.10 (or 10%), it suggests that the intervention group has a 10% higher absolute event rate compared to the control group.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>To investigate the efficacy of domestic ranitidine in treating peptic ulcers, four randomized controlled trials meeting the criteria were collected. Cimetidine was used as the control drug, and the study results are shown in <a href="#tbl-rd-meta" class="quarto-xref">Table&nbsp;<span>31.2</span></a> . Please perform a meta-analysis to combine the difference in ulcer healing rates between domestic ranitidine and the control drug.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex31-02.csv"</span>, <span class="at">show_col_types =</span> F) <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>), <span class="at">.before =</span> <span class="dv">1</span>) </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-rd-meta" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rd-meta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;31.2: Data of 4 randomized controlled trials
+</figcaption>
+<div aria-describedby="tbl-rd-meta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">id</th>
+<th style="text-align: center;">n1</th>
+<th style="text-align: center;">p1</th>
+<th style="text-align: center;">n2</th>
+<th style="text-align: center;">p2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1.0000</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0.9286</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">0.8333</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">0.8000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">62</td>
+<td style="text-align: center;">0.8710</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">0.6875</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">0.7813</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">0.6923</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>To perform pooling of risk differences, you can use the <code>metabin()</code> function from the meta package, specifying <code>sm = "RD"</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">metabin</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">event.e =</span> p1 <span class="sc">*</span> n1, <span class="at">n.e =</span> n1, <span class="at">event.c =</span> p2 <span class="sc">*</span> n2, <span class="at">n.c =</span> n2,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sm =</span> <span class="st">"RD"</span>, <span class="at">method =</span> <span class="st">"Inverse"</span>, <span class="at">data =</span> df, <span class="at">studlab =</span> id)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>res <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;       RD            95%-CI %W(common) %W(random)
+#&gt; 1 0.0714 [-0.1548; 0.2976]       17.1       17.1
+#&gt; 2 0.0333 [-0.1652; 0.2318]       22.2       22.2
+#&gt; 3 0.1835 [ 0.0426; 0.3244]       44.0       44.0
+#&gt; 4 0.0890 [-0.1390; 0.3170]       16.8       16.8
+#&gt; 
+#&gt; Number of studies: k = 4
+#&gt; Number of observations: o = 266 (o.e = 137, o.c = 129)
+#&gt; Number of events: e = 211.0026
+#&gt; 
+#&gt;                          RD           95%-CI    z p-value
+#&gt; Common effect model  0.1152 [0.0218; 0.2087] 2.42  0.0157
+#&gt; Random effects model 0.1152 [0.0218; 0.2087] 2.42  0.0157
+#&gt; 
+#&gt; Quantifying heterogeneity (with 95%-CIs):
+#&gt;  tau^2 = 0 [0.0000; 0.0496]; tau = 0 [0.0000; 0.2227]
+#&gt;  I^2 = 0.0% [0.0%; 84.7%]; H = 1.00 [1.00; 2.56]
+#&gt; 
+#&gt; Test of heterogeneity:
+#&gt;     Q d.f. p-value
+#&gt;  1.75    3  0.6257
+#&gt; 
+#&gt; Details of meta-analysis methods:
+#&gt; - Inverse variance method
+#&gt; - Restricted maximum-likelihood estimator for tau^2
+#&gt; - Q-Profile method for confidence interval of tau^2 and tau
+#&gt; - Calculation of I^2 based on Q
+#&gt; - Continuity correction of 0.5 in studies with zero cell frequencies</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">layout =</span> <span class="st">"RevMan5"</span>, <span class="at">random =</span> F, <span class="at">common =</span> T, <span class="at">prediction =</span> T, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">text.predict =</span> <span class="st">"Prediction CI"</span>, <span class="at">pooled.events =</span> T, <span class="at">pooled.totals =</span> T,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"Odds Ratio"</span>, <span class="at">ref =</span> <span class="dv">1</span>, <span class="at">header.line =</span> <span class="st">"below"</span>, <span class="at">details =</span> T,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">fontsize =</span> <span class="dv">10</span>, <span class="at">fs.details =</span> <span class="dv">8</span>, <span class="at">squaresize =</span> <span class="fl">0.5</span>, <span class="at">colgap =</span> <span class="st">"2mm"</span>, </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">just =</span> <span class="st">"center"</span>, <span class="at">just.studlab =</span> <span class="st">"center"</span>, <span class="at">col.diamond.common =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  res, <span class="at">type =</span> <span class="st">"standard"</span>, <span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex.lab =</span> <span class="fl">0.8</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex.axis =</span> <span class="fl">0.8</span>, <span class="at">studlab =</span> T, <span class="at">pos.studlab =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="meta-analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
