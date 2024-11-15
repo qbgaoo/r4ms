@@ -1,0 +1,219 @@
+# Randomization
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Randomization is a technique used in experiments and studies to assign participants to different groups, such as treatment and control groups, in a way that is entirely random. The goal is to reduce potential bias and to ensure that any differences between groups are due to chance rather than systematic differences. This approach helps to increase the validity of study results, as it balances confounding variables across groups.
+
+## Prerequisites
+
+```{r}
+#| message: false
+library(tidyverse)
+library(rmarkdown)
+library(randomizeR)
+```
+
+## Simple randomization
+
+Simple Randomization is a straightforward technique in which each participant has an equal probability of being assigned to any of the available study groups. This approach is ideal for large samples, as it usually results in balanced group sizes and unbiased results. However, in smaller samples, there is a risk of group size imbalance.
+
+::: example
+Suppose you are conducting a clinical trial to test the efficacy of a new drug, and you have 50 subjects. You need to randomly assign them to a treatment group and a control group.
+:::
+
+Here’s how to perform simple randomization, where we want to assign participants to two groups:
+
+```{r}
+set.seed(2024)
+N = 50
+simple_R <- tibble(no = c(1:N), group = "") |>
+  mutate(group = ifelse(runif(N) > 0.5, "A", "B")) 
+simple_R |> 
+  group_by(group) |> 
+  summarise(n = n())
+```
+
+Alternatively, you can use `randomizeR` package to perform simple randomization.
+
+```{r}
+N = 50
+rarPar(N = N, K = 2) |> 
+  genSeq(r = 3, seed = 2024) |> 
+  pluck("M") |>    
+  apply(MARGIN = 2, \(x) ifelse(x == 0, "A", "B")) |> 
+  as_tibble(.name_repair = ~ paste0("s", (1:N))) 
+```
+
+## Complete randomization
+
+Complete randomization is a method used in experimental design and clinical trials to assign participants to different treatment groups. It involves randomly distributing a predetermined, fixed number of participants across the groups to ensure balanced group sizes. Unlike simple randomization, which may result in unequal group sizes due to chance, complete randomization ensures that each group has the same or nearly the same number of participants.
+
+Here’s an example on how to perform complete randomization:
+
+```{r}
+set.seed(2024)
+N = 50
+init <- tibble(no = c(1:N), group = "")
+
+groupA <- init |> 
+  slice_sample(prop = 0.5, replace = F) 
+groupB <- init |> 
+  setdiff(groupA)
+groupA <- mutate(groupA, group = "A")
+groupB <- mutate(groupB, group = "B")
+complete_R <- rbind(groupA, groupB)
+
+complete_R |> 
+  group_by(group) |> 
+  summarise(n = n())
+```
+
+Alternatively, you can use `randomizeR` package to perform complete randomization.
+
+```{r}
+N = 50
+crPar(N = N, K = 2) |> 
+  genSeq(r = 3, seed = 2024) |> 
+  pluck("M") |>    
+  apply(MARGIN = 2, \(x) ifelse(x == 0, "A", "B")) |> 
+  as_tibble(.name_repair = ~ paste0("s", (1:N))) 
+```
+
+## **Block Randomization**
+
+Block randomization is a technique used in experimental design to ensure that groups have a balanced number of participants over each block, reducing the potential for bias and imbalance. This is especially useful in clinical trials and other studies where ensuring equal group sizes within blocks is essential.
+
+::: example
+Let’s assume we have 50 subjects and want to assign them to two groups with a block size of 5.
+:::
+
+The subjects are first divided into blocks, then within each block, subjects are assigned to groups in a specific ratio. Here is an example code for block randomization:
+
+```{r}
+set.seed(2024)
+N = 50
+block_size = 5
+
+init <- tibble(
+  no = c(1:N), block = rep(1:block_size, each = N/ block_size), 
+  group = "") 
+
+groupA <- init |> 
+  slice_sample(prop = 0.6, by = block)
+groupB <- init |> 
+  setdiff(groupA)
+groupA <- mutate(groupA, group = "A")
+groupB <- mutate(groupB, group = "B")
+block_R <- rbind(groupA, groupB)
+
+block_R |> 
+  group_by(group) |> 
+  summarise(n = n())
+```
+
+Alternatively, you can use `randomizeR` package to perform simple randomization.
+
+```{r}
+N = 50; rb = 10
+rpbrPar(N = N, rb = rb, K = 2) |> 
+  genSeq(r = 3, seed = 2024) |> 
+  pluck("M") |>    
+  apply(MARGIN = 2, \(x) ifelse(x == 0, "A", "B")) |> 
+  as_tibble(.name_repair = ~ paste0("s", (1:N))) 
+```
+
+## Stratified randomization
+
+Stratified randomization is a technique used to ensure that specific characteristics (or “strata”) are evenly distributed across treatment groups in a study. This method helps control for confounding variables by balancing them across groups, which can be especially useful in clinical trials where factors like age, gender, or disease severity could impact the outcome.
+
+::: example
+Suppose we have a study where we need to randomly assign 100 subjects to two treatment groups, stratified by gender (male, female) and age group (\<30 years, ≥30 years). This approach ensures balanced distribution within each combination of gender and age group.
+:::
+
+Here is an example code for stratified randomization:
+
+```{r}
+set.seed(2024)
+N <- 100
+ratio = 0.5
+init <- tibble(
+  id = 1:N,
+  gender = sample(c("Male", "Female"), N, replace = T),
+  age = sample(c("<30", "≥30"), N, replace = T)
+)
+
+stratified_r <- init |> 
+  group_by(gender, age) |> 
+  mutate(group = if_else(row_number() <= round(n() * ratio), "A", "B")) |> 
+  ungroup()
+
+# Shuffle within each stratum to add randomness
+stratified_r <- stratified_r |> 
+  group_by(gender, age) |> 
+  sample_frac() |> 
+  ungroup()
+
+stratified_r |> 
+  group_by(group) |> 
+  summarise(n = n())  
+
+stratified_r |> 
+  count(gender, age, group)
+```
+
+## **Minimization**
+
+Minimization is a randomization method often used in clinical trials to ensure balanced allocation of participants across treatment groups while taking specific covariates (such as age, gender, or disease severity) into account. Unlike simple or stratified randomization, minimization actively adjusts the assignment of each new participant based on existing imbalances across groups.
+
+Here’s how minimization works:
+
+1\. Identify key covariates: Select the covariates that are important for balancing across treatment groups.
+
+2\. Assign the first participants: Start by assigning the initial participants randomly to treatment groups.
+
+3\. Calculate imbalance: For each new participant, calculate how their assignment to each group would impact the balance of covariates across groups.
+
+4\. Assign to the least imbalanced group: The participant is assigned to the group that would result in the least imbalance, with a small probability of random assignment to avoid predictability.
+
+```{r}
+set.seed(2024)
+n <- 100
+df <- tibble(
+  subject = 1:n, 
+  gender = sample(c("Male", "Female"), n, replace = T), 
+  ageGroup = sample(c("<30", ">=30"), n, replace = T),
+  group = "")
+
+# Define a combination of covariables
+cov_comb <- expand.grid(
+  gender = c("Male", "Female"), ageGroup = c("<30", ">=30")) |> 
+  mutate(comb = paste0(gender, "_", ageGroup))
+
+# Select the processing group with the least imbalance
+counter <- matrix(0, nrow = 2, ncol = 4, dimnames = list(c("A", "B"), cov_comb$comb))
+
+for (i in 1:n) {
+  # Gets the covariate combination for the current subject
+  current_cov <- paste0(df$gender[i], "_", df$ageGroup[i])
+  
+  # Calculate the imbalance score
+  imbalance_A <- sum(counter["A", ]) - counter["A", current_cov]
+  imbalance_B <- sum(counter["B", ]) - counter["B", current_cov]
+  
+  # Select the processing group with the least imbalance
+  if (abs(imbalance_A) < abs(imbalance_B)) {
+    df$group[i] <- "A"
+    counter["A", current_cov] <- counter["A", current_cov] + 1
+  } else {
+    df$group[i] <- "B"
+    counter["B", current_cov] <- counter["B", current_cov] + 1
+  }
+}
+
+head(df, 5)
+# Count the number of occurrences of each group
+df |> count(group)
+```

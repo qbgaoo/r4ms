@@ -52,16 +52,19 @@ book:
         - meta-analysis.qmd
         - general-estimat-equation.qmd
         
-    - part: stat-anal-report.qmd
+    - part: practical-skills.qmd
       chapters: 
-        - quarto.qmd
+        - data-preprocess.qmd
+        - random-sampling.qmd
+        - randomization.qmd
+        - sample-size.qmd
         - pilot-project.qmd
+        - quarto.qmd
         - memo.qmd
 
 format:
   html:
     html-math-method: katex
-    
     theme:
       light: [flatly, flatly.scss]
       dark:  [darkly, darkly.scss]

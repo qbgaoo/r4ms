@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>34&nbsp; Random sampling – R for Medical Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./randomization.html" rel="next">
+<link href="./data-preprocess.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./random-sampling.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R for Medical Statistics</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://qbgaoo.github.io/r4ms" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-git"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./basic-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quat-data-statdesc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Statistical description of quantitative data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normal-distribution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normal distribution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statistical-inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Statistical inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ttest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">t-test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Analysis of Variance</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./count-data-statdesc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Statistical description of count data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discrete-data-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Distributions of discrete variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./chi-square-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Chi-square test</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nonparametric-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regression-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Bivariate regression and correlation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./advanced-stat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Advanced methods</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multifactor-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Multifactor ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Repeated measures ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./general-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">General linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate-groups-diff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Multivariate data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multiple-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multiple linear regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Logistic regression analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Generalized linear model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Survival analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cluster analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./discriminant-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Discriminant analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca-factor-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Principal components and factor analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./canonical-correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Canonical correlation analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./structural-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural equation model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multilevel-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Multilevel model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comprehensive-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Comprehensive evaluation methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./community-interfere.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community interfere</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./scale-develop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Medical scales</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./meta-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Meta analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./general-estimat-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Generalized estimating equation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./practical-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical skills</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-preprocess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Data preprocessing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./random-sampling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./randomization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sample-size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sample size estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./memo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">34.1</span> Prerequisites</a></li>
+  <li><a href="#basic-concepts" id="toc-basic-concepts" class="nav-link" data-scroll-target="#basic-concepts"><span class="header-section-number">34.2</span> Basic concepts</a>
+  <ul class="collapse">
+  <li><a href="#population-and-sample" id="toc-population-and-sample" class="nav-link" data-scroll-target="#population-and-sample"><span class="header-section-number">34.2.1</span> Population and sample</a></li>
+  <li><a href="#parameters-and-statistics" id="toc-parameters-and-statistics" class="nav-link" data-scroll-target="#parameters-and-statistics"><span class="header-section-number">34.2.2</span> Parameters and statistics</a></li>
+  <li><a href="#sampling-frame-and-sampling" id="toc-sampling-frame-and-sampling" class="nav-link" data-scroll-target="#sampling-frame-and-sampling"><span class="header-section-number">34.2.3</span> Sampling frame and sampling</a></li>
+  </ul></li>
+  <li><a href="#simple-random-sampling" id="toc-simple-random-sampling" class="nav-link" data-scroll-target="#simple-random-sampling"><span class="header-section-number">34.3</span> Simple random sampling</a></li>
+  <li><a href="#stratified-random-sampling" id="toc-stratified-random-sampling" class="nav-link" data-scroll-target="#stratified-random-sampling"><span class="header-section-number">34.4</span> Stratified random sampling</a></li>
+  <li><a href="#systematic-sampling" id="toc-systematic-sampling" class="nav-link" data-scroll-target="#systematic-sampling"><span class="header-section-number">34.5</span> Systematic sampling</a></li>
+  <li><a href="#cluster-sampling" id="toc-cluster-sampling" class="nav-link" data-scroll-target="#cluster-sampling"><span class="header-section-number">34.6</span> Cluster sampling</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/random-sampling.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./random-sampling.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Random sampling is a statistical technique used to select a subset of individuals or observations from a larger population in such a way that each member of the population has an equal chance of being chosen. This method is often used to ensure that the sample represents the broader population, which helps to reduce bias and improve the generalizability of study results.</p>
+<section id="prerequisites" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">34.1</span> Prerequisites</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="basic-concepts" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="basic-concepts"><span class="header-section-number">34.2</span> Basic concepts</h2>
+<section id="population-and-sample" class="level3" data-number="34.2.1">
+<h3 data-number="34.2.1" class="anchored" data-anchor-id="population-and-sample"><span class="header-section-number">34.2.1</span> Population and sample</h3>
+<p>In statistics, population and sample are two key concepts used to make inferences about a larger group based on the analysis of a smaller group.</p>
+<p><strong>Population</strong></p>
+<p>The population is the entire group of individuals, objects, or events that you are interested in studying. It includes all possible observations that could be made, so it represents the “whole.” Populations can be large (e.g., all residents of a country) or small (e.g., all patients in a hospital).</p>
+<p>Examples of populations:</p>
+<ul>
+<li>All patients with hypertension in the United States.</li>
+<li>All residents in a city when studying the incidence of respiratory diseases.</li>
+<li>All infants born in a hospital over a year to assess newborn health outcomes.</li>
+</ul>
+<p><strong>Sample</strong></p>
+<p>A sample is a subset of the population, selected in such a way that it represents the larger group. Sampling is done because studying the entire population can be impractical or impossible. In practice, obtaining samples might involve random sampling or other methods like stratified sampling to ensure specific subgroups are represented. The goal of taking a sample is to make inferences or predictions about the population based on this smaller, manageable group.</p>
+<p>Examples of samples:</p>
+<ul>
+<li>200 randomly selected patients with hypertension in a specific city to study treatment effectiveness.</li>
+<li>A group of 500 patients from a population of individuals over 65 to analyze common health outcomes in older adults.</li>
+<li>Blood samples taken from 150 randomly selected participants in a clinical trial to measure a biomarker.</li>
+</ul>
+</section>
+<section id="parameters-and-statistics" class="level3" data-number="34.2.2">
+<h3 data-number="34.2.2" class="anchored" data-anchor-id="parameters-and-statistics"><span class="header-section-number">34.2.2</span> Parameters and statistics</h3>
+<p>In statistics, parameters and statistics are two fundamental concepts that distinguish the characteristics of a population from those of a sample.</p>
+<p><strong>Parameters</strong></p>
+<p>Parameters are numerical values that describe specific characteristics of a population. They represent true, often unknown values because measuring every individual in a population is usually impractical or impossible. Parameters are fixed values; however, they are generally estimated rather than measured directly.</p>
+<p><strong>Statistics</strong></p>
+<p>Statistics are numerical values calculated from a sample and serve as estimates of the corresponding population parameters. Statistics vary from sample to sample, as each sample might differ slightly from others due to random variation. They are used to make inferences about the population parameters.</p>
+<p><a href="#tbl-parameter-statistic" class="quarto-xref">Table&nbsp;<span>34.1</span></a> shows the differences between parameters and statistics.</p>
+<div class="cell">
+<div id="tbl-parameter-statistic" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-parameter-statistic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;34.1: Key differences between parameter and statistic
+</figcaption>
+<div aria-describedby="tbl-parameter-statistic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 45%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Aspect</th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Definition</td>
+<td style="text-align: left;">Describes a population</td>
+<td style="text-align: left;">Describes a sample</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Representation</td>
+<td style="text-align: left;">True values, often unknown</td>
+<td style="text-align: left;">Estimated values, calculated from a sample</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Symbol</td>
+<td style="text-align: left;"><span class="math inline">\mu</span> (mean), <span class="math inline">\sigma^2</span> (variance), <span class="math inline">\pi</span> (proportion)</td>
+<td style="text-align: left;"><span class="math inline">\bar{X}</span> (mean), <span class="math inline">S^2</span> (variance), <span class="math inline">p</span> (proportion)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variability</td>
+<td style="text-align: left;">Constant (fixed value)</td>
+<td style="text-align: left;">Varies from sample to sample</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purpose</td>
+<td style="text-align: left;">Describe entire population characteristics</td>
+<td style="text-align: left;">Estimate or infer population parameters</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="sampling-frame-and-sampling" class="level3" data-number="34.2.3">
+<h3 data-number="34.2.3" class="anchored" data-anchor-id="sampling-frame-and-sampling"><span class="header-section-number">34.2.3</span> Sampling frame and sampling</h3>
+<p>In survey research and statistics, sampling and the sampling frame are both critical concepts in designing and conducting studies:</p>
+<p><strong>Sampling</strong></p>
+<p>Sampling is the process of selecting a subset of individuals (the sample) from a larger group (the population) to estimate characteristics of the whole group. Effective sampling allows researchers to make inferences about the population without surveying everyone, which is especially useful for large populations. Different sampling methods exist, such as simple random sampling, stratified sampling, and cluster sampling, each tailored to specific research needs.</p>
+<p><strong>Sampling frame</strong></p>
+<p>Sampling frame is the actual list or database from which the sample is drawn. It ideally includes every member of the population to avoid selection bias. The quality of the sampling frame directly affects the quality of the sample: if the sampling frame is incomplete or outdated, certain groups within the population may be under- or overrepresented in the sample, which can lead to biased results.</p>
+<p>For example, in a study of hospital patients, the sampling frame might be a complete patient registry, and the sampling method might involve randomly selecting a group from this registry for survey.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>To illustrate various sampling methods, here we use all the passengers in the Titanic disaster of 1912 as the population, and the passenger registry with details as the sampling frame.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">&lt;-</span> carData<span class="sc">::</span>TitanicSurvival <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> passengerClass, <span class="at">age =</span> <span class="fu">as.integer</span>(age), <span class="at">.keep =</span> <span class="st">"unused"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"The total number of survived passengers is:"</span>, <span class="fu">nrow</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; The total number of survived passengers is: 1309</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="simple-random-sampling" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="simple-random-sampling"><span class="header-section-number">34.3</span> Simple random sampling</h2>
+<p>Simple random sampling is a fundamental method of random sampling where each member of a population has an equal chance of being selected. This sampling technique is straightforward and is designed to minimize bias, ensuring that the sample is representative of the population.</p>
+<p>Here’s how you might perform a simple random sampling to select a sample of 10% subjects from a population:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>simple_rs <span class="ot">&lt;-</span> pop <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.1</span>, <span class="at">replace =</span> F) </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>simple_rs <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["survived"],"name":[1],"type":["fct"],"align":["left"]},{"label":["sex"],"name":[2],"type":["fct"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"yes","2":"male","3":"0","4":"2nd","_rn_":"Richards, Master. George Sibley"},{"1":"no","2":"male","3":"38","4":"3rd","_rn_":"Cacic, Mr. Luka"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Vendel, Mr. Olof Edvin"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Karaic, Mr. Milan"},{"1":"no","2":"male","3":"32","4":"3rd","_rn_":"Andersen, Mr. Albert Karvin"},{"1":"yes","2":"female","3":"54","4":"1st","_rn_":"Eustis, Miss. Elizabeth Mussey"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Mitkoff, Mr. Mito"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Nankoff, Mr. Minko"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Moubarek, Master. Gerios"},{"1":"yes","2":"male","3":"24","4":"3rd","_rn_":"Duquemin, Mr. Joseph"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Olsen, Mr. Ole Martin"},{"1":"no","2":"male","3":"16","4":"3rd","_rn_":"Vander Planke, Mr. Leo Edmondus"},{"1":"no","2":"male","3":"54","4":"2nd","_rn_":"Downton, Mr. William James"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Kiernan, Mr. John"},{"1":"yes","2":"male","3":"20","4":"3rd","_rn_":"Nakid, Mr. Sahid"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Shaughnessy, Mr. Patrick"},{"1":"no","2":"male","3":"36","4":"2nd","_rn_":"Fox, Mr. Stanley Hubert"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Nenkoff, Mr. Christo"},{"1":"no","2":"male","3":"31","4":"3rd","_rn_":"Connaghton, Mr. Michael"},{"1":"yes","2":"male","3":"36","4":"1st","_rn_":"McGough, Mr. James Robert"},{"1":"no","2":"male","3":"42","4":"1st","_rn_":"Borebank, Mr. John James"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Robbins, Mr. Victor"},{"1":"no","2":"male","3":"36","4":"2nd","_rn_":"West, Mr. Edwy Arthur"},{"1":"no","2":"male","3":"64","4":"1st","_rn_":"Warren, Mr. Frank Manley"},{"1":"no","2":"male","3":"34","4":"3rd","_rn_":"Theobald, Mr. Thomas Leonard"},{"1":"yes","2":"female","3":"40","4":"1st","_rn_":"Spedden, Mrs. Frederic Oakley ("},{"1":"no","2":"male","3":"32","4":"3rd","_rn_":"Pavlovic, Mr. Stefo"},{"1":"no","2":"male","3":"39","4":"2nd","_rn_":"Meyer, Mr. August"},{"1":"no","2":"male","3":"27","4":"3rd","_rn_":"Zakarian, Mr. Ortin"},{"1":"no","2":"male","3":"25","4":"3rd","_rn_":"Ali, Mr. William"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"McNeill, Miss. Bridget"},{"1":"no","2":"male","3":"47","4":"1st","_rn_":"Moore, Mr. Clarence Bloomfield"},{"1":"yes","2":"female","3":"18","4":"1st","_rn_":"Taussig, Miss. Ruth"},{"1":"yes","2":"male","3":"0","4":"3rd","_rn_":"Thomas, Master. Assad Alexander"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Gheorgheff, Mr. Stanio"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Laleff, Mr. Kristo"},{"1":"yes","2":"male","3":"NA","4":"1st","_rn_":"Hawksford, Mr. Walter James"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Cann, Mr. Ernest Charles"},{"1":"yes","2":"male","3":"48","4":"1st","_rn_":"Anderson, Mr. Harry"},{"1":"yes","2":"female","3":"24","4":"2nd","_rn_":"del Carlo, Mrs. Sebastiano (Arg"},{"1":"no","2":"male","3":"26","4":"3rd","_rn_":"Chronopoulos, Mr. Apostolos"},{"1":"no","2":"male","3":"22","4":"2nd","_rn_":"Jefferys, Mr. Ernest Wilfred"},{"1":"no","2":"male","3":"30","4":"2nd","_rn_":"Hale, Mr. Reginald"},{"1":"no","2":"male","3":"42","4":"1st","_rn_":"Lindeberg-Lind, Mr. Erik Gustaf"},{"1":"yes","2":"female","3":"60","4":"1st","_rn_":"Warren, Mrs. Frank Manley (Anna"},{"1":"no","2":"female","3":"38","4":"3rd","_rn_":"Andersson, Miss. Ida Augusta Ma"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Flegenheim, Mrs. Alfred (Antoin"},{"1":"yes","2":"female","3":"40","4":"1st","_rn_":"Shutes, Miss. Elizabeth W"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Rogers, Mr. William John"},{"1":"no","2":"male","3":"47","4":"3rd","_rn_":"Vander Cruyssen, Mr. Victor"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Khalil, Mrs. Betros (Zahie Mar"},{"1":"yes","2":"female","3":"17","4":"2nd","_rn_":"Ilett, Miss. Bertha"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"Madigan, Miss. Margaret Maggie"},{"1":"yes","2":"female","3":"51","4":"1st","_rn_":"Lines, Mrs. Ernest H (Elizabeth"},{"1":"yes","2":"female","3":"30","4":"1st","_rn_":"Serepeca, Miss. Augusta"},{"1":"yes","2":"female","3":"2","4":"2nd","_rn_":"Quick, Miss. Phyllis May"},{"1":"no","2":"male","3":"21","4":"2nd","_rn_":"Hickman, Mr. Stanley George"},{"1":"yes","2":"female","3":"36","4":"2nd","_rn_":"Ball, Mrs. (Ada E Hall)"},{"1":"no","2":"male","3":"28","4":"2nd","_rn_":"Parker, Mr. Clifford Richard"},{"1":"no","2":"male","3":"23","4":"2nd","_rn_":"Richard, Mr. Emile"},{"1":"yes","2":"male","3":"25","4":"3rd","_rn_":"Krekorian, Mr. Neshan"},{"1":"yes","2":"female","3":"37","4":"1st","_rn_":"Minahan, Mrs. William Edward (L"},{"1":"yes","2":"female","3":"32","4":"2nd","_rn_":"Webber, Miss. Susan"},{"1":"no","2":"male","3":"16","4":"3rd","_rn_":"Eklund, Mr. Hans Linus"},{"1":"yes","2":"female","3":"30","4":"1st","_rn_":"Francatelli, Miss. Laura Mabel"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Hyman, Mr. Abraham"},{"1":"yes","2":"female","3":"49","4":"1st","_rn_":"Harper, Mrs. Henry Sleeper (Myn"},{"1":"no","2":"male","3":"27","4":"3rd","_rn_":"Yasbeck, Mr. Antoni"},{"1":"yes","2":"male","3":"29","4":"3rd","_rn_":"Sheerlinck, Mr. Jan Baptist"},{"1":"no","2":"male","3":"17","4":"3rd","_rn_":"Calic, Mr. Petar"},{"1":"no","2":"male","3":"21","4":"2nd","_rn_":"Hood, Mr. Ambrose Jr"},{"1":"yes","2":"female","3":"30","4":"1st","_rn_":"Cherry, Miss. Gladys"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Rasmussen, Mrs. (Lena Jacobsen"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"Mockler, Miss. Helen Mary Elli"},{"1":"no","2":"male","3":"24","4":"2nd","_rn_":"Jefferys, Mr. Clifford Thomas"},{"1":"no","2":"male","3":"1","4":"3rd","_rn_":"Goodwin, Master. Sidney Leonard"},{"1":"yes","2":"female","3":"36","4":"3rd","_rn_":"Coutts, Mrs. William (Winnie M"},{"1":"yes","2":"female","3":"4","4":"3rd","_rn_":"Kink-Heilmann, Miss. Luise Gret"},{"1":"no","2":"male","3":"26","4":"3rd","_rn_":"Angheloff, Mr. Minko"},{"1":"no","2":"male","3":"38","4":"3rd","_rn_":"Goncalves, Mr. Manuel Estanslas"},{"1":"no","2":"male","3":"24","4":"3rd","_rn_":"Svensson, Mr. Olof"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Pekoniemi, Mr. Edvard"},{"1":"no","2":"female","3":"18","4":"2nd","_rn_":"Hiltunen, Miss. Marta"},{"1":"no","2":"male","3":"36","4":"3rd","_rn_":"Van Impe, Mr. Jean Baptiste"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Caram, Mr. Joseph"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"McCarthy, Miss. Catherine Kati"},{"1":"yes","2":"male","3":"28","4":"1st","_rn_":"Sloper, Mr. William Thompson"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Thomas, Mr. John"},{"1":"no","2":"male","3":"23","4":"2nd","_rn_":"Berriman, Mr. William John"},{"1":"yes","2":"female","3":"14","4":"3rd","_rn_":"Nicola-Yarred, Miss. Jamila"},{"1":"yes","2":"female","3":"55","4":"1st","_rn_":"Lindstrom, Mrs. Carl Johan (Sig"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Thomas, Mr. Tannous"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Frost, Mr. Anthony Wood Archie"},{"1":"yes","2":"female","3":"47","4":"3rd","_rn_":"Wilkes, Mrs. James (Ellen Needs"},{"1":"no","2":"female","3":"23","4":"3rd","_rn_":"Heininen, Miss. Wendla Maria"},{"1":"no","2":"male","3":"10","4":"3rd","_rn_":"Rice, Master. Albert"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Dennis, Mr. Samuel"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Plotcharsky, Mr. Vasil"},{"1":"no","2":"male","3":"29","4":"3rd","_rn_":"Zimmerman, Mr. Leo"},{"1":"no","2":"female","3":"18","4":"3rd","_rn_":"Hegarty, Miss. Hanora Nora"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Franklin, Mr. Thomas Parham"},{"1":"no","2":"male","3":"45","4":"3rd","_rn_":"Ekstrom, Mr. Johan"},{"1":"no","2":"female","3":"27","4":"2nd","_rn_":"Turpin, Mrs. William John Rober"},{"1":"yes","2":"female","3":"33","4":"3rd","_rn_":"Dean, Mrs. Bertram (Eva Georget"},{"1":"no","2":"male","3":"2","4":"3rd","_rn_":"Panula, Master. Urho Abraham"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Naughton, Miss. Hannah"},{"1":"no","2":"male","3":"24","4":"1st","_rn_":"Smith, Mr. Lucien Philip"},{"1":"yes","2":"female","3":"58","4":"1st","_rn_":"Cardeza, Mrs. James Warburton M"},{"1":"no","2":"female","3":"9","4":"3rd","_rn_":"Ford, Miss. Robina Maggie Ruby"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Doharr, Mr. Tannous"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Baumann, Mr. John D"},{"1":"no","2":"female","3":"14","4":"3rd","_rn_":"Vestrom, Miss. Hulda Amanda Ado"},{"1":"no","2":"female","3":"2","4":"3rd","_rn_":"Rosblom, Miss. Salli Helena"},{"1":"no","2":"male","3":"27","4":"3rd","_rn_":"Jonsson, Mr. Nils Hilding"},{"1":"no","2":"male","3":"32","4":"2nd","_rn_":"Nasser, Mr. Nicholas"},{"1":"no","2":"male","3":"18","4":"2nd","_rn_":"Davies, Mr. Charles Henry"},{"1":"yes","2":"female","3":"42","4":"1st","_rn_":"Bidois, Miss. Rosalie"},{"1":"no","2":"female","3":"24","4":"2nd","_rn_":"Yrois, Miss. Henriette (Mrs Ha"},{"1":"no","2":"male","3":"4","4":"3rd","_rn_":"Rice, Master. Arthur"},{"1":"no","2":"male","3":"32","4":"3rd","_rn_":"Leinonen, Mr. Antti Gustaf"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Cassebeer, Mrs. Henry Arthur Jr"},{"1":"no","2":"male","3":"48","4":"3rd","_rn_":"Jensen, Mr. Niels Peder"},{"1":"yes","2":"female","3":"48","4":"2nd","_rn_":"Davies, Mrs. John Morgan (Eliza"},{"1":"no","2":"male","3":"46","4":"1st","_rn_":"Jones, Mr. Charles Cresson"},{"1":"yes","2":"male","3":"45","4":"1st","_rn_":"Spedden, Mr. Frederic Oakley"},{"1":"yes","2":"female","3":"1","4":"3rd","_rn_":"Nakid, Miss. Maria (Mary)"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Carver, Mr. Alfred John"},{"1":"yes","2":"female","3":"24","4":"1st","_rn_":"Hays, Miss. Margaret Bechstein"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Somerton, Mr. Francis William"},{"1":"yes","2":"female","3":"21","4":"1st","_rn_":"Willard, Miss. Constance"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>In this example, <code>replace = FALSE</code> ensures that each selected member can only appear in the sample once, maintaining independence and uniqueness in the sample selection.</p>
+<p>The survival rates of different class can be estimated by the following code block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>simple_rs <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class, survived) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> <span class="fu">everything</span>(), <span class="at">names_from =</span> <span class="fu">c</span>(survived), <span class="at">values_from =</span> n</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">surv_rate =</span> yes <span class="sc">/</span> (yes <span class="sc">+</span> no))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 4
+#&gt;   class    no   yes surv_rate
+#&gt;   &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+#&gt; 1 1st       9    23     0.719
+#&gt; 2 2nd      18     7     0.28 
+#&gt; 3 3rd      57    16     0.219</code></pre>
+</div>
+</div>
+<p>Simple random sampling is often used in:</p>
+<ul>
+<li>Survey research: To gather opinions or information from a subset of a population.</li>
+<li>Quality control: To inspect a sample of items for defects.</li>
+<li>Clinical trials: To select patients randomly for different treatment groups.</li>
+</ul>
+<p>This method works best when you have a complete list of the population and need an unbiased sample, especially when the population size is manageable.</p>
+</section>
+<section id="stratified-random-sampling" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="stratified-random-sampling"><span class="header-section-number">34.4</span> Stratified random sampling</h2>
+<p>Stratified random sampling is a method of sampling that involves dividing a population into distinct subgroups, called strata, that share specific characteristics. Within each stratum, a random sample is selected proportionally. This technique ensures that each subgroup is represented in the final sample, which can improve the accuracy and reliability of the study’s results, especially when the population has varying characteristics across groups.</p>
+<p>For the Titanic passengers, if the goal is to study survival rates across different class, the strata could be first class, second class and third class. Suppose each class has different numbers of passengers: First, select a proportionate random sample from each class (10% ), then, combine these samples to create a final sample that represents all classes proportionally.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stratified_rs <span class="ot">&lt;-</span> pop <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.1</span>, <span class="at">by =</span> class) </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>stratified_rs <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["survived"],"name":[1],"type":["fct"],"align":["left"]},{"label":["sex"],"name":[2],"type":["fct"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"yes","2":"female","3":"33","4":"1st","_rn_":"Chambers, Mrs. Norman Campbell"},{"1":"yes","2":"female","3":"22","4":"1st","_rn_":"Bowerman, Miss. Elsie Edith"},{"1":"yes","2":"female","3":"41","4":"1st","_rn_":"Burns, Miss. Elizabeth Margaret"},{"1":"yes","2":"female","3":"16","4":"1st","_rn_":"Lines, Miss. Mary Conover"},{"1":"yes","2":"male","3":"NA","4":"1st","_rn_":"Saalfeld, Mr. Adolphe"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Fleming, Miss. Margaret"},{"1":"yes","2":"female","3":"54","4":"1st","_rn_":"Eustis, Miss. Elizabeth Mussey"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Frauenthal, Mrs. Henry William"},{"1":"no","2":"male","3":"23","4":"1st","_rn_":"Payne, Mr. Vivian Ponsonby"},{"1":"yes","2":"female","3":"35","4":"1st","_rn_":"Bissette, Miss. Amelia"},{"1":"no","2":"male","3":"47","4":"1st","_rn_":"Astor, Col. John Jacob"},{"1":"yes","2":"male","3":"24","4":"1st","_rn_":"Snyder, Mr. John Pillsbury"},{"1":"yes","2":"female","3":"76","4":"1st","_rn_":"Cavendish, Mrs. Tyrell William"},{"1":"yes","2":"female","3":"21","4":"1st","_rn_":"Ryerson, Miss. Susan Parker Su"},{"1":"no","2":"male","3":"25","4":"1st","_rn_":"Birnbaum, Mr. Jakob"},{"1":"no","2":"male","3":"46","4":"1st","_rn_":"Jones, Mr. Charles Cresson"},{"1":"yes","2":"male","3":"36","4":"1st","_rn_":"Cardeza, Mr. Thomas Drake Marti"},{"1":"yes","2":"male","3":"40","4":"1st","_rn_":"Blank, Mr. Henry"},{"1":"no","2":"male","3":"37","4":"1st","_rn_":"Natsch, Mr. Charles H"},{"1":"yes","2":"male","3":"36","4":"1st","_rn_":"McGough, Mr. James Robert"},{"1":"no","2":"male","3":"42","4":"1st","_rn_":"Borebank, Mr. John James"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Robbins, Mr. Victor"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Crafton, Mr. John Bertram"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Stewart, Mr. Albert A"},{"1":"no","2":"male","3":"58","4":"1st","_rn_":"Newell, Mr. Arthur Webster"},{"1":"yes","2":"female","3":"64","4":"1st","_rn_":"Crosby, Mrs. Edward Gifford (Ca"},{"1":"yes","2":"female","3":"40","4":"1st","_rn_":"Spedden, Mrs. Frederic Oakley ("},{"1":"yes","2":"male","3":"51","4":"1st","_rn_":"Daly, Mr. Peter Denis"},{"1":"yes","2":"female","3":"31","4":"1st","_rn_":"Wilson, Miss. Helen Alice"},{"1":"no","2":"female","3":"36","4":"1st","_rn_":"Evans, Miss. Edith Corse"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Goldenberg, Mrs. Samuel L (Edwi"},{"1":"no","2":"male","3":"47","4":"1st","_rn_":"Moore, Mr. Clarence Bloomfield"},{"1":"no","2":"male","3":"27","4":"2nd","_rn_":"Pulbaum, Mr. Franz"},{"1":"no","2":"male","3":"21","4":"2nd","_rn_":"Hood, Mr. Ambrose Jr"},{"1":"no","2":"female","3":"26","4":"2nd","_rn_":"Lahtinen, Mrs. William (Anna Sy"},{"1":"yes","2":"male","3":"3","4":"2nd","_rn_":"Navratil, Master. Michel M"},{"1":"no","2":"male","3":"34","4":"2nd","_rn_":"Angle, Mr. William A"},{"1":"yes","2":"female","3":"50","4":"2nd","_rn_":"Parrish, Mrs. (Lutie Davis)"},{"1":"no","2":"male","3":"28","4":"2nd","_rn_":"Parker, Mr. Clifford Richard"},{"1":"no","2":"male","3":"54","4":"2nd","_rn_":"Moraweck, Dr. Ernest"},{"1":"yes","2":"female","3":"24","4":"2nd","_rn_":"Herman, Miss. Alice"},{"1":"yes","2":"female","3":"6","4":"2nd","_rn_":"Harper, Miss. Annie Jessie Nin"},{"1":"yes","2":"female","3":"40","4":"2nd","_rn_":"Watt, Mrs. James (Elizabeth Be"},{"1":"no","2":"male","3":"19","4":"2nd","_rn_":"Pengelly, Mr. Frederick William"},{"1":"yes","2":"female","3":"26","4":"2nd","_rn_":"Wright, Miss. Marion"},{"1":"yes","2":"male","3":"NA","4":"2nd","_rn_":"Williams, Mr. Charles Eugene"},{"1":"yes","2":"female","3":"21","4":"2nd","_rn_":"Phillips, Miss. Alice Frances L"},{"1":"no","2":"male","3":"62","4":"2nd","_rn_":"Myles, Mr. Thomas Francis"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Watson, Mr. Ennis Hastings"},{"1":"no","2":"male","3":"60","4":"2nd","_rn_":"Brown, Mr. Thomas William Solom"},{"1":"yes","2":"female","3":"25","4":"2nd","_rn_":"Shelley, Mrs. William (Imanita"},{"1":"no","2":"male","3":"28","4":"2nd","_rn_":"Beauchamp, Mr. Henry James"},{"1":"yes","2":"female","3":"42","4":"2nd","_rn_":"Bystrom, Mrs. (Karolina)"},{"1":"no","2":"male","3":"30","4":"2nd","_rn_":"Matthews, Mr. William John"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Pernot, Mr. Rene"},{"1":"no","2":"male","3":"39","4":"2nd","_rn_":"Otter, Mr. Richard"},{"1":"yes","2":"female","3":"18","4":"2nd","_rn_":"Doling, Miss. Elsie"},{"1":"yes","2":"female","3":"36","4":"2nd","_rn_":"Becker, Mrs. Allen Oliver (Nell"},{"1":"yes","2":"female","3":"30","4":"2nd","_rn_":"Slayter, Miss. Hilda Mary"},{"1":"no","2":"male","3":"18","4":"3rd","_rn_":"Chronopoulos, Mr. Demetrios"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"McCoy, Miss. Agnes"},{"1":"no","2":"female","3":"18","4":"3rd","_rn_":"Vander Planke, Miss. Augusta Ma"},{"1":"yes","2":"male","3":"29","4":"3rd","_rn_":"Daly, Mr. Eugene Patrick"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Tomlin, Mr. Ernest Portage"},{"1":"no","2":"male","3":"17","4":"3rd","_rn_":"Dika, Mr. Mirko"},{"1":"no","2":"male","3":"45","4":"3rd","_rn_":"Youseff, Mr. Gerious"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Nasr, Mr. Mustafa"},{"1":"no","2":"female","3":"27","4":"3rd","_rn_":"Barry, Miss. Julia"},{"1":"no","2":"male","3":"4","4":"3rd","_rn_":"Rice, Master. Arthur"},{"1":"no","2":"male","3":"24","4":"3rd","_rn_":"Celotti, Mr. Francesco"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Nilsson, Mr. August Ferdinand"},{"1":"yes","2":"male","3":"9","4":"3rd","_rn_":"Olsen, Master. Artur Karl"},{"1":"no","2":"male","3":"25","4":"3rd","_rn_":"Sutehall, Mr. Henry Jr"},{"1":"no","2":"male","3":"2","4":"3rd","_rn_":"Panula, Master. Urho Abraham"},{"1":"yes","2":"female","3":"15","4":"3rd","_rn_":"Yasbeck, Mrs. Antoni (Selini Al"},{"1":"yes","2":"male","3":"21","4":"3rd","_rn_":"Buckley, Mr. Daniel"},{"1":"no","2":"male","3":"18","4":"3rd","_rn_":"Myhrman, Mr. Pehr Fabian Oliver"},{"1":"yes","2":"female","3":"27","4":"3rd","_rn_":"Moor, Mrs. (Beila)"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Holthen, Mr. Johan Martin"},{"1":"yes","2":"male","3":"12","4":"3rd","_rn_":"Nicola-Yarred, Master. Elias"},{"1":"yes","2":"female","3":"18","4":"3rd","_rn_":"Turja, Miss. Anna Sofia"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Henry, Miss. Delia"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Zabour, Miss. Thamine"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Lam, Mr. Ali"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Andreasson, Mr. Paul Edvin"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Stanley, Mr. Edward Roland"},{"1":"no","2":"male","3":"18","4":"3rd","_rn_":"Edvardsson, Mr. Gustaf Hjalmar"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Sage, Mr. Frederick"},{"1":"no","2":"male","3":"24","4":"3rd","_rn_":"McNamee, Mr. Neal"},{"1":"no","2":"male","3":"29","4":"3rd","_rn_":"Zimmerman, Mr. Leo"},{"1":"no","2":"male","3":"40","4":"3rd","_rn_":"Skoog, Mr. Wilhelm"},{"1":"no","2":"male","3":"24","4":"3rd","_rn_":"Carlsson, Mr. Carl Robert"},{"1":"no","2":"male","3":"35","4":"3rd","_rn_":"Rintamaki, Mr. Matti"},{"1":"no","2":"male","3":"61","4":"3rd","_rn_":"Nysveen, Mr. Johan Hansen"},{"1":"no","2":"male","3":"26","4":"3rd","_rn_":"Zakarian, Mr. Mapriededer"},{"1":"no","2":"male","3":"36","4":"3rd","_rn_":"Lindell, Mr. Edvard Bengtsson"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Coelho, Mr. Domingos Fernandeo"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Sadlier, Mr. Matthew"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Sage, Miss. Stella Anna"},{"1":"no","2":"female","3":"9","4":"3rd","_rn_":"Boulos, Miss. Nourelain"},{"1":"yes","2":"male","3":"27","4":"3rd","_rn_":"Andersson, Mr. August Edvard ("},{"1":"no","2":"male","3":"25","4":"3rd","_rn_":"Moen, Mr. Sigurd Hansen"},{"1":"no","2":"female","3":"27","4":"3rd","_rn_":"Ilmakangas, Miss. Ida Livija"},{"1":"no","2":"male","3":"51","4":"3rd","_rn_":"Widegren, Mr. Carl/Charles Pete"},{"1":"no","2":"male","3":"27","4":"3rd","_rn_":"Zakarian, Mr. Ortin"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Thomas, Mr. Charles P"},{"1":"no","2":"male","3":"43","4":"3rd","_rn_":"Holm, Mr. John Fredrik Alexande"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Samaan, Mr. Hanna"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Keane, Mr. Andrew Andy"},{"1":"no","2":"female","3":"17","4":"3rd","_rn_":"Attalah, Miss. Malake"},{"1":"no","2":"male","3":"41","4":"3rd","_rn_":"Hansen, Mr. Claus Peter"},{"1":"no","2":"male","3":"23","4":"3rd","_rn_":"Dyker, Mr. Adolf Fredrik"},{"1":"yes","2":"male","3":"0","4":"3rd","_rn_":"Thomas, Master. Assad Alexander"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Hampe, Mr. Leon"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Alhomaki, Mr. Ilmari Rudolf"},{"1":"no","2":"male","3":"19","4":"3rd","_rn_":"Soholt, Mr. Peter Andreas Lauri"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Corn, Mr. Harry"},{"1":"no","2":"female","3":"3","4":"3rd","_rn_":"Peacock, Miss. Treasteall"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Maenpaa, Mr. Matti Alexanteri"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Foo, Mr. Choong"},{"1":"no","2":"female","3":"6","4":"3rd","_rn_":"Andersson, Miss. Ebba Iris Alfr"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Shorney, Mr. Charles Joseph"},{"1":"yes","2":"female","3":"22","4":"3rd","_rn_":"Landergren, Miss. Aurora Adelia"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Vanden Steen, Mr. Leo Peter"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Reynolds, Mr. Harold J"},{"1":"yes","2":"female","3":"5","4":"3rd","_rn_":"Baclini, Miss. Marie Catherine"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Mahon, Miss. Bridget Delia"},{"1":"yes","2":"female","3":"19","4":"3rd","_rn_":"Devaney, Miss. Margaret Delia"},{"1":"no","2":"male","3":"33","4":"3rd","_rn_":"Johansson, Mr. Gustaf Joel"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The survival rates of different class is calculated by the following code block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>stratified_rs <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class, survived) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">id_cols =</span> <span class="fu">everything</span>(), <span class="at">names_from =</span> <span class="fu">c</span>(survived), <span class="at">values_from =</span> n</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">surv_rate =</span> yes <span class="sc">/</span> (yes <span class="sc">+</span> no))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 4
+#&gt;   class    no   yes surv_rate
+#&gt;   &lt;fct&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+#&gt; 1 1st      12    20     0.625
+#&gt; 2 2nd      14    13     0.481
+#&gt; 3 3rd      55    15     0.214</code></pre>
+</div>
+</div>
+</section>
+<section id="systematic-sampling" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="systematic-sampling"><span class="header-section-number">34.5</span> Systematic sampling</h2>
+<p>Systematic sampling is a sampling technique where you select every k-th individual from a population list to form a sample. This method is straightforward, often easy to implement, and useful when a truly random sample is not required. It provides a way to cover the entire population by using a structured approach, which can be more efficient than simple random sampling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sys_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(df, size) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="fu">nrow</span>(df) </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">floor</span>(N <span class="sc">/</span> size)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  start <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>k, <span class="dv">1</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  indices <span class="ot">&lt;-</span> <span class="fu">seq</span>(start, <span class="at">by =</span> k, <span class="at">length.out =</span> size)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df[indices, ])</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>systematic_rs <span class="ot">&lt;-</span> <span class="fu">sys_sample</span>(pop, <span class="dv">130</span>) </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>systematic_rs <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["survived"],"name":[1],"type":["fct"],"align":["left"]},{"label":["sex"],"name":[2],"type":["fct"],"align":["left"]},{"label":["age"],"name":[3],"type":["int"],"align":["right"]},{"label":["class"],"name":[4],"type":["fct"],"align":["left"]}],"data":[{"1":"yes","2":"male","3":"0","4":"1st","_rn_":"Allison, Master. Hudson Trevor"},{"1":"yes","2":"female","3":"18","4":"1st","_rn_":"Astor, Mrs. John Jacob (Madelei"},{"1":"yes","2":"female","3":"47","4":"1st","_rn_":"Beckwith, Mrs. Richard Leonard"},{"1":"yes","2":"male","3":"40","4":"1st","_rn_":"Blank, Mr. Henry"},{"1":"yes","2":"female","3":"44","4":"1st","_rn_":"Brown, Mrs. James Joseph (Marga"},{"1":"no","2":"male","3":"33","4":"1st","_rn_":"Carlsson, Mr. Frans Olof"},{"1":"yes","2":"female","3":"76","4":"1st","_rn_":"Cavendish, Mrs. Tyrell William"},{"1":"no","2":"male","3":"27","4":"1st","_rn_":"Clark, Mr. Walter Miller"},{"1":"no","2":"male","3":"70","4":"1st","_rn_":"Crosby, Capt. Edward Gifford"},{"1":"yes","2":"male","3":"31","4":"1st","_rn_":"Dick, Mr. Albert Adrian"},{"1":"no","2":"male","3":"39","4":"1st","_rn_":"Dulles, Mr. William Crothers"},{"1":"yes","2":"female","3":"24","4":"1st","_rn_":"Fortune, Miss. Alice Elizabeth"},{"1":"yes","2":"female","3":"NA","4":"1st","_rn_":"Frauenthal, Mrs. Henry William"},{"1":"yes","2":"female","3":"45","4":"1st","_rn_":"Gibson, Mrs. Leonard (Pauline C"},{"1":"yes","2":"female","3":"45","4":"1st","_rn_":"Greenfield, Mrs. Leo David (Bla"},{"1":"yes","2":"male","3":"27","4":"1st","_rn_":"Hassab, Mr. Hammad"},{"1":"yes","2":"female","3":"51","4":"1st","_rn_":"Hogeboom, Mrs. John C (Anna And"},{"1":"no","2":"male","3":"46","4":"1st","_rn_":"Jones, Mr. Charles Cresson"},{"1":"yes","2":"female","3":"49","4":"1st","_rn_":"Leader, Dr. Alice (Farnham)"},{"1":"no","2":"male","3":"30","4":"1st","_rn_":"Loring, Mr. Joseph Holland"},{"1":"no","2":"male","3":"54","4":"1st","_rn_":"McCarthy, Mr. Timothy J"},{"1":"no","2":"male","3":"47","4":"1st","_rn_":"Moore, Mr. Clarence Bloomfield"},{"1":"no","2":"male","3":"65","4":"1st","_rn_":"Ostby, Mr. Engelhart Cornelius"},{"1":"yes","2":"male","3":"52","4":"1st","_rn_":"Peuchen, Major. Arthur Godfrey"},{"1":"no","2":"male","3":"NA","4":"1st","_rn_":"Rood, Mr. Hugh Roscoe"},{"1":"yes","2":"female","3":"21","4":"1st","_rn_":"Ryerson, Miss. Susan Parker Su"},{"1":"yes","2":"male","3":"35","4":"1st","_rn_":"Silverthorne, Mr. Spencer Victo"},{"1":"yes","2":"male","3":"24","4":"1st","_rn_":"Snyder, Mr. John Pillsbury"},{"1":"yes","2":"female","3":"43","4":"1st","_rn_":"Stengel, Mrs. Charles Emil Henr"},{"1":"yes","2":"female","3":"39","4":"1st","_rn_":"Taussig, Mrs. Emil (Tillie Mand"},{"1":"no","2":"male","3":"47","4":"1st","_rn_":"Walker, Mr. William Anderson"},{"1":"yes","2":"female","3":"45","4":"1st","_rn_":"Wick, Mrs. George Dennick (Mary"},{"1":"no","2":"male","3":"62","4":"1st","_rn_":"Wright, Mr. George"},{"1":"no","2":"male","3":"18","4":"2nd","_rn_":"Bailey, Mr. Percy Andrew"},{"1":"yes","2":"female","3":"12","4":"2nd","_rn_":"Becker, Miss. Ruth Elizabeth"},{"1":"no","2":"male","3":"60","4":"2nd","_rn_":"Brown, Mr. Thomas William Solom"},{"1":"yes","2":"female","3":"22","4":"2nd","_rn_":"Caldwell, Mrs. Albert Francis ("},{"1":"yes","2":"female","3":"45","4":"2nd","_rn_":"Christy, Mrs. (Alice Frances)"},{"1":"no","2":"female","3":"30","4":"2nd","_rn_":"Corbett, Mrs. Walter H (Irene C"},{"1":"no","2":"male","3":"29","4":"2nd","_rn_":"del Carlo, Mr. Sebastiano"},{"1":"yes","2":"female","3":"27","4":"2nd","_rn_":"Duran y More, Miss. Asuncion"},{"1":"no","2":"female","3":"38","4":"2nd","_rn_":"Funk, Miss. Annie Clemmer"},{"1":"no","2":"male","3":"24","4":"2nd","_rn_":"Giles, Mr. Ralph"},{"1":"no","2":"male","3":"28","4":"2nd","_rn_":"Harper, Rev. John"},{"1":"yes","2":"female","3":"55","4":"2nd","_rn_":"Hewlett, Mrs. (Mary D Kingcome)"},{"1":"no","2":"male","3":"44","4":"2nd","_rn_":"Hold, Mr. Stephen"},{"1":"no","2":"male","3":"47","4":"2nd","_rn_":"Jarvis, Mr. John Denzil"},{"1":"yes","2":"female","3":"45","4":"2nd","_rn_":"Kelly, Mrs. Florence Fannie"},{"1":"yes","2":"female","3":"22","4":"2nd","_rn_":"Laroche, Mrs. Joseph (Juliette"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Malachard, Mr. Noel"},{"1":"yes","2":"female","3":"13","4":"2nd","_rn_":"Mellinger, Miss. Madeleine Viol"},{"1":"no","2":"male","3":"62","4":"2nd","_rn_":"Myles, Mr. Thomas Francis"},{"1":"yes","2":"female","3":"29","4":"2nd","_rn_":"Nye, Mrs. (Elizabeth Ramell)"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Pernot, Mr. Rene"},{"1":"yes","2":"female","3":"8","4":"2nd","_rn_":"Quick, Miss. Winifred Vera"},{"1":"yes","2":"female","3":"50","4":"2nd","_rn_":"Ridsdale, Miss. Lucy"},{"1":"no","2":"male","3":"59","4":"2nd","_rn_":"Sjostedt, Mr. Ernst Adolf"},{"1":"no","2":"male","3":"23","4":"2nd","_rn_":"Troupiansky, Mr. Moses Aaron"},{"1":"no","2":"male","3":"NA","4":"2nd","_rn_":"Watson, Mr. Ennis Hastings"},{"1":"yes","2":"female","3":"5","4":"2nd","_rn_":"West, Miss. Constance Mirium"},{"1":"no","2":"male","3":"13","4":"3rd","_rn_":"Abbott, Master. Eugene Joseph"},{"1":"yes","2":"male","3":"0","4":"3rd","_rn_":"Aks, Master. Philip Frank"},{"1":"yes","2":"female","3":"19","4":"3rd","_rn_":"Andersen-Jensen, Miss. Carla Ch"},{"1":"no","2":"male","3":"26","4":"3rd","_rn_":"Andersson, Mr. Johan Samuel"},{"1":"yes","2":"male","3":"3","4":"3rd","_rn_":"Asplund, Master. Edvin Rojj Fel"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Attalah, Mr. Sleiman"},{"1":"yes","2":"female","3":"18","4":"3rd","_rn_":"Badman, Miss. Emily Louisa"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Berglund, Mr. Karl Ivar Sven"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Boulos, Mrs. Joseph (Sultana)"},{"1":"no","2":"male","3":"35","4":"3rd","_rn_":"Brocklebank, Mr. William Alfred"},{"1":"no","2":"male","3":"17","4":"3rd","_rn_":"Calic, Mr. Petar"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Carver, Mr. Alfred John"},{"1":"no","2":"male","3":"36","4":"3rd","_rn_":"Coleff, Mr. Peju"},{"1":"no","2":"male","3":"19","4":"3rd","_rn_":"Cor, Mr. Liudevit"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Daher, Mr. Shedid"},{"1":"no","2":"male","3":"25","4":"3rd","_rn_":"Dantcheff, Mr. Ristiu"},{"1":"no","2":"male","3":"16","4":"3rd","_rn_":"de Pelsmaeker, Mr. Alfons"},{"1":"yes","2":"female","3":"19","4":"3rd","_rn_":"Devaney, Miss. Margaret Delia"},{"1":"no","2":"male","3":"33","4":"3rd","_rn_":"Drazenoic, Mr. Jozef"},{"1":"no","2":"male","3":"17","4":"3rd","_rn_":"Elias, Mr. Joseph Jr"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Flynn, Mr. James"},{"1":"no","2":"female","3":"48","4":"3rd","_rn_":"Ford, Mrs. Edward (Margaret Ann"},{"1":"no","2":"male","3":"33","4":"3rd","_rn_":"Goldsmith, Mr. Frank John"},{"1":"no","2":"male","3":"40","4":"3rd","_rn_":"Goodwin, Mr. Charles Frederick"},{"1":"no","2":"female","3":"17","4":"3rd","_rn_":"Hagardon, Miss. Kate"},{"1":"yes","2":"female","3":"45","4":"3rd","_rn_":"Hansen, Mrs. Claus Peter (Jenni"},{"1":"no","2":"female","3":"23","4":"3rd","_rn_":"Heininen, Miss. Wendla Maria"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Horgan, Mr. John"},{"1":"yes","2":"male","3":"21","4":"3rd","_rn_":"Jansson, Mr. Carl Olof"},{"1":"no","2":"male","3":"33","4":"3rd","_rn_":"Johansson, Mr. Gustaf Joel"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Johnston, Miss. Catherine Helen"},{"1":"no","2":"male","3":"21","4":"3rd","_rn_":"Kalvik, Mr. Johannes Halvorsen"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Keefe, Mr. Arthur"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Kilgannon, Mr. Thomas J"},{"1":"yes","2":"male","3":"25","4":"3rd","_rn_":"Krekorian, Mr. Neshan"},{"1":"no","2":"male","3":"29","4":"3rd","_rn_":"Larsson, Mr. Bengt Edvin"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Lennon, Miss. Mary"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Linehan, Mr. Michael"},{"1":"yes","2":"male","3":"32","4":"3rd","_rn_":"Lundstrom, Mr. Thure Edvin"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Mamee, Mr. Hanna"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"McCoy, Miss. Agnes"},{"1":"no","2":"female","3":"19","4":"3rd","_rn_":"McNamee, Mrs. Neal (Eileen O'Le"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Mionoff, Mr. Stoytcho"},{"1":"no","2":"male","3":"34","4":"3rd","_rn_":"Morley, Mr. William"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Murdlin, Mr. Joseph"},{"1":"no","2":"male","3":"33","4":"3rd","_rn_":"Nancarrow, Mr. William Henry"},{"1":"yes","2":"female","3":"26","4":"3rd","_rn_":"Nilsson, Miss. Helmina Josefina"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"O'Brien, Mrs. Thomas (Johanna"},{"1":"yes","2":"female","3":"NA","4":"3rd","_rn_":"O'Leary, Miss. Hanora Norah"},{"1":"no","2":"female","3":"20","4":"3rd","_rn_":"Oreskovic, Miss. Marija"},{"1":"no","2":"male","3":"1","4":"3rd","_rn_":"Panula, Master. Eino Viljami"},{"1":"no","2":"male","3":"0","4":"3rd","_rn_":"Peacock, Master. Alfred Edward"},{"1":"yes","2":"male","3":"NA","4":"3rd","_rn_":"Peter, Master. Michael J"},{"1":"yes","2":"male","3":"32","4":"3rd","_rn_":"Pickard, Mr. Berk (Berk Trembis"},{"1":"no","2":"male","3":"10","4":"3rd","_rn_":"Rice, Master. Albert"},{"1":"no","2":"female","3":"NA","4":"3rd","_rn_":"Risien, Mrs. Samuel (Emma)"},{"1":"no","2":"male","3":"16","4":"3rd","_rn_":"Rush, Mr. Alfred George John"},{"1":"no","2":"male","3":"14","4":"3rd","_rn_":"Sage, Master. William Henry"},{"1":"no","2":"male","3":"24","4":"3rd","_rn_":"Salander, Mr. Karl Johan"},{"1":"no","2":"male","3":"20","4":"3rd","_rn_":"Saundercock, Mr. William Henry"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Sirayanian, Mr. Orsen"},{"1":"no","2":"female","3":"45","4":"3rd","_rn_":"Skoog, Mrs. William (Anna Bernh"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Staneff, Mr. Ivan"},{"1":"no","2":"female","3":"29","4":"3rd","_rn_":"Strom, Mrs. Wilhelm (Elna Matil"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Thomas, Mr. Charles P"},{"1":"no","2":"male","3":"30","4":"3rd","_rn_":"Tomlin, Mr. Ernest Portage"},{"1":"yes","2":"female","3":"63","4":"3rd","_rn_":"Turkula, Mrs. (Hedwig)"},{"1":"no","2":"male","3":"28","4":"3rd","_rn_":"Vanden Steen, Mr. Leo Peter"},{"1":"no","2":"male","3":"22","4":"3rd","_rn_":"Waelens, Mr. Achille"},{"1":"no","2":"male","3":"NA","4":"3rd","_rn_":"Willer, Mr. Aaron (Abi Weller"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="cluster-sampling" class="level2" data-number="34.6">
+<h2 data-number="34.6" class="anchored" data-anchor-id="cluster-sampling"><span class="header-section-number">34.6</span> Cluster sampling</h2>
+<p>Cluster Sampling is a probability sampling technique in which the population is divided into distinct groups, or “clusters.” Then, instead of selecting individual members from the entire population, random clusters are selected, and all or a sample of individuals within each selected cluster are included in the final sample. This method is commonly used in large-scale studies, especially when the population is spread across a wide geographic area, making individual sampling costly or impractical.</p>
+<p>Suppose you want to conduct a survey on household income in a city with 100 neighborhoods (clusters), each has 1000 families, and you plan to take a sample of 10 clusters, in each cluster 100 families are selected randomly. Here we write a clustering sampling function named <code>cluster_sample()</code> to perform this process:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cluster_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(data, id, n, <span class="at">size =</span> <span class="cn">NULL</span>, <span class="at">prop =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">xor</span>(<span class="fu">is.null</span>(size), <span class="fu">is.null</span>(prop))) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Specify either 'size' or 'prop', but not both."</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 1: Select clusters</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  selected_clusters <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">unique</span>(data <span class="sc">|&gt;</span> <span class="fu">pull</span>({{id}})), n)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Step 2: Sample families within each selected cluster</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  sampled_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">lapply</span>(selected_clusters, <span class="cf">function</span>(cluster) {</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter data for the current cluster</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    cluster_data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">filter</span>({{id}} <span class="sc">==</span> cluster)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Determine the number of families available in the cluster</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    n_families <span class="ot">&lt;-</span> <span class="fu">nrow</span>(cluster_data)</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decide the number of samples based on fixed count or proportion</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(size)) {</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Use a fixed number but limit to available families</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      n_to_sample <span class="ot">&lt;-</span> <span class="fu">min</span>(size, n_families)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Use a proportion but ensure at least 1 family is selected</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>      n_to_sample <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">1</span>, <span class="fu">round</span>(n_families <span class="sc">*</span> prop))</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Randomly sample families within the cluster</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    sampled_families <span class="ot">&lt;-</span> cluster_data <span class="sc">|&gt;</span> <span class="fu">slice_sample</span>(<span class="at">n =</span> n_to_sample)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(sampled_families)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sampled_data)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nhood_sizes <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">800</span><span class="sc">:</span><span class="dv">1200</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>nhoods <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">nhood_id =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">times =</span> nhood_sizes),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">family_id =</span> <span class="fu">sequence</span>(nhood_sizes),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">income =</span> <span class="fu">rnorm</span>(<span class="fu">sum</span>(nhood_sizes), <span class="at">mean =</span> <span class="dv">50000</span>, <span class="at">sd =</span> <span class="dv">15000</span>)  </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 1: Sample 100 families from each of 10 selected clusters</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cluster_sample</span>(nhoods, <span class="at">id =</span> nhood_id, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nhood_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["family_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["income"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"38","2":"225","3":"36703.977"},{"1":"38","2":"655","3":"70989.902"},{"1":"38","2":"64","3":"39182.020"},{"1":"38","2":"295","3":"44323.521"},{"1":"38","2":"484","3":"75370.612"},{"1":"38","2":"393","3":"49371.621"},{"1":"38","2":"298","3":"60180.051"},{"1":"38","2":"762","3":"40774.903"},{"1":"38","2":"1164","3":"51422.555"},{"1":"38","2":"643","3":"64699.655"},{"1":"38","2":"1068","3":"54072.881"},{"1":"38","2":"602","3":"59470.311"},{"1":"38","2":"1153","3":"45682.571"},{"1":"38","2":"960","3":"41661.806"},{"1":"38","2":"1141","3":"28222.157"},{"1":"38","2":"271","3":"48168.566"},{"1":"38","2":"339","3":"42515.531"},{"1":"38","2":"767","3":"62295.524"},{"1":"38","2":"195","3":"69954.184"},{"1":"38","2":"429","3":"72522.391"},{"1":"38","2":"259","3":"56162.104"},{"1":"38","2":"257","3":"27813.736"},{"1":"38","2":"402","3":"60241.631"},{"1":"38","2":"821","3":"62419.158"},{"1":"38","2":"1032","3":"64149.459"},{"1":"38","2":"360","3":"66917.267"},{"1":"38","2":"1026","3":"44348.778"},{"1":"38","2":"307","3":"25503.176"},{"1":"38","2":"600","3":"45438.568"},{"1":"38","2":"510","3":"30768.389"},{"1":"38","2":"1165","3":"68032.419"},{"1":"38","2":"690","3":"57071.155"},{"1":"38","2":"44","3":"51416.875"},{"1":"38","2":"352","3":"43431.246"},{"1":"38","2":"1005","3":"42112.092"},{"1":"38","2":"936","3":"35046.529"},{"1":"38","2":"85","3":"40181.278"},{"1":"38","2":"253","3":"71272.205"},{"1":"38","2":"687","3":"34756.135"},{"1":"38","2":"92","3":"45595.802"},{"1":"38","2":"534","3":"56237.853"},{"1":"38","2":"175","3":"53989.393"},{"1":"38","2":"604","3":"54917.437"},{"1":"38","2":"524","3":"23049.306"},{"1":"38","2":"807","3":"59759.225"},{"1":"38","2":"879","3":"42456.458"},{"1":"38","2":"1139","3":"31785.741"},{"1":"38","2":"555","3":"43166.587"},{"1":"38","2":"311","3":"49396.605"},{"1":"38","2":"557","3":"38863.617"},{"1":"38","2":"460","3":"59313.577"},{"1":"38","2":"806","3":"58120.927"},{"1":"38","2":"70","3":"32258.560"},{"1":"38","2":"32","3":"53485.184"},{"1":"38","2":"285","3":"30559.290"},{"1":"38","2":"1092","3":"38090.041"},{"1":"38","2":"681","3":"45931.098"},{"1":"38","2":"744","3":"28734.595"},{"1":"38","2":"108","3":"58813.833"},{"1":"38","2":"964","3":"31604.442"},{"1":"38","2":"679","3":"55902.258"},{"1":"38","2":"696","3":"62986.276"},{"1":"38","2":"164","3":"47679.546"},{"1":"38","2":"927","3":"27485.485"},{"1":"38","2":"1123","3":"49157.332"},{"1":"38","2":"899","3":"37413.779"},{"1":"38","2":"42","3":"58598.862"},{"1":"38","2":"379","3":"54627.472"},{"1":"38","2":"738","3":"60332.802"},{"1":"38","2":"832","3":"45289.659"},{"1":"38","2":"361","3":"61494.184"},{"1":"38","2":"1122","3":"38167.288"},{"1":"38","2":"540","3":"31403.575"},{"1":"38","2":"610","3":"82952.570"},{"1":"38","2":"279","3":"31839.630"},{"1":"38","2":"1110","3":"47735.733"},{"1":"38","2":"521","3":"51590.863"},{"1":"38","2":"454","3":"47515.775"},{"1":"38","2":"146","3":"64693.452"},{"1":"38","2":"50","3":"49853.967"},{"1":"38","2":"1107","3":"53156.901"},{"1":"38","2":"449","3":"64738.723"},{"1":"38","2":"302","3":"26329.323"},{"1":"38","2":"359","3":"73988.167"},{"1":"38","2":"801","3":"25530.447"},{"1":"38","2":"631","3":"47221.966"},{"1":"38","2":"640","3":"62080.789"},{"1":"38","2":"404","3":"27810.792"},{"1":"38","2":"425","3":"33857.396"},{"1":"38","2":"400","3":"71210.675"},{"1":"38","2":"754","3":"60988.746"},{"1":"38","2":"340","3":"14560.591"},{"1":"38","2":"992","3":"51937.850"},{"1":"38","2":"442","3":"54645.411"},{"1":"38","2":"230","3":"33936.864"},{"1":"38","2":"888","3":"67057.948"},{"1":"38","2":"1014","3":"59504.482"},{"1":"38","2":"1162","3":"48229.907"},{"1":"38","2":"1167","3":"36368.839"},{"1":"38","2":"1021","3":"74025.530"},{"1":"75","2":"295","3":"40232.496"},{"1":"75","2":"1016","3":"55247.701"},{"1":"75","2":"1012","3":"95906.960"},{"1":"75","2":"602","3":"33690.542"},{"1":"75","2":"651","3":"33723.655"},{"1":"75","2":"524","3":"66665.889"},{"1":"75","2":"564","3":"49659.437"},{"1":"75","2":"167","3":"73157.974"},{"1":"75","2":"762","3":"46797.734"},{"1":"75","2":"485","3":"50259.407"},{"1":"75","2":"717","3":"38828.532"},{"1":"75","2":"180","3":"84982.714"},{"1":"75","2":"755","3":"34792.934"},{"1":"75","2":"194","3":"53799.485"},{"1":"75","2":"858","3":"45905.348"},{"1":"75","2":"810","3":"59382.171"},{"1":"75","2":"149","3":"24317.399"},{"1":"75","2":"875","3":"67253.320"},{"1":"75","2":"54","3":"47457.818"},{"1":"75","2":"253","3":"61504.688"},{"1":"75","2":"70","3":"48938.013"},{"1":"75","2":"401","3":"43102.805"},{"1":"75","2":"767","3":"56556.091"},{"1":"75","2":"274","3":"46027.389"},{"1":"75","2":"294","3":"48203.854"},{"1":"75","2":"287","3":"58926.334"},{"1":"75","2":"979","3":"41432.120"},{"1":"75","2":"660","3":"39685.471"},{"1":"75","2":"286","3":"26625.090"},{"1":"75","2":"77","3":"51083.327"},{"1":"75","2":"188","3":"49586.164"},{"1":"75","2":"637","3":"53628.933"},{"1":"75","2":"132","3":"62445.350"},{"1":"75","2":"888","3":"42885.881"},{"1":"75","2":"297","3":"48851.400"},{"1":"75","2":"164","3":"58389.426"},{"1":"75","2":"813","3":"47624.472"},{"1":"75","2":"233","3":"45944.944"},{"1":"75","2":"67","3":"29541.901"},{"1":"75","2":"1024","3":"32055.751"},{"1":"75","2":"462","3":"60236.816"},{"1":"75","2":"895","3":"78900.267"},{"1":"75","2":"724","3":"57325.242"},{"1":"75","2":"439","3":"45391.589"},{"1":"75","2":"740","3":"47341.681"},{"1":"75","2":"288","3":"45616.364"},{"1":"75","2":"943","3":"47253.249"},{"1":"75","2":"340","3":"51258.887"},{"1":"75","2":"176","3":"44445.115"},{"1":"75","2":"738","3":"55003.929"},{"1":"75","2":"80","3":"33984.514"},{"1":"75","2":"275","3":"62419.218"},{"1":"75","2":"929","3":"49522.497"},{"1":"75","2":"948","3":"44914.477"},{"1":"75","2":"154","3":"51850.461"},{"1":"75","2":"82","3":"74163.252"},{"1":"75","2":"758","3":"33866.303"},{"1":"75","2":"182","3":"38918.235"},{"1":"75","2":"308","3":"61539.957"},{"1":"75","2":"796","3":"25175.969"},{"1":"75","2":"535","3":"52955.217"},{"1":"75","2":"866","3":"39674.520"},{"1":"75","2":"90","3":"56673.511"},{"1":"75","2":"300","3":"53836.315"},{"1":"75","2":"542","3":"29248.225"},{"1":"75","2":"185","3":"43480.582"},{"1":"75","2":"463","3":"44363.667"},{"1":"75","2":"853","3":"38185.396"},{"1":"75","2":"699","3":"40415.226"},{"1":"75","2":"910","3":"46507.557"},{"1":"75","2":"16","3":"22777.208"},{"1":"75","2":"961","3":"50385.443"},{"1":"75","2":"620","3":"39112.310"},{"1":"75","2":"816","3":"37211.859"},{"1":"75","2":"124","3":"49538.503"},{"1":"75","2":"994","3":"53115.729"},{"1":"75","2":"93","3":"64722.277"},{"1":"75","2":"749","3":"36167.831"},{"1":"75","2":"580","3":"50507.931"},{"1":"75","2":"841","3":"47274.212"},{"1":"75","2":"313","3":"38632.601"},{"1":"75","2":"486","3":"29524.808"},{"1":"75","2":"664","3":"40054.768"},{"1":"75","2":"419","3":"45177.246"},{"1":"75","2":"890","3":"41596.298"},{"1":"75","2":"772","3":"42621.061"},{"1":"75","2":"26","3":"46897.457"},{"1":"75","2":"301","3":"42006.726"},{"1":"75","2":"151","3":"44608.134"},{"1":"75","2":"690","3":"49729.716"},{"1":"75","2":"394","3":"46129.781"},{"1":"75","2":"119","3":"35312.868"},{"1":"75","2":"928","3":"27670.480"},{"1":"75","2":"479","3":"75824.930"},{"1":"75","2":"648","3":"51860.991"},{"1":"75","2":"911","3":"51723.298"},{"1":"75","2":"260","3":"80429.707"},{"1":"75","2":"237","3":"45003.038"},{"1":"75","2":"573","3":"54146.595"},{"1":"75","2":"817","3":"40986.588"},{"1":"23","2":"692","3":"48169.965"},{"1":"23","2":"482","3":"51103.381"},{"1":"23","2":"893","3":"43605.895"},{"1":"23","2":"589","3":"52029.607"},{"1":"23","2":"145","3":"57680.405"},{"1":"23","2":"320","3":"71498.356"},{"1":"23","2":"305","3":"43551.550"},{"1":"23","2":"667","3":"48649.193"},{"1":"23","2":"916","3":"48939.297"},{"1":"23","2":"829","3":"27721.368"},{"1":"23","2":"237","3":"61940.647"},{"1":"23","2":"584","3":"58393.745"},{"1":"23","2":"489","3":"64758.842"},{"1":"23","2":"825","3":"57560.128"},{"1":"23","2":"105","3":"29328.791"},{"1":"23","2":"957","3":"63453.342"},{"1":"23","2":"688","3":"63950.079"},{"1":"23","2":"149","3":"48945.792"},{"1":"23","2":"728","3":"66586.282"},{"1":"23","2":"100","3":"57361.646"},{"1":"23","2":"901","3":"34577.817"},{"1":"23","2":"761","3":"85147.795"},{"1":"23","2":"52","3":"26780.461"},{"1":"23","2":"263","3":"41765.966"},{"1":"23","2":"681","3":"68656.567"},{"1":"23","2":"453","3":"44982.524"},{"1":"23","2":"935","3":"44721.648"},{"1":"23","2":"97","3":"56099.269"},{"1":"23","2":"817","3":"48458.517"},{"1":"23","2":"266","3":"43161.071"},{"1":"23","2":"389","3":"25430.955"},{"1":"23","2":"586","3":"53424.226"},{"1":"23","2":"633","3":"66665.916"},{"1":"23","2":"178","3":"41754.136"},{"1":"23","2":"274","3":"48013.569"},{"1":"23","2":"854","3":"59722.349"},{"1":"23","2":"152","3":"50316.249"},{"1":"23","2":"302","3":"25128.712"},{"1":"23","2":"748","3":"32761.329"},{"1":"23","2":"82","3":"52565.302"},{"1":"23","2":"318","3":"72572.931"},{"1":"23","2":"273","3":"37253.204"},{"1":"23","2":"870","3":"61530.734"},{"1":"23","2":"975","3":"53108.665"},{"1":"23","2":"537","3":"46190.156"},{"1":"23","2":"965","3":"47672.953"},{"1":"23","2":"799","3":"47077.027"},{"1":"23","2":"683","3":"35482.532"},{"1":"23","2":"808","3":"49819.640"},{"1":"23","2":"385","3":"25865.911"},{"1":"23","2":"614","3":"61550.402"},{"1":"23","2":"890","3":"77920.405"},{"1":"23","2":"169","3":"34669.391"},{"1":"23","2":"758","3":"59570.160"},{"1":"23","2":"306","3":"38738.921"},{"1":"23","2":"562","3":"13088.252"},{"1":"23","2":"99","3":"38085.003"},{"1":"23","2":"296","3":"52140.527"},{"1":"23","2":"493","3":"46026.465"},{"1":"23","2":"286","3":"21131.734"},{"1":"23","2":"223","3":"77539.498"},{"1":"23","2":"530","3":"27491.363"},{"1":"23","2":"766","3":"49690.726"},{"1":"23","2":"455","3":"79677.470"},{"1":"23","2":"730","3":"20435.611"},{"1":"23","2":"57","3":"52303.154"},{"1":"23","2":"413","3":"63559.538"},{"1":"23","2":"598","3":"41524.995"},{"1":"23","2":"14","3":"62063.706"},{"1":"23","2":"676","3":"67633.923"},{"1":"23","2":"21","3":"67932.382"},{"1":"23","2":"203","3":"41680.953"},{"1":"23","2":"279","3":"38547.243"},{"1":"23","2":"630","3":"76555.999"},{"1":"23","2":"316","3":"68091.569"},{"1":"23","2":"276","3":"64171.225"},{"1":"23","2":"459","3":"56707.784"},{"1":"23","2":"979","3":"38454.338"},{"1":"23","2":"723","3":"43427.983"},{"1":"23","2":"945","3":"46275.553"},{"1":"23","2":"939","3":"71551.364"},{"1":"23","2":"468","3":"54960.855"},{"1":"23","2":"623","3":"36446.615"},{"1":"23","2":"844","3":"56455.447"},{"1":"23","2":"204","3":"46155.131"},{"1":"23","2":"396","3":"38409.897"},{"1":"23","2":"821","3":"42485.097"},{"1":"23","2":"771","3":"48163.972"},{"1":"23","2":"450","3":"39632.686"},{"1":"23","2":"498","3":"48920.879"},{"1":"23","2":"156","3":"60376.616"},{"1":"23","2":"186","3":"59174.837"},{"1":"23","2":"911","3":"16554.395"},{"1":"23","2":"136","3":"50382.836"},{"1":"23","2":"706","3":"46354.604"},{"1":"23","2":"582","3":"37460.832"},{"1":"23","2":"796","3":"45005.732"},{"1":"23","2":"978","3":"63279.279"},{"1":"23","2":"770","3":"48621.279"},{"1":"23","2":"70","3":"45510.041"},{"1":"49","2":"870","3":"38222.677"},{"1":"49","2":"686","3":"64441.290"},{"1":"49","2":"1047","3":"53168.862"},{"1":"49","2":"350","3":"82163.811"},{"1":"49","2":"404","3":"66027.481"},{"1":"49","2":"366","3":"28477.143"},{"1":"49","2":"927","3":"39502.504"},{"1":"49","2":"82","3":"78119.683"},{"1":"49","2":"338","3":"50173.706"},{"1":"49","2":"700","3":"52435.900"},{"1":"49","2":"260","3":"54156.000"},{"1":"49","2":"77","3":"46404.949"},{"1":"49","2":"1000","3":"53738.324"},{"1":"49","2":"1025","3":"45068.972"},{"1":"49","2":"130","3":"40878.012"},{"1":"49","2":"353","3":"56268.022"},{"1":"49","2":"886","3":"88604.277"},{"1":"49","2":"514","3":"48192.093"},{"1":"49","2":"465","3":"58794.970"},{"1":"49","2":"978","3":"57544.632"},{"1":"49","2":"705","3":"28625.453"},{"1":"49","2":"1015","3":"49527.433"},{"1":"49","2":"252","3":"35144.004"},{"1":"49","2":"205","3":"16482.380"},{"1":"49","2":"357","3":"53640.247"},{"1":"49","2":"1101","3":"51760.571"},{"1":"49","2":"1031","3":"53972.716"},{"1":"49","2":"677","3":"62311.272"},{"1":"49","2":"877","3":"39430.913"},{"1":"49","2":"1090","3":"48743.401"},{"1":"49","2":"487","3":"32587.145"},{"1":"49","2":"546","3":"52464.034"},{"1":"49","2":"4","3":"48469.172"},{"1":"49","2":"1004","3":"46370.465"},{"1":"49","2":"242","3":"83029.326"},{"1":"49","2":"247","3":"72818.044"},{"1":"49","2":"582","3":"50970.266"},{"1":"49","2":"131","3":"9637.693"},{"1":"49","2":"918","3":"89954.165"},{"1":"49","2":"959","3":"49638.154"},{"1":"49","2":"855","3":"61627.773"},{"1":"49","2":"436","3":"26788.063"},{"1":"49","2":"880","3":"54373.620"},{"1":"49","2":"937","3":"58076.820"},{"1":"49","2":"46","3":"49747.753"},{"1":"49","2":"1085","3":"60763.828"},{"1":"49","2":"132","3":"54707.348"},{"1":"49","2":"57","3":"31688.949"},{"1":"49","2":"349","3":"77601.354"},{"1":"49","2":"133","3":"36751.891"},{"1":"49","2":"1009","3":"76706.916"},{"1":"49","2":"409","3":"35732.774"},{"1":"49","2":"975","3":"49835.569"},{"1":"49","2":"1044","3":"60316.426"},{"1":"49","2":"903","3":"53332.464"},{"1":"49","2":"1048","3":"57017.501"},{"1":"49","2":"463","3":"38584.751"},{"1":"49","2":"95","3":"64491.465"},{"1":"49","2":"241","3":"61790.585"},{"1":"49","2":"305","3":"49617.801"},{"1":"49","2":"842","3":"62135.241"},{"1":"49","2":"284","3":"43195.852"},{"1":"49","2":"1021","3":"55245.887"},{"1":"49","2":"300","3":"51436.535"},{"1":"49","2":"318","3":"70433.215"},{"1":"49","2":"321","3":"73100.162"},{"1":"49","2":"1093","3":"47919.906"},{"1":"49","2":"35","3":"57365.285"},{"1":"49","2":"375","3":"74649.935"},{"1":"49","2":"207","3":"55555.738"},{"1":"49","2":"847","3":"49980.070"},{"1":"49","2":"613","3":"24667.549"},{"1":"49","2":"360","3":"55087.269"},{"1":"49","2":"810","3":"41556.966"},{"1":"49","2":"103","3":"51252.740"},{"1":"49","2":"1069","3":"59430.250"},{"1":"49","2":"370","3":"56753.464"},{"1":"49","2":"119","3":"33695.396"},{"1":"49","2":"621","3":"31405.907"},{"1":"49","2":"602","3":"70862.967"},{"1":"49","2":"723","3":"37636.955"},{"1":"49","2":"2","3":"12153.953"},{"1":"49","2":"517","3":"38737.943"},{"1":"49","2":"811","3":"52443.133"},{"1":"49","2":"795","3":"64443.440"},{"1":"49","2":"25","3":"41612.339"},{"1":"49","2":"683","3":"58161.101"},{"1":"49","2":"376","3":"70234.018"},{"1":"49","2":"545","3":"71418.549"},{"1":"49","2":"48","3":"59904.714"},{"1":"49","2":"1073","3":"67169.835"},{"1":"49","2":"966","3":"62361.749"},{"1":"49","2":"27","3":"21762.931"},{"1":"49","2":"710","3":"38723.094"},{"1":"49","2":"814","3":"46467.673"},{"1":"49","2":"403","3":"52390.554"},{"1":"49","2":"511","3":"61639.847"},{"1":"49","2":"213","3":"24478.289"},{"1":"49","2":"334","3":"26460.900"},{"1":"49","2":"83","3":"21742.964"},{"1":"91","2":"785","3":"31741.423"},{"1":"91","2":"161","3":"40037.362"},{"1":"91","2":"9","3":"47838.847"},{"1":"91","2":"365","3":"47940.422"},{"1":"91","2":"331","3":"64618.370"},{"1":"91","2":"588","3":"43526.810"},{"1":"91","2":"102","3":"68529.269"},{"1":"91","2":"976","3":"39537.140"},{"1":"91","2":"353","3":"58826.272"},{"1":"91","2":"746","3":"49784.411"},{"1":"91","2":"922","3":"13754.795"},{"1":"91","2":"357","3":"42813.935"},{"1":"91","2":"20","3":"75637.158"},{"1":"91","2":"642","3":"30028.397"},{"1":"91","2":"226","3":"40446.800"},{"1":"91","2":"135","3":"48934.894"},{"1":"91","2":"816","3":"45522.089"},{"1":"91","2":"709","3":"53899.191"},{"1":"91","2":"456","3":"72375.930"},{"1":"91","2":"908","3":"58539.942"},{"1":"91","2":"236","3":"38704.059"},{"1":"91","2":"996","3":"20418.520"},{"1":"91","2":"38","3":"30603.252"},{"1":"91","2":"899","3":"70022.172"},{"1":"91","2":"127","3":"38645.659"},{"1":"91","2":"177","3":"65173.383"},{"1":"91","2":"681","3":"51137.656"},{"1":"91","2":"176","3":"75374.333"},{"1":"91","2":"842","3":"29333.400"},{"1":"91","2":"555","3":"32234.940"},{"1":"91","2":"610","3":"55101.306"},{"1":"91","2":"323","3":"28426.889"},{"1":"91","2":"1054","3":"38581.524"},{"1":"91","2":"10","3":"43942.121"},{"1":"91","2":"931","3":"56183.091"},{"1":"91","2":"252","3":"62774.876"},{"1":"91","2":"363","3":"59126.295"},{"1":"91","2":"505","3":"56581.261"},{"1":"91","2":"390","3":"62146.560"},{"1":"91","2":"820","3":"39512.039"},{"1":"91","2":"950","3":"39960.365"},{"1":"91","2":"525","3":"15176.992"},{"1":"91","2":"754","3":"54805.614"},{"1":"91","2":"188","3":"48171.586"},{"1":"91","2":"523","3":"57722.703"},{"1":"91","2":"766","3":"56609.098"},{"1":"91","2":"411","3":"52349.208"},{"1":"91","2":"129","3":"58571.316"},{"1":"91","2":"859","3":"61295.048"},{"1":"91","2":"768","3":"63777.293"},{"1":"91","2":"50","3":"38320.471"},{"1":"91","2":"472","3":"45959.703"},{"1":"91","2":"565","3":"59116.829"},{"1":"91","2":"196","3":"60126.201"},{"1":"91","2":"371","3":"82924.466"},{"1":"91","2":"173","3":"24990.096"},{"1":"91","2":"56","3":"37695.122"},{"1":"91","2":"736","3":"63806.554"},{"1":"91","2":"392","3":"75013.425"},{"1":"91","2":"471","3":"38335.875"},{"1":"91","2":"174","3":"45457.939"},{"1":"91","2":"420","3":"42894.003"},{"1":"91","2":"800","3":"58545.059"},{"1":"91","2":"838","3":"15746.337"},{"1":"91","2":"623","3":"45553.501"},{"1":"91","2":"143","3":"72193.822"},{"1":"91","2":"60","3":"36702.364"},{"1":"91","2":"90","3":"28193.053"},{"1":"91","2":"221","3":"41247.657"},{"1":"91","2":"94","3":"42222.809"},{"1":"91","2":"299","3":"63413.400"},{"1":"91","2":"967","3":"56115.551"},{"1":"91","2":"1027","3":"38542.015"},{"1":"91","2":"981","3":"41816.131"},{"1":"91","2":"384","3":"40471.912"},{"1":"91","2":"487","3":"45813.598"},{"1":"91","2":"559","3":"50368.044"},{"1":"91","2":"1058","3":"74976.130"},{"1":"91","2":"448","3":"41922.873"},{"1":"91","2":"458","3":"62762.954"},{"1":"91","2":"37","3":"79602.114"},{"1":"91","2":"1152","3":"64836.695"},{"1":"91","2":"115","3":"82932.741"},{"1":"91","2":"441","3":"42172.522"},{"1":"91","2":"792","3":"37188.009"},{"1":"91","2":"75","3":"47899.824"},{"1":"91","2":"914","3":"58125.760"},{"1":"91","2":"81","3":"46538.700"},{"1":"91","2":"155","3":"52857.780"},{"1":"91","2":"1121","3":"44003.590"},{"1":"91","2":"113","3":"25302.087"},{"1":"91","2":"872","3":"55560.225"},{"1":"91","2":"482","3":"45468.596"},{"1":"91","2":"539","3":"45032.505"},{"1":"91","2":"318","3":"41761.141"},{"1":"91","2":"667","3":"60393.973"},{"1":"91","2":"866","3":"49925.279"},{"1":"91","2":"626","3":"43146.142"},{"1":"91","2":"180","3":"65741.958"},{"1":"91","2":"406","3":"45085.216"},{"1":"16","2":"609","3":"48840.874"},{"1":"16","2":"924","3":"51186.021"},{"1":"16","2":"99","3":"71272.671"},{"1":"16","2":"361","3":"40036.908"},{"1":"16","2":"154","3":"58266.359"},{"1":"16","2":"526","3":"38158.181"},{"1":"16","2":"95","3":"76690.476"},{"1":"16","2":"456","3":"57811.183"},{"1":"16","2":"214","3":"64493.424"},{"1":"16","2":"262","3":"44350.893"},{"1":"16","2":"676","3":"40081.991"},{"1":"16","2":"895","3":"53351.597"},{"1":"16","2":"316","3":"52300.305"},{"1":"16","2":"912","3":"47458.756"},{"1":"16","2":"872","3":"39068.747"},{"1":"16","2":"1123","3":"68972.197"},{"1":"16","2":"571","3":"59887.819"},{"1":"16","2":"953","3":"63615.801"},{"1":"16","2":"485","3":"9668.010"},{"1":"16","2":"364","3":"67916.333"},{"1":"16","2":"446","3":"65954.276"},{"1":"16","2":"38","3":"59556.107"},{"1":"16","2":"98","3":"69951.408"},{"1":"16","2":"327","3":"42285.891"},{"1":"16","2":"720","3":"66733.851"},{"1":"16","2":"854","3":"49057.317"},{"1":"16","2":"631","3":"48539.616"},{"1":"16","2":"1158","3":"48987.257"},{"1":"16","2":"1183","3":"44755.590"},{"1":"16","2":"255","3":"39918.228"},{"1":"16","2":"745","3":"66758.676"},{"1":"16","2":"129","3":"26649.845"},{"1":"16","2":"143","3":"65136.865"},{"1":"16","2":"459","3":"28980.946"},{"1":"16","2":"6","3":"69363.180"},{"1":"16","2":"472","3":"23016.310"},{"1":"16","2":"3","3":"71482.583"},{"1":"16","2":"310","3":"51208.567"},{"1":"16","2":"239","3":"53456.488"},{"1":"16","2":"1080","3":"46835.603"},{"1":"16","2":"173","3":"57828.185"},{"1":"16","2":"14","3":"49883.590"},{"1":"16","2":"934","3":"35693.832"},{"1":"16","2":"564","3":"54527.985"},{"1":"16","2":"867","3":"65235.098"},{"1":"16","2":"340","3":"58703.412"},{"1":"16","2":"227","3":"45553.932"},{"1":"16","2":"1124","3":"62676.275"},{"1":"16","2":"917","3":"75300.354"},{"1":"16","2":"331","3":"39670.759"},{"1":"16","2":"721","3":"45237.434"},{"1":"16","2":"789","3":"54942.541"},{"1":"16","2":"1113","3":"53641.023"},{"1":"16","2":"112","3":"67519.512"},{"1":"16","2":"248","3":"67559.647"},{"1":"16","2":"19","3":"38923.403"},{"1":"16","2":"477","3":"61636.029"},{"1":"16","2":"518","3":"51666.789"},{"1":"16","2":"484","3":"64428.492"},{"1":"16","2":"317","3":"58498.349"},{"1":"16","2":"913","3":"25456.242"},{"1":"16","2":"165","3":"59410.977"},{"1":"16","2":"41","3":"49654.445"},{"1":"16","2":"326","3":"37589.591"},{"1":"16","2":"766","3":"36135.700"},{"1":"16","2":"802","3":"36277.621"},{"1":"16","2":"470","3":"60643.019"},{"1":"16","2":"226","3":"60949.238"},{"1":"16","2":"81","3":"51888.569"},{"1":"16","2":"155","3":"41216.455"},{"1":"16","2":"76","3":"60795.671"},{"1":"16","2":"148","3":"42000.463"},{"1":"16","2":"940","3":"66953.302"},{"1":"16","2":"455","3":"83856.219"},{"1":"16","2":"946","3":"32193.567"},{"1":"16","2":"590","3":"51723.090"},{"1":"16","2":"1143","3":"38007.214"},{"1":"16","2":"1094","3":"42014.050"},{"1":"16","2":"627","3":"59344.026"},{"1":"16","2":"821","3":"89882.243"},{"1":"16","2":"230","3":"49907.521"},{"1":"16","2":"43","3":"23478.661"},{"1":"16","2":"47","3":"55007.439"},{"1":"16","2":"811","3":"52093.347"},{"1":"16","2":"380","3":"41604.332"},{"1":"16","2":"1061","3":"36523.298"},{"1":"16","2":"419","3":"36826.582"},{"1":"16","2":"866","3":"35131.558"},{"1":"16","2":"527","3":"55412.866"},{"1":"16","2":"986","3":"35515.312"},{"1":"16","2":"1121","3":"35611.299"},{"1":"16","2":"750","3":"44299.042"},{"1":"16","2":"1170","3":"59302.299"},{"1":"16","2":"1075","3":"46590.500"},{"1":"16","2":"513","3":"82838.493"},{"1":"16","2":"410","3":"81949.269"},{"1":"16","2":"1137","3":"71063.420"},{"1":"16","2":"131","3":"44612.063"},{"1":"16","2":"218","3":"58691.041"},{"1":"16","2":"696","3":"36018.894"},{"1":"94","2":"622","3":"52303.673"},{"1":"94","2":"706","3":"57019.917"},{"1":"94","2":"279","3":"34856.492"},{"1":"94","2":"285","3":"60141.109"},{"1":"94","2":"961","3":"44206.738"},{"1":"94","2":"344","3":"50097.228"},{"1":"94","2":"132","3":"38844.121"},{"1":"94","2":"575","3":"42423.835"},{"1":"94","2":"213","3":"52121.099"},{"1":"94","2":"476","3":"55237.711"},{"1":"94","2":"95","3":"58442.324"},{"1":"94","2":"100","3":"57124.095"},{"1":"94","2":"286","3":"50198.519"},{"1":"94","2":"878","3":"41661.061"},{"1":"94","2":"115","3":"59270.294"},{"1":"94","2":"74","3":"25177.783"},{"1":"94","2":"532","3":"27784.474"},{"1":"94","2":"670","3":"53980.518"},{"1":"94","2":"398","3":"57651.020"},{"1":"94","2":"137","3":"61588.752"},{"1":"94","2":"379","3":"45924.967"},{"1":"94","2":"454","3":"21325.591"},{"1":"94","2":"15","3":"42659.359"},{"1":"94","2":"13","3":"52727.416"},{"1":"94","2":"578","3":"37737.023"},{"1":"94","2":"525","3":"54926.025"},{"1":"94","2":"374","3":"36854.230"},{"1":"94","2":"517","3":"56605.461"},{"1":"94","2":"69","3":"58473.643"},{"1":"94","2":"568","3":"61824.044"},{"1":"94","2":"2","3":"51119.727"},{"1":"94","2":"242","3":"53233.209"},{"1":"94","2":"750","3":"34442.864"},{"1":"94","2":"909","3":"66028.062"},{"1":"94","2":"12","3":"69606.793"},{"1":"94","2":"705","3":"39377.127"},{"1":"94","2":"632","3":"70234.151"},{"1":"94","2":"201","3":"59761.482"},{"1":"94","2":"803","3":"46077.643"},{"1":"94","2":"599","3":"55081.266"},{"1":"94","2":"956","3":"79592.152"},{"1":"94","2":"417","3":"26870.438"},{"1":"94","2":"574","3":"58243.965"},{"1":"94","2":"55","3":"34477.847"},{"1":"94","2":"402","3":"54368.218"},{"1":"94","2":"289","3":"54432.088"},{"1":"94","2":"328","3":"56487.636"},{"1":"94","2":"247","3":"44992.055"},{"1":"94","2":"830","3":"86555.664"},{"1":"94","2":"354","3":"36855.370"},{"1":"94","2":"976","3":"61817.444"},{"1":"94","2":"711","3":"60241.710"},{"1":"94","2":"496","3":"67469.826"},{"1":"94","2":"453","3":"52358.440"},{"1":"94","2":"185","3":"45254.425"},{"1":"94","2":"7","3":"51209.731"},{"1":"94","2":"181","3":"59764.175"},{"1":"94","2":"48","3":"55865.575"},{"1":"94","2":"339","3":"44149.887"},{"1":"94","2":"343","3":"28089.264"},{"1":"94","2":"916","3":"27269.420"},{"1":"94","2":"225","3":"71717.418"},{"1":"94","2":"635","3":"61546.575"},{"1":"94","2":"538","3":"40422.465"},{"1":"94","2":"362","3":"62880.466"},{"1":"94","2":"429","3":"45006.308"},{"1":"94","2":"35","3":"47450.045"},{"1":"94","2":"458","3":"56190.882"},{"1":"94","2":"308","3":"42312.699"},{"1":"94","2":"119","3":"83029.578"},{"1":"94","2":"846","3":"33015.211"},{"1":"94","2":"53","3":"49463.577"},{"1":"94","2":"717","3":"34911.880"},{"1":"94","2":"507","3":"58616.404"},{"1":"94","2":"497","3":"37151.405"},{"1":"94","2":"188","3":"64286.869"},{"1":"94","2":"293","3":"54692.009"},{"1":"94","2":"767","3":"47696.648"},{"1":"94","2":"106","3":"61237.161"},{"1":"94","2":"214","3":"41617.686"},{"1":"94","2":"891","3":"42308.925"},{"1":"94","2":"10","3":"51635.038"},{"1":"94","2":"939","3":"54035.309"},{"1":"94","2":"973","3":"34419.328"},{"1":"94","2":"808","3":"51244.757"},{"1":"94","2":"206","3":"47065.353"},{"1":"94","2":"671","3":"46607.280"},{"1":"94","2":"762","3":"37672.671"},{"1":"94","2":"466","3":"37677.421"},{"1":"94","2":"847","3":"68118.989"},{"1":"94","2":"127","3":"38566.235"},{"1":"94","2":"676","3":"48655.918"},{"1":"94","2":"209","3":"44797.604"},{"1":"94","2":"386","3":"44146.687"},{"1":"94","2":"248","3":"55425.543"},{"1":"94","2":"522","3":"24674.134"},{"1":"94","2":"710","3":"33566.359"},{"1":"94","2":"288","3":"71744.043"},{"1":"94","2":"835","3":"46435.083"},{"1":"94","2":"776","3":"68474.544"},{"1":"30","2":"896","3":"64619.067"},{"1":"30","2":"536","3":"27729.662"},{"1":"30","2":"898","3":"26527.070"},{"1":"30","2":"831","3":"54245.793"},{"1":"30","2":"142","3":"46996.617"},{"1":"30","2":"269","3":"25217.399"},{"1":"30","2":"848","3":"58813.098"},{"1":"30","2":"645","3":"21498.699"},{"1":"30","2":"285","3":"48895.972"},{"1":"30","2":"964","3":"60481.876"},{"1":"30","2":"543","3":"46399.315"},{"1":"30","2":"250","3":"52728.123"},{"1":"30","2":"136","3":"50369.180"},{"1":"30","2":"143","3":"59982.676"},{"1":"30","2":"955","3":"72042.588"},{"1":"30","2":"599","3":"31047.270"},{"1":"30","2":"614","3":"38971.632"},{"1":"30","2":"891","3":"75588.026"},{"1":"30","2":"81","3":"60037.262"},{"1":"30","2":"515","3":"40068.780"},{"1":"30","2":"551","3":"50659.769"},{"1":"30","2":"827","3":"71367.278"},{"1":"30","2":"320","3":"21800.969"},{"1":"30","2":"539","3":"42439.402"},{"1":"30","2":"233","3":"57364.692"},{"1":"30","2":"132","3":"74448.359"},{"1":"30","2":"97","3":"40584.887"},{"1":"30","2":"797","3":"56297.443"},{"1":"30","2":"237","3":"34334.637"},{"1":"30","2":"54","3":"43682.492"},{"1":"30","2":"56","3":"64693.256"},{"1":"30","2":"672","3":"48677.085"},{"1":"30","2":"715","3":"45472.429"},{"1":"30","2":"999","3":"50357.701"},{"1":"30","2":"605","3":"56189.594"},{"1":"30","2":"835","3":"28638.779"},{"1":"30","2":"295","3":"61027.691"},{"1":"30","2":"419","3":"55803.239"},{"1":"30","2":"431","3":"59123.453"},{"1":"30","2":"365","3":"39405.349"},{"1":"30","2":"700","3":"47862.717"},{"1":"30","2":"597","3":"53519.338"},{"1":"30","2":"527","3":"59858.340"},{"1":"30","2":"643","3":"68532.577"},{"1":"30","2":"74","3":"5426.308"},{"1":"30","2":"471","3":"73057.184"},{"1":"30","2":"69","3":"58003.367"},{"1":"30","2":"190","3":"25190.528"},{"1":"30","2":"718","3":"62338.840"},{"1":"30","2":"443","3":"41565.777"},{"1":"30","2":"487","3":"41004.196"},{"1":"30","2":"293","3":"73917.981"},{"1":"30","2":"589","3":"61883.485"},{"1":"30","2":"758","3":"48798.052"},{"1":"30","2":"602","3":"48610.873"},{"1":"30","2":"473","3":"51136.580"},{"1":"30","2":"853","3":"53432.228"},{"1":"30","2":"2","3":"55842.448"},{"1":"30","2":"628","3":"49681.839"},{"1":"30","2":"66","3":"55540.200"},{"1":"30","2":"335","3":"58493.131"},{"1":"30","2":"521","3":"47584.946"},{"1":"30","2":"266","3":"70432.972"},{"1":"30","2":"844","3":"54511.613"},{"1":"30","2":"506","3":"59609.525"},{"1":"30","2":"568","3":"57055.906"},{"1":"30","2":"114","3":"54471.366"},{"1":"30","2":"769","3":"81260.229"},{"1":"30","2":"512","3":"69257.296"},{"1":"30","2":"994","3":"79986.710"},{"1":"30","2":"550","3":"63800.869"},{"1":"30","2":"768","3":"43400.718"},{"1":"30","2":"290","3":"44645.646"},{"1":"30","2":"968","3":"33342.531"},{"1":"30","2":"318","3":"51652.552"},{"1":"30","2":"601","3":"34926.319"},{"1":"30","2":"199","3":"69937.437"},{"1":"30","2":"916","3":"64815.500"},{"1":"30","2":"905","3":"50570.793"},{"1":"30","2":"868","3":"55291.357"},{"1":"30","2":"876","3":"28059.518"},{"1":"30","2":"618","3":"47644.864"},{"1":"30","2":"981","3":"41956.119"},{"1":"30","2":"678","3":"68817.610"},{"1":"30","2":"921","3":"34192.497"},{"1":"30","2":"531","3":"44245.394"},{"1":"30","2":"698","3":"54264.347"},{"1":"30","2":"321","3":"61542.135"},{"1":"30","2":"767","3":"41270.176"},{"1":"30","2":"983","3":"62674.003"},{"1":"30","2":"11","3":"32958.911"},{"1":"30","2":"192","3":"65574.863"},{"1":"30","2":"945","3":"59296.569"},{"1":"30","2":"249","3":"61591.929"},{"1":"30","2":"452","3":"37268.111"},{"1":"30","2":"193","3":"35610.128"},{"1":"30","2":"83","3":"63748.286"},{"1":"30","2":"271","3":"40936.713"},{"1":"30","2":"46","3":"32516.319"},{"1":"30","2":"172","3":"70888.206"},{"1":"85","2":"430","3":"48880.192"},{"1":"85","2":"170","3":"47172.081"},{"1":"85","2":"338","3":"29592.355"},{"1":"85","2":"279","3":"89715.720"},{"1":"85","2":"1066","3":"54458.700"},{"1":"85","2":"123","3":"62187.868"},{"1":"85","2":"49","3":"43591.643"},{"1":"85","2":"96","3":"68743.367"},{"1":"85","2":"547","3":"43610.190"},{"1":"85","2":"275","3":"51830.390"},{"1":"85","2":"58","3":"56407.472"},{"1":"85","2":"519","3":"38462.478"},{"1":"85","2":"508","3":"57076.880"},{"1":"85","2":"110","3":"32520.714"},{"1":"85","2":"487","3":"25915.006"},{"1":"85","2":"565","3":"32856.019"},{"1":"85","2":"431","3":"48978.852"},{"1":"85","2":"765","3":"56710.608"},{"1":"85","2":"219","3":"37499.306"},{"1":"85","2":"198","3":"67058.310"},{"1":"85","2":"99","3":"63496.087"},{"1":"85","2":"1075","3":"51628.822"},{"1":"85","2":"894","3":"50779.165"},{"1":"85","2":"966","3":"43025.876"},{"1":"85","2":"693","3":"48483.398"},{"1":"85","2":"492","3":"32923.667"},{"1":"85","2":"1139","3":"32297.541"},{"1":"85","2":"763","3":"65771.581"},{"1":"85","2":"940","3":"53308.997"},{"1":"85","2":"1055","3":"54711.216"},{"1":"85","2":"622","3":"51956.754"},{"1":"85","2":"947","3":"69320.228"},{"1":"85","2":"458","3":"36258.828"},{"1":"85","2":"919","3":"33802.310"},{"1":"85","2":"400","3":"47977.395"},{"1":"85","2":"21","3":"57528.202"},{"1":"85","2":"166","3":"36838.941"},{"1":"85","2":"531","3":"82914.438"},{"1":"85","2":"1030","3":"71887.833"},{"1":"85","2":"944","3":"71802.058"},{"1":"85","2":"1160","3":"79548.108"},{"1":"85","2":"23","3":"47518.880"},{"1":"85","2":"415","3":"78891.419"},{"1":"85","2":"836","3":"41153.087"},{"1":"85","2":"388","3":"50258.063"},{"1":"85","2":"1002","3":"31657.992"},{"1":"85","2":"727","3":"44986.282"},{"1":"85","2":"955","3":"67780.015"},{"1":"85","2":"734","3":"33378.444"},{"1":"85","2":"878","3":"59002.156"},{"1":"85","2":"504","3":"38263.872"},{"1":"85","2":"554","3":"56299.683"},{"1":"85","2":"865","3":"56370.491"},{"1":"85","2":"1015","3":"46642.351"},{"1":"85","2":"886","3":"79503.720"},{"1":"85","2":"47","3":"62650.299"},{"1":"85","2":"764","3":"40563.708"},{"1":"85","2":"798","3":"55398.923"},{"1":"85","2":"555","3":"50973.564"},{"1":"85","2":"965","3":"72710.815"},{"1":"85","2":"156","3":"37096.810"},{"1":"85","2":"804","3":"60376.432"},{"1":"85","2":"479","3":"68447.375"},{"1":"85","2":"283","3":"54548.577"},{"1":"85","2":"905","3":"13059.755"},{"1":"85","2":"244","3":"53071.449"},{"1":"85","2":"321","3":"57387.803"},{"1":"85","2":"1009","3":"50018.878"},{"1":"85","2":"115","3":"50879.645"},{"1":"85","2":"305","3":"52851.164"},{"1":"85","2":"14","3":"43552.352"},{"1":"85","2":"210","3":"36409.641"},{"1":"85","2":"168","3":"47095.296"},{"1":"85","2":"960","3":"53536.059"},{"1":"85","2":"434","3":"52392.839"},{"1":"85","2":"862","3":"52410.653"},{"1":"85","2":"322","3":"52377.416"},{"1":"85","2":"737","3":"28224.273"},{"1":"85","2":"575","3":"65486.981"},{"1":"85","2":"467","3":"37982.029"},{"1":"85","2":"406","3":"70644.690"},{"1":"85","2":"1103","3":"63832.315"},{"1":"85","2":"432","3":"50727.354"},{"1":"85","2":"733","3":"54858.453"},{"1":"85","2":"718","3":"66023.820"},{"1":"85","2":"196","3":"46787.156"},{"1":"85","2":"791","3":"23743.397"},{"1":"85","2":"132","3":"38835.573"},{"1":"85","2":"435","3":"31468.221"},{"1":"85","2":"827","3":"34796.175"},{"1":"85","2":"192","3":"59497.958"},{"1":"85","2":"478","3":"23072.993"},{"1":"85","2":"455","3":"47572.340"},{"1":"85","2":"820","3":"39749.608"},{"1":"85","2":"30","3":"27156.334"},{"1":"85","2":"824","3":"55307.185"},{"1":"85","2":"689","3":"44322.844"},{"1":"85","2":"673","3":"43717.829"},{"1":"85","2":"681","3":"54196.624"},{"1":"85","2":"213","3":"39115.755"},{"1":"7","2":"107","3":"35069.322"},{"1":"7","2":"825","3":"59074.252"},{"1":"7","2":"6","3":"37223.828"},{"1":"7","2":"778","3":"30062.829"},{"1":"7","2":"831","3":"37167.217"},{"1":"7","2":"361","3":"41352.137"},{"1":"7","2":"260","3":"47019.626"},{"1":"7","2":"288","3":"31948.662"},{"1":"7","2":"629","3":"60998.068"},{"1":"7","2":"365","3":"61904.624"},{"1":"7","2":"830","3":"36351.756"},{"1":"7","2":"221","3":"55971.715"},{"1":"7","2":"750","3":"39711.899"},{"1":"7","2":"410","3":"48822.474"},{"1":"7","2":"720","3":"48453.346"},{"1":"7","2":"642","3":"44607.687"},{"1":"7","2":"774","3":"13828.899"},{"1":"7","2":"883","3":"31051.436"},{"1":"7","2":"75","3":"29522.495"},{"1":"7","2":"611","3":"49446.132"},{"1":"7","2":"456","3":"20033.187"},{"1":"7","2":"326","3":"54735.749"},{"1":"7","2":"506","3":"57867.091"},{"1":"7","2":"684","3":"66736.969"},{"1":"7","2":"17","3":"44302.747"},{"1":"7","2":"549","3":"47233.548"},{"1":"7","2":"748","3":"62546.701"},{"1":"7","2":"335","3":"77949.728"},{"1":"7","2":"529","3":"68711.857"},{"1":"7","2":"371","3":"19537.947"},{"1":"7","2":"518","3":"39607.441"},{"1":"7","2":"683","3":"66511.281"},{"1":"7","2":"782","3":"38212.627"},{"1":"7","2":"433","3":"35802.021"},{"1":"7","2":"462","3":"67502.756"},{"1":"7","2":"888","3":"36616.567"},{"1":"7","2":"103","3":"27829.438"},{"1":"7","2":"217","3":"43965.740"},{"1":"7","2":"617","3":"33614.348"},{"1":"7","2":"845","3":"44696.970"},{"1":"7","2":"274","3":"74784.468"},{"1":"7","2":"404","3":"53802.974"},{"1":"7","2":"348","3":"52470.530"},{"1":"7","2":"86","3":"40897.835"},{"1":"7","2":"61","3":"60470.845"},{"1":"7","2":"344","3":"47811.969"},{"1":"7","2":"74","3":"71784.364"},{"1":"7","2":"224","3":"62461.485"},{"1":"7","2":"26","3":"56611.753"},{"1":"7","2":"783","3":"50241.013"},{"1":"7","2":"571","3":"64927.044"},{"1":"7","2":"29","3":"31860.710"},{"1":"7","2":"236","3":"58130.598"},{"1":"7","2":"201","3":"52718.314"},{"1":"7","2":"179","3":"70027.203"},{"1":"7","2":"248","3":"72808.320"},{"1":"7","2":"211","3":"44539.255"},{"1":"7","2":"383","3":"74947.386"},{"1":"7","2":"20","3":"36563.051"},{"1":"7","2":"121","3":"56582.786"},{"1":"7","2":"446","3":"59719.052"},{"1":"7","2":"3","3":"46948.670"},{"1":"7","2":"130","3":"52085.927"},{"1":"7","2":"317","3":"37959.028"},{"1":"7","2":"136","3":"45691.624"},{"1":"7","2":"870","3":"36852.084"},{"1":"7","2":"292","3":"47374.177"},{"1":"7","2":"98","3":"39226.392"},{"1":"7","2":"590","3":"39948.565"},{"1":"7","2":"188","3":"75211.115"},{"1":"7","2":"463","3":"36398.585"},{"1":"7","2":"171","3":"52852.818"},{"1":"7","2":"523","3":"14436.165"},{"1":"7","2":"215","3":"52195.551"},{"1":"7","2":"8","3":"45868.069"},{"1":"7","2":"225","3":"55671.102"},{"1":"7","2":"400","3":"74812.361"},{"1":"7","2":"259","3":"23944.203"},{"1":"7","2":"426","3":"31502.443"},{"1":"7","2":"389","3":"65033.127"},{"1":"7","2":"44","3":"44589.205"},{"1":"7","2":"270","3":"60908.563"},{"1":"7","2":"678","3":"40662.450"},{"1":"7","2":"391","3":"30383.433"},{"1":"7","2":"40","3":"46695.331"},{"1":"7","2":"397","3":"73742.507"},{"1":"7","2":"525","3":"66492.967"},{"1":"7","2":"394","3":"39466.098"},{"1":"7","2":"882","3":"67866.138"},{"1":"7","2":"69","3":"48592.955"},{"1":"7","2":"896","3":"43083.379"},{"1":"7","2":"301","3":"36951.829"},{"1":"7","2":"381","3":"24640.860"},{"1":"7","2":"101","3":"42287.442"},{"1":"7","2":"285","3":"72145.884"},{"1":"7","2":"364","3":"63292.752"},{"1":"7","2":"226","3":"54219.544"},{"1":"7","2":"762","3":"42549.922"},{"1":"7","2":"196","3":"84156.704"},{"1":"7","2":"865","3":"30084.215"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example 2: Sample 10% of families from each of 10 selected clusters</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cluster_sample</span>(nhoods, <span class="at">id =</span> nhood_id, <span class="at">n =</span> <span class="dv">10</span>, <span class="at">prop =</span> <span class="fl">0.1</span>) <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nhood_id"],"name":[1],"type":["int"],"align":["right"]},{"label":["family_id"],"name":[2],"type":["int"],"align":["right"]},{"label":["income"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"29","2":"769","3":"52326.874"},{"1":"29","2":"169","3":"53861.376"},{"1":"29","2":"31","3":"39855.274"},{"1":"29","2":"617","3":"65481.626"},{"1":"29","2":"1030","3":"57754.300"},{"1":"29","2":"830","3":"45701.166"},{"1":"29","2":"873","3":"76028.641"},{"1":"29","2":"123","3":"60573.536"},{"1":"29","2":"980","3":"21878.807"},{"1":"29","2":"233","3":"82598.090"},{"1":"29","2":"523","3":"55714.352"},{"1":"29","2":"614","3":"34580.512"},{"1":"29","2":"140","3":"22788.412"},{"1":"29","2":"367","3":"31943.689"},{"1":"29","2":"899","3":"51103.432"},{"1":"29","2":"650","3":"54662.922"},{"1":"29","2":"747","3":"55589.316"},{"1":"29","2":"993","3":"61810.030"},{"1":"29","2":"193","3":"56689.001"},{"1":"29","2":"426","3":"36022.705"},{"1":"29","2":"926","3":"57623.830"},{"1":"29","2":"698","3":"77835.376"},{"1":"29","2":"748","3":"52343.714"},{"1":"29","2":"583","3":"49283.135"},{"1":"29","2":"694","3":"72254.501"},{"1":"29","2":"301","3":"60216.168"},{"1":"29","2":"751","3":"66667.407"},{"1":"29","2":"205","3":"23221.108"},{"1":"29","2":"502","3":"72984.323"},{"1":"29","2":"403","3":"16081.254"},{"1":"29","2":"95","3":"86788.876"},{"1":"29","2":"560","3":"26535.019"},{"1":"29","2":"813","3":"35291.999"},{"1":"29","2":"994","3":"51487.556"},{"1":"29","2":"883","3":"66971.044"},{"1":"29","2":"19","3":"57276.571"},{"1":"29","2":"463","3":"50920.299"},{"1":"29","2":"467","3":"53071.242"},{"1":"29","2":"68","3":"52645.260"},{"1":"29","2":"79","3":"25227.087"},{"1":"29","2":"413","3":"56322.871"},{"1":"29","2":"299","3":"52403.910"},{"1":"29","2":"1100","3":"42023.755"},{"1":"29","2":"821","3":"58659.940"},{"1":"29","2":"714","3":"50022.712"},{"1":"29","2":"518","3":"55022.918"},{"1":"29","2":"442","3":"43418.223"},{"1":"29","2":"837","3":"32580.865"},{"1":"29","2":"886","3":"37021.051"},{"1":"29","2":"369","3":"45710.592"},{"1":"29","2":"400","3":"40934.917"},{"1":"29","2":"672","3":"50617.458"},{"1":"29","2":"937","3":"30036.980"},{"1":"29","2":"868","3":"34429.251"},{"1":"29","2":"56","3":"65110.475"},{"1":"29","2":"189","3":"38610.399"},{"1":"29","2":"1072","3":"34516.963"},{"1":"29","2":"679","3":"24848.635"},{"1":"29","2":"252","3":"26057.114"},{"1":"29","2":"646","3":"54868.165"},{"1":"29","2":"96","3":"71639.025"},{"1":"29","2":"564","3":"38932.669"},{"1":"29","2":"526","3":"53013.649"},{"1":"29","2":"154","3":"32733.160"},{"1":"29","2":"864","3":"75052.457"},{"1":"29","2":"506","3":"52730.408"},{"1":"29","2":"320","3":"42105.672"},{"1":"29","2":"279","3":"42637.902"},{"1":"29","2":"678","3":"65488.059"},{"1":"29","2":"877","3":"68896.933"},{"1":"29","2":"625","3":"50430.639"},{"1":"29","2":"619","3":"48059.141"},{"1":"29","2":"118","3":"60166.317"},{"1":"29","2":"264","3":"43190.403"},{"1":"29","2":"16","3":"62635.972"},{"1":"29","2":"765","3":"73942.838"},{"1":"29","2":"914","3":"52854.320"},{"1":"29","2":"771","3":"21943.288"},{"1":"29","2":"167","3":"51742.743"},{"1":"29","2":"115","3":"49969.712"},{"1":"29","2":"1007","3":"71372.905"},{"1":"29","2":"1029","3":"61124.610"},{"1":"29","2":"212","3":"80034.605"},{"1":"29","2":"65","3":"20326.905"},{"1":"29","2":"624","3":"71950.236"},{"1":"29","2":"709","3":"19661.236"},{"1":"29","2":"204","3":"37796.262"},{"1":"29","2":"834","3":"49511.685"},{"1":"29","2":"501","3":"50891.725"},{"1":"29","2":"793","3":"36707.852"},{"1":"29","2":"549","3":"65870.373"},{"1":"29","2":"104","3":"61773.134"},{"1":"29","2":"841","3":"56767.048"},{"1":"29","2":"1033","3":"59681.067"},{"1":"29","2":"378","3":"50672.098"},{"1":"29","2":"128","3":"41738.621"},{"1":"29","2":"357","3":"53626.528"},{"1":"29","2":"893","3":"62569.261"},{"1":"29","2":"960","3":"51472.547"},{"1":"29","2":"211","3":"63212.814"},{"1":"29","2":"569","3":"70161.057"},{"1":"29","2":"966","3":"24227.743"},{"1":"29","2":"710","3":"58797.654"},{"1":"29","2":"101","3":"65233.506"},{"1":"29","2":"472","3":"40865.688"},{"1":"29","2":"856","3":"30631.463"},{"1":"29","2":"807","3":"53205.904"},{"1":"29","2":"1006","3":"52336.628"},{"1":"29","2":"109","3":"51621.432"},{"1":"29","2":"375","3":"72436.388"},{"1":"47","2":"1076","3":"41465.315"},{"1":"47","2":"676","3":"33588.540"},{"1":"47","2":"1032","3":"56969.674"},{"1":"47","2":"213","3":"44512.810"},{"1":"47","2":"639","3":"33729.340"},{"1":"47","2":"1011","3":"67559.097"},{"1":"47","2":"150","3":"40207.009"},{"1":"47","2":"445","3":"49425.380"},{"1":"47","2":"313","3":"63141.957"},{"1":"47","2":"611","3":"57444.558"},{"1":"47","2":"1018","3":"19720.833"},{"1":"47","2":"566","3":"59491.811"},{"1":"47","2":"379","3":"36550.407"},{"1":"47","2":"62","3":"46349.793"},{"1":"47","2":"867","3":"50412.077"},{"1":"47","2":"661","3":"34369.743"},{"1":"47","2":"412","3":"41801.159"},{"1":"47","2":"168","3":"36269.096"},{"1":"47","2":"374","3":"53841.405"},{"1":"47","2":"305","3":"57903.157"},{"1":"47","2":"79","3":"58286.717"},{"1":"47","2":"788","3":"53803.275"},{"1":"47","2":"960","3":"57109.563"},{"1":"47","2":"34","3":"51247.044"},{"1":"47","2":"568","3":"42217.675"},{"1":"47","2":"282","3":"55154.594"},{"1":"47","2":"357","3":"40742.359"},{"1":"47","2":"320","3":"41236.860"},{"1":"47","2":"606","3":"23955.204"},{"1":"47","2":"926","3":"43375.928"},{"1":"47","2":"635","3":"38159.838"},{"1":"47","2":"457","3":"64238.815"},{"1":"47","2":"687","3":"39173.910"},{"1":"47","2":"562","3":"66295.476"},{"1":"47","2":"431","3":"34904.256"},{"1":"47","2":"326","3":"35736.532"},{"1":"47","2":"745","3":"35913.203"},{"1":"47","2":"772","3":"47743.280"},{"1":"47","2":"958","3":"64906.666"},{"1":"47","2":"315","3":"67262.007"},{"1":"47","2":"22","3":"42007.209"},{"1":"47","2":"683","3":"42096.882"},{"1":"47","2":"119","3":"33106.290"},{"1":"47","2":"215","3":"57952.256"},{"1":"47","2":"146","3":"63137.825"},{"1":"47","2":"760","3":"30866.813"},{"1":"47","2":"454","3":"66360.312"},{"1":"47","2":"483","3":"34713.188"},{"1":"47","2":"55","3":"56682.726"},{"1":"47","2":"163","3":"49924.466"},{"1":"47","2":"270","3":"81247.114"},{"1":"47","2":"829","3":"40412.488"},{"1":"47","2":"665","3":"44585.241"},{"1":"47","2":"548","3":"71307.868"},{"1":"47","2":"613","3":"66086.623"},{"1":"47","2":"836","3":"30819.034"},{"1":"47","2":"251","3":"38361.468"},{"1":"47","2":"547","3":"47402.201"},{"1":"47","2":"450","3":"50179.255"},{"1":"47","2":"103","3":"51002.948"},{"1":"47","2":"932","3":"41083.076"},{"1":"47","2":"253","3":"47798.635"},{"1":"47","2":"96","3":"32738.480"},{"1":"47","2":"202","3":"56121.445"},{"1":"47","2":"755","3":"-1616.725"},{"1":"47","2":"630","3":"53928.342"},{"1":"47","2":"901","3":"38588.919"},{"1":"47","2":"311","3":"47535.910"},{"1":"47","2":"372","3":"39903.616"},{"1":"47","2":"909","3":"70920.331"},{"1":"47","2":"323","3":"7503.324"},{"1":"47","2":"1103","3":"41649.264"},{"1":"47","2":"816","3":"18029.542"},{"1":"47","2":"123","3":"43152.059"},{"1":"47","2":"509","3":"42707.678"},{"1":"47","2":"896","3":"69234.506"},{"1":"47","2":"758","3":"66647.155"},{"1":"47","2":"866","3":"63524.118"},{"1":"47","2":"52","3":"43763.584"},{"1":"47","2":"467","3":"55091.367"},{"1":"47","2":"689","3":"25417.601"},{"1":"47","2":"813","3":"64790.990"},{"1":"47","2":"638","3":"53138.907"},{"1":"47","2":"698","3":"47355.335"},{"1":"47","2":"1042","3":"48746.849"},{"1":"47","2":"737","3":"61121.624"},{"1":"47","2":"614","3":"33667.166"},{"1":"47","2":"391","3":"69623.641"},{"1":"47","2":"318","3":"59269.372"},{"1":"47","2":"608","3":"6087.517"},{"1":"47","2":"489","3":"44489.021"},{"1":"47","2":"949","3":"51249.362"},{"1":"47","2":"122","3":"45259.060"},{"1":"47","2":"261","3":"53822.507"},{"1":"47","2":"534","3":"37496.688"},{"1":"47","2":"1040","3":"35092.878"},{"1":"47","2":"1067","3":"60893.306"},{"1":"47","2":"817","3":"54863.641"},{"1":"47","2":"914","3":"56865.932"},{"1":"47","2":"74","3":"43823.438"},{"1":"47","2":"137","3":"34946.047"},{"1":"47","2":"180","3":"27916.840"},{"1":"47","2":"787","3":"17218.028"},{"1":"47","2":"647","3":"69127.189"},{"1":"47","2":"527","3":"16225.629"},{"1":"47","2":"380","3":"22492.432"},{"1":"47","2":"207","3":"28823.909"},{"1":"47","2":"980","3":"52118.950"},{"1":"47","2":"1026","3":"80059.880"},{"1":"47","2":"522","3":"43551.031"},{"1":"47","2":"177","3":"73009.361"},{"1":"12","2":"508","3":"85916.660"},{"1":"12","2":"236","3":"90546.822"},{"1":"12","2":"775","3":"51924.035"},{"1":"12","2":"422","3":"53174.357"},{"1":"12","2":"758","3":"66818.386"},{"1":"12","2":"377","3":"50608.760"},{"1":"12","2":"596","3":"30105.722"},{"1":"12","2":"79","3":"34282.972"},{"1":"12","2":"515","3":"58894.454"},{"1":"12","2":"265","3":"26065.329"},{"1":"12","2":"487","3":"57516.397"},{"1":"12","2":"681","3":"58590.136"},{"1":"12","2":"129","3":"49609.342"},{"1":"12","2":"322","3":"49648.845"},{"1":"12","2":"264","3":"65757.749"},{"1":"12","2":"469","3":"73803.538"},{"1":"12","2":"270","3":"59448.765"},{"1":"12","2":"663","3":"22880.261"},{"1":"12","2":"18","3":"61952.730"},{"1":"12","2":"566","3":"43626.522"},{"1":"12","2":"810","3":"43973.720"},{"1":"12","2":"99","3":"50434.255"},{"1":"12","2":"311","3":"55865.493"},{"1":"12","2":"330","3":"51452.865"},{"1":"12","2":"560","3":"40375.107"},{"1":"12","2":"277","3":"46897.938"},{"1":"12","2":"711","3":"56515.107"},{"1":"12","2":"603","3":"22094.229"},{"1":"12","2":"629","3":"57876.687"},{"1":"12","2":"453","3":"47488.799"},{"1":"12","2":"468","3":"46649.056"},{"1":"12","2":"394","3":"46240.748"},{"1":"12","2":"520","3":"54467.508"},{"1":"12","2":"761","3":"45147.819"},{"1":"12","2":"697","3":"79047.960"},{"1":"12","2":"749","3":"59095.679"},{"1":"12","2":"143","3":"31846.305"},{"1":"12","2":"638","3":"30940.382"},{"1":"12","2":"651","3":"62682.197"},{"1":"12","2":"752","3":"55571.641"},{"1":"12","2":"664","3":"49635.240"},{"1":"12","2":"731","3":"54270.081"},{"1":"12","2":"205","3":"52024.656"},{"1":"12","2":"585","3":"34809.429"},{"1":"12","2":"113","3":"73498.803"},{"1":"12","2":"640","3":"39176.708"},{"1":"12","2":"804","3":"62913.986"},{"1":"12","2":"116","3":"39909.334"},{"1":"12","2":"716","3":"48026.885"},{"1":"12","2":"336","3":"55547.498"},{"1":"12","2":"107","3":"44906.518"},{"1":"12","2":"343","3":"24758.122"},{"1":"12","2":"307","3":"46090.326"},{"1":"12","2":"729","3":"62556.479"},{"1":"12","2":"284","3":"34519.157"},{"1":"12","2":"296","3":"67155.207"},{"1":"12","2":"570","3":"16507.136"},{"1":"12","2":"776","3":"58824.565"},{"1":"12","2":"43","3":"38897.744"},{"1":"12","2":"504","3":"36623.749"},{"1":"12","2":"363","3":"41189.407"},{"1":"12","2":"151","3":"48397.895"},{"1":"12","2":"721","3":"62505.598"},{"1":"12","2":"331","3":"64448.955"},{"1":"12","2":"85","3":"64417.919"},{"1":"12","2":"781","3":"44398.931"},{"1":"12","2":"404","3":"50681.676"},{"1":"12","2":"27","3":"53639.865"},{"1":"12","2":"587","3":"52371.130"},{"1":"12","2":"173","3":"35805.909"},{"1":"12","2":"757","3":"53218.385"},{"1":"12","2":"535","3":"55859.468"},{"1":"12","2":"750","3":"35914.319"},{"1":"12","2":"597","3":"45309.809"},{"1":"12","2":"376","3":"33035.106"},{"1":"12","2":"252","3":"83507.565"},{"1":"12","2":"249","3":"42882.440"},{"1":"12","2":"391","3":"47053.831"},{"1":"12","2":"283","3":"53059.024"},{"1":"12","2":"778","3":"34854.478"},{"1":"12","2":"248","3":"52375.227"},{"1":"34","2":"271","3":"22157.629"},{"1":"34","2":"797","3":"76432.543"},{"1":"34","2":"792","3":"44991.372"},{"1":"34","2":"344","3":"56087.797"},{"1":"34","2":"413","3":"51649.422"},{"1":"34","2":"652","3":"67512.680"},{"1":"34","2":"682","3":"76306.055"},{"1":"34","2":"554","3":"51577.535"},{"1":"34","2":"528","3":"30853.015"},{"1":"34","2":"75","3":"60306.491"},{"1":"34","2":"191","3":"47085.900"},{"1":"34","2":"996","3":"31279.594"},{"1":"34","2":"324","3":"80905.440"},{"1":"34","2":"522","3":"60048.575"},{"1":"34","2":"256","3":"64287.748"},{"1":"34","2":"32","3":"52028.873"},{"1":"34","2":"941","3":"43824.035"},{"1":"34","2":"481","3":"46071.136"},{"1":"34","2":"867","3":"47056.648"},{"1":"34","2":"524","3":"41533.943"},{"1":"34","2":"991","3":"20833.752"},{"1":"34","2":"557","3":"61872.296"},{"1":"34","2":"46","3":"31659.385"},{"1":"34","2":"1038","3":"43757.657"},{"1":"34","2":"560","3":"59731.727"},{"1":"34","2":"421","3":"81253.314"},{"1":"34","2":"254","3":"46646.332"},{"1":"34","2":"320","3":"23766.492"},{"1":"34","2":"131","3":"51473.514"},{"1":"34","2":"811","3":"53525.246"},{"1":"34","2":"477","3":"47919.630"},{"1":"34","2":"653","3":"47500.483"},{"1":"34","2":"949","3":"62518.151"},{"1":"34","2":"203","3":"22451.619"},{"1":"34","2":"242","3":"79481.716"},{"1":"34","2":"854","3":"93250.764"},{"1":"34","2":"945","3":"47319.025"},{"1":"34","2":"152","3":"57158.798"},{"1":"34","2":"662","3":"59365.983"},{"1":"34","2":"752","3":"100120.756"},{"1":"34","2":"198","3":"63589.117"},{"1":"34","2":"121","3":"67663.119"},{"1":"34","2":"923","3":"68449.618"},{"1":"34","2":"323","3":"74979.789"},{"1":"34","2":"281","3":"64586.902"},{"1":"34","2":"360","3":"67190.576"},{"1":"34","2":"667","3":"36875.922"},{"1":"34","2":"902","3":"40003.948"},{"1":"34","2":"174","3":"37651.556"},{"1":"34","2":"114","3":"16309.467"},{"1":"34","2":"583","3":"80434.851"},{"1":"34","2":"98","3":"59011.106"},{"1":"34","2":"125","3":"58329.679"},{"1":"34","2":"558","3":"55347.661"},{"1":"34","2":"310","3":"70193.696"},{"1":"34","2":"633","3":"49493.635"},{"1":"34","2":"132","3":"57246.991"},{"1":"34","2":"615","3":"36279.884"},{"1":"34","2":"505","3":"59915.189"},{"1":"34","2":"204","3":"61952.385"},{"1":"34","2":"185","3":"48927.944"},{"1":"34","2":"835","3":"61369.758"},{"1":"34","2":"837","3":"49026.682"},{"1":"34","2":"1","3":"43323.626"},{"1":"34","2":"189","3":"63803.268"},{"1":"34","2":"988","3":"34161.124"},{"1":"34","2":"695","3":"27925.582"},{"1":"34","2":"197","3":"48321.342"},{"1":"34","2":"1016","3":"47087.842"},{"1":"34","2":"886","3":"54223.469"},{"1":"34","2":"460","3":"46295.037"},{"1":"34","2":"382","3":"90864.890"},{"1":"34","2":"588","3":"35274.124"},{"1":"34","2":"1032","3":"37401.565"},{"1":"34","2":"805","3":"36105.022"},{"1":"34","2":"696","3":"49902.043"},{"1":"34","2":"195","3":"29294.659"},{"1":"34","2":"499","3":"47489.702"},{"1":"34","2":"865","3":"61160.884"},{"1":"34","2":"515","3":"57569.665"},{"1":"34","2":"689","3":"45497.284"},{"1":"34","2":"687","3":"46348.657"},{"1":"34","2":"290","3":"52878.673"},{"1":"34","2":"273","3":"84056.267"},{"1":"34","2":"1062","3":"57171.474"},{"1":"34","2":"594","3":"56626.031"},{"1":"34","2":"464","3":"69760.453"},{"1":"34","2":"347","3":"76566.772"},{"1":"34","2":"604","3":"46807.795"},{"1":"34","2":"498","3":"68206.237"},{"1":"34","2":"795","3":"39018.776"},{"1":"34","2":"56","3":"59407.280"},{"1":"34","2":"268","3":"29976.891"},{"1":"34","2":"85","3":"55328.152"},{"1":"34","2":"129","3":"43063.697"},{"1":"34","2":"888","3":"36084.871"},{"1":"34","2":"381","3":"55454.421"},{"1":"34","2":"170","3":"17756.545"},{"1":"34","2":"15","3":"65475.885"},{"1":"34","2":"712","3":"50498.117"},{"1":"34","2":"307","3":"68632.683"},{"1":"34","2":"13","3":"51189.863"},{"1":"34","2":"1065","3":"34044.696"},{"1":"34","2":"709","3":"70724.883"},{"1":"34","2":"488","3":"37593.209"},{"1":"34","2":"666","3":"56845.886"},{"1":"34","2":"773","3":"66002.220"},{"1":"34","2":"461","3":"8803.995"},{"1":"13","2":"737","3":"38016.289"},{"1":"13","2":"783","3":"47614.765"},{"1":"13","2":"38","3":"14949.164"},{"1":"13","2":"833","3":"32514.290"},{"1":"13","2":"629","3":"30591.264"},{"1":"13","2":"692","3":"38605.487"},{"1":"13","2":"412","3":"38777.015"},{"1":"13","2":"34","3":"50965.532"},{"1":"13","2":"379","3":"45279.127"},{"1":"13","2":"700","3":"49995.255"},{"1":"13","2":"918","3":"46452.730"},{"1":"13","2":"45","3":"56150.817"},{"1":"13","2":"167","3":"45712.923"},{"1":"13","2":"385","3":"64629.984"},{"1":"13","2":"489","3":"53055.482"},{"1":"13","2":"550","3":"48691.475"},{"1":"13","2":"405","3":"41642.542"},{"1":"13","2":"522","3":"57501.979"},{"1":"13","2":"260","3":"35223.379"},{"1":"13","2":"919","3":"38431.879"},{"1":"13","2":"463","3":"45993.540"},{"1":"13","2":"723","3":"42523.816"},{"1":"13","2":"397","3":"72696.644"},{"1":"13","2":"1049","3":"75928.904"},{"1":"13","2":"380","3":"71011.565"},{"1":"13","2":"466","3":"42488.494"},{"1":"13","2":"281","3":"54974.634"},{"1":"13","2":"374","3":"49078.510"},{"1":"13","2":"827","3":"38213.860"},{"1":"13","2":"120","3":"48646.062"},{"1":"13","2":"1060","3":"11393.724"},{"1":"13","2":"957","3":"65511.118"},{"1":"13","2":"872","3":"35945.528"},{"1":"13","2":"591","3":"41671.455"},{"1":"13","2":"534","3":"65483.058"},{"1":"13","2":"505","3":"46566.388"},{"1":"13","2":"1013","3":"41480.966"},{"1":"13","2":"406","3":"46433.627"},{"1":"13","2":"954","3":"49674.161"},{"1":"13","2":"474","3":"54037.451"},{"1":"13","2":"854","3":"35299.288"},{"1":"13","2":"893","3":"50201.632"},{"1":"13","2":"190","3":"70970.062"},{"1":"13","2":"980","3":"57528.854"},{"1":"13","2":"995","3":"28575.456"},{"1":"13","2":"512","3":"66308.008"},{"1":"13","2":"1045","3":"44948.682"},{"1":"13","2":"30","3":"39511.813"},{"1":"13","2":"425","3":"62411.369"},{"1":"13","2":"524","3":"49059.615"},{"1":"13","2":"948","3":"38969.422"},{"1":"13","2":"859","3":"45239.100"},{"1":"13","2":"607","3":"48038.801"},{"1":"13","2":"241","3":"67418.028"},{"1":"13","2":"511","3":"51450.254"},{"1":"13","2":"765","3":"32185.084"},{"1":"13","2":"193","3":"31715.277"},{"1":"13","2":"697","3":"38754.322"},{"1":"13","2":"429","3":"53245.145"},{"1":"13","2":"384","3":"37111.243"},{"1":"13","2":"92","3":"46000.747"},{"1":"13","2":"755","3":"54792.054"},{"1":"13","2":"153","3":"47248.571"},{"1":"13","2":"664","3":"51673.618"},{"1":"13","2":"867","3":"67069.960"},{"1":"13","2":"61","3":"8536.950"},{"1":"13","2":"300","3":"47101.711"},{"1":"13","2":"593","3":"84813.872"},{"1":"13","2":"16","3":"84809.155"},{"1":"13","2":"154","3":"35690.257"},{"1":"13","2":"482","3":"48771.112"},{"1":"13","2":"216","3":"46319.729"},{"1":"13","2":"80","3":"45618.688"},{"1":"13","2":"446","3":"74617.338"},{"1":"13","2":"371","3":"78642.183"},{"1":"13","2":"326","3":"24163.685"},{"1":"13","2":"43","3":"53311.140"},{"1":"13","2":"526","3":"44788.782"},{"1":"13","2":"345","3":"47970.453"},{"1":"13","2":"767","3":"50029.140"},{"1":"13","2":"719","3":"35049.476"},{"1":"13","2":"930","3":"46208.098"},{"1":"13","2":"497","3":"24861.809"},{"1":"13","2":"670","3":"28800.841"},{"1":"13","2":"402","3":"54248.463"},{"1":"13","2":"916","3":"62773.725"},{"1":"13","2":"67","3":"41885.578"},{"1":"13","2":"566","3":"41465.580"},{"1":"13","2":"382","3":"59025.729"},{"1":"13","2":"1006","3":"52256.049"},{"1":"13","2":"928","3":"17138.437"},{"1":"13","2":"164","3":"63134.566"},{"1":"13","2":"318","3":"44148.662"},{"1":"13","2":"55","3":"54956.966"},{"1":"13","2":"189","3":"58429.555"},{"1":"13","2":"1046","3":"45426.619"},{"1":"13","2":"940","3":"45358.041"},{"1":"13","2":"707","3":"57033.395"},{"1":"13","2":"457","3":"62207.043"},{"1":"13","2":"824","3":"53426.990"},{"1":"13","2":"809","3":"34909.514"},{"1":"13","2":"139","3":"67307.306"},{"1":"13","2":"901","3":"41117.351"},{"1":"13","2":"812","3":"46289.124"},{"1":"13","2":"37","3":"55501.942"},{"1":"13","2":"174","3":"56525.762"},{"1":"13","2":"644","3":"46648.449"},{"1":"46","2":"832","3":"47704.311"},{"1":"46","2":"40","3":"38648.610"},{"1":"46","2":"367","3":"41432.315"},{"1":"46","2":"757","3":"39900.283"},{"1":"46","2":"451","3":"59972.165"},{"1":"46","2":"508","3":"13890.121"},{"1":"46","2":"978","3":"64613.711"},{"1":"46","2":"942","3":"46301.282"},{"1":"46","2":"798","3":"53317.016"},{"1":"46","2":"607","3":"44688.602"},{"1":"46","2":"1008","3":"29734.474"},{"1":"46","2":"3","3":"47674.703"},{"1":"46","2":"511","3":"57088.609"},{"1":"46","2":"372","3":"66716.445"},{"1":"46","2":"678","3":"35983.615"},{"1":"46","2":"355","3":"48205.755"},{"1":"46","2":"534","3":"67279.142"},{"1":"46","2":"255","3":"67480.459"},{"1":"46","2":"803","3":"27163.415"},{"1":"46","2":"554","3":"83947.863"},{"1":"46","2":"496","3":"42504.222"},{"1":"46","2":"193","3":"54401.345"},{"1":"46","2":"237","3":"4511.241"},{"1":"46","2":"763","3":"57853.268"},{"1":"46","2":"697","3":"28859.572"},{"1":"46","2":"966","3":"50389.086"},{"1":"46","2":"1004","3":"53454.712"},{"1":"46","2":"263","3":"49083.387"},{"1":"46","2":"138","3":"55650.519"},{"1":"46","2":"667","3":"52104.439"},{"1":"46","2":"495","3":"51933.660"},{"1":"46","2":"238","3":"63750.995"},{"1":"46","2":"865","3":"38374.540"},{"1":"46","2":"412","3":"47754.665"},{"1":"46","2":"945","3":"36106.656"},{"1":"46","2":"279","3":"71970.713"},{"1":"46","2":"272","3":"61065.365"},{"1":"46","2":"481","3":"54429.773"},{"1":"46","2":"989","3":"66164.905"},{"1":"46","2":"226","3":"64934.693"},{"1":"46","2":"536","3":"34723.650"},{"1":"46","2":"60","3":"45523.159"},{"1":"46","2":"899","3":"29674.323"},{"1":"46","2":"333","3":"75885.274"},{"1":"46","2":"813","3":"10044.949"},{"1":"46","2":"843","3":"36293.324"},{"1":"46","2":"506","3":"25347.928"},{"1":"46","2":"585","3":"26992.936"},{"1":"46","2":"694","3":"18248.371"},{"1":"46","2":"368","3":"48118.688"},{"1":"46","2":"307","3":"30816.216"},{"1":"46","2":"347","3":"56413.798"},{"1":"46","2":"741","3":"53288.420"},{"1":"46","2":"557","3":"76521.444"},{"1":"46","2":"755","3":"26779.714"},{"1":"46","2":"714","3":"74623.475"},{"1":"46","2":"257","3":"63699.109"},{"1":"46","2":"601","3":"33767.122"},{"1":"46","2":"326","3":"37273.350"},{"1":"46","2":"394","3":"41112.354"},{"1":"46","2":"268","3":"54497.380"},{"1":"46","2":"166","3":"47869.389"},{"1":"46","2":"130","3":"56026.744"},{"1":"46","2":"198","3":"67705.997"},{"1":"46","2":"230","3":"48796.278"},{"1":"46","2":"381","3":"34972.493"},{"1":"46","2":"81","3":"67780.863"},{"1":"46","2":"815","3":"42619.641"},{"1":"46","2":"65","3":"30000.977"},{"1":"46","2":"112","3":"36998.162"},{"1":"46","2":"190","3":"63694.137"},{"1":"46","2":"507","3":"34582.910"},{"1":"46","2":"392","3":"61254.791"},{"1":"46","2":"398","3":"45385.487"},{"1":"46","2":"723","3":"31497.153"},{"1":"46","2":"838","3":"52450.004"},{"1":"46","2":"45","3":"74581.648"},{"1":"46","2":"63","3":"33268.483"},{"1":"46","2":"593","3":"58626.531"},{"1":"46","2":"809","3":"41578.249"},{"1":"46","2":"440","3":"57805.804"},{"1":"46","2":"944","3":"43688.155"},{"1":"46","2":"541","3":"22394.951"},{"1":"46","2":"857","3":"51984.472"},{"1":"46","2":"98","3":"48047.792"},{"1":"46","2":"774","3":"57591.092"},{"1":"46","2":"172","3":"74335.392"},{"1":"46","2":"389","3":"31333.282"},{"1":"46","2":"197","3":"60739.418"},{"1":"46","2":"564","3":"55391.261"},{"1":"46","2":"704","3":"70360.515"},{"1":"46","2":"872","3":"30444.196"},{"1":"46","2":"309","3":"47118.229"},{"1":"46","2":"464","3":"40956.025"},{"1":"46","2":"770","3":"91086.737"},{"1":"46","2":"808","3":"37406.681"},{"1":"46","2":"574","3":"40286.651"},{"1":"46","2":"826","3":"37684.809"},{"1":"46","2":"416","3":"41035.241"},{"1":"46","2":"278","3":"39993.826"},{"1":"46","2":"866","3":"17898.483"},{"1":"46","2":"883","3":"42098.162"},{"1":"85","2":"1114","3":"54238.026"},{"1":"85","2":"183","3":"61563.075"},{"1":"85","2":"944","3":"71802.058"},{"1":"85","2":"153","3":"65142.415"},{"1":"85","2":"453","3":"52905.798"},{"1":"85","2":"1012","3":"56339.274"},{"1":"85","2":"881","3":"56331.850"},{"1":"85","2":"920","3":"70198.182"},{"1":"85","2":"976","3":"48368.906"},{"1":"85","2":"1151","3":"51118.031"},{"1":"85","2":"628","3":"51562.336"},{"1":"85","2":"718","3":"66023.820"},{"1":"85","2":"973","3":"41201.383"},{"1":"85","2":"946","3":"73589.048"},{"1":"85","2":"90","3":"68647.096"},{"1":"85","2":"446","3":"71304.179"},{"1":"85","2":"398","3":"41684.162"},{"1":"85","2":"1133","3":"49256.006"},{"1":"85","2":"68","3":"26957.882"},{"1":"85","2":"649","3":"64060.799"},{"1":"85","2":"213","3":"39115.755"},{"1":"85","2":"87","3":"42511.026"},{"1":"85","2":"303","3":"58738.953"},{"1":"85","2":"1066","3":"54458.700"},{"1":"85","2":"802","3":"57853.796"},{"1":"85","2":"930","3":"55616.027"},{"1":"85","2":"645","3":"47525.326"},{"1":"85","2":"34","3":"58976.880"},{"1":"85","2":"543","3":"60434.505"},{"1":"85","2":"98","3":"50897.434"},{"1":"85","2":"1097","3":"35387.714"},{"1":"85","2":"409","3":"33133.733"},{"1":"85","2":"1003","3":"38692.268"},{"1":"85","2":"854","3":"42935.552"},{"1":"85","2":"1000","3":"30359.925"},{"1":"85","2":"510","3":"62446.298"},{"1":"85","2":"315","3":"76620.552"},{"1":"85","2":"17","3":"80226.904"},{"1":"85","2":"926","3":"23591.684"},{"1":"85","2":"860","3":"72156.189"},{"1":"85","2":"522","3":"37152.473"},{"1":"85","2":"619","3":"49650.944"},{"1":"85","2":"814","3":"56235.885"},{"1":"85","2":"896","3":"48533.221"},{"1":"85","2":"1068","3":"92761.589"},{"1":"85","2":"166","3":"36838.941"},{"1":"85","2":"679","3":"55400.060"},{"1":"85","2":"808","3":"51453.033"},{"1":"85","2":"923","3":"46344.790"},{"1":"85","2":"169","3":"61402.203"},{"1":"85","2":"835","3":"57873.880"},{"1":"85","2":"4","3":"68991.058"},{"1":"85","2":"882","3":"46960.363"},{"1":"85","2":"31","3":"69859.546"},{"1":"85","2":"736","3":"71059.322"},{"1":"85","2":"503","3":"8650.894"},{"1":"85","2":"1108","3":"33726.013"},{"1":"85","2":"38","3":"33105.787"},{"1":"85","2":"565","3":"32856.019"},{"1":"85","2":"75","3":"60632.283"},{"1":"85","2":"983","3":"60237.226"},{"1":"85","2":"1033","3":"61738.248"},{"1":"85","2":"328","3":"44014.073"},{"1":"85","2":"756","3":"72913.801"},{"1":"85","2":"839","3":"48401.846"},{"1":"85","2":"259","3":"52844.599"},{"1":"85","2":"652","3":"50067.770"},{"1":"85","2":"584","3":"68675.489"},{"1":"85","2":"400","3":"47977.395"},{"1":"85","2":"461","3":"60351.788"},{"1":"85","2":"136","3":"42350.124"},{"1":"85","2":"282","3":"51325.070"},{"1":"85","2":"479","3":"68447.375"},{"1":"85","2":"178","3":"56757.027"},{"1":"85","2":"717","3":"21791.409"},{"1":"85","2":"857","3":"77664.521"},{"1":"85","2":"1007","3":"52648.320"},{"1":"85","2":"179","3":"52147.712"},{"1":"85","2":"523","3":"36382.924"},{"1":"85","2":"122","3":"40541.485"},{"1":"85","2":"441","3":"71118.302"},{"1":"85","2":"667","3":"30760.797"},{"1":"85","2":"41","3":"42535.056"},{"1":"85","2":"236","3":"49614.963"},{"1":"85","2":"214","3":"48376.659"},{"1":"85","2":"716","3":"44084.263"},{"1":"85","2":"344","3":"44733.575"},{"1":"85","2":"404","3":"30134.480"},{"1":"85","2":"1008","3":"54870.172"},{"1":"85","2":"646","3":"42105.039"},{"1":"85","2":"380","3":"51543.773"},{"1":"85","2":"201","3":"65800.674"},{"1":"85","2":"310","3":"51848.049"},{"1":"85","2":"361","3":"70078.811"},{"1":"85","2":"527","3":"59251.189"},{"1":"85","2":"103","3":"72283.221"},{"1":"85","2":"1142","3":"32605.347"},{"1":"85","2":"442","3":"45451.295"},{"1":"85","2":"251","3":"53441.376"},{"1":"85","2":"591","3":"61447.123"},{"1":"85","2":"818","3":"35743.808"},{"1":"85","2":"330","3":"52374.538"},{"1":"85","2":"272","3":"61250.922"},{"1":"85","2":"1128","3":"36823.522"},{"1":"85","2":"1167","3":"39352.661"},{"1":"85","2":"1174","3":"37745.495"},{"1":"85","2":"21","3":"57528.202"},{"1":"85","2":"1123","3":"46427.657"},{"1":"85","2":"170","3":"47172.081"},{"1":"85","2":"1125","3":"63051.258"},{"1":"85","2":"199","3":"26034.177"},{"1":"85","2":"1148","3":"33966.188"},{"1":"85","2":"22","3":"64743.157"},{"1":"85","2":"780","3":"47462.018"},{"1":"85","2":"914","3":"54518.545"},{"1":"85","2":"322","3":"52377.416"},{"1":"85","2":"226","3":"42251.932"},{"1":"85","2":"850","3":"60936.358"},{"1":"20","2":"397","3":"42151.429"},{"1":"20","2":"489","3":"84740.395"},{"1":"20","2":"384","3":"43222.326"},{"1":"20","2":"823","3":"61518.615"},{"1":"20","2":"133","3":"53880.332"},{"1":"20","2":"465","3":"92282.276"},{"1":"20","2":"197","3":"62985.608"},{"1":"20","2":"740","3":"66652.509"},{"1":"20","2":"326","3":"48357.019"},{"1":"20","2":"511","3":"30828.039"},{"1":"20","2":"171","3":"58758.332"},{"1":"20","2":"544","3":"78662.363"},{"1":"20","2":"355","3":"48047.388"},{"1":"20","2":"205","3":"85002.810"},{"1":"20","2":"729","3":"34083.910"},{"1":"20","2":"118","3":"49087.983"},{"1":"20","2":"149","3":"75093.451"},{"1":"20","2":"715","3":"63853.886"},{"1":"20","2":"426","3":"64363.370"},{"1":"20","2":"160","3":"67589.957"},{"1":"20","2":"41","3":"52522.996"},{"1":"20","2":"421","3":"29925.066"},{"1":"20","2":"99","3":"17024.115"},{"1":"20","2":"284","3":"44575.985"},{"1":"20","2":"75","3":"49562.949"},{"1":"20","2":"176","3":"49125.436"},{"1":"20","2":"86","3":"57706.387"},{"1":"20","2":"434","3":"51585.575"},{"1":"20","2":"9","3":"55866.786"},{"1":"20","2":"31","3":"39394.055"},{"1":"20","2":"519","3":"58133.920"},{"1":"20","2":"592","3":"68501.515"},{"1":"20","2":"817","3":"79085.275"},{"1":"20","2":"423","3":"30481.749"},{"1":"20","2":"343","3":"46032.441"},{"1":"20","2":"48","3":"83723.069"},{"1":"20","2":"112","3":"50925.733"},{"1":"20","2":"101","3":"65822.212"},{"1":"20","2":"553","3":"54616.403"},{"1":"20","2":"464","3":"33329.209"},{"1":"20","2":"826","3":"41399.881"},{"1":"20","2":"480","3":"41329.087"},{"1":"20","2":"223","3":"42452.523"},{"1":"20","2":"811","3":"68535.967"},{"1":"20","2":"587","3":"60616.753"},{"1":"20","2":"581","3":"53438.503"},{"1":"20","2":"792","3":"55675.683"},{"1":"20","2":"15","3":"56722.483"},{"1":"20","2":"441","3":"40066.429"},{"1":"20","2":"385","3":"68886.328"},{"1":"20","2":"362","3":"19674.023"},{"1":"20","2":"188","3":"29935.230"},{"1":"20","2":"757","3":"61478.800"},{"1":"20","2":"279","3":"67793.084"},{"1":"20","2":"253","3":"48848.870"},{"1":"20","2":"442","3":"70891.250"},{"1":"20","2":"46","3":"35981.858"},{"1":"20","2":"684","3":"57702.487"},{"1":"20","2":"747","3":"47261.914"},{"1":"20","2":"677","3":"41266.859"},{"1":"20","2":"331","3":"50850.741"},{"1":"20","2":"609","3":"43737.530"},{"1":"20","2":"29","3":"57867.431"},{"1":"20","2":"443","3":"32552.744"},{"1":"20","2":"55","3":"36143.957"},{"1":"20","2":"351","3":"36728.689"},{"1":"20","2":"716","3":"53225.695"},{"1":"20","2":"735","3":"63587.263"},{"1":"20","2":"785","3":"47975.826"},{"1":"20","2":"379","3":"64173.748"},{"1":"20","2":"803","3":"30568.161"},{"1":"20","2":"543","3":"51477.713"},{"1":"20","2":"782","3":"26744.755"},{"1":"20","2":"51","3":"76383.075"},{"1":"20","2":"315","3":"45806.676"},{"1":"20","2":"661","3":"54983.948"},{"1":"20","2":"218","3":"78971.458"},{"1":"20","2":"356","3":"51288.562"},{"1":"20","2":"35","3":"59591.112"},{"1":"20","2":"183","3":"51838.234"},{"1":"20","2":"247","3":"77514.216"},{"1":"20","2":"802","3":"47704.233"},{"1":"20","2":"71","3":"44805.999"},{"1":"70","2":"909","3":"35482.299"},{"1":"70","2":"815","3":"73058.376"},{"1":"70","2":"310","3":"56427.059"},{"1":"70","2":"383","3":"49407.351"},{"1":"70","2":"715","3":"39503.105"},{"1":"70","2":"253","3":"27482.244"},{"1":"70","2":"1100","3":"68048.180"},{"1":"70","2":"935","3":"71099.072"},{"1":"70","2":"478","3":"44641.197"},{"1":"70","2":"644","3":"82296.789"},{"1":"70","2":"270","3":"49565.884"},{"1":"70","2":"538","3":"39653.224"},{"1":"70","2":"1023","3":"67239.376"},{"1":"70","2":"71","3":"65851.134"},{"1":"70","2":"288","3":"64521.916"},{"1":"70","2":"524","3":"52924.167"},{"1":"70","2":"55","3":"49583.548"},{"1":"70","2":"1031","3":"45406.040"},{"1":"70","2":"162","3":"57868.760"},{"1":"70","2":"94","3":"31297.499"},{"1":"70","2":"437","3":"34091.847"},{"1":"70","2":"104","3":"52353.760"},{"1":"70","2":"203","3":"68462.775"},{"1":"70","2":"477","3":"34155.422"},{"1":"70","2":"148","3":"46392.224"},{"1":"70","2":"747","3":"25562.314"},{"1":"70","2":"547","3":"28914.984"},{"1":"70","2":"397","3":"55548.090"},{"1":"70","2":"79","3":"38698.301"},{"1":"70","2":"922","3":"62585.902"},{"1":"70","2":"869","3":"58646.823"},{"1":"70","2":"845","3":"46045.925"},{"1":"70","2":"392","3":"31617.871"},{"1":"70","2":"292","3":"29222.535"},{"1":"70","2":"919","3":"59121.385"},{"1":"70","2":"1103","3":"62211.917"},{"1":"70","2":"916","3":"40695.225"},{"1":"70","2":"254","3":"38473.394"},{"1":"70","2":"647","3":"54765.263"},{"1":"70","2":"27","3":"62983.487"},{"1":"70","2":"533","3":"44867.458"},{"1":"70","2":"434","3":"28648.440"},{"1":"70","2":"396","3":"26312.065"},{"1":"70","2":"624","3":"54879.348"},{"1":"70","2":"1125","3":"36507.358"},{"1":"70","2":"15","3":"29062.534"},{"1":"70","2":"581","3":"43169.189"},{"1":"70","2":"708","3":"70364.427"},{"1":"70","2":"260","3":"60057.146"},{"1":"70","2":"140","3":"38387.941"},{"1":"70","2":"582","3":"55132.080"},{"1":"70","2":"600","3":"66373.527"},{"1":"70","2":"164","3":"10570.056"},{"1":"70","2":"210","3":"35693.760"},{"1":"70","2":"970","3":"36308.947"},{"1":"70","2":"731","3":"52648.865"},{"1":"70","2":"521","3":"43780.456"},{"1":"70","2":"403","3":"49439.084"},{"1":"70","2":"623","3":"36472.156"},{"1":"70","2":"730","3":"62164.822"},{"1":"70","2":"774","3":"35695.823"},{"1":"70","2":"58","3":"56969.740"},{"1":"70","2":"1012","3":"33787.918"},{"1":"70","2":"913","3":"55993.810"},{"1":"70","2":"323","3":"70256.458"},{"1":"70","2":"177","3":"62616.630"},{"1":"70","2":"467","3":"33408.021"},{"1":"70","2":"960","3":"63568.468"},{"1":"70","2":"657","3":"51604.772"},{"1":"70","2":"972","3":"47158.740"},{"1":"70","2":"186","3":"43662.445"},{"1":"70","2":"535","3":"43461.960"},{"1":"70","2":"418","3":"63693.413"},{"1":"70","2":"242","3":"48989.477"},{"1":"70","2":"91","3":"30813.714"},{"1":"70","2":"439","3":"78678.793"},{"1":"70","2":"801","3":"55168.102"},{"1":"70","2":"1027","3":"54798.210"},{"1":"70","2":"863","3":"55491.338"},{"1":"70","2":"331","3":"40033.868"},{"1":"70","2":"733","3":"34446.388"},{"1":"70","2":"557","3":"40860.589"},{"1":"70","2":"408","3":"52778.199"},{"1":"70","2":"811","3":"59129.217"},{"1":"70","2":"682","3":"54515.483"},{"1":"70","2":"221","3":"30940.289"},{"1":"70","2":"846","3":"48356.917"},{"1":"70","2":"1020","3":"60049.312"},{"1":"70","2":"787","3":"46906.491"},{"1":"70","2":"844","3":"23306.167"},{"1":"70","2":"567","3":"64690.227"},{"1":"70","2":"432","3":"61018.824"},{"1":"70","2":"1071","3":"37478.072"},{"1":"70","2":"96","3":"51553.343"},{"1":"70","2":"732","3":"67409.561"},{"1":"70","2":"346","3":"55927.615"},{"1":"70","2":"137","3":"55006.568"},{"1":"70","2":"366","3":"36755.204"},{"1":"70","2":"1041","3":"48400.885"},{"1":"70","2":"259","3":"39106.123"},{"1":"70","2":"690","3":"54514.518"},{"1":"70","2":"614","3":"62013.017"},{"1":"70","2":"824","3":"77423.275"},{"1":"70","2":"796","3":"53736.327"},{"1":"70","2":"1118","3":"22509.938"},{"1":"70","2":"691","3":"54770.862"},{"1":"70","2":"1068","3":"57415.609"},{"1":"70","2":"879","3":"44804.983"},{"1":"70","2":"1059","3":"39508.231"},{"1":"70","2":"1108","3":"47203.088"},{"1":"70","2":"339","3":"66247.653"},{"1":"70","2":"476","3":"47880.494"},{"1":"70","2":"564","3":"46595.497"},{"1":"33","2":"840","3":"43224.341"},{"1":"33","2":"1061","3":"40118.910"},{"1":"33","2":"412","3":"29015.486"},{"1":"33","2":"649","3":"58138.843"},{"1":"33","2":"703","3":"50608.616"},{"1":"33","2":"1058","3":"61862.858"},{"1":"33","2":"990","3":"76752.767"},{"1":"33","2":"422","3":"44974.379"},{"1":"33","2":"668","3":"45324.660"},{"1":"33","2":"202","3":"18732.218"},{"1":"33","2":"440","3":"59765.500"},{"1":"33","2":"811","3":"40075.730"},{"1":"33","2":"796","3":"43561.350"},{"1":"33","2":"692","3":"64843.993"},{"1":"33","2":"906","3":"50652.131"},{"1":"33","2":"936","3":"24178.358"},{"1":"33","2":"220","3":"39424.917"},{"1":"33","2":"1165","3":"35567.848"},{"1":"33","2":"119","3":"77730.904"},{"1":"33","2":"392","3":"79304.943"},{"1":"33","2":"65","3":"57740.446"},{"1":"33","2":"99","3":"62634.311"},{"1":"33","2":"72","3":"34638.413"},{"1":"33","2":"547","3":"42762.979"},{"1":"33","2":"447","3":"46795.848"},{"1":"33","2":"463","3":"46310.540"},{"1":"33","2":"312","3":"59050.139"},{"1":"33","2":"1014","3":"36988.656"},{"1":"33","2":"226","3":"60986.411"},{"1":"33","2":"540","3":"59954.385"},{"1":"33","2":"211","3":"42765.393"},{"1":"33","2":"985","3":"37389.379"},{"1":"33","2":"979","3":"60834.761"},{"1":"33","2":"452","3":"47831.448"},{"1":"33","2":"430","3":"38289.889"},{"1":"33","2":"337","3":"64697.082"},{"1":"33","2":"1160","3":"40819.038"},{"1":"33","2":"974","3":"35664.142"},{"1":"33","2":"657","3":"59606.166"},{"1":"33","2":"650","3":"37941.106"},{"1":"33","2":"1119","3":"74058.902"},{"1":"33","2":"510","3":"46522.561"},{"1":"33","2":"307","3":"44445.990"},{"1":"33","2":"558","3":"39109.167"},{"1":"33","2":"60","3":"48476.582"},{"1":"33","2":"333","3":"33863.433"},{"1":"33","2":"773","3":"73023.009"},{"1":"33","2":"771","3":"50619.744"},{"1":"33","2":"969","3":"41991.536"},{"1":"33","2":"615","3":"68740.224"},{"1":"33","2":"853","3":"38285.642"},{"1":"33","2":"798","3":"50219.364"},{"1":"33","2":"849","3":"53986.128"},{"1":"33","2":"70","3":"64514.733"},{"1":"33","2":"955","3":"36624.813"},{"1":"33","2":"997","3":"81608.332"},{"1":"33","2":"156","3":"45562.514"},{"1":"33","2":"970","3":"59900.699"},{"1":"33","2":"460","3":"43190.045"},{"1":"33","2":"348","3":"49477.246"},{"1":"33","2":"187","3":"56763.447"},{"1":"33","2":"492","3":"46955.141"},{"1":"33","2":"1152","3":"36738.539"},{"1":"33","2":"804","3":"29684.205"},{"1":"33","2":"77","3":"32016.432"},{"1":"33","2":"154","3":"34467.833"},{"1":"33","2":"828","3":"47356.567"},{"1":"33","2":"3","3":"32992.364"},{"1":"33","2":"749","3":"57859.114"},{"1":"33","2":"972","3":"66853.992"},{"1":"33","2":"493","3":"55780.648"},{"1":"33","2":"174","3":"56079.320"},{"1":"33","2":"937","3":"57916.919"},{"1":"33","2":"246","3":"44340.246"},{"1":"33","2":"987","3":"57942.890"},{"1":"33","2":"557","3":"45230.549"},{"1":"33","2":"873","3":"41908.133"},{"1":"33","2":"428","3":"46973.394"},{"1":"33","2":"349","3":"64259.617"},{"1":"33","2":"693","3":"59286.518"},{"1":"33","2":"1133","3":"50405.946"},{"1":"33","2":"683","3":"55718.207"},{"1":"33","2":"794","3":"33004.295"},{"1":"33","2":"552","3":"34996.664"},{"1":"33","2":"958","3":"55830.479"},{"1":"33","2":"133","3":"45889.629"},{"1":"33","2":"135","3":"52631.913"},{"1":"33","2":"275","3":"54786.914"},{"1":"33","2":"166","3":"49001.277"},{"1":"33","2":"980","3":"54039.853"},{"1":"33","2":"107","3":"19954.690"},{"1":"33","2":"1027","3":"52184.291"},{"1":"33","2":"537","3":"65808.890"},{"1":"33","2":"126","3":"56883.993"},{"1":"33","2":"863","3":"49847.799"},{"1":"33","2":"449","3":"72453.563"},{"1":"33","2":"1157","3":"54632.013"},{"1":"33","2":"479","3":"66595.948"},{"1":"33","2":"526","3":"42597.393"},{"1":"33","2":"861","3":"91044.305"},{"1":"33","2":"186","3":"22645.710"},{"1":"33","2":"209","3":"30184.384"},{"1":"33","2":"867","3":"70831.084"},{"1":"33","2":"474","3":"58423.162"},{"1":"33","2":"701","3":"51523.364"},{"1":"33","2":"908","3":"32215.957"},{"1":"33","2":"1101","3":"56124.940"},{"1":"33","2":"929","3":"49376.797"},{"1":"33","2":"1121","3":"16023.502"},{"1":"33","2":"1045","3":"36709.199"},{"1":"33","2":"168","3":"57578.750"},{"1":"33","2":"865","3":"68371.996"},{"1":"33","2":"1103","3":"25009.814"},{"1":"33","2":"293","3":"30251.881"},{"1":"33","2":"49","3":"33964.664"},{"1":"33","2":"538","3":"42039.884"},{"1":"33","2":"921","3":"55089.291"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Cluster sampling is commonly used in:</p>
+<ul>
+<li>Public health surveys: Randomly select neighborhoods (clusters) to analyze health indicators across a city.</li>
+<li>Social research: Select geographic areas or households to study quality of life or social indicators</li>
+<li>Educational research: Choose schools or classes as clusters to assess academic performance among students.</li>
+</ul>
+<p>Cluster sampling is a practical and cost-effective way to gather representative data in resource-limited scenarios. However, special attention is needed to ensure clusters are representative to avoid bias.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/qbgaoo\.github\.io\/r4ms");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+      for (let i=0; i<annoteTargets.length; i++) {
+        const annoteTarget = annoteTargets[i];
+        const targetCell = annoteTarget.getAttribute("data-target-cell");
+        const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+        const contentFn = () => {
+          const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          if (content) {
+            const tipContent = content.cloneNode(true);
+            tipContent.classList.add("code-annotation-tip-content");
+            return tipContent.outerHTML;
+          }
+        }
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          onShow: (instance) => {
+            selectCodeLines(instance.reference);
+            instance.reference.classList.add('code-annotation-active');
+            window.tippy.hideAll();
+          },
+          onHide: (instance) => {
+            unselectCodeLines();
+            instance.reference.classList.remove('code-annotation-active');
+          },
+          maxWidth: 300,
+          delay: [50, 0],
+          duration: [200, 0],
+          offset: [5, 10],
+          arrow: true,
+          appendTo: function(el) {
+            return el.parentElement.parentElement.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto',
+          placement: 'right',
+          popperOptions: {
+            modifiers: [
+            {
+              name: 'flip',
+              options: {
+                flipVariations: false, // true by default
+                allowedAutoPlacements: ['right'],
+                fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+              },
+            },
+            {
+              name: 'preventOverflow',
+              options: {
+                mainAxis: false,
+                altAxis: false
+              }
+            }
+            ]        
+          }      
+        };
+        window.tippy(annoteTarget, config); 
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./data-preprocess.html" class="pagination-link" aria-label="Data preprocessing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Data preprocessing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./randomization.html" class="pagination-link" aria-label="Randomization">
+        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/random-sampling.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

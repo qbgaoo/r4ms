@@ -1,0 +1,250 @@
+# Random sampling 
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Random sampling is a statistical technique used to select a subset of individuals or observations from a larger population in such a way that each member of the population has an equal chance of being chosen. This method is often used to ensure that the sample represents the broader population, which helps to reduce bias and improve the generalizability of study results.
+
+## Prerequisites
+
+```{r}
+#| message: false
+library(tidyverse)
+library(rmarkdown)
+```
+
+## Basic concepts
+
+### Population and sample
+
+In statistics, population and sample are two key concepts used to make inferences about a larger group based on the analysis of a smaller group.
+
+**Population**
+
+The population is the entire group of individuals, objects, or events that you are interested in studying. It includes all possible observations that could be made, so it represents the “whole.” Populations can be large (e.g., all residents of a country) or small (e.g., all patients in a hospital).
+
+Examples of populations:
+
+-   All patients with hypertension in the United States.
+-   All residents in a city when studying the incidence of respiratory diseases.
+-   All infants born in a hospital over a year to assess newborn health outcomes.
+
+**Sample**
+
+A sample is a subset of the population, selected in such a way that it represents the larger group. Sampling is done because studying the entire population can be impractical or impossible. In practice, obtaining samples might involve random sampling or other methods like stratified sampling to ensure specific subgroups are represented. The goal of taking a sample is to make inferences or predictions about the population based on this smaller, manageable group.
+
+Examples of samples:
+
+-   200 randomly selected patients with hypertension in a specific city to study treatment effectiveness.
+-   A group of 500 patients from a population of individuals over 65 to analyze common health outcomes in older adults.
+-   Blood samples taken from 150 randomly selected participants in a clinical trial to measure a biomarker.
+
+### Parameters and statistics
+
+In statistics, parameters and statistics are two fundamental concepts that distinguish the characteristics of a population from those of a sample.
+
+**Parameters**
+
+Parameters are numerical values that describe specific characteristics of a population. They represent true, often unknown values because measuring every individual in a population is usually impractical or impossible. Parameters are fixed values; however, they are generally estimated rather than measured directly.
+
+**Statistics**
+
+Statistics are numerical values calculated from a sample and serve as estimates of the corresponding population parameters. Statistics vary from sample to sample, as each sample might differ slightly from others due to random variation. They are used to make inferences about the population parameters.
+
+@tbl-parameter-statistic shows the differences between parameters and statistics.
+
+```{r}
+#| echo: false
+#| label: tbl-parameter-statistic
+#| tbl-cap: Key differences between parameter and statistic
+tibble(
+  Aspect = c(
+    "Definition", "Representation", "Symbol", "Variability", 
+    "Purpose"),
+  Parameter = c(
+    "Describes a population", "True values, often unknown", 
+    "$\\mu$ (mean), $\\sigma^2$ (variance), $\\pi$ (proportion)",
+    "Constant (fixed value)", 
+    "Describe entire population characteristics"),
+  Statistic = c(
+    "Describes a sample", "Estimated values, calculated from a sample",
+    "$\\bar{X}$ (mean), $S^2$ (variance), $p$ (proportion)",
+    "Varies from sample to sample", 
+    "Estimate or infer population parameters")
+) |> 
+  knitr::kable(align = 'l')
+```
+
+### Sampling frame and sampling
+
+In survey research and statistics, sampling and the sampling frame are both critical concepts in designing and conducting studies:
+
+**Sampling**
+
+Sampling is the process of selecting a subset of individuals (the sample) from a larger group (the population) to estimate characteristics of the whole group. Effective sampling allows researchers to make inferences about the population without surveying everyone, which is especially useful for large populations. Different sampling methods exist, such as simple random sampling, stratified sampling, and cluster sampling, each tailored to specific research needs.
+
+**Sampling frame**
+
+Sampling frame is the actual list or database from which the sample is drawn. It ideally includes every member of the population to avoid selection bias. The quality of the sampling frame directly affects the quality of the sample: if the sampling frame is incomplete or outdated, certain groups within the population may be under- or overrepresented in the sample, which can lead to biased results.
+
+For example, in a study of hospital patients, the sampling frame might be a complete patient registry, and the sampling method might involve randomly selecting a group from this registry for survey.
+
+::: example
+To illustrate various sampling methods, here we use all the passengers in the Titanic disaster of 1912 as the population, and the passenger registry with details as the sampling frame.
+:::
+
+```{r}
+pop <- carData::TitanicSurvival |> 
+  mutate(
+    class = passengerClass, age = as.integer(age), .keep = "unused")
+
+cat("The total number of survived passengers is:", nrow(pop))
+```
+
+## Simple random sampling
+
+Simple random sampling is a fundamental method of random sampling where each member of a population has an equal chance of being selected. This sampling technique is straightforward and is designed to minimize bias, ensuring that the sample is representative of the population.
+
+Here’s how you might perform a simple random sampling to select a sample of 10% subjects from a population:
+
+```{r}
+set.seed(2024)
+simple_rs <- pop |> 
+  slice_sample(prop = 0.1, replace = F) 
+simple_rs |> paged_table()
+```
+
+In this example, `replace = FALSE` ensures that each selected member can only appear in the sample once, maintaining independence and uniqueness in the sample selection.
+
+The survival rates of different class can be estimated by the following code block:
+
+```{r}
+simple_rs |> 
+  group_by(class, survived) |> 
+  summarise(n = n(), .groups = "drop") |> 
+  pivot_wider(
+    id_cols = everything(), names_from = c(survived), values_from = n
+  ) |> 
+  mutate(surv_rate = yes / (yes + no))
+```
+
+Simple random sampling is often used in:
+
+-   Survey research: To gather opinions or information from a subset of a population.
+-   Quality control: To inspect a sample of items for defects.
+-   Clinical trials: To select patients randomly for different treatment groups.
+
+This method works best when you have a complete list of the population and need an unbiased sample, especially when the population size is manageable.
+
+## Stratified random sampling
+
+Stratified random sampling is a method of sampling that involves dividing a population into distinct subgroups, called strata, that share specific characteristics. Within each stratum, a random sample is selected proportionally. This technique ensures that each subgroup is represented in the final sample, which can improve the accuracy and reliability of the study’s results, especially when the population has varying characteristics across groups.
+
+For the Titanic passengers, if the goal is to study survival rates across different class, the strata could be first class, second class and third class. Suppose each class has different numbers of passengers: First, select a proportionate random sample from each class (10% ), then, combine these samples to create a final sample that represents all classes proportionally.
+
+```{r}
+set.seed(2024)
+stratified_rs <- pop |> 
+  slice_sample(prop = 0.1, by = class) 
+
+stratified_rs |> paged_table()
+```
+
+The survival rates of different class is calculated by the following code block:
+
+```{r}
+stratified_rs |> 
+  group_by(class, survived) |> 
+  summarise(n = n(), .groups = "drop") |> 
+  pivot_wider(
+    id_cols = everything(), names_from = c(survived), values_from = n
+  ) |> 
+  mutate(surv_rate = yes / (yes + no))
+```
+
+## Systematic sampling
+
+Systematic sampling is a sampling technique where you select every k-th individual from a population list to form a sample. This method is straightforward, often easy to implement, and useful when a truly random sample is not required. It provides a way to cover the entire population by using a structured approach, which can be more efficient than simple random sampling.
+
+```{r}
+set.seed(2024)
+
+sys_sample <- function(df, size) {
+  N <- nrow(df) 
+  k <- floor(N / size)
+  start <- sample(1:k, 1)
+  indices <- seq(start, by = k, length.out = size)
+  
+  return(df[indices, ])
+}
+
+systematic_rs <- sys_sample(pop, 130) 
+systematic_rs |> paged_table()
+```
+
+## Cluster sampling
+
+Cluster Sampling is a probability sampling technique in which the population is divided into distinct groups, or “clusters.” Then, instead of selecting individual members from the entire population, random clusters are selected, and all or a sample of individuals within each selected cluster are included in the final sample. This method is commonly used in large-scale studies, especially when the population is spread across a wide geographic area, making individual sampling costly or impractical.
+
+Suppose you want to conduct a survey on household income in a city with 100 neighborhoods (clusters), each has 1000 families, and you plan to take a sample of 10 clusters, in each cluster 100 families are selected randomly. Here we write a clustering sampling function named `cluster_sample()` to perform this process:
+
+```{r}
+cluster_sample <- function(data, id, n, size = NULL, prop = NULL) {
+  if (!xor(is.null(size), is.null(prop))) {
+    stop("Specify either 'size' or 'prop', but not both.")
+  }
+  
+  # Step 1: Select clusters
+  selected_clusters <- sample(unique(data |> pull({{id}})), n)
+  
+  # Step 2: Sample families within each selected cluster
+  sampled_data <- bind_rows(lapply(selected_clusters, function(cluster) {
+    # Filter data for the current cluster
+    cluster_data <- data |> filter({{id}} == cluster)
+    
+    # Determine the number of families available in the cluster
+    n_families <- nrow(cluster_data)
+    
+    # Decide the number of samples based on fixed count or proportion
+    if (!is.null(size)) {
+      # Use a fixed number but limit to available families
+      n_to_sample <- min(size, n_families)
+    } else {
+      # Use a proportion but ensure at least 1 family is selected
+      n_to_sample <- max(1, round(n_families * prop))
+    }
+    
+    # Randomly sample families within the cluster
+    sampled_families <- cluster_data |> slice_sample(n = n_to_sample)
+    return(sampled_families)
+  }))
+  
+  return(sampled_data)
+}
+```
+
+```{r}
+set.seed(2024)
+nhood_sizes <- sample(800:1200, 100, replace = T)
+
+nhoods <- tibble(
+  nhood_id = rep(1:100, times = nhood_sizes),
+  family_id = sequence(nhood_sizes),
+  income = rnorm(sum(nhood_sizes), mean = 50000, sd = 15000)  
+)
+# Example 1: Sample 100 families from each of 10 selected clusters
+cluster_sample(nhoods, id = nhood_id, n = 10, size = 100) |> paged_table()
+
+# Example 2: Sample 10% of families from each of 10 selected clusters
+cluster_sample(nhoods, id = nhood_id, n = 10, prop = 0.1) |> paged_table()
+```
+
+Cluster sampling is commonly used in:
+
+-   Public health surveys: Randomly select neighborhoods (clusters) to analyze health indicators across a city.
+-   Social research: Select geographic areas or households to study quality of life or social indicators
+-   Educational research: Choose schools or classes as clusters to assess academic performance among students.
+
+Cluster sampling is a practical and cost-effective way to gather representative data in resource-limited scenarios. However, special attention is needed to ensure clusters are representative to avoid bias.

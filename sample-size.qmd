@@ -1,0 +1,356 @@
+# Sample size estimation
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Sample size estimation is an important step when conducting clinical trials, survey studies, or other scientific research. It is essential for designing a study that is capable of detecting significant effects or differences. A reasonable sample size ensures that the study has sufficient statistical power to detect the effects of interest while avoiding unnecessary waste of resources.
+
+## Prerequisites
+
+```{r}
+#| message: false
+library(tidyverse)
+library(pwr)
+library(effectsize)
+```
+
+## Factors affecting sample size
+
+The required sample size in a study is influenced by several key factors, which determine how large a sample is necessary to detect meaningful effects or differences. Here are the primary factors affecting sample size:
+
+**1. Effect size**
+
+Effect size is the magnitude of the difference or relationship the study aims to detect. Larger effect sizes require smaller sample sizes to detect, while smaller effect sizes require larger sample sizes to achieve the same power.
+
+**2. Significance level (**$\alpha$**)**
+
+Significance level is the probability of rejecting the null hypothesis when it is actually true (type I error), often set at 0.05. Lowering $\alpha$ (making the test more stringent) increases the required sample size because it reduces the chance of falsely detecting a significant effect.
+
+**3. Statistical power (**$1-\beta$**)**
+
+Statistical power is the probability of correctly rejecting the null hypothesis when it is false, typically set at 0.8 or 0.9. Higher power requires a larger sample size, as it reduces the chance of a type II error (failing to detect a true effect).
+
+**4. Population variability**
+
+The extent of variability or dispersion in the population, often reflected in standard deviation or variance. Higher variability necessitates a larger sample size to achieve a reliable estimate, as more variability makes it harder to detect true differences.
+
+**5. Study design**
+
+Study design refers to the structure of the study, such as whether it includes repeated measures, matched pairs, or independent groups. Designs that control for variability (e.g., paired designs) generally require smaller sample sizes than independent designs.
+
+**6. Sampling method**
+
+Sampling method refers to the approach of how participants are selected for the study (e.g., random sampling, stratified sampling). A sampling method that better represents the population can improve accuracy and reduce the sample size needed.
+
+**7. Attrition or dropout rate**
+
+Attrition rate denotes the expected rate at which participants may leave the study before it is completed. Higher expected dropout rates require oversampling to ensure adequate final sample size.
+
+Understanding these factors allows researchers to plan a sample size that balances feasibility with statistical rigor, ensuring the study’s findings are reliable and valid. Here’s a breakdown of sample size estimation methods for different study types and analysis.
+
+## Comparison of one-sample mean with a known population mean
+
+To compare a single sample mean with a known population mean, the one-sample t-test is commonly used if the population variance is unknown and the sample size is relatively small. To estimate the required sample size of one-sample t-test, we need to consider several key factors:effect size $\Delta$, significance level $\alpha$, power 1-β, and population standard deviation $\sigma$ (or an estimate if unknown). The sample size $n$ can be estimated as:
+
+$$
+n = \left( \frac{Z_{1-\alpha/2} + Z_{1-\beta}}{\Delta / \sigma} \right)^2
+$$
+
+where $Z_{1-\alpha/2}$ is the Z-score for the significance level (two-tailed, if applicable), $Z_{1-\beta}$ is the Z-score for the desired power level.
+
+::: example
+A scientist wants to study the effect of a treatment on blood pressure in rats with acute myocardial ischemia. It is hypothesized that an average increase of 10 mmHg in arterial systolic pressure would be clinically significant. Given that the standard deviation of the treatment effect on blood pressure is 15 mmHg, how many rats are needed to detect this effect?
+:::
+
+The `power.t.test()` function fro the `stats` package can be used to estimate the sample size needed for a one-sample t-test.
+
+```{r}
+power.t.test(
+  delta = 10, sd = 15, sig.level = 0.05, power = 0.9,
+  type = "one.sample", alternative = "one.sided")
+```
+
+Alternatively, you can use the `pwr.t.test()` function from the `pwr` package:
+
+```{r}
+pwr.t.test(
+  d = 10 / 15, sig.level = 0.05, power = 0.9,
+  type = "one.sample",alternative = "greater") 
+```
+
+Based on the results, the scientist would need 21 rats in order to have a 90% probability of detecting a significant increase in blood pressure of at least 10 mmHg with a one-sided test at a 5% significance level.
+
+## Comparison of two-sample means
+
+A two-sample mean comparison is used to determine if there is a significant difference between the means of two independent groups. This type of test is commonly applied in scenarios like comparing the effect of two treatments or comparing measurements between two different populations. To estimate the sample size, we use a formula that considers the effect size, significance level, power, and variability within each group. This is typically done for a two-sample t-test.
+
+The formula for estimating the required sample size $n$ per group is:
+
+$$
+n = \frac{2 \sigma^2 (Z_{1-\alpha/2} + Z_{1-\beta})^2}{\Delta^2}
+$$
+
+where $\sigma$ is the pooled standard deviation of the two groups, assumed to be the same for both groups (or an estimate from previous data), $Z_{1-\alpha/2}$ is the Z-score corresponding to the chosen significance level (this is often 1.96 if $\alpha = 0.05$), $Z_{1-\beta}$ is the Z-score corresponding to the desired power level (0.84 for 80% power or 1.28 for 90% power), $\Delta$ is the effect size, defined as the minimum detectable difference in means between the two groups.
+
+::: example
+A scientist intends to evaluate the efficacy of a compound hypoglycemic capsule on diabetic mice. The plan is to randomly divide diabetic model mice into two equal groups. After four weeks, fasting blood glucose levels will be measured and compared between the two groups. Based on preliminary results, the expected fasting blood glucose in the control group is 16.5 mmol/L, while in the experimental group, it is 10.5 mmol/L. The standard deviation of fasting blood glucose in both groups is assumed to be equal, at 8.0 mmol/L. To detect a significant effect of the compound hypoglycemic capsule, with a significance level of $\alpha = 0.05$ and power of $1 - \beta = 0.90$, how many mice are required in each group?
+:::
+
+The `power.t.test()` function and `pwr.t.test()` function can perform this calculation for a two-sample t-test:
+
+```{r}
+power.t.test(delta = 6, sd = 8, sig.level = 0.05, power = 0.9, type = "two.sample")
+```
+
+```{r}
+pwr.t.test(
+  d = 6 / 8, sig.level = 0.05, power = 0.9,
+  type = "two.sample",alternative = "two.sided") 
+```
+
+With these parameters, the output suggests that 39 mice each group are needed to reliably detect a significant difference in fasting blood glucose levels between the treatment and control groups.
+
+## Comparison of multiple sample means
+
+When comparing multiple sample means, typically a one-way analysis of variance (ANOVA) is used to test if there are statistically significant differences among the means of three or more independent groups. The one-way ANOVA works under the assumption that the groups have approximately equal variances and that the data are normally distributed within each group.
+
+When comparing multiple sample means with ANOVA, the sample size estimation considers the desired power, significance level, number of groups, and effect size. For a one-way ANOVA with $k$ groups, the sample size $n$ required each group can be estimated using:
+
+$$
+n = \frac{2 (Z_{1 - \alpha/2} + Z_{1 - \beta})^2}{f^2}
+$$
+
+where $Z_{1 - \alpha/2}$ is the critical value from the standard normal distribution for a two-sided test, $Z_{1 - \beta}$ is the critical value associated with the desired power, $f$, i.e. Cohen’s f, is the effect size for ANOVA, defined as:
+
+$$
+f = \frac{\sqrt{\frac{\sum_{i=1}^k (\bar{X}_i - \bar{X}_{\text{grand}})^2}{k}}}{\sigma}
+$$
+
+where $k$ is the number of groups, $\bar{X}_i$ is the mean of the $i$-th group,$\bar{X}_{\text{grand}}$ is the overall (grand) mean across all groups, and $\sigma$ is the pooled within-group standard deviation, which is expressed as:
+
+$$
+\sigma = \sqrt{\frac{\sum_{i=1}^k (n_i - 1)S_i^2}{\sum_{i=1}^k (n_i - 1)}}
+$$
+
+where $n_i$ is the sample size and $S_i$ the standard deviation of group $i$.
+
+For a balanced design with equal group sizes $n$ , $\sigma$ is calculated as:
+
+$$
+\sigma = \sqrt{\frac{\sum_{i=1}^k S_i^2}{k}}
+$$
+
+Here we define a function named `cohens.f()` to compute Cohen’s f with the group means and the standard deviations:
+
+```{r}
+# Function to calculate Cohen's f for ANOVA
+cohens.f <- function(means, sds) {
+  grand_mean <- mean(means)
+  pooled_sd <- sqrt(mean(sds^2))
+  sd_mean <- sqrt(mean((means - grand_mean)^2))
+  
+  # Calculate Cohen's f
+  cohens_f <- sd_mean / pooled_sd
+  return(cohens_f)
+}
+```
+
+::: example
+A scientist plans to study the effects of Bifidobacterium and colchicine on liver fibrosis in mice. The mice will be randomly divided into three groups: a model (control) group, a Bifidobacterium infantis group, and a colchicine group. One primary outcome is the liver weight index in the mice. It is estimated that the liver weight index for each group at the end of the experiment will be 6.20, 5.40, and 4.70, respectively, with standard deviations of 1.87, 1.56, and 1.52. With a significance level of $\alpha = 0.05$ and power of $1 - \beta = 0.90$, how many mice are needed in each group to detect a significant difference?
+:::
+
+The `power.anova.test()` function and `pwr.anova.test()` function can perform this calculation for this example:
+
+```{r}
+means <- c(6.20, 5.40, 4.70)
+sds <- c(1.87, 1.56, 1.52)
+
+power.anova.test(
+  groups = 3, between.var = var(means), within.var = mean(sds^2),
+  sig.level = 0.05, power = 0.9) 
+```
+
+```{r}
+f <- cohens.f(means, sds)
+
+pwr.anova.test(k = 3, f = f, sig.level = 0.05, power = 0.9)
+```
+
+For the given parameters, the output shows that each group should include 32 subjects. This sample size ensures a 90% chance of detecting a meaningful difference between the groups.
+
+::: callout-tip
+The `effectsize` package provides various effect size calculations, including Cohen’s f for ANOVA directly from model objects. If you have original data collected from a pilot study, first conduct an ANOVA and then extract the effect size.
+:::
+
+```{r}
+set.seed(2024)
+
+# Example data frame for ANOVA analysis
+data <- data.frame(
+  group = factor(c(rep("A", 15), rep("B", 15), rep("C", 15))),
+  x = c(
+    rnorm(15, 6.20, 1.87), rnorm(15, 5.40, 1.56), rnorm(15, 4.70, 1.52))
+)
+
+model <- aov(x ~ group, data = data)
+cohens_f(model, partial = F, alternative = "two.sided")
+```
+
+## Comparison of one-sample proportion with a known population proportion
+
+When comparing a sample proportion to a known population proportion, the goal is typically to determine whether the observed sample proportion differs significantly from the known or expected proportion in the population.
+
+For a large sample (typically $n \geq 30$, or more strictly when $np \geq 5$ and $n(1 - p) \geq 5$), a z-test is appropriate to compare the sample proportion to the known population proportion. This is because, with a large sample size, the distribution of the sample proportion approximates a normal distribution. The z-test statistic for this test is calculated as:
+
+$$
+z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0 (1 - p_0)}{n}}}
+$$
+
+where $\hat{p}$ is the sample proportion, $p_0$ is the known population proportion, $n$ is the sample size.
+
+To estimate the sample size needed for this test with specified significance level and power, use the following formula:
+
+$$
+n = \frac{(Z_{1 - \alpha/2} + Z_{1 - \beta})^2 \cdot p_0 (1 - p_0)}{(\hat{p} - p_0)^2}
+$$
+
+where $Z_{1 - \alpha/2}$ is the Z-value for the significance level, $Z_{1 - \beta}$ is the Z-value associated with the desired power.
+
+For small samples (when $n < 30$ , or $np < 5$ and $n(1 - p) < 5$), the z-test is not suitable because the sample proportion distribution does not approximate a normal distribution. Instead, a binomial test is recommended for small sample sizes. The binomial test is a non-parametric test, appropriate when normality cannot be assumed. It directly evaluates the difference in proportions based on the binomial distribution, providing a more accurate result for small samples.
+
+::: example
+A pharmaceutical institute has developed a new drug expected to increase the effective rate of treating lung cancer model mice from the conventional 45% to 60%. To conduct an animal experiment, how many lung cancer model mice are required to detect an improvement of 15% in the effective rate of the new drug?
+:::
+
+Here we write a function named `sample.size.one.p()` to compute the sample size based on the formula above:
+
+```{r}
+sample.size.one.p <- function(p0, p, alpha = 0.05, power = 0.9, alternative = "one.sided") {
+  if (alternative == "one.sided") {
+    z_alpha <- qnorm(1 - alpha)
+  } else if (alternative == "two.sided") {
+    z_alpha <- qnorm(1 - alpha / 2)
+  } else {
+    stop("alternative must be 'one.sided' or 'two.sided'")
+  }
+  z_beta <- qnorm(power)
+  numerator <- (z_alpha + z_beta)^2 * p0 * (1 - p0)
+  denominator <- (p - p0)^2
+  n <- numerator / denominator
+  
+  METHOD <- "One-sample comparison of proportion sample size calculation"
+  
+  structure(
+    list(n = n, alpha = alpha, power = power, alternative = alternative, 
+         method = METHOD), 
+    class = "power.htest")
+}
+
+sample.size.one.p(p0 = 0.45, p = 0.6, alpha = 0.05, power = 0.9)
+```
+
+Alternative, you can use the `pwr.p.test()` function from the `pwr` packages:
+
+```{r}
+h <- ES.h(0.6, 0.45)
+
+pwr.p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "greater")
+```
+
+In summary, for a study designed to detect an effect size (h = 0.3015) with 90% power and a 5% significance level, you would need approximately 95 observations in a one-sided test to determine if the sample proportion is significantly greater than the population proportion.
+
+## Comparison of two-sample proportions
+
+To compare two independent sample proportions, we generally conduct a hypothesis test for the difference between two population proportions. This is typically done using a two-sample z-test for proportions. The test statistic follows a normal distribution (under large sample sizes) and is calculated as:
+
+$$
+Z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1 - \hat{p}) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}}
+$$
+
+where $\hat{p}_1$ and $\hat{p}_2$ are the two sample proportions, $n_1$ and $n_2$ are the sample sizes of each group, $\hat{p}$ is the pooled sample proportion, which is the weighted average of the two sample proportions:
+
+$$
+\hat{p} = \frac{x_1 + x_2}{n_1 + n_2}
+$$
+
+where $x_1$ and $x_2$ are the number of successes (events of interest) in each group.
+
+To estimate the sample size required for detecting a difference between two independent sample proportions, the following formula can be used:
+
+$$
+n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1} \sqrt{p_1} - \text {sin}^{-1} \sqrt{p_2})^2}
+$$
+
+where $Z_{\alpha/2}$ is the critical value for the two-sided test at significance level $\alpha$, $Z_{\beta}$ is the critical value corresponding to the desired power.
+
+Here we write a function named `sample.size.two.p()` to compute the sample size based on the formula above:
+
+```{r}
+sample.size.two_p <- function(p1, p2, alpha = 0.05, power = 0.9, alternative = "two.sided") {
+  # Calculate Z-scores for significance level based on test type
+  if (alternative == "two.sided") {
+    z_alpha <- qnorm(1 - alpha / 2)  # Two-sided test
+  } else if (alternative == "one.sided") {
+    z_alpha <- qnorm(1 - alpha)  # One-sided test
+  } else {
+    stop("alternative must be 'two.sided', 'one.sided'")
+  }
+  
+  z_beta <- qnorm(power)
+  numerator <- (z_alpha + z_beta)^2 
+  denominator <- 2 * (asin(sqrt(p1)) - asin(sqrt(p2)))^2
+  n <- numerator / denominator
+  
+  NOTE <-  "n is the sample size for each group"
+  METHOD <- "Two-sample comparison of proportions sample size calculation"
+  structure(
+    list(
+      n = n, alpha = alpha, power = power, alternative = alternative, 
+      method = METHOD, note = NOTE), 
+    class = "power.htest")
+}
+
+sample.size.two_p(p1 = 0.95, p2 = 0.80, alpha = 0.05, power = 0.9, alternative = "two.sided")
+```
+
+```{r}
+power.prop.test(p1 = 0.95, p2 = 0.8, sig.level = 0.05,
+  power = 0.9, alternative = "two") 
+```
+
+```{r}
+h <- ES.h(0.95, 0.8)
+pwr.2p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "two")
+```
+
+It should be noticed that the sample sizes calculated by `power.prop.test()` and `pwr.2p.test()` are different. The difference comes from the underlying methodologies they use to estimate effect size and power. Here’s a brief explanation of each:
+
+-   `power.prop.test()` uses a standard normal approximation for the difference between two proportions, calculating power based on a more traditional Z-test approach. It does not transform the proportions and operates directly on the difference in proportions (p1 - p2).
+-   `pwr.2p.test()` from the `pwr` package uses Cohen’s h, which is based on the arcsine transformation of the proportions. Cohen’s h is a measure of effect size that is specifically adjusted for proportions, aiming to improve the estimation’s stability, especially when proportions are near 0 or 1.
+
+If you areworking with proportions that are close to 0 or 1, pwr.2p.test() may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.
+
+## Comparison of multiple sample proportions
+
+When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The null hypothesis assumes that the proportions are equal across all groups.
+
+To estimate the sample size required for detecting a difference among groups, the following formula can be used:
+
+$$
+n = \frac{\lambda} {2(\text {sin}^{-1} \sqrt{p_{\text max}} - \text {sin}^{-1} \sqrt{p_{\text min}})^2}
+$$
+
+where $Z_{\alpha/2}$ is the critical value for the two-sided test at significance level $\alpha$, $Z_{\beta}$ is the critical value corresponding to the desired power.
+
+::: example
+To observe the effects of 3 methods for treating peptic ulcers in rats, it is preliminarily estimated that method A has an efficacy rate of 40%, method B has an efficacy rate of 50%, and method C has an efficacy rate of 65%. Assuming $α = 0.05$ and $β = 0.10$, to conclude that there are differences in efficacy rates, how many rats need to be observed in each group?
+:::
+
+```{r}
+P <- matrix(c(0.4, 0.6, 0.5, 0.5, 0.65, 0.35), nrow = 3, byrow = T)
+w = ES.w2(P / 3) 
+
+pwr.chisq.test(w = w, df = 2, sig.level = 0.05, power = 0.9) 
+```

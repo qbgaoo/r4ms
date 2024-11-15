@@ -1,5 +1,7 @@
 # Generalized estimating equation
 
+Generalized estimating equation (GEE) is a statistical technique used for analyzing correlated data, particularly in longitudinal studies or repeated measurements where observations are not independent. GEE is useful for handling a range of data distributions and works well in situations where measurements are taken multiple times on the same subjects.
+
 ```{r}
 #| echo: false
 source("_common.R")
@@ -12,7 +14,42 @@ source("_common.R")
 library(tidyverse)
 library(ordinal)
 library(geepack)
+library(repolr)
 ```
+
+## Introduction of GEE
+
+### Key features of GEE
+
+Handles repeated measures: GEE is well-suited for analyzing data from subjects measured multiple times, where these repeated measurements are likely to be correlated.
+
+Flexible modeling: GEE can handle various distributions, including binary, Poisson, and normal distributions.
+
+Robust Estimation: GEE provides consistent estimates even if the correlation structure is not perfectly specified.
+
+### Correlation structures in GEE
+
+GEE requires specifying a correlation structure to model the relationship between repeated measures. Common structures include:
+
+Independent: Assumes no correlation between measurements.
+
+Exchangeable: Assumes a constant correlation between measurements from the same subject.
+
+Autoregressive: Assumes that correlations decrease as time points grow further apart.
+
+Unstructured: Allows each pair of measurements to have its own correlation, though it requires a larger sample size to estimate reliably.
+
+### Applications of GEE
+
+GEE is widely used in fields like medicine, psychology, ecology, and social sciences for analyzing:
+
+Clinical trials: Evaluating patient outcomes over multiple time points.
+
+Multi-center studies: Analyzing data from different locations while accounting for within-center correlations.
+
+Longitudinal research: Assessing changes over time, such as in developmental studies or tracking treatment effects.
+
+## Using GEE in R
 
 ::: example
 A researcher randomly selected 149 patients who used a pain relief pump after gynecological abdominal surgery. The subjects were randomly divided them into a control group and an treatment group, with different postoperative care methods applied. The researcher observed the patients’ pain at five different time points and assessed the pain levels using a numerical rating scale. The question is whether the two methods differ in their effectiveness in relieving the patients’ pain.
@@ -20,7 +57,7 @@ A researcher randomly selected 149 patients who used a pain relief pump after gy
 
 <div>
 
-<a href="datasets/ex31-01.csv" download="ex31-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+<a href="datasets/ex32-01.csv" download="ex312-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
 
 </div>
 
@@ -28,7 +65,11 @@ A researcher randomly selected 149 patients who used a pain relief pump after gy
 df <- read_csv("datasets/ex32-01.csv", , show_col_types = F) 
 ```
 
-The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.
+The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the GEE approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.
+
+### `geepack` package
+
+The `geepack` package provides the several functions to fit GEE models. The `geeglm()` is a general GEE function that can model various types of data, including binary, count, and continuous outcomes, with flexibility in specifying link functions. The `ordgee()` function is specifically tailored for ordinal response data within GEE models. This function handles ordinal outcomes by fitting a GEE model with an ordinal link, such as the cumulative logit model, which is suitable for ordered categorical data.
 
 The following table shows the results of model:
 
@@ -42,114 +83,135 @@ data <- df |>
   ) |> 
   mutate(
     subject = as.integer(subject),
-    group = factor(group, labels = c("ctrl", "trt")),
+    group = factor(group, labels = c("ctl", "trt")),
     time = as.integer(time)
-  )
+  ) |> 
+  as.data.frame()
 
 geeglm(
   pain ~ time + group + time:group, 
   id = subject, 
-  corstr = "ar1", 
+  corstr = "unstructured", 
   data = data
 ) |> 
-  summary()
-```
-
-```{r}
-ordgee(
-  ordered(pain) ~ time + group + time:group, 
-  id = subject, 
-  corstr = "independence", 
-  data = data
-) |> 
-  summary()
+  tidy()
 ```
 
 The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :
 
 1.  (Intercept)
 
-• Estimate: 2.565 • Standard Error: 0.055 • Statistic: 2,182.131 • p-value: 0.000
+Estimate: 2.549 Standard Error: 0.072 Statistic: 1261.13 p-value: 0.000
 
 Interpretation: The intercept represents the estimated average level of the response variable pain when both time and group are at their reference levels (e.g., at the baseline time point and in the control group). The p-value indicates that this estimate is highly statistically significant, meaning there’s strong evidence that the intercept is different from zero.
 
 2.  time
 
-• Estimate: -0.480 • Standard Error: 0.023 • Statistic: 422.960 • p-value: 0.000
+Estimate: -0.5154 Standard Error: 0.02395 Statistic: 305.61 p-value: 0.000
 
-Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant (p-value = 0.000).
+Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant .
 
 3.  group
 
-• Estimate: -0.304 • Standard Error: 0.090 • Statistic: 11.386 • p-value: 0.001
+Estimate: -0.3446 Standard Error: 0.1132 Statistic: 9.26 p-value: 0.00234
 
-Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value = 0.001).
+Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value \< 0.01).
 
 4.  time:group
 
-• Estimate: 0.038 • Standard Error: 0.035 • Statistic: 1.181 • p-value: 0.277
+Estimate: 0.0829 Standard Error: 0.0437 Statistic: 3.6 p-value: 0.0577
 
-Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.277 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.
+Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.0577 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.
 
-Summary
+```{r}
+geepack::ordgee(
+  ordered(pain) ~ time * group, id = subject, 
+  corstr = "independence", data = data) |> 
+  summary()
+```
 
-• Main Effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. • Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.
+The `geeglm()` and `ordgee()` are both functions used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.
+
+**`geeglm()`**
+
+This function is a more general function that fits GEE models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM).
+
+It allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects.
+
+Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data.
+
+Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.
+
+**`ordgee()`**
+
+This function is specifically designed for fitting GEE models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data.
+
+It accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes.
+
+Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes.
+
+Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.
+
+**Key Differences:**
+
+1.  Outcome Type: ordgee: Specifically for ordinal outcomes. geeglm: For a wide range of outcome types (continuous, binary, count, etc.).
+2.  Link Functions: ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). geeglm: Allows specification of various link functions depending on the distribution of the response variable.
+3.  Flexibility: ordgee: More specialized, focusing on ordinal outcomes. geeglm: More flexible, applicable to various types of response variables.
+4.  Interpretation: ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. geeglm: Focuses on population-averaged effects across the levels of the outcome.
+
+**When to use which:** Use `geeglm()` when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering. Use `ordgee()` when you have ordinal response data and need to account for repeated measures or clustering.
+
+### `repolr` package
+
+The package allows regression models to be fitted to repeated ordinal scores, for the proportional odds model, using a generalized estimating equation (GEE) methodology. The algorithm estimates the correlation parameter by minimizing the generalized variance of the regression parameters at each step of the fitting algorithm.
+
+The `repolr()` function from the `repolr` package is used to handle this problem.
+
+```{r}
+repolr(
+  pain ~ time * group, data = data, subjects = "subject", 
+  times = c(1, 2, 3, 4, 5), categories = 4) |> 
+  summary()
+```
+
+Main effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.
+
+GEE is a powerful approach for repeated measures and longitudinal data analysis, allowing researchers to account for correlation within subjects and to draw meaningful conclusions about treatment effects or changes over time. It is robust to correlation misspecification, making it suitable for complex correlated data structures. It provides reliable parameter estimates across various data distributions. However, GEE is less effective with small sample sizes, where its estimations may be less reliable. The choice of correlation structure requires statistical expertise, as incorrect specification can impact results.
+
+### `ordinal` package
+
+This package facilitates analysis of ordinal (ordered categorical data) via cumulative link models (CLMs) and cumulative link mixed models (CLMMs). Robust and efficient computational methods gives speedy and accurate estimation. A wide range of methods for model fits aids the data analysis.
 
 ```{r}
 clm(ordered(pain) ~ time * group, data = data) |> 
   summary()
 ```
 
-The choice between cumulative link mixed models (CLMM) and generalized estimating equations (GEE) depends on the specifics of your data and the goals of your analysis. Both methods are used for analyzing clustered or repeated measures data with ordinal outcomes, but they have different strengths and weaknesses.
-
 ```{r}
-clmm(ordered(pain) ~ time * group + (1 | subject), data = data) |> 
+clmm(ordered(pain) ~ time * group + (1 | subject), data = data) |>
   summary()
 ```
 
-Cumulative Link Mixed Models (CLMM)
+CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects.
 
-Pros:
+CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns.
 
-• Random Effects: CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects. • Interpretation: CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns. • Likelihood-Based: CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met.
+CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met. CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.
 
-Cons:
+CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects.
 
-• Computationally Intensive: CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects. • Assumptions: CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.
+GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met.
 
-Generalized Estimating Equations (GEE)
+GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets.
 
-Pros:
+GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.
 
-• Robustness: GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met. • Less Computationally Intensive: GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets. • Flexibility: GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.
+GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.
 
-Cons:
+When to choose which:
 
-• No Random Effects: GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.
+Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.
 
-When to Choose Which:
-
-• Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable. • Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.
+Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable.
 
 In summary, if your primary interest is in understanding individual-level variability and you can handle the computational load, CLMM might be the better choice. If you’re more interested in population-level trends and want a more robust approach with less concern for the specific correlation structure, GEE would be a better option.
-
-ordgee and geeglm are both functions in R used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.
-
-ordgee (Ordinal Generalized Estimating Equations)
-
-• Purpose: ordgee is specifically designed for fitting Generalized Estimating Equations (GEE) models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data. • Model: ordgee accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes. • Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes. • Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.
-
-geeglm (Generalized Estimating Equations for Generalized Linear Models)
-
-• Purpose: geeglm is a more general function that fits Generalized Estimating Equations (GEE) models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM). • Model: geeglm allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects. • Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data. • Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.
-
-Key Differences:
-
-1.  Outcome Type: • ordgee: Specifically for ordinal outcomes. • geeglm: For a wide range of outcome types (continuous, binary, count, etc.).
-2.  Link Functions: • ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). • geeglm: Allows specification of various link functions depending on the distribution of the response variable.
-3.  Flexibility: • ordgee: More specialized, focusing on ordinal outcomes. • geeglm: More flexible, applicable to various types of response variables.
-4.  Interpretation: • ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. • geeglm: Focuses on population-averaged effects across the levels of the outcome.
-
-When to Use Which:
-
-• Use ordgee when you have ordinal response data and need to account for repeated measures or clustering. • Use geeglm when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering.

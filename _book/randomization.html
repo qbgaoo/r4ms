@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Introduction – R for Medical Statistics</title>
+<title>35&nbsp; Randomization – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./basic-stat.html" rel="next">
-<link href="./preface.html" rel="prev">
+<link href="./sample-size.html" rel="next">
+<link href="./random-sampling.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -85,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introduction.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./randomization.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -133,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./introduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -362,20 +396,32 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./randomization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sample-size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sample size estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -390,28 +436,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#medical-statistics" id="toc-medical-statistics" class="nav-link active" data-scroll-target="#medical-statistics"><span class="header-section-number">2.1</span> Medical statistics</a></li>
-  <li><a href="#population-and-sample" id="toc-population-and-sample" class="nav-link" data-scroll-target="#population-and-sample"><span class="header-section-number">2.2</span> Population and sample</a>
-  <ul class="collapse">
-  <li><a href="#population" id="toc-population" class="nav-link" data-scroll-target="#population"><span class="header-section-number">2.2.1</span> Population</a></li>
-  <li><a href="#sample" id="toc-sample" class="nav-link" data-scroll-target="#sample"><span class="header-section-number">2.2.2</span> Sample</a></li>
-  <li><a href="#relationship-between-population-and-sample" id="toc-relationship-between-population-and-sample" class="nav-link" data-scroll-target="#relationship-between-population-and-sample"><span class="header-section-number">2.2.3</span> Relationship between population and sample</a></li>
-  </ul></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">2.3</span> Data</a>
-  <ul class="collapse">
-  <li><a href="#quantitative-data" id="toc-quantitative-data" class="nav-link" data-scroll-target="#quantitative-data"><span class="header-section-number">2.3.1</span> Quantitative data</a></li>
-  <li><a href="#qualitative-data-categorical-data" id="toc-qualitative-data-categorical-data" class="nav-link" data-scroll-target="#qualitative-data-categorical-data"><span class="header-section-number">2.3.2</span> <strong>Qualitative data (Categorical data)</strong></a></li>
-  <li><a href="#ordinal-data" id="toc-ordinal-data" class="nav-link" data-scroll-target="#ordinal-data"><span class="header-section-number">2.3.3</span> <strong>Ordinal Data</strong></a></li>
-  </ul></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">35.1</span> Prerequisites</a></li>
+  <li><a href="#simple-randomization" id="toc-simple-randomization" class="nav-link" data-scroll-target="#simple-randomization"><span class="header-section-number">35.2</span> Simple randomization</a></li>
+  <li><a href="#complete-randomization" id="toc-complete-randomization" class="nav-link" data-scroll-target="#complete-randomization"><span class="header-section-number">35.3</span> Complete randomization</a></li>
+  <li><a href="#block-randomization" id="toc-block-randomization" class="nav-link" data-scroll-target="#block-randomization"><span class="header-section-number">35.4</span> <strong>Block Randomization</strong></a></li>
+  <li><a href="#stratified-randomization" id="toc-stratified-randomization" class="nav-link" data-scroll-target="#stratified-randomization"><span class="header-section-number">35.5</span> Stratified randomization</a></li>
+  <li><a href="#minimization" id="toc-minimization" class="nav-link" data-scroll-target="#minimization"><span class="header-section-number">35.6</span> <strong>Minimization</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/introduction.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/randomization.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./randomization.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></h1>
+<h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></h1>
 </div>
 
 
@@ -428,166 +467,284 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="medical-statistics" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="medical-statistics"><span class="header-section-number">2.1</span> Medical statistics</h2>
-<p>Medical statistics is the science of applying statistical techniques and principles to analyze data related to health, disease, treatment effectiveness, and public health issues. It involves the systematic collection, organization, description, and inference of health-related data to assist healthcare professionals in making evidence-based, scientific decisions.</p>
-<p><strong>Key Components:</strong></p>
-<p>1. <strong>Data Collection</strong>: Gathering health-related data systematically through experiments, observational studies, or clinical trials.</p>
-<p>2. <strong>Data Organization and Description</strong>: Using statistical measures, such as means, variances, and frequency distributions, to describe and summarize the basic characteristics of the data.</p>
-<p>3. <strong>Data Analysis</strong>: Applying inferential statistical methods, such as hypothesis testing, regression analysis, and analysis of variance (ANOVA), to uncover patterns and causal relationships in the data.</p>
-<p>4. <strong>Interpretation of Results</strong>: Applying the results of statistical analyses to the medical field, explaining the occurrence and progression of diseases, the effectiveness of treatments, and providing evidence-based support for clinical decisions and public health policies.</p>
-<p>Medical statistics is widely used in medical research, the design of clinical trials, the evaluation of diagnostic tests, the comparison of treatment outcomes, and the epidemiological study of diseases.</p>
+<p>Randomization is a technique used in experiments and studies to assign participants to different groups, such as treatment and control groups, in a way that is entirely random. The goal is to reduce potential bias and to ensure that any differences between groups are due to chance rather than systematic differences. This approach helps to increase the validity of study results, as it balances confounding variables across groups.</p>
+<section id="prerequisites" class="level2" data-number="35.1">
+<h2 data-number="35.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">35.1</span> Prerequisites</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomizeR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="population-and-sample" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="population-and-sample"><span class="header-section-number">2.2</span> Population and sample</h2>
-<p>Population and sample are fundamental concepts in statistics, and they are key to understanding data analysis, particularly in the context of statistical inference.</p>
-<section id="population" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="population"><span class="header-section-number">2.2.1</span> Population</h3>
-<p>A population includes all members of a defined group that we are studying or collecting information on for data-driven decisions. The population represents the entire group of interest, which could be people, objects, events, or measurements.</p>
-<p>Examples: All adults living in a particular country. All patients treated for a particular condition in a hospital over a decade.</p>
-<p>Characteristics:</p>
-<p>Parameters: The numerical characteristics of a population are called parameters (e.g., population mean, population standard deviation).</p>
-<p>Size: The population can be finite (e.g., all students in a school) or infinite (e.g., all possible outcomes of rolling a die).</p>
+<section id="simple-randomization" class="level2" data-number="35.2">
+<h2 data-number="35.2" class="anchored" data-anchor-id="simple-randomization"><span class="header-section-number">35.2</span> Simple randomization</h2>
+<p>Simple Randomization is a straightforward technique in which each participant has an equal probability of being assigned to any of the available study groups. This approach is ideal for large samples, as it usually results in balanced group sizes and unbiased results. However, in smaller samples, there is a risk of group size imbalance.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>Suppose you are conducting a clinical trial to test the efficacy of a new drug, and you have 50 subjects. You need to randomly assign them to a treatment group and a control group.</p>
+</div>
+<p>Here’s how to perform simple randomization, where we want to assign participants to two groups:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>simple_R <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">group =</span> <span class="st">""</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">runif</span>(N) <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>simple_R <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        27
+#&gt; 2 B        23</code></pre>
+</div>
+</div>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform simple randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rarPar</span>(<span class="at">N =</span> N, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     B     B     A     B     B     B     B     B     A     A     B    
+#&gt; 2 A     A     A     A     A     A     B     B     A     B     B     A    
+#&gt; 3 A     B     B     B     A     A     A     A     A     B     A     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
 </section>
-<section id="sample" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="sample"><span class="header-section-number">2.2.2</span> Sample</h3>
-<p>A sample is a subset of the population selected for study. It is often impractical or impossible to study an entire population, so researchers use a sample to draw conclusions about the population.</p>
-<p>Examples: 1,000 randomly selected adults from a country. 200 patients selected from the hospital’s records.</p>
-<p>Statistics: The numerical characteristics of a sample are called statistics (e.g., sample mean, sample standard deviation).</p>
-<p>Size: The size of the sample (denoted as n) is always smaller than the population size (denoted as N).</p>
+<section id="complete-randomization" class="level2" data-number="35.3">
+<h2 data-number="35.3" class="anchored" data-anchor-id="complete-randomization"><span class="header-section-number">35.3</span> Complete randomization</h2>
+<p>Complete randomization is a method used in experimental design and clinical trials to assign participants to different treatment groups. It involves randomly distributing a predetermined, fixed number of participants across the groups to ensure balanced group sizes. Unlike simple randomization, which may result in unequal group sizes due to chance, complete randomization ensures that each group has the same or nearly the same number of participants.</p>
+<p>Here’s an example on how to perform complete randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">group =</span> <span class="st">""</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.5</span>, <span class="at">replace =</span> F) </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(groupA)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupA, <span class="at">group =</span> <span class="st">"A"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupB, <span class="at">group =</span> <span class="st">"B"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>complete_R <span class="ot">&lt;-</span> <span class="fu">rbind</span>(groupA, groupB)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>complete_R <span class="sc">|&gt;</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        25
+#&gt; 2 B        25</code></pre>
+</div>
+</div>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform complete randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPar</span>(<span class="at">N =</span> N, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     B     A     A     B     A     B     B     A     B     A     A    
+#&gt; 2 B     A     B     B     A     A     B     B     B     B     B     B    
+#&gt; 3 B     A     B     A     B     A     B     B     B     A     B     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
 </section>
-<section id="relationship-between-population-and-sample" class="level3" data-number="2.2.3">
-<h3 data-number="2.2.3" class="anchored" data-anchor-id="relationship-between-population-and-sample"><span class="header-section-number">2.2.3</span> Relationship between population and sample</h3>
-<p>Sampling: The process of selecting a sample from a population is called sampling. It is crucial that the sample is representative of the population to ensure that the conclusions drawn from the sample can be generalized to the population.</p>
-<p>Inference: Statistical inference involves making predictions or generalizations about a population based on information from a sample. This is done using various statistical methods, including estimation and hypothesis testing.</p>
-<p>Bias and Variability: A sample might not perfectly represent the population due to sampling bias or variability. Researchers use random sampling techniques to minimize these issues and improve the reliability of the inference.</p>
-<p>Practical Example</p>
-<p>Imagine you want to study the average height of all adult women in a country (population). Measuring the height of every woman in the country would be impractical, so instead, you randomly select 500 women (sample) and measure their heights. The average height of these 500 women is a statistic. You then use this statistic to estimate the parameter—the average height of all adult women in the country.</p>
-<p>Key Points to Remember</p>
-<p>Population: Entire group of interest; parameters describe it.</p>
-<p>Sample: Subset of the population; statistics describe it.</p>
-<p>Inference: Drawing conclusions about the population based on sample data.</p>
-<p>Representativeness: A sample should represent the population to ensure valid inferences.</p>
-<p>Understanding the distinction between population and sample is essential for conducting valid and reliable statistical analyses.</p>
+<section id="block-randomization" class="level2" data-number="35.4">
+<h2 data-number="35.4" class="anchored" data-anchor-id="block-randomization"><span class="header-section-number">35.4</span> <strong>Block Randomization</strong></h2>
+<p>Block randomization is a technique used in experimental design to ensure that groups have a balanced number of participants over each block, reducing the potential for bias and imbalance. This is especially useful in clinical trials and other studies where ensuring equal group sizes within blocks is essential.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>Let’s assume we have 50 subjects and want to assign them to two groups with a block size of 5.</p>
+</div>
+<p>The subjects are first divided into blocks, then within each block, subjects are assigned to groups in a specific ratio. Here is an example code for block randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>block_size <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">block =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>block_size, <span class="at">each =</span> N<span class="sc">/</span> block_size), </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">""</span>) </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">by =</span> block)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(groupA)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupA, <span class="at">group =</span> <span class="st">"A"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupB, <span class="at">group =</span> <span class="st">"B"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>block_R <span class="ot">&lt;-</span> <span class="fu">rbind</span>(groupA, groupB)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>block_R <span class="sc">|&gt;</span> </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        30
+#&gt; 2 B        20</code></pre>
+</div>
+</div>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform simple randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span>; rb <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpbrPar</span>(<span class="at">N =</span> N, <span class="at">rb =</span> rb, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     A     B     A     A     B     B     B     B     A     A     B    
+#&gt; 2 A     B     B     A     A     B     A     B     A     B     A     B    
+#&gt; 3 B     B     A     B     B     A     A     A     A     B     A     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
 </section>
+<section id="stratified-randomization" class="level2" data-number="35.5">
+<h2 data-number="35.5" class="anchored" data-anchor-id="stratified-randomization"><span class="header-section-number">35.5</span> Stratified randomization</h2>
+<p>Stratified randomization is a technique used to ensure that specific characteristics (or “strata”) are evenly distributed across treatment groups in a study. This method helps control for confounding variables by balancing them across groups, which can be especially useful in clinical trials where factors like age, gender, or disease severity could impact the outcome.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>Suppose we have a study where we need to randomly assign 100 subjects to two treatment groups, stratified by gender (male, female) and age group (&lt;30 years, ≥30 years). This approach ensures balanced distribution within each combination of gender and age group.</p>
+</div>
+<p>Here is an example code for stratified randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ratio <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>N,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), N, <span class="at">replace =</span> T),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"≥30"</span>), N, <span class="at">replace =</span> T)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, age) <span class="sc">|&gt;</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">if_else</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="fu">round</span>(<span class="fu">n</span>() <span class="sc">*</span> ratio), <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Shuffle within each stratum to add randomness</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="ot">&lt;-</span> stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, age) <span class="sc">|&gt;</span> </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_frac</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        50
+#&gt; 2 B        50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender, age, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 8 × 4
+#&gt;   gender age   group     n
+#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+#&gt; 1 Female &lt;30   A        14
+#&gt; 2 Female &lt;30   B        13
+#&gt; 3 Female ≥30   A        10
+#&gt; 4 Female ≥30   B        11
+#&gt; 5 Male   &lt;30   A        12
+#&gt; 6 Male   &lt;30   B        12
+#&gt; # ℹ 2 more rows</code></pre>
+</div>
+</div>
 </section>
-<section id="data" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="data"><span class="header-section-number">2.3</span> Data</h2>
-<p>In statistics, data can be classified into different types based on various characteristics. Understanding these data types is crucial for selecting appropriate statistical methods and accurately interpreting results. Below are the main types of data:</p>
-<section id="quantitative-data" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="quantitative-data"><span class="header-section-number">2.3.1</span> Quantitative data</h3>
-<p>Quantitative data (numerical data) refers to data that can be measured and expressed numerically. This type of data is critical in the medical field as it allows for precise measurements, comparisons, and statistical analysis, ultimately leading to better understanding, diagnosis, treatment, and prevention of diseases. Quantitative data can be further classified into two main types:</p>
-<p><strong>1. Discrete Data</strong></p>
-<p>Discrete data consist of distinct, separate values that are countable. These values are typically whole numbers, and there is no intermediate value between them.</p>
-<p><strong>Examples:</strong></p>
-<p>Number of patients: The number of patients admitted to a hospital.</p>
-<p>Number of medications: The number of medications a patient is taking.</p>
-<p>Number of occurrences: The number of heartbeats per minute (heart rate).</p>
-<p><strong>Characteristics of count data</strong></p>
-<ol type="1">
-<li>Discrete: The data are non-negative integers, as they represent counts of occurrences.</li>
-<li>Overdispersion: Count data in medical settings often show overdispersion, where the variance exceeds the mean (e.g., some patients may have a high number of hospital visits while others have very few).</li>
-<li>Skewed Distribution: Count data are often positively skewed, with many individuals having low counts (e.g., no hospital visits) and fewer individuals having higher counts.</li>
-</ol>
-<p><strong>2. Continuous Data</strong></p>
-<p>Continuous data can take any value within a given range. These data represent measurements and can have decimal places, meaning they are not restricted to whole numbers.</p>
-<p>Examples:</p>
-<p>Blood pressure: Systolic and diastolic blood pressure measurements (e.g., 120/80 mmHg).</p>
-<p>Body temperature: Body temperature measured in degrees Celsius or Fahrenheit (e.g., 36.6°C).</p>
-<p>Cholesterol levels: Blood cholesterol levels measured in milligrams per deciliter (e.g., 180 mg/dL).</p>
-<p>Quantitative data is fundamental in many areas of medicine:</p>
-<ol type="1">
-<li>Diagnosis: • Quantitative measurements such as blood pressure, blood glucose levels, and cholesterol levels are used to diagnose conditions like hypertension, diabetes, and hyperlipidemia. 2. Treatment Monitoring: • Quantitative data is crucial for monitoring treatment effectiveness. For example, changes in tumor size (measured in millimeters or centimeters) can indicate whether cancer treatment is effective. 3. Epidemiology: • Quantitative data is used to track disease incidence and prevalence rates, mortality rates, and other public health indicators. • Example: Tracking the number of new COVID-19 cases per day during a pandemic. 4. Clinical Research: • In clinical trials, quantitative data is collected to assess the safety and efficacy of new drugs or treatments. • Example: Measuring the reduction in blood pressure in participants taking an antihypertensive drug. 5. Medical Imaging: • Quantitative data is used in medical imaging to measure organ size, tumor volume, and other anatomical features. • Example: Measuring the size of a kidney stone on an ultrasound image.</li>
-</ol>
-<p>Statistical Analysis of Quantitative Data in Medicine</p>
-<p>Quantitative data allows for a variety of statistical analyses, including:</p>
-<ol type="1">
-<li>Descriptive Statistics: • Mean: The average value (e.g., average heart rate of a group of patients). • Median: The middle value when data is ordered (e.g., median age of patients in a study). • Standard Deviation: A measure of the variability or spread of data (e.g., variability in blood pressure readings).</li>
-<li>Inferential Statistics: • t-tests and ANOVA: Used to compare means between two or more groups. • Regression Analysis: Used to model the relationship between a dependent variable and one or more independent variables. • Correlation: Used to assess the strength and direction of the relationship between two continuous variables.</li>
-<li>Probability and Distributions: • Quantitative data often follows specific statistical distributions (e.g., normal distribution), which are used in probability and inferential statistics.</li>
-</ol>
-<p>Examples of Quantitative Data in Medical Practice</p>
-<p>Vital Signs Monitoring: • Continuous monitoring of heart rate, blood pressure, and oxygen saturation levels in critically ill patients. • Laboratory Tests: • Quantitative measurement of blood glucose levels, complete blood count (CBC), and electrolyte levels. • Growth and Development: • Tracking height, weight, and head circumference in pediatric patients over time to assess growth and development. • Pharmacokinetics: • Measuring drug concentrations in the blood over time to understand absorption, distribution, metabolism, and excretion.</p>
-<p>Application of Quantitative Data in Medical Research</p>
-<ol type="1">
-<li>Randomized Controlled Trials (RCTs): • Quantitative data is used to compare the effectiveness of new treatments or interventions with standard care or placebo. • Example: Measuring the reduction in blood pressure in patients receiving a new antihypertensive drug versus a placebo.</li>
-<li>Longitudinal Studies: • Quantitative data is collected over time to study changes in health outcomes, risk factors, or disease progression. • Example: Tracking changes in lung function in smokers versus non-smokers over several years.</li>
-<li>Health Economics: • Quantitative data is used to evaluate the cost-effectiveness of medical interventions, including cost per quality-adjusted life year (QALY) gained. • Example: Calculating the cost-effectiveness of a new cancer treatment based on survival rates and costs.</li>
-</ol>
-<p>Quantitative data is a cornerstone of medical science, providing the foundation for diagnosis, treatment, research, and public health. Its ability to be precisely measured and analyzed makes it indispensable for advancing medical knowledge, improving patient care, and making informed decisions in healthcare.</p>
-</section>
-<section id="qualitative-data-categorical-data" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="qualitative-data-categorical-data"><span class="header-section-number">2.3.2</span> <strong>Qualitative data (Categorical data)</strong></h3>
-<p>Qualitative data in medicine refers to non-numerical data that represent categories or groups. Unlike quantitative data, which deals with numbers and measurements, qualitative data describes characteristics or attributes that can be used to classify individuals, objects, or events into distinct groups. This type of data is crucial in medical research and practice for understanding patient demographics, disease classifications, and treatment outcomes. ain types:</p>
-<p><strong>1. Nominal Data</strong></p>
-<p>Nominal data consists of categories that do not have a natural order or ranking. These categories are mutually exclusive, meaning that an individual or event can belong to only one category.</p>
-<p><strong>Blood Type:</strong> Categories like A, B, AB, and O.</p>
-<p><strong>Gender:</strong> Male, Female, Other.</p>
-<p><strong>Presence or Absence of a Condition:</strong> Yes/No responses (e.g., presence of hypertension).</p>
-</section>
-<section id="ordinal-data" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="ordinal-data"><span class="header-section-number">2.3.3</span> <strong>Ordinal Data</strong></h3>
-<p>Ordinal data consists of categories that have a meaningful order or ranking, but the intervals between the categories are not necessarily equal or meaningful.</p>
-<p><strong>Severity of Disease:</strong> Mild, Moderate, Severe.</p>
-<p><strong>Pain Scale:</strong> Numeric rating scale (e.g., 0–10), where 0 is no pain and 10 is the worst pain imaginable.</p>
-<p><strong>Stage of Cancer:</strong> Stages I, II, III, IV.</p>
-<p>Qualitative data plays a vital role in various aspects:</p>
-<ul>
-<li><strong>Patient Demographics:</strong>
-<ul>
-<li><strong>Categorization:</strong> Patients are often categorized based on attributes like age group, gender, race, and ethnicity, which are critical for understanding the distribution of diseases and tailoring medical interventions.</li>
-<li><strong>Example:</strong> A study may categorize patients by age group (e.g., children, adults, elderly) to analyze how a particular disease affects different age groups.</li>
-</ul></li>
-<li><strong>Disease Classification:</strong>
-<ul>
-<li><strong>Diagnosis:</strong> Diseases are classified into categories based on symptoms, genetic markers, or other clinical criteria. This classification helps in diagnosing, treating, and researching diseases.</li>
-<li><strong>Example:</strong> Types of diabetes (Type 1, Type 2, Gestational Diabetes) are categorical variables that guide treatment plans.</li>
-</ul></li>
-<li><strong>Treatment Outcomes:</strong>
-<ul>
-<li><strong>Outcome Measures:</strong> Treatment outcomes can be categorized as successful/unsuccessful, improved/no improvement, or recurrence/no recurrence. These qualitative outcomes are essential for evaluating the effectiveness of treatments.</li>
-<li><strong>Example:</strong> A study on cancer treatment might categorize outcomes as “complete remission,” “partial remission,” or “no response.”</li>
-</ul></li>
-<li><strong>Quality of Life and Patient Satisfaction:</strong>
-<ul>
-<li><strong>Surveys and Questionnaires:</strong> Patient satisfaction surveys and quality of life assessments often use ordinal scales (e.g., very satisfied, satisfied, neutral, dissatisfied, very dissatisfied) to gather qualitative data on patient experiences.</li>
-<li><strong>Example:</strong> A patient satisfaction survey may categorize responses to a question about hospital care quality into five levels, from “very poor” to “excellent.”</li>
-</ul></li>
-</ul>
-<p><strong>Statistical Analysis of Qualitative Data</strong></p>
-<ul>
-<li><p><strong>Frequency and Proportion:</strong> The most basic analysis involves counting the number of occurrences in each category and expressing them as frequencies or proportions (percentages).</p>
-<p><strong>Example:</strong> Proportion of patients with a specific blood type in a population.</p></li>
-<li><p><strong>Chi-Square Tests:</strong> Used to determine if there is a significant association between two categorical variables.</p>
-<p><strong>Example:</strong> Assessing the relationship between smoking status (smoker, non-smoker) and lung cancer diagnosis (yes, no).</p></li>
-</ul>
-<!-- -->
-<ul>
-<li><p><strong>Logistic Regression:</strong> Used for modeling the probability of a binary outcome based on one or more predictor variables.</p>
-<p><strong>Example:</strong> Predicting the likelihood of a disease relapse based on treatment type and other categorical factors.</p></li>
-<li><p><strong>Cross-Tabulation:</strong> A method used to examine the relationship between two or more categorical variables by displaying the data in a matrix format.</p>
-<p><strong>Example:</strong> Cross-tabulating the relationship between gender and the prevalence of a specific medical condition.</p></li>
-</ul>
-<p><strong>Applications in Medical Research</strong></p>
-<ol type="1">
-<li><strong>Epidemiology:</strong></li>
-</ol>
-<p>Researchers often use qualitative data to study the distribution and determinants of health-related states in populations.</p>
-<p><strong>Example:</strong> Categorizing patients by exposure to a risk factor (e.g., exposure to asbestos: yes/no) and examining its relationship with disease occurrence.</p>
-<ol start="2" type="1">
-<li><strong>Clinical Trials:</strong></li>
-</ol>
-<p>Clinical trials use qualitative data to classify participants, monitor treatment adherence, and assess treatment responses.</p>
-<p><strong>Example:</strong> Categorizing patients based on their response to a new drug as “responsive,” “partially responsive,” or “non-responsive.”</p>
-<ol start="3" type="1">
-<li><strong>Public Health:</strong></li>
-</ol>
-<p>Public health studies often categorize populations based on demographic factors to identify health disparities and target interventions.</p>
-<p><strong>Example:</strong> Identifying vaccination rates across different ethnic groups to improve immunization programs.</p>
-<p>Qualitative data is essential in the medical field for categorizing and analyzing various aspects of health and disease. It provides the basis for understanding patterns, making clinical decisions, and conducting research that ultimately improves patient care. Properly collecting, analyzing, and interpreting qualitative data ensures that medical interventions are tailored to the specific needs of patients and populations.</p>
+<section id="minimization" class="level2" data-number="35.6">
+<h2 data-number="35.6" class="anchored" data-anchor-id="minimization"><span class="header-section-number">35.6</span> <strong>Minimization</strong></h2>
+<p>Minimization is a randomization method often used in clinical trials to ensure balanced allocation of participants across treatment groups while taking specific covariates (such as age, gender, or disease severity) into account. Unlike simple or stratified randomization, minimization actively adjusts the assignment of each new participant based on existing imbalances across groups.</p>
+<p>Here’s how minimization works:</p>
+<p>1. Identify key covariates: Select the covariates that are important for balancing across treatment groups.</p>
+<p>2. Assign the first participants: Start by assigning the initial participants randomly to treatment groups.</p>
+<p>3. Calculate imbalance: For each new participant, calculate how their assignment to each group would impact the balance of covariates across groups.</p>
+<p>4. Assign to the least imbalanced group: The participant is assigned to the group that would result in the least imbalance, with a small probability of random assignment to avoid predictability.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject =</span> <span class="dv">1</span><span class="sc">:</span>n, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), n, <span class="at">replace =</span> T), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ageGroup =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"&gt;=30"</span>), n, <span class="at">replace =</span> T),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">""</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a combination of covariables</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>cov_comb <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), <span class="at">ageGroup =</span> <span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"&gt;=30"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comb =</span> <span class="fu">paste0</span>(gender, <span class="st">"_"</span>, ageGroup))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the processing group with the least imbalance</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>counter <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), cov_comb<span class="sc">$</span>comb))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gets the covariate combination for the current subject</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  current_cov <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df<span class="sc">$</span>gender[i], <span class="st">"_"</span>, df<span class="sc">$</span>ageGroup[i])</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the imbalance score</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  imbalance_A <span class="ot">&lt;-</span> <span class="fu">sum</span>(counter[<span class="st">"A"</span>, ]) <span class="sc">-</span> counter[<span class="st">"A"</span>, current_cov]</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  imbalance_B <span class="ot">&lt;-</span> <span class="fu">sum</span>(counter[<span class="st">"B"</span>, ]) <span class="sc">-</span> counter[<span class="st">"B"</span>, current_cov]</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select the processing group with the least imbalance</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(imbalance_A) <span class="sc">&lt;</span> <span class="fu">abs</span>(imbalance_B)) {</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>group[i] <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    counter[<span class="st">"A"</span>, current_cov] <span class="ot">&lt;-</span> counter[<span class="st">"A"</span>, current_cov] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>group[i] <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    counter[<span class="st">"B"</span>, current_cov] <span class="ot">&lt;-</span> counter[<span class="st">"B"</span>, current_cov] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 5 × 4
+#&gt;   subject gender ageGroup group
+#&gt;     &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;
+#&gt; 1       1 Female &gt;=30     B    
+#&gt; 2       2 Male   &gt;=30     A    
+#&gt; 3       3 Male   &lt;30      B    
+#&gt; 4       4 Female &gt;=30     B    
+#&gt; 5       5 Male   &lt;30      A</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of occurrences of each group</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">count</span>(group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        55
+#&gt; 2 B        45</code></pre>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1196,13 +1353,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./preface.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span>
+      <a href="./random-sampling.html" class="pagination-link" aria-label="Random sampling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./basic-stat.html" class="pagination-link" aria-label="Basic methods">
-        <span class="nav-page-text">Basic methods</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sample-size.html" class="pagination-link" aria-label="Sample size estimation">
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sample size estimation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1211,5 +1368,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/introduction.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/randomization.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
