@@ -2,158 +2,174 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://qbgaoo.github.io/r4ms/index.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/preface.html</loc>
-    <lastmod>2024-11-14T23:19:01.404Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/introduction.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/quat-data-statdesc.html</loc>
-    <lastmod>2024-11-14T23:19:01.404Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/normal-distribution.html</loc>
-    <lastmod>2024-11-14T23:19:01.403Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/statistical-inference.html</loc>
-    <lastmod>2024-11-14T23:19:01.406Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/hypothesis-test.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/ttest.html</loc>
-    <lastmod>2024-11-14T23:19:01.407Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/anova.html</loc>
-    <lastmod>2024-11-14T23:19:00.878Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.478Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/count-data-statdesc.html</loc>
-    <lastmod>2024-11-14T23:19:00.884Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/discrete-data-dist.html</loc>
-    <lastmod>2024-11-14T23:19:01.392Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.657Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/chi-square-test.html</loc>
-    <lastmod>2024-11-14T23:19:00.880Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/nonparametric-test.html</loc>
-    <lastmod>2024-11-14T23:19:01.403Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/regression-correlation.html</loc>
-    <lastmod>2024-11-14T23:19:01.404Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.663Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/multifactor-anova.html</loc>
-    <lastmod>2024-11-14T23:19:01.401Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/repeated-measurement.html</loc>
-    <lastmod>2024-11-14T23:19:01.405Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/general-linear-model.html</loc>
-    <lastmod>2024-11-14T23:19:01.396Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.659Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/multivariate-groups-diff.html</loc>
-    <lastmod>2024-11-14T23:19:01.403Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/multiple-linear-regression.html</loc>
-    <lastmod>2024-11-14T23:19:01.402Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/logistic-regression.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/generalized-linear-model.html</loc>
-    <lastmod>2024-11-14T23:19:01.397Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/survival-analysis.html</loc>
-    <lastmod>2024-11-14T23:19:01.407Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/cluster-analysis.html</loc>
-    <lastmod>2024-11-14T23:19:00.880Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/discriminant-analysis.html</loc>
-    <lastmod>2024-11-14T23:19:01.393Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.657Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/pca-factor-analysis.html</loc>
-    <lastmod>2024-11-14T23:19:01.403Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/canonical-correlation.html</loc>
-    <lastmod>2024-11-14T23:19:00.879Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/structural-equation.html</loc>
-    <lastmod>2024-11-14T23:19:01.406Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/multilevel-model.html</loc>
-    <lastmod>2024-11-14T23:19:01.401Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/comprehensive-evaluation.html</loc>
-    <lastmod>2024-11-14T23:19:00.880Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/community-interfere.html</loc>
-    <lastmod>2024-11-14T23:19:00.880Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/scale-develop.html</loc>
-    <lastmod>2024-11-14T23:19:01.405Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/meta-analysis.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.661Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/general-estimat-equation.html</loc>
-    <lastmod>2024-11-14T23:19:01.396Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.659Z</lastmod>
   </url>
   <url>
-    <loc>https://qbgaoo.github.io/r4ms/quarto.html</loc>
-    <lastmod>2024-11-14T23:19:01.404Z</lastmod>
+    <loc>https://qbgaoo.github.io/r4ms/data-preprocess.html</loc>
+    <lastmod>2024-11-16T01:23:10.637Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/random-sampling.html</loc>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/randomization.html</loc>
+    <lastmod>2024-11-16T01:23:10.663Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/sample-size.html</loc>
+    <lastmod>2024-11-16T01:23:10.664Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/pilot-project.html</loc>
-    <lastmod>2024-11-14T23:19:01.404Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
+  </url>
+  <url>
+    <loc>https://qbgaoo.github.io/r4ms/quarto.html</loc>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/memo.html</loc>
-    <lastmod>2024-11-14T23:19:01.400Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.660Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/basic-stat.html</loc>
-    <lastmod>2024-11-14T23:19:00.879Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.479Z</lastmod>
   </url>
   <url>
     <loc>https://qbgaoo.github.io/r4ms/advanced-stat.html</loc>
-    <lastmod>2024-11-14T23:19:00.877Z</lastmod>
+    <lastmod>2024-11-16T01:23:10.478Z</lastmod>
   </url>
   <url>
-    <loc>https://qbgaoo.github.io/r4ms/stat-anal-report.html</loc>
-    <lastmod>2024-11-14T23:19:01.406Z</lastmod>
+    <loc>https://qbgaoo.github.io/r4ms/practical-skills.html</loc>
+    <lastmod>2024-11-16T01:23:10.662Z</lastmod>
   </url>
 </urlset>

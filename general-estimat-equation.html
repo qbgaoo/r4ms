@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./stat-anal-report.html" rel="next">
+<link href="./practical-skills.html" rel="next">
 <link href="./meta-analysis.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -375,8 +375,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./stat-anal-report.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Communication</span></a>
+            <a href="./practical-skills.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Practical skills</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -384,20 +384,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  <a href="./data-preprocess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Data preprocessing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./random-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./randomization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sample-size.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sample size estimation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pilot-project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A case to analyze</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./memo.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span></a>
   </div>
 </li>
       </ul>
@@ -413,6 +437,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">32.1</span> Prerequisites</a></li>
+  <li><a href="#introduction-of-gee" id="toc-introduction-of-gee" class="nav-link" data-scroll-target="#introduction-of-gee"><span class="header-section-number">32.2</span> Introduction of GEE</a>
+  <ul class="collapse">
+  <li><a href="#key-features-of-gee" id="toc-key-features-of-gee" class="nav-link" data-scroll-target="#key-features-of-gee"><span class="header-section-number">32.2.1</span> Key features of GEE</a></li>
+  <li><a href="#correlation-structures-in-gee" id="toc-correlation-structures-in-gee" class="nav-link" data-scroll-target="#correlation-structures-in-gee"><span class="header-section-number">32.2.2</span> Correlation structures in GEE</a></li>
+  <li><a href="#applications-of-gee" id="toc-applications-of-gee" class="nav-link" data-scroll-target="#applications-of-gee"><span class="header-section-number">32.2.3</span> Applications of GEE</a></li>
+  </ul></li>
+  <li><a href="#using-gee-in-r" id="toc-using-gee-in-r" class="nav-link" data-scroll-target="#using-gee-in-r"><span class="header-section-number">32.3</span> Using GEE in R</a>
+  <ul class="collapse">
+  <li><a href="#geepack-package" id="toc-geepack-package" class="nav-link" data-scroll-target="#geepack-package"><span class="header-section-number">32.3.1</span> <code>geepack</code> package</a></li>
+  <li><a href="#repolr-package" id="toc-repolr-package" class="nav-link" data-scroll-target="#repolr-package"><span class="header-section-number">32.3.2</span> <code>repolr</code> package</a></li>
+  <li><a href="#ordinal-package" id="toc-ordinal-package" class="nav-link" data-scroll-target="#ordinal-package"><span class="header-section-number">32.3.3</span> <code>ordinal</code> package</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/general-estimat-equation.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -438,24 +474,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Generalized estimating equation (GEE) is a statistical technique used for analyzing correlated data, particularly in longitudinal studies or repeated measurements where observations are not independent. GEE is useful for handling a range of data distributions and works well in situations where measurements are taken multiple times on the same subjects.</p>
 <section id="prerequisites" class="level2" data-number="32.1">
 <h2 data-number="32.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">32.1</span> Prerequisites</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(repolr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="introduction-of-gee" class="level2" data-number="32.2">
+<h2 data-number="32.2" class="anchored" data-anchor-id="introduction-of-gee"><span class="header-section-number">32.2</span> Introduction of GEE</h2>
+<section id="key-features-of-gee" class="level3" data-number="32.2.1">
+<h3 data-number="32.2.1" class="anchored" data-anchor-id="key-features-of-gee"><span class="header-section-number">32.2.1</span> Key features of GEE</h3>
+<p>Handles repeated measures: GEE is well-suited for analyzing data from subjects measured multiple times, where these repeated measurements are likely to be correlated.</p>
+<p>Flexible modeling: GEE can handle various distributions, including binary, Poisson, and normal distributions.</p>
+<p>Robust Estimation: GEE provides consistent estimates even if the correlation structure is not perfectly specified.</p>
+</section>
+<section id="correlation-structures-in-gee" class="level3" data-number="32.2.2">
+<h3 data-number="32.2.2" class="anchored" data-anchor-id="correlation-structures-in-gee"><span class="header-section-number">32.2.2</span> Correlation structures in GEE</h3>
+<p>GEE requires specifying a correlation structure to model the relationship between repeated measures. Common structures include:</p>
+<p>Independent: Assumes no correlation between measurements.</p>
+<p>Exchangeable: Assumes a constant correlation between measurements from the same subject.</p>
+<p>Autoregressive: Assumes that correlations decrease as time points grow further apart.</p>
+<p>Unstructured: Allows each pair of measurements to have its own correlation, though it requires a larger sample size to estimate reliably.</p>
+</section>
+<section id="applications-of-gee" class="level3" data-number="32.2.3">
+<h3 data-number="32.2.3" class="anchored" data-anchor-id="applications-of-gee"><span class="header-section-number">32.2.3</span> Applications of GEE</h3>
+<p>GEE is widely used in fields like medicine, psychology, ecology, and social sciences for analyzing:</p>
+<p>Clinical trials: Evaluating patient outcomes over multiple time points.</p>
+<p>Multi-center studies: Analyzing data from different locations while accounting for within-center correlations.</p>
+<p>Longitudinal research: Assessing changes over time, such as in developmental studies or tracking treatment effects.</p>
+</section>
+</section>
+<section id="using-gee-in-r" class="level2" data-number="32.3">
+<h2 data-number="32.3" class="anchored" data-anchor-id="using-gee-in-r"><span class="header-section-number">32.3</span> Using GEE in R</h2>
 <div class="example">
 <strong>Example 1:</strong> 
 <p>A researcher randomly selected 149 patients who used a pain relief pump after gynecological abdominal surgery. The subjects were randomly divided them into a control group and an treatment group, with different postoperative care methods applied. The researcher observed the patients’ pain at five different time points and assessed the pain levels using a numerical rating scale. The question is whether the two methods differ in their effectiveness in relieving the patients’ pain.</p>
 </div>
 <div>
-<p><a href="datasets/ex31-01.csv" download="ex31-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+<p><a href="datasets/ex32-01.csv" download="ex312-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex32-01.csv"</span>, , <span class="at">show_col_types =</span> F) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the Generalized Estimating Equations (GEE) approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.</p>
+<p>The pain ratings are categorized as ordinal data, with measurements taken at multiple time points, making it repeated measures data. For such data, the GEE approach is commonly used. It can handle ordinal data and accounts for the correlation within the data.</p>
+<section id="geepack-package" class="level3" data-number="32.3.1">
+<h3 data-number="32.3.1" class="anchored" data-anchor-id="geepack-package"><span class="header-section-number">32.3.1</span> <code>geepack</code> package</h3>
+<p>The <code>geepack</code> package provides the several functions to fit GEE models. The <code>geeglm()</code> is a general GEE function that can model various types of data, including binary, count, and continuous outcomes, with flexibility in specifying link functions. The <code>ordgee()</code> function is specifically tailored for ordinal response data within GEE models. This function handles ordinal outcomes by fitting a GEE model with an ordinal link, such as the cumulative logit model, which is suitable for ordered categorical data.</p>
 <p>The following table shows the results of model:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
@@ -467,57 +535,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subject =</span> <span class="fu">as.integer</span>(subject),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"ctrl"</span>, <span class="st">"trt"</span>)),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"ctl"</span>, <span class="st">"trt"</span>)),</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">as.integer</span>(time)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">geeglm</span>(</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  pain <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"ar1"</span>, </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">geeglm</span>(</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  pain <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"unstructured"</span>, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; geeglm(formula = pain ~ time + group + time:group, data = data, 
-#&gt;     id = subject, corstr = "ar1")
-#&gt; 
-#&gt;  Coefficients:
-#&gt;               Estimate  Std.err     Wald Pr(&gt;|W|)    
-#&gt; (Intercept)    2.48042  0.05591 1967.895  &lt; 2e-16 ***
-#&gt; time          -0.47973  0.02232  462.027  &lt; 2e-16 ***
-#&gt; grouptrt      -0.26915  0.09328    8.325  0.00391 ** 
-#&gt; time:grouptrt  0.04365  0.03478    1.575  0.20946    
-#&gt; ---
-#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-#&gt; 
-#&gt; Correlation structure = ar1 
-#&gt; Estimated Scale Parameters:
-#&gt; 
-#&gt;             Estimate Std.err
-#&gt; (Intercept)   0.4798  0.0302
-#&gt;   Link = identity 
-#&gt; 
-#&gt; Estimated Correlation Parameters:
-#&gt;       Estimate Std.err
-#&gt; alpha   0.5355 0.03477
-#&gt; Number of clusters:   149  Maximum cluster size: 5</code></pre>
+<pre><code>#&gt; # A tibble: 4 × 5
+#&gt;   term          estimate std.error statistic p.value
+#&gt;   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1 (Intercept)     2.55      0.0718   1261.   0      
+#&gt; 2 time           -0.515     0.0295    306.   0      
+#&gt; 3 grouptrt       -0.345     0.113       9.26 0.00234
+#&gt; 4 time:grouptrt   0.0829    0.0437      3.60 0.0577</code></pre>
 </div>
 </div>
+<p>The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :</p>
+<ol type="1">
+<li>(Intercept)</li>
+</ol>
+<p>Estimate: 2.549 Standard Error: 0.072 Statistic: 1261.13 p-value: 0.000</p>
+<p>Interpretation: The intercept represents the estimated average level of the response variable pain when both time and group are at their reference levels (e.g., at the baseline time point and in the control group). The p-value indicates that this estimate is highly statistically significant, meaning there’s strong evidence that the intercept is different from zero.</p>
+<ol start="2" type="1">
+<li>time</li>
+</ol>
+<p>Estimate: -0.5154 Standard Error: 0.02395 Statistic: 305.61 p-value: 0.000</p>
+<p>Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant .</p>
+<ol start="3" type="1">
+<li>group</li>
+</ol>
+<p>Estimate: -0.3446 Standard Error: 0.1132 Statistic: 9.26 p-value: 0.00234</p>
+<p>Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value &lt; 0.01).</p>
+<ol start="4" type="1">
+<li>time:group</li>
+</ol>
+<p>Estimate: 0.0829 Standard Error: 0.0437 Statistic: 3.6 p-value: 0.0577</p>
+<p>Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.0577 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ordgee</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">+</span> group <span class="sc">+</span> time<span class="sc">:</span>group, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> subject, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"independence"</span>, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>geepack<span class="sc">::</span><span class="fu">ordgee</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">id =</span> subject, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">corstr =</span> <span class="st">"independence"</span>, <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt; Call:
-#&gt; ordgee(formula = ordered(pain) ~ time + group + time:group, id = subject, 
+#&gt; geepack::ordgee(formula = ordered(pain) ~ time * group, id = subject, 
 #&gt;     data = data, corstr = "independence")
 #&gt; 
 #&gt; Mean Model:
@@ -525,14 +594,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt;  Variance to Mean Relation: binomial 
 #&gt; 
 #&gt;  Coefficients:
-#&gt;                 estimate san.se wald p
-#&gt; Inter:0       -4.903e+01      0  Inf 0
-#&gt; Inter:1       -6.340e+01      0  Inf 0
-#&gt; Inter:2       -7.956e+01      0  Inf 0
-#&gt; Inter:3       -4.485e+15      0  Inf 0
-#&gt; time           2.517e+00      0  Inf 0
-#&gt; grouptrt      -1.438e+02      0  Inf 0
-#&gt; time:grouptrt  3.266e+01      0  Inf 0
+#&gt;                    estimate san.se wald p
+#&gt; Inter:0       -4.903146e+01      0  Inf 0
+#&gt; Inter:1       -6.339917e+01      0  Inf 0
+#&gt; Inter:2       -7.956222e+01      0  Inf 0
+#&gt; Inter:3       -4.485464e+15      0  Inf 0
+#&gt; time           2.517124e+00      0  Inf 0
+#&gt; grouptrt      -1.437689e+02      0  Inf 0
+#&gt; time:grouptrt  3.265732e+01      0  Inf 0
 #&gt; 
 #&gt; Scale is fixed.
 #&gt; 
@@ -543,32 +612,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; Number of clusters:   149   Maximum cluster size: 5</code></pre>
 </div>
 </div>
-<p>The model analyzes the effects of time, treat, and the interaction of time and treat on the response variable (pain degree) :</p>
+<p>The <code>geeglm()</code> and <code>ordgee()</code> are both functions used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.</p>
+<p><strong><code>geeglm()</code></strong></p>
+<p>This function is a more general function that fits GEE models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM).</p>
+<p>It allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects.</p>
+<p>Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data.</p>
+<p>Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.</p>
+<p><strong><code>ordgee()</code></strong></p>
+<p>This function is specifically designed for fitting GEE models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data.</p>
+<p>It accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes.</p>
+<p>Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes.</p>
+<p>Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.</p>
+<p><strong>Key Differences:</strong></p>
 <ol type="1">
-<li>(Intercept)</li>
+<li>Outcome Type: ordgee: Specifically for ordinal outcomes. geeglm: For a wide range of outcome types (continuous, binary, count, etc.).</li>
+<li>Link Functions: ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). geeglm: Allows specification of various link functions depending on the distribution of the response variable.</li>
+<li>Flexibility: ordgee: More specialized, focusing on ordinal outcomes. geeglm: More flexible, applicable to various types of response variables.</li>
+<li>Interpretation: ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. geeglm: Focuses on population-averaged effects across the levels of the outcome.</li>
 </ol>
-<p>• Estimate: 2.565 • Standard Error: 0.055 • Statistic: 2,182.131 • p-value: 0.000</p>
-<p>Interpretation: The intercept represents the estimated average level of the response variable pain when both time and group are at their reference levels (e.g., at the baseline time point and in the control group). The p-value indicates that this estimate is highly statistically significant, meaning there’s strong evidence that the intercept is different from zero.</p>
-<ol start="2" type="1">
-<li>time</li>
-</ol>
-<p>• Estimate: -0.480 • Standard Error: 0.023 • Statistic: 422.960 • p-value: 0.000</p>
-<p>Interpretation: The coefficient for time represents the change in the response variable pain for each unit increase in time (e.g., for each additional time point). The negative estimate suggests that pain decreases over time. This effect is also highly statistically significant (p-value = 0.000).</p>
-<ol start="3" type="1">
-<li>group</li>
-</ol>
-<p>• Estimate: -0.304 • Standard Error: 0.090 • Statistic: 11.386 • p-value: 0.001</p>
-<p>Interpretation: The coefficient for group (experimental group) indicates the difference in the response variable pain between the experimental group and the reference group (likely the control group). The negative estimate suggests that pain is lower in the experimental group compared to the control group. This difference is statistically significant (p-value = 0.001).</p>
-<ol start="4" type="1">
-<li>time:group</li>
-</ol>
-<p>• Estimate: 0.038 • Standard Error: 0.035 • Statistic: 1.181 • p-value: 0.277</p>
-<p>Interpretation: The interaction term time:group represents how the effect of time on pain differs between the experimental group and the control group. The positive estimate suggests a slight increase in pain over time in the experimental group compared to the control group. However, the p-value of 0.277 indicates that this interaction is not statistically significant, meaning there’s no strong evidence that the effect of time on pain differs between the groups.</p>
-<p>Summary</p>
-<p>• Main Effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. • Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.</p>
+<p><strong>When to use which:</strong> Use <code>geeglm()</code> when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering. Use <code>ordgee()</code> when you have ordinal response data and need to account for repeated measures or clustering.</p>
+</section>
+<section id="repolr-package" class="level3" data-number="32.3.2">
+<h3 data-number="32.3.2" class="anchored" data-anchor-id="repolr-package"><span class="header-section-number">32.3.2</span> <code>repolr</code> package</h3>
+<p>The package allows regression models to be fitted to repeated ordinal scores, for the proportional odds model, using a generalized estimating equation (GEE) methodology. The algorithm estimates the correlation parameter by minimizing the generalized variance of the regression parameters at each step of the fitting algorithm.</p>
+<p>The <code>repolr()</code> function from the <code>repolr</code> package is used to handle this problem.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">repolr</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  pain <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">data =</span> data, <span class="at">subjects =</span> <span class="st">"subject"</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), <span class="at">categories =</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt; repolr: 2016-02-26 version 3.4 
+#&gt; 
+#&gt; Call:
+#&gt; repolr(formula = pain ~ time * group, subjects = "subject", data = data, 
+#&gt;     times = c(1, 2, 3, 4, 5), categories = 4)
+#&gt; 
+#&gt; Coefficients: 
+#&gt;                coeff     se.robust  z.robust  p.value 
+#&gt; cuts1|2         -3.5676    0.2590   -13.7745    0.0000
+#&gt; cuts2|3          0.2612    0.2238     1.1671    0.2432
+#&gt; cuts3|4          3.8177    0.7406     5.1549    0.0000
+#&gt; time             1.3319    0.1066    12.4944    0.0000
+#&gt; grouptrt         0.8689    0.3121     2.7840    0.0054
+#&gt; time:grouptrt   -0.1712    0.1357    -1.2616    0.2071
+#&gt; 
+#&gt; Correlation Structure:  independence 
+#&gt; Fixed Correlation:  0</code></pre>
+</div>
+</div>
+<p>Main effects: Both time and group have statistically significant effects on pain. Pain decreases over time and is lower in the experimental group. Interaction: The interaction between time and group is not statistically significant, suggesting that the rate of change in pain over time does not differ significantly between the experimental and control groups.</p>
+<p>GEE is a powerful approach for repeated measures and longitudinal data analysis, allowing researchers to account for correlation within subjects and to draw meaningful conclusions about treatment effects or changes over time. It is robust to correlation misspecification, making it suitable for complex correlated data structures. It provides reliable parameter estimates across various data distributions. However, GEE is less effective with small sample sizes, where its estimations may be less reliable. The choice of correlation structure requires statistical expertise, as incorrect specification can impact results.</p>
+</section>
+<section id="ordinal-package" class="level3" data-number="32.3.3">
+<h3 data-number="32.3.3" class="anchored" data-anchor-id="ordinal-package"><span class="header-section-number">32.3.3</span> <code>ordinal</code> package</h3>
+<p>This package facilitates analysis of ordinal (ordered categorical data) via cumulative link models (CLMs) and cumulative link mixed models (CLMMs). Robust and efficient computational methods gives speedy and accurate estimation. A wide range of methods for model fits aids the data analysis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group, <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; formula: ordered(pain) ~ time * group
 #&gt; data:    data
@@ -578,24 +680,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; 
 #&gt; Coefficients:
 #&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; time           -1.4000     0.0929  -15.07   &lt;2e-16 ***
-#&gt; grouptrt       -0.8344     0.2703   -3.09    0.002 ** 
-#&gt; time:grouptrt   0.0953     0.1069    0.89    0.373    
+#&gt; time          -1.40000    0.09288 -15.073  &lt; 2e-16 ***
+#&gt; grouptrt      -0.83443    0.27030  -3.087  0.00202 ** 
+#&gt; time:grouptrt  0.09529    0.10695   0.891  0.37296    
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
 #&gt; Threshold coefficients:
 #&gt;     Estimate Std. Error z value
-#&gt; 0|1   -5.274      0.292  -18.05
-#&gt; 1|2   -3.755      0.256  -14.67
-#&gt; 2|3    0.209      0.186    1.13
-#&gt; 3|4    3.777      0.593    6.37</code></pre>
+#&gt; 0|1  -5.2738     0.2922 -18.051
+#&gt; 1|2  -3.7553     0.2561 -14.666
+#&gt; 2|3   0.2093     0.1856   1.128
+#&gt; 3|4   3.7766     0.5929   6.369</code></pre>
 </div>
 </div>
-<p>The choice between cumulative link mixed models (CLMM) and generalized estimating equations (GEE) depends on the specifics of your data and the goals of your analysis. Both methods are used for analyzing clustered or repeated measures data with ordinal outcomes, but they have different strengths and weaknesses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clmm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subject), <span class="at">data =</span> data) <span class="sc">|&gt;</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clmm</span>(<span class="fu">ordered</span>(pain) <span class="sc">~</span> time <span class="sc">*</span> group <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> subject), <span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Cumulative Link Mixed Model fitted with the Laplace approximation
 #&gt; 
@@ -607,54 +708,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #&gt; 
 #&gt; Random effects:
 #&gt;  Groups  Name        Variance Std.Dev.
-#&gt;  subject (Intercept) 2.89     1.7     
+#&gt;  subject (Intercept) 2.887    1.699   
 #&gt; Number of groups:  subject 149 
 #&gt; 
 #&gt; Coefficients:
 #&gt;               Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; time            -1.970      0.131  -15.03   &lt;2e-16 ***
-#&gt; grouptrt        -1.247      0.417   -2.99   0.0028 ** 
-#&gt; time:grouptrt    0.123      0.122    1.01   0.3135    
+#&gt; time           -1.9697     0.1311 -15.025   &lt;2e-16 ***
+#&gt; grouptrt       -1.2470     0.4172  -2.989   0.0028 ** 
+#&gt; time:grouptrt   0.1234     0.1224   1.008   0.3135    
 #&gt; ---
 #&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #&gt; 
 #&gt; Threshold coefficients:
 #&gt;     Estimate Std. Error z value
-#&gt; 0|1   -7.539      0.491  -15.37
-#&gt; 1|2   -5.397      0.420  -12.87
-#&gt; 2|3    0.252      0.295    0.85
-#&gt; 3|4    4.777      0.696    6.87</code></pre>
+#&gt; 0|1  -7.5386     0.4905 -15.368
+#&gt; 1|2  -5.3973     0.4195 -12.865
+#&gt; 2|3   0.2524     0.2953   0.855
+#&gt; 3|4   4.7771     0.6956   6.867</code></pre>
 </div>
 </div>
-<p>Cumulative Link Mixed Models (CLMM)</p>
-<p>Pros:</p>
-<p>• Random Effects: CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects. • Interpretation: CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns. • Likelihood-Based: CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met.</p>
-<p>Cons:</p>
-<p>• Computationally Intensive: CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects. • Assumptions: CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.</p>
-<p>Generalized Estimating Equations (GEE)</p>
-<p>Pros:</p>
-<p>• Robustness: GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met. • Less Computationally Intensive: GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets. • Flexibility: GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.</p>
-<p>Cons:</p>
-<p>• No Random Effects: GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.</p>
-<p>When to Choose Which:</p>
-<p>• Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable. • Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.</p>
+<p>CLMMs explicitly model random effects, which allows for subject-specific inferences. This means you can account for the variability between subjects, leading to more accurate estimates of the fixed effects.</p>
+<p>CLMMs provide estimates for both fixed effects (population-level effects) and random effects (subject-level variability), which can be useful if you’re interested in understanding both individual and group-level patterns.</p>
+<p>CLMMs are likelihood-based models, which can provide more efficient estimates when the model assumptions are met. CLMMs assume a particular distribution (e.g., normally distributed random effects), and if this assumption is violated, the model may not perform well.</p>
+<p>CLMMs can be more computationally intensive, especially with large datasets or complex models with many random effects.</p>
+<p>GEE is robust to misspecification of the correlation structure within clusters. It focuses on estimating population-averaged effects rather than subject-specific effects, which can be more stable when model assumptions are not fully met.</p>
+<p>GEE tends to be less computationally demanding compared to CLMM, making it a better choice for large datasets.</p>
+<p>GEE can handle various types of correlation structures, making it flexible for different kinds of clustered data.</p>
+<p>GEE does not model random effects, which means it does not provide subject-specific inferences. It’s primarily focused on population-averaged effects. • Less Efficient with Small Samples: GEE might be less efficient with small sample sizes compared to CLMM because it does not fully account for subject-level variability.</p>
+<p>When to choose which:</p>
+<p>Use GEE if you are more interested in population-averaged effects, have a large dataset, or want a method that is more robust to correlation structure misspecification.</p>
+<p>Use CLMM if you are interested in subject-specific inferences, need to account for random effects, and are working with a relatively smaller dataset where computational demands are manageable.</p>
 <p>In summary, if your primary interest is in understanding individual-level variability and you can handle the computational load, CLMM might be the better choice. If you’re more interested in population-level trends and want a more robust approach with less concern for the specific correlation structure, GEE would be a better option.</p>
-<p>ordgee and geeglm are both functions in R used to fit models for clustered or repeated measures data, but they differ in the types of data they handle and the specific models they fit.</p>
-<p>ordgee (Ordinal Generalized Estimating Equations)</p>
-<p>• Purpose: ordgee is specifically designed for fitting Generalized Estimating Equations (GEE) models to ordinal response data. This is useful when your outcome variable is ordinal (e.g., Likert scale data, ordered categorical data) and you have repeated measures or clustered data. • Model: ordgee accounts for the ordinal nature of the data by using a cumulative logit link function or other appropriate link functions for ordinal outcomes. • Usage: It’s particularly used in situations where the response variable has a natural order but the distances between the categories are not assumed to be equal. It extends the GEE framework to handle the special case of ordinal outcomes. • Example Scenario: If you’re analyzing patient satisfaction scores (e.g., 1 to 5) collected at multiple time points for different treatment groups, ordgee would be appropriate.</p>
-<p>geeglm (Generalized Estimating Equations for Generalized Linear Models)</p>
-<p>• Purpose: geeglm is a more general function that fits Generalized Estimating Equations (GEE) models for a wide variety of outcome distributions (e.g., Gaussian, binomial, Poisson). It is not restricted to ordinal data and can handle any type of response variable (continuous, binary, count, etc.) that can be modeled with a generalized linear model (GLM). • Model: geeglm allows you to specify the link function and the error distribution appropriate for your data (e.g., logit for binary outcomes, identity for continuous outcomes). It estimates population-averaged effects rather than subject-specific effects. • Usage: It’s used for a broad range of data types and is versatile for many different kinds of clustered or repeated measures data. • Example Scenario: If you’re analyzing binary outcomes (e.g., success/failure) collected at multiple time points across different clusters (e.g., hospitals), geeglm would be the appropriate choice.</p>
-<p>Key Differences:</p>
-<ol type="1">
-<li>Outcome Type: • ordgee: Specifically for ordinal outcomes. • geeglm: For a wide range of outcome types (continuous, binary, count, etc.).</li>
-<li>Link Functions: • ordgee: Uses link functions appropriate for ordinal data (e.g., cumulative logit). • geeglm: Allows specification of various link functions depending on the distribution of the response variable.</li>
-<li>Flexibility: • ordgee: More specialized, focusing on ordinal outcomes. • geeglm: More flexible, applicable to various types of response variables.</li>
-<li>Interpretation: • ordgee: Focuses on the odds of being in a higher versus lower category of the ordinal outcome. • geeglm: Focuses on population-averaged effects across the levels of the outcome.</li>
-</ol>
-<p>When to Use Which:</p>
-<p>• Use ordgee when you have ordinal response data and need to account for repeated measures or clustering. • Use geeglm when your response variable is not ordinal, or you are dealing with binary, continuous, or count data, and you need to account for repeated measures or clustering.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1268,8 +1355,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./stat-anal-report.html" class="pagination-link" aria-label="Communication">
-        <span class="nav-page-text">Communication</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./practical-skills.html" class="pagination-link" aria-label="Practical skills">
+        <span class="nav-page-text">Practical skills</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

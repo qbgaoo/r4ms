@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>38&nbsp; Quarto – R for Medical Statistics</title>
+<title>35&nbsp; Randomization – R for Medical Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./memo.html" rel="next">
-<link href="./pilot-project.html" rel="prev">
+<link href="./sample-size.html" rel="next">
+<link href="./random-sampling.html" rel="prev">
 <link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./randomization.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -396,7 +396,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./randomization.html" class="sidebar-item-text sidebar-link">
+  <a href="./randomization.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></span></a>
   </div>
 </li>
@@ -414,7 +414,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./quarto.html" class="sidebar-item-text sidebar-link active">
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
   </div>
 </li>
@@ -436,20 +436,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#github-action" id="toc-github-action" class="nav-link active" data-scroll-target="#github-action"><span class="header-section-number">38.1</span> GitHub Action</a>
-  <ul class="collapse">
-  <li><a href="#执行代码" id="toc-执行代码" class="nav-link" data-scroll-target="#执行代码"><span class="header-section-number">38.1.1</span> 执行代码</a></li>
-  <li><a href="#先决条件" id="toc-先决条件" class="nav-link" data-scroll-target="#先决条件"><span class="header-section-number">38.1.2</span> <strong>先决条件</strong></a></li>
-  </ul></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">35.1</span> Prerequisites</a></li>
+  <li><a href="#simple-randomization" id="toc-simple-randomization" class="nav-link" data-scroll-target="#simple-randomization"><span class="header-section-number">35.2</span> Simple randomization</a></li>
+  <li><a href="#complete-randomization" id="toc-complete-randomization" class="nav-link" data-scroll-target="#complete-randomization"><span class="header-section-number">35.3</span> Complete randomization</a></li>
+  <li><a href="#block-randomization" id="toc-block-randomization" class="nav-link" data-scroll-target="#block-randomization"><span class="header-section-number">35.4</span> <strong>Block Randomization</strong></a></li>
+  <li><a href="#stratified-randomization" id="toc-stratified-randomization" class="nav-link" data-scroll-target="#stratified-randomization"><span class="header-section-number">35.5</span> Stratified randomization</a></li>
+  <li><a href="#minimization" id="toc-minimization" class="nav-link" data-scroll-target="#minimization"><span class="header-section-number">35.6</span> <strong>Minimization</strong></a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/randomization.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./practical-skills.html">Practical skills</a></li><li class="breadcrumb-item"><a href="./randomization.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Quarto</span></h1>
+<h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Randomization</span></h1>
 </div>
 
 
@@ -466,85 +467,284 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="github-action" class="level2" data-number="38.1">
-<h2 data-number="38.1" class="anchored" data-anchor-id="github-action"><span class="header-section-number">38.1</span> GitHub Action</h2>
-<p>呈现和发布内容有几种不同的方法。下面，我们将提供一个使用 <a href="https://docs.github.com/en/actions">GitHub Actions</a> 和 GitHub Pages 发布内容的指南。</p>
-<section id="执行代码" class="level3" data-number="38.1.1">
-<h3 data-number="38.1.1" class="anchored" data-anchor-id="执行代码"><span class="header-section-number">38.1.1</span> 执行代码</h3>
-<p>如果你愿意，可以配置一个 GitHub Action 来执行 R 代码作为渲染的一部分。这虽然是最好的方法，但当在 GitHub Actions 等 CI 服务中执行代码时，请考虑以下要求:</p>
-<ul>
-<li>你需要在 CI 环境中重新配置所有依赖项（包括 R 以及所需的正确版本的包）。</li>
-<li>如果你的代码需要任何特殊权限（例如访问数据库或网络）， CI 服务器上也需要具备这些权限。</li>
-<li>你的项目可能包含无法轻易执行的文档（例如使用旧版包的几年前的博客文章）。这些文档可能需要单独启用冻结功能，以防止它们在 CI 上执行。</li>
-</ul>
+<p>Randomization is a technique used in experiments and studies to assign participants to different groups, such as treatment and control groups, in a way that is entirely random. The goal is to reduce potential bias and to ensure that any differences between groups are due to chance rather than systematic differences. This approach helps to increase the validity of study results, as it balances confounding variables across groups.</p>
+<section id="prerequisites" class="level2" data-number="35.1">
+<h2 data-number="35.1" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">35.1</span> Prerequisites</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmarkdown)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomizeR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="先决条件" class="level3" data-number="38.1.2">
-<h3 data-number="38.1.2" class="anchored" data-anchor-id="先决条件"><span class="header-section-number">38.1.2</span> <strong>先决条件</strong></h3>
-<p>确保代码可以在 GitHub Action 中执行的最佳方法是为项目使用 <a href="https://rstudio.github.io/renv/articles/renv.html">renv</a> 虚拟环境。以下是一个完整的 GitHub Action 示例，它安装 R 和 <code>renv.lock</code> 中的包依赖项，然后执行代码并将输出渲染到 GitHub Pages：</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="simple-randomization" class="level2" data-number="35.2">
+<h2 data-number="35.2" class="anchored" data-anchor-id="simple-randomization"><span class="header-section-number">35.2</span> Simple randomization</h2>
+<p>Simple Randomization is a straightforward technique in which each participant has an equal probability of being assigned to any of the available study groups. This approach is ideal for large samples, as it usually results in balanced group sizes and unbiased results. However, in smaller samples, there is a risk of group size imbalance.</p>
+<div class="example">
+<strong>Example 1:</strong> 
+<p>Suppose you are conducting a clinical trial to test the efficacy of a new drug, and you have 50 subjects. You need to randomly assign them to a treatment group and a control group.</p>
 </div>
-<div class="callout-title-container flex-fill">
-Tip
+<p>Here’s how to perform simple randomization, where we want to assign participants to two groups:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>simple_R <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">group =</span> <span class="st">""</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">runif</span>(N) <span class="sc">&gt;</span> <span class="fl">0.5</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>simple_R <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        27
+#&gt; 2 B        23</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>在 RStudio 左下窗口的 Terminal 选项卡中依次运行以下 Git 命令：</p>
-<ul>
-<li>git remote add origin https://github.com/qbgaoo/r4ms.git</li>
-<li>git branch -M main</li>
-<li>git push -u origin main</li>
-</ul>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform simple randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rarPar</span>(<span class="at">N =</span> N, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     B     B     A     B     B     B     B     B     A     A     B    
+#&gt; 2 A     A     A     A     A     A     B     B     A     B     B     A    
+#&gt; 3 A     B     B     B     A     A     A     A     A     B     A     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
 </div>
 </div>
-<p>在 Quarto 项目中新建文本文件，命名为 <code>publish.yml</code>（当然也可以是其他命字），保存路径为 <code>.github/workflows/publish.yml</code>，在文件中添加如下内容：</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pull_request</span><span class="kw">:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  # to be able to trigger a manual build</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schedule</span><span class="kw">:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    # run every day at 11 PM</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">cron</span><span class="kw">:</span><span class="at"> </span><span class="st">'0 23 * * *'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and deploy Book to Github</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">build-deploy</span><span class="kw">:</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out repository</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Quarto</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install R</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-r@v2</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">r-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'4.4.1'</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install R Dependencies</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-renv@v2</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">cache-version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and Publish</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/publish@v2</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">target</span><span class="kw">:</span><span class="at"> gh-pages</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>这是一个 GitHub Actions 工作流配置文件，保存后将文件提交到 GitHub中，触发文件中的工作流。</p>
+</section>
+<section id="complete-randomization" class="level2" data-number="35.3">
+<h2 data-number="35.3" class="anchored" data-anchor-id="complete-randomization"><span class="header-section-number">35.3</span> Complete randomization</h2>
+<p>Complete randomization is a method used in experimental design and clinical trials to assign participants to different treatment groups. It involves randomly distributing a predetermined, fixed number of participants across the groups to ensure balanced group sizes. Unlike simple randomization, which may result in unequal group sizes due to chance, complete randomization ensures that each group has the same or nearly the same number of participants.</p>
+<p>Here’s an example on how to perform complete randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">group =</span> <span class="st">""</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.5</span>, <span class="at">replace =</span> F) </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(groupA)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupA, <span class="at">group =</span> <span class="st">"A"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupB, <span class="at">group =</span> <span class="st">"B"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>complete_R <span class="ot">&lt;-</span> <span class="fu">rbind</span>(groupA, groupB)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>complete_R <span class="sc">|&gt;</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        25
+#&gt; 2 B        25</code></pre>
+</div>
+</div>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform complete randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crPar</span>(<span class="at">N =</span> N, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     B     A     A     B     A     B     B     A     B     A     A    
+#&gt; 2 B     A     B     B     A     A     B     B     B     B     B     B    
+#&gt; 3 B     A     B     A     B     A     B     B     B     A     B     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="block-randomization" class="level2" data-number="35.4">
+<h2 data-number="35.4" class="anchored" data-anchor-id="block-randomization"><span class="header-section-number">35.4</span> <strong>Block Randomization</strong></h2>
+<p>Block randomization is a technique used in experimental design to ensure that groups have a balanced number of participants over each block, reducing the potential for bias and imbalance. This is especially useful in clinical trials and other studies where ensuring equal group sizes within blocks is essential.</p>
+<div class="example">
+<strong>Example 2:</strong> 
+<p>Let’s assume we have 50 subjects and want to assign them to two groups with a block size of 5.</p>
+</div>
+<p>The subjects are first divided into blocks, then within each block, subjects are assigned to groups in a specific ratio. Here is an example code for block randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>block_size <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">no =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>N), <span class="at">block =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>block_size, <span class="at">each =</span> N<span class="sc">/</span> block_size), </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">""</span>) </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.6</span>, <span class="at">by =</span> block)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setdiff</span>(groupA)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>groupA <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupA, <span class="at">group =</span> <span class="st">"A"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>groupB <span class="ot">&lt;-</span> <span class="fu">mutate</span>(groupB, <span class="at">group =</span> <span class="st">"B"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>block_R <span class="ot">&lt;-</span> <span class="fu">rbind</span>(groupA, groupB)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>block_R <span class="sc">|&gt;</span> </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        30
+#&gt; 2 B        20</code></pre>
+</div>
+</div>
+<p>Alternatively, you can use <code>randomizeR</code> package to perform simple randomization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">50</span>; rb <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpbrPar</span>(<span class="at">N =</span> N, <span class="at">rb =</span> rb, <span class="at">K =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">genSeq</span>(<span class="at">r =</span> <span class="dv">3</span>, <span class="at">seed =</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pluck</span>(<span class="st">"M"</span>) <span class="sc">|&gt;</span>    </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="at">MARGIN =</span> <span class="dv">2</span>, \(x) <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">.name_repair =</span> <span class="sc">~</span> <span class="fu">paste0</span>(<span class="st">"s"</span>, (<span class="dv">1</span><span class="sc">:</span>N))) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 3 × 50
+#&gt;   s1    s2    s3    s4    s5    s6    s7    s8    s9    s10   s11   s12  
+#&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+#&gt; 1 A     A     B     A     A     B     B     B     B     A     A     B    
+#&gt; 2 A     B     B     A     A     B     A     B     A     B     A     B    
+#&gt; 3 B     B     A     B     B     A     A     A     A     B     A     A    
+#&gt; # ℹ 38 more variables: s13 &lt;chr&gt;, s14 &lt;chr&gt;, s15 &lt;chr&gt;, s16 &lt;chr&gt;,
+#&gt; #   s17 &lt;chr&gt;, s18 &lt;chr&gt;, s19 &lt;chr&gt;, s20 &lt;chr&gt;, s21 &lt;chr&gt;, s22 &lt;chr&gt;, …</code></pre>
+</div>
+</div>
+</section>
+<section id="stratified-randomization" class="level2" data-number="35.5">
+<h2 data-number="35.5" class="anchored" data-anchor-id="stratified-randomization"><span class="header-section-number">35.5</span> Stratified randomization</h2>
+<p>Stratified randomization is a technique used to ensure that specific characteristics (or “strata”) are evenly distributed across treatment groups in a study. This method helps control for confounding variables by balancing them across groups, which can be especially useful in clinical trials where factors like age, gender, or disease severity could impact the outcome.</p>
+<div class="example">
+<strong>Example 3:</strong> 
+<p>Suppose we have a study where we need to randomly assign 100 subjects to two treatment groups, stratified by gender (male, female) and age group (&lt;30 years, ≥30 years). This approach ensures balanced distribution within each combination of gender and age group.</p>
+</div>
+<p>Here is an example code for stratified randomization:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ratio <span class="ot">=</span> <span class="fl">0.5</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>init <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span>N,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), N, <span class="at">replace =</span> T),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"≥30"</span>), N, <span class="at">replace =</span> T)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="ot">&lt;-</span> init <span class="sc">|&gt;</span> </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, age) <span class="sc">|&gt;</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">if_else</span>(<span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="fu">round</span>(<span class="fu">n</span>() <span class="sc">*</span> ratio), <span class="st">"A"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Shuffle within each stratum to add randomness</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="ot">&lt;-</span> stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender, age) <span class="sc">|&gt;</span> </span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_frac</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">|&gt;</span> </span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        50
+#&gt; 2 B        50</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stratified_r <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(gender, age, group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 8 × 4
+#&gt;   gender age   group     n
+#&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
+#&gt; 1 Female &lt;30   A        14
+#&gt; 2 Female &lt;30   B        13
+#&gt; 3 Female ≥30   A        10
+#&gt; 4 Female ≥30   B        11
+#&gt; 5 Male   &lt;30   A        12
+#&gt; 6 Male   &lt;30   B        12
+#&gt; # ℹ 2 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="minimization" class="level2" data-number="35.6">
+<h2 data-number="35.6" class="anchored" data-anchor-id="minimization"><span class="header-section-number">35.6</span> <strong>Minimization</strong></h2>
+<p>Minimization is a randomization method often used in clinical trials to ensure balanced allocation of participants across treatment groups while taking specific covariates (such as age, gender, or disease severity) into account. Unlike simple or stratified randomization, minimization actively adjusts the assignment of each new participant based on existing imbalances across groups.</p>
+<p>Here’s how minimization works:</p>
+<p>1. Identify key covariates: Select the covariates that are important for balancing across treatment groups.</p>
+<p>2. Assign the first participants: Start by assigning the initial participants randomly to treatment groups.</p>
+<p>3. Calculate imbalance: For each new participant, calculate how their assignment to each group would impact the balance of covariates across groups.</p>
+<p>4. Assign to the least imbalanced group: The participant is assigned to the group that would result in the least imbalance, with a small probability of random assignment to avoid predictability.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">subject =</span> <span class="dv">1</span><span class="sc">:</span>n, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), n, <span class="at">replace =</span> T), </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">ageGroup =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"&gt;=30"</span>), n, <span class="at">replace =</span> T),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">""</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a combination of covariables</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>cov_comb <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>), <span class="at">ageGroup =</span> <span class="fu">c</span>(<span class="st">"&lt;30"</span>, <span class="st">"&gt;=30"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">comb =</span> <span class="fu">paste0</span>(gender, <span class="st">"_"</span>, ageGroup))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the processing group with the least imbalance</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>counter <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>), cov_comb<span class="sc">$</span>comb))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gets the covariate combination for the current subject</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  current_cov <span class="ot">&lt;-</span> <span class="fu">paste0</span>(df<span class="sc">$</span>gender[i], <span class="st">"_"</span>, df<span class="sc">$</span>ageGroup[i])</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the imbalance score</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  imbalance_A <span class="ot">&lt;-</span> <span class="fu">sum</span>(counter[<span class="st">"A"</span>, ]) <span class="sc">-</span> counter[<span class="st">"A"</span>, current_cov]</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  imbalance_B <span class="ot">&lt;-</span> <span class="fu">sum</span>(counter[<span class="st">"B"</span>, ]) <span class="sc">-</span> counter[<span class="st">"B"</span>, current_cov]</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select the processing group with the least imbalance</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(imbalance_A) <span class="sc">&lt;</span> <span class="fu">abs</span>(imbalance_B)) {</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>group[i] <span class="ot">&lt;-</span> <span class="st">"A"</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    counter[<span class="st">"A"</span>, current_cov] <span class="ot">&lt;-</span> counter[<span class="st">"A"</span>, current_cov] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    df<span class="sc">$</span>group[i] <span class="ot">&lt;-</span> <span class="st">"B"</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    counter[<span class="st">"B"</span>, current_cov] <span class="ot">&lt;-</span> counter[<span class="st">"B"</span>, current_cov] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 5 × 4
+#&gt;   subject gender ageGroup group
+#&gt;     &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;
+#&gt; 1       1 Female &gt;=30     B    
+#&gt; 2       2 Male   &gt;=30     A    
+#&gt; 3       3 Male   &lt;30      B    
+#&gt; 4       4 Female &gt;=30     B    
+#&gt; 5       5 Male   &lt;30      A</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of occurrences of each group</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">count</span>(group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; # A tibble: 2 × 2
+#&gt;   group     n
+#&gt;   &lt;chr&gt; &lt;int&gt;
+#&gt; 1 A        55
+#&gt; 2 B        45</code></pre>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1153,13 +1353,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pilot-project.html" class="pagination-link" aria-label="A case to analyze">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">A case to analyze</span></span>
+      <a href="./random-sampling.html" class="pagination-link" aria-label="Random sampling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Random sampling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./memo.html" class="pagination-link" aria-label="Memo for future programming">
-        <span class="nav-page-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Memo for future programming</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./sample-size.html" class="pagination-link" aria-label="Sample size estimation">
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Sample size estimation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1168,5 +1368,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/randomization.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
