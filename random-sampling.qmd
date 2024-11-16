@@ -1,4 +1,4 @@
-# Random sampling 
+# Random sampling
 
 ```{r}
 #| echo: false

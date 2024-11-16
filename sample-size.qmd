@@ -330,27 +330,33 @@ It should be noticed that the sample sizes calculated by `power.prop.test()` and
 -   `power.prop.test()` uses a standard normal approximation for the difference between two proportions, calculating power based on a more traditional Z-test approach. It does not transform the proportions and operates directly on the difference in proportions (p1 - p2).
 -   `pwr.2p.test()` from the `pwr` package uses Cohen’s h, which is based on the arcsine transformation of the proportions. Cohen’s h is a measure of effect size that is specifically adjusted for proportions, aiming to improve the estimation’s stability, especially when proportions are near 0 or 1.
 
-If you areworking with proportions that are close to 0 or 1, pwr.2p.test() may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.
+If you are working with proportions that are close to 0 or 1, `pwr.2p.test()` may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.
 
 ## Comparison of multiple sample proportions
 
-When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The null hypothesis assumes that the proportions are equal across all groups.
-
-To estimate the sample size required for detecting a difference among groups, the following formula can be used:
+When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The formula for calculating sample size for each group in a multiple-proportion comparison is:
 
 $$
-n = \frac{\lambda} {2(\text {sin}^{-1} \sqrt{p_{\text max}} - \text {sin}^{-1} \sqrt{p_{\text min}})^2}
+n = \frac{\lambda} {2(\sin^{-1} \sqrt{p_{\text{max}}} - \sin^{-1} \sqrt{p_{\text{min}}})^2}
 $$
 
-where $Z_{\alpha/2}$ is the critical value for the two-sided test at significance level $\alpha$, $Z_{\beta}$ is the critical value corresponding to the desired power.
+where $p_{\text{max}}$is the highest proportion (efficacy rate) among the groups, $p_{\text{min}}$ is the lowest proportion among the groups, $\lambda$ is the non-centrality parametera, which is a constant that depends on the desired significance level and power.
 
 ::: example
 To observe the effects of 3 methods for treating peptic ulcers in rats, it is preliminarily estimated that method A has an efficacy rate of 40%, method B has an efficacy rate of 50%, and method C has an efficacy rate of 65%. Assuming $α = 0.05$ and $β = 0.10$, to conclude that there are differences in efficacy rates, how many rats need to be observed in each group?
 :::
 
-```{r}
-P <- matrix(c(0.4, 0.6, 0.5, 0.5, 0.65, 0.35), nrow = 3, byrow = T)
-w = ES.w2(P / 3) 
+For a given power $1 - \beta$, significance level $\alpha$, and effect size $w$, the sample size $N$ can be calculated using the `pwr.chisq.test()` function, which is based on the non-central chi-squared distribution. This approach ensures accurate power calculations, especially for cases where the central approximation does not hold.
 
-pwr.chisq.test(w = w, df = 2, sig.level = 0.05, power = 0.9) 
+```{r}
+k <- 3
+p0 = c(0.4, 0.5, 0.65);  p1 = c(0.6, 0.5, 0.35)
+P = matrix(c(p0, p1), nrow = k) / k
+w1 = ES.w2(P)                                         # <1>
+w2 <- cohens_w(P, alternative = "two.sided") |> pluck(1)  # <1>
+
+pwr.chisq.test(w = w1, df = 2, sig.level = 0.05, power = 0.9) 
+pwr.chisq.test(w = w2, df = 2, sig.level = 0.05, power = 0.9)
 ```
+
+1.  Calculate the effect size, with the same results
