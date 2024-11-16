@@ -908,27 +908,50 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 <li><code>power.prop.test()</code> uses a standard normal approximation for the difference between two proportions, calculating power based on a more traditional Z-test approach. It does not transform the proportions and operates directly on the difference in proportions (p1 - p2).</li>
 <li><code>pwr.2p.test()</code> from the <code>pwr</code> package uses Cohen’s h, which is based on the arcsine transformation of the proportions. Cohen’s h is a measure of effect size that is specifically adjusted for proportions, aiming to improve the estimation’s stability, especially when proportions are near 0 or 1.</li>
 </ul>
-<p>If you areworking with proportions that are close to 0 or 1, pwr.2p.test() may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.</p>
+<p>If you are working with proportions that are close to 0 or 1, <code>pwr.2p.test()</code> may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.</p>
 </section>
 <section id="comparison-of-multiple-sample-proportions" class="level2" data-number="36.8">
 <h2 data-number="36.8" class="anchored" data-anchor-id="comparison-of-multiple-sample-proportions"><span class="header-section-number">36.8</span> Comparison of multiple sample proportions</h2>
-<p>When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The null hypothesis assumes that the proportions are equal across all groups.</p>
-<p>To estimate the sample size required for detecting a difference among groups, the following formula can be used:</p>
+<p>When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The formula for calculating sample size for each group in a multiple-proportion comparison is:</p>
 <p><span class="math display">
-n = \frac{\lambda} {2(\text {sin}^{-1} \sqrt{p_{\text max}} - \text {sin}^{-1} \sqrt{p_{\text min}})^2}
+n = \frac{\lambda} {2(\sin^{-1} \sqrt{p_{\text{max}}} - \sin^{-1} \sqrt{p_{\text{min}}})^2}
 </span></p>
-<p>where <span class="math inline">Z_{\alpha/2}</span> is the critical value for the two-sided test at significance level <span class="math inline">\alpha</span>, <span class="math inline">Z_{\beta}</span> is the critical value corresponding to the desired power.</p>
+<p>where <span class="math inline">p_{\text{max}}</span>is the highest proportion (efficacy rate) among the groups, <span class="math inline">p_{\text{min}}</span> is the lowest proportion among the groups, <span class="math inline">\lambda</span> is the non-centrality parametera, which is a constant that depends on the desired significance level and power.</p>
 <div class="example">
 <strong>Example 5:</strong> 
 <p>To observe the effects of 3 methods for treating peptic ulcers in rats, it is preliminarily estimated that method A has an efficacy rate of 40%, method B has an efficacy rate of 50%, and method C has an efficacy rate of 65%. Assuming <span class="math inline">α = 0.05</span> and <span class="math inline">β = 0.10</span>, to conclude that there are differences in efficacy rates, how many rats need to be observed in each group?</p>
 </div>
+<p>For a given power <span class="math inline">1 - \beta</span>, significance level <span class="math inline">\alpha</span>, and effect size <span class="math inline">w</span>, the sample size <span class="math inline">N</span> can be calculated using the <code>pwr.chisq.test()</code> function, which is based on the non-central chi-squared distribution. This approach ensures accurate power calculations, especially for cases where the central approximation does not hold.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.65</span>, <span class="fl">0.35</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> T)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">ES.w2</span>(P <span class="sc">/</span> <span class="dv">3</span>) </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.65</span>);  p1 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fl">0.35</span>)</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(p0, p1), <span class="at">nrow =</span> k) <span class="sc">/</span> k</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-4" class="code-annotation-target"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">=</span> <span class="fu">ES.w2</span>(P)</span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">cohens_w</span>(P, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>)</span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w1, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w2, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="4,5" data-code-annotation="1">Calculate the effect size, with the same results</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
+#&gt;      Chi squared power calculation 
+#&gt; 
+#&gt;               w = 0.2055947
+#&gt;               N = 299.3655
+#&gt;              df = 2
+#&gt;       sig.level = 0.05
+#&gt;           power = 0.9
+#&gt; 
+#&gt; NOTE: N is the number of observations
+#&gt; 
+#&gt; 
 #&gt;      Chi squared power calculation 
 #&gt; 
 #&gt;               w = 0.2055947
