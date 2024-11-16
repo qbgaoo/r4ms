@@ -71,6 +71,16 @@
       ],
       "Hash": "065ae649b05f1ff66bb0c793107508f5"
     },
+    "DEoptimR": {
+      "Package": "DEoptimR",
+      "Version": "1.1-3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "stats"
+      ],
+      "Hash": "72f87e0092e39384aee16df8d67d7410"
+    },
     "DT": {
       "Package": "DT",
       "Version": "0.33",
@@ -436,6 +446,16 @@
       ],
       "Hash": "f8de2251d038370300412802bb809927"
     },
+    "PwrGSD": {
+      "Package": "PwrGSD",
+      "Version": "2.3.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "survival"
+      ],
+      "Hash": "b52f0e72096ddab7ef7cc3262368f1c1"
+    },
     "QuickJSR": {
       "Package": "QuickJSR",
       "Version": "1.4.0",
@@ -712,6 +732,19 @@
       ],
       "Hash": "5b250ad4c5863ee4a68e280fcb0a3600"
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "6.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Rcpp",
+        "curl",
+        "jsonlite",
+        "utils"
+      ],
+      "Hash": "6603bfcbc7883a5fed41fb13042a3899"
+    },
     "VGAM": {
       "Package": "VGAM",
       "Version": "1.1-12",
@@ -815,6 +848,22 @@
       ],
       "Hash": "c39f4155b3ceb1a9a2799d700fbd4b6a"
     },
+    "assertr": {
+      "Package": "assertr",
+      "Version": "3.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "MASS",
+        "R",
+        "dplyr",
+        "methods",
+        "rlang",
+        "stats",
+        "utils"
+      ],
+      "Hash": "dd34511e88d11c95e80f8d9bb0606e79"
+    },
     "assertthat": {
       "Package": "assertthat",
       "Version": "0.2.1",
@@ -902,6 +951,16 @@
       ],
       "Hash": "4ca24fd5ccfa7397a722aaee347e918d"
     },
+    "bigD": {
+      "Package": "bigD",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "93637e906f3fe962413912c956eb44db"
+    },
     "bit": {
       "Package": "bit",
       "Version": "4.5.0",
@@ -925,6 +984,40 @@
         "utils"
       ],
       "Hash": "e84984bf5f12a18628d9a02322128dfd"
+    },
+    "bitops": {
+      "Package": "bitops",
+      "Version": "1.0-9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d972ef991d58c19e6efa71b21f5e144b"
+    },
+    "blastula": {
+      "Package": "blastula",
+      "Version": "0.3.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "base64enc",
+        "commonmark",
+        "curl",
+        "digest",
+        "dplyr",
+        "fs",
+        "getPass",
+        "here",
+        "htmltools",
+        "httr",
+        "jsonlite",
+        "magrittr",
+        "mime",
+        "rlang",
+        "rmarkdown",
+        "stringr",
+        "uuid"
+      ],
+      "Hash": "0a4a92a60e3d152c7797f166cf927239"
     },
     "blob": {
       "Package": "blob",
@@ -1505,6 +1598,27 @@
       ],
       "Hash": "d7602f0f55e0335b83f2353337848d6f"
     },
+    "dataMaid": {
+      "Package": "dataMaid",
+      "Version": "1.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "gridExtra",
+        "haven",
+        "htmltools",
+        "magrittr",
+        "methods",
+        "pander",
+        "rmarkdown",
+        "robustbase",
+        "stringi",
+        "whoami"
+      ],
+      "Hash": "f7a2aaf8d6f33b0ed9d0a24b0af9ff99"
+    },
     "datawizard": {
       "Package": "datawizard",
       "Version": "0.13.0",
@@ -2072,6 +2186,18 @@
       ],
       "Hash": "15e9634c0fcd294799e9b2e929ed1b86"
     },
+    "getPass": {
+      "Package": "getPass",
+      "Version": "0.2-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "rstudioapi",
+        "utils"
+      ],
+      "Hash": "281e56bcab06202f51be7b50254f2fce"
+    },
     "ggplot2": {
       "Package": "ggplot2",
       "Version": "3.5.1",
@@ -2403,6 +2529,59 @@
       ],
       "Hash": "05e4f5fffb1eecfeaac9ea0b7f255fef"
     },
+    "gsDesign": {
+      "Package": "gsDesign",
+      "Version": "3.6.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "ggplot2",
+        "graphics",
+        "gt",
+        "magrittr",
+        "methods",
+        "r2rtf",
+        "rlang",
+        "stats",
+        "tibble",
+        "tidyr",
+        "tools",
+        "xtable"
+      ],
+      "Hash": "0a3639c9b3a529a6ca0fad4b8f20743b"
+    },
+    "gt": {
+      "Package": "gt",
+      "Version": "0.11.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "base64enc",
+        "bigD",
+        "bitops",
+        "cli",
+        "commonmark",
+        "dplyr",
+        "fs",
+        "glue",
+        "htmltools",
+        "htmlwidgets",
+        "juicyjuice",
+        "magrittr",
+        "markdown",
+        "reactable",
+        "rlang",
+        "sass",
+        "scales",
+        "tidyselect",
+        "vctrs",
+        "xml2"
+      ],
+      "Hash": "3170d1f0f45e531c241179ab57cd30bd"
+    },
     "gtable": {
       "Package": "gtable",
       "Version": "0.3.6",
@@ -2466,6 +2645,16 @@
         "vctrs"
       ],
       "Hash": "9171f898db9d9c4c1b2c745adc2c1ef1"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rprojroot"
+      ],
+      "Hash": "24b224366f9c2e7534d2344d10d59211"
     },
     "highr": {
       "Package": "highr",
@@ -2570,6 +2759,32 @@
         "openssl"
       ],
       "Hash": "ac107251d9d9fd72f0ca8049988f1d7f"
+    },
+    "huxtable": {
+      "Package": "huxtable",
+      "Version": "5.5.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "assertthat",
+        "base64enc",
+        "commonmark",
+        "fansi",
+        "generics",
+        "glue",
+        "htmltools",
+        "memoise",
+        "rlang",
+        "stats",
+        "stringi",
+        "stringr",
+        "tidyselect",
+        "utils",
+        "xml2"
+      ],
+      "Hash": "e24fbb6f2726397e0269034bdd11a895"
     },
     "ids": {
       "Package": "ids",
@@ -2717,6 +2932,16 @@
         "methods"
       ],
       "Hash": "4e993b65c2c3ffbffce7bb3e2c6f832b"
+    },
+    "juicyjuice": {
+      "Package": "juicyjuice",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "V8"
+      ],
+      "Hash": "3bcd11943da509341838da9399e18bce"
     },
     "kSamples": {
       "Package": "kSamples",
@@ -3347,6 +3572,21 @@
       ],
       "Hash": "8d75f0669b1fb93885d39b9281672c5e"
     },
+    "mstate": {
+      "Package": "mstate",
+      "Version": "0.3.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "RColorBrewer",
+        "data.table",
+        "lattice",
+        "rlang",
+        "survival",
+        "viridisLite"
+      ],
+      "Hash": "21e44519ee857edee1838a638848faca"
+    },
     "multcomp": {
       "Package": "multcomp",
       "Version": "1.4-26",
@@ -3528,6 +3768,16 @@
       ],
       "Hash": "c54136f6b269d1e006d62f7dd8ff4c94"
     },
+    "outliers": {
+      "Package": "outliers",
+      "Version": "0.15",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "2a7c7080df9a8a71d979a83dafdd28df"
+    },
     "pROC": {
       "Package": "pROC",
       "Version": "1.18.5",
@@ -3540,6 +3790,24 @@
         "plyr"
       ],
       "Hash": "82d32ebd548c6a4e7de73bab96411b3b"
+    },
+    "pander": {
+      "Package": "pander",
+      "Version": "0.6.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "digest",
+        "grDevices",
+        "graphics",
+        "methods",
+        "stats",
+        "tools",
+        "utils"
+      ],
+      "Hash": "737924139a1e4fc96356ff377c754c35"
     },
     "parallelly": {
       "Package": "parallelly",
@@ -3730,6 +3998,20 @@
       ],
       "Hash": "2ec30ffbeec83da57655b850cf2d3e0e"
     },
+    "plotrix": {
+      "Package": "plotrix",
+      "Version": "3.8-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "d47fdfc45aeba360ce9db50643de3fbd"
+    },
     "pls": {
       "Package": "pls",
       "Version": "2.8-5",
@@ -3764,6 +4046,36 @@
         "R"
       ],
       "Hash": "bd54ba8a0a5faded999a7aab6e46b374"
+    },
+    "pointblank": {
+      "Package": "pointblank",
+      "Version": "0.12.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DBI",
+        "R",
+        "base64enc",
+        "blastula",
+        "cli",
+        "dbplyr",
+        "digest",
+        "dplyr",
+        "fs",
+        "glue",
+        "gt",
+        "htmltools",
+        "knitr",
+        "magrittr",
+        "rlang",
+        "scales",
+        "testthat",
+        "tibble",
+        "tidyr",
+        "tidyselect",
+        "yaml"
+      ],
+      "Hash": "0c27be441965f1862008da6673b79fb7"
     },
     "polspline": {
       "Package": "polspline",
@@ -3970,6 +4282,17 @@
       ],
       "Hash": "1cba04a4e9414bdefc9dcaa99649a8dc"
     },
+    "pwr": {
+      "Package": "pwr",
+      "Version": "1.3-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "graphics",
+        "stats"
+      ],
+      "Hash": "adfa41db3678b41bf9235c514c51799a"
+    },
     "qgraph": {
       "Package": "qgraph",
       "Version": "1.9.8",
@@ -4064,6 +4387,18 @@
       ],
       "Hash": "22f4e24806d7d2112f10927a4ee64786"
     },
+    "r2rtf": {
+      "Package": "r2rtf",
+      "Version": "1.1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "tools"
+      ],
+      "Hash": "807989b4dccfab6440841a5e8aaa95f1"
+    },
     "ragg": {
       "Package": "ragg",
       "Version": "1.3.3",
@@ -4074,6 +4409,31 @@
         "textshaping"
       ],
       "Hash": "0595fe5e47357111f29ad19101c7d271"
+    },
+    "randomizeR": {
+      "Package": "randomizeR",
+      "Version": "3.0.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "PwrGSD",
+        "R",
+        "coin",
+        "dplyr",
+        "ggplot2",
+        "gsDesign",
+        "insight",
+        "magrittr",
+        "methods",
+        "mstate",
+        "mvtnorm",
+        "plotrix",
+        "purrr",
+        "reshape2",
+        "rlang",
+        "survival"
+      ],
+      "Hash": "d22309ab2b609eb233d4b2e931dad265"
     },
     "rappdirs": {
       "Package": "rappdirs",
@@ -4096,6 +4456,31 @@
         "utils"
       ],
       "Hash": "dfc034a172fd88fc66b1a703894c4185"
+    },
+    "reactR": {
+      "Package": "reactR",
+      "Version": "0.6.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "htmltools"
+      ],
+      "Hash": "b8e3d93f508045812f47136c7c44c251"
+    },
+    "reactable": {
+      "Package": "reactable",
+      "Version": "0.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "reactR"
+      ],
+      "Hash": "6069eb2a6597963eae0605c1875ff14c"
     },
     "readr": {
       "Package": "readr",
@@ -4187,9 +4572,25 @@
     "renv": {
       "Package": "renv",
       "Version": "1.0.11",
-      "OS_type": null,
+      "Source": "Repository",
       "Repository": "CRAN",
-      "Source": "Repository"
+      "Requirements": [
+        "utils"
+      ],
+      "Hash": "47623f66b4e80b3b0587bc5d7b309888"
+    },
+    "repolr": {
+      "Package": "repolr",
+      "Version": "3.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "Rcpp",
+        "RcppArmadillo",
+        "methods"
+      ],
+      "Hash": "038185423c5a253426aee6394a49fcd3"
     },
     "reprex": {
       "Package": "reprex",
@@ -4298,6 +4699,21 @@
         "survival"
       ],
       "Hash": "1677eb26455ea84eef2e51100648147d"
+    },
+    "robustbase": {
+      "Package": "robustbase",
+      "Version": "0.99-4-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DEoptimR",
+        "R",
+        "graphics",
+        "methods",
+        "stats",
+        "utils"
+      ],
+      "Hash": "c4aa31d38787b63bddb050b175f52e3d"
     },
     "rockchalk": {
       "Package": "rockchalk",
@@ -4593,6 +5009,17 @@
         "utils"
       ],
       "Hash": "cf00a3c090a54979990af2e89506a1d3"
+    },
+    "settings": {
+      "Package": "settings",
+      "Version": "0.2.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "grDevices",
+        "graphics"
+      ],
+      "Hash": "044078dfd387c9a6e160103978d23be4"
     },
     "shape": {
       "Package": "shape",
@@ -5075,6 +5502,22 @@
       ],
       "Hash": "34e965e62a41fcafb1ca60e9b142085b"
     },
+    "validate": {
+      "Package": "validate",
+      "Version": "1.1.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "graphics",
+        "grid",
+        "methods",
+        "settings",
+        "stats",
+        "yaml"
+      ],
+      "Hash": "b3353629762a62bb7cd9b79fc0caf683"
+    },
     "vcd": {
       "Package": "vcd",
       "Version": "1.4-13",
@@ -5202,6 +5645,18 @@
         "rlang"
       ],
       "Hash": "52f574062a7b66e56926988c3fbdb3b7"
+    },
+    "whoami": {
+      "Package": "whoami",
+      "Version": "1.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "httr",
+        "jsonlite",
+        "utils"
+      ],
+      "Hash": "ef0f4d9b8f2cc2ebeccae1d725b8a023"
     },
     "withr": {
       "Package": "withr",
