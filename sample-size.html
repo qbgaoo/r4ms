@@ -481,12 +481,21 @@ window.Quarto = {
   <ul>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites"><span class="header-section-number">36.1</span> Prerequisites</a></li>
   <li><a href="#factors-affecting-sample-size" id="toc-factors-affecting-sample-size" class="nav-link" data-scroll-target="#factors-affecting-sample-size"><span class="header-section-number">36.2</span> Factors affecting sample size</a></li>
-  <li><a href="#comparison-of-one-sample-mean-with-a-known-population-mean" id="toc-comparison-of-one-sample-mean-with-a-known-population-mean" class="nav-link" data-scroll-target="#comparison-of-one-sample-mean-with-a-known-population-mean"><span class="header-section-number">36.3</span> Comparison of one-sample mean with a known population mean</a></li>
-  <li><a href="#comparison-of-two-sample-means" id="toc-comparison-of-two-sample-means" class="nav-link" data-scroll-target="#comparison-of-two-sample-means"><span class="header-section-number">36.4</span> Comparison of two-sample means</a></li>
-  <li><a href="#comparison-of-multiple-sample-means" id="toc-comparison-of-multiple-sample-means" class="nav-link" data-scroll-target="#comparison-of-multiple-sample-means"><span class="header-section-number">36.5</span> Comparison of multiple sample means</a></li>
-  <li><a href="#comparison-of-one-sample-proportion-with-a-known-population-proportion" id="toc-comparison-of-one-sample-proportion-with-a-known-population-proportion" class="nav-link" data-scroll-target="#comparison-of-one-sample-proportion-with-a-known-population-proportion"><span class="header-section-number">36.6</span> Comparison of one-sample proportion with a known population proportion</a></li>
-  <li><a href="#comparison-of-two-sample-proportions" id="toc-comparison-of-two-sample-proportions" class="nav-link" data-scroll-target="#comparison-of-two-sample-proportions"><span class="header-section-number">36.7</span> Comparison of two-sample proportions</a></li>
-  <li><a href="#comparison-of-multiple-sample-proportions" id="toc-comparison-of-multiple-sample-proportions" class="nav-link" data-scroll-target="#comparison-of-multiple-sample-proportions"><span class="header-section-number">36.8</span> Comparison of multiple sample proportions</a></li>
+  <li><a href="#sample-size-for-testing-means" id="toc-sample-size-for-testing-means" class="nav-link" data-scroll-target="#sample-size-for-testing-means"><span class="header-section-number">36.3</span> Sample size for testing means</a>
+  <ul class="collapse">
+  <li><a href="#one-sample-mean" id="toc-one-sample-mean" class="nav-link" data-scroll-target="#one-sample-mean"><span class="header-section-number">36.3.1</span> One-sample mean</a></li>
+  <li><a href="#two-sample-means" id="toc-two-sample-means" class="nav-link" data-scroll-target="#two-sample-means"><span class="header-section-number">36.3.2</span> Two-sample means</a></li>
+  <li><a href="#multiple-sample-means" id="toc-multiple-sample-means" class="nav-link" data-scroll-target="#multiple-sample-means"><span class="header-section-number">36.3.3</span> Multiple sample means</a></li>
+  </ul></li>
+  <li><a href="#sample-size-for-testing-proportions" id="toc-sample-size-for-testing-proportions" class="nav-link" data-scroll-target="#sample-size-for-testing-proportions"><span class="header-section-number">36.4</span> Sample size for testing proportions</a>
+  <ul class="collapse">
+  <li><a href="#one-sample-proportion" id="toc-one-sample-proportion" class="nav-link" data-scroll-target="#one-sample-proportion"><span class="header-section-number">36.4.1</span> One-sample proportion</a></li>
+  <li><a href="#two-sample-proportions" id="toc-two-sample-proportions" class="nav-link" data-scroll-target="#two-sample-proportions"><span class="header-section-number">36.4.2</span> Two-sample proportions</a></li>
+  <li><a href="#multiple-sample-proportions" id="toc-multiple-sample-proportions" class="nav-link" data-scroll-target="#multiple-sample-proportions"><span class="header-section-number">36.4.3</span> Multiple sample proportions</a></li>
+  </ul></li>
+  <li><a href="#sample-size-for-linear-correlation" id="toc-sample-size-for-linear-correlation" class="nav-link" data-scroll-target="#sample-size-for-linear-correlation"><span class="header-section-number">36.5</span> Sample size for linear correlation</a></li>
+  <li><a href="#sample-size-for-testing-hazard-ratio-待完成" id="toc-sample-size-for-testing-hazard-ratio-待完成" class="nav-link" data-scroll-target="#sample-size-for-testing-hazard-ratio-待完成"><span class="header-section-number">36.6</span> Sample size for testing hazard ratio (待完成)</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">36.7</span> </a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/sample-size.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -518,7 +527,9 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effectsize)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(powerSurvEpi)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpact)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="factors-affecting-sample-size" class="level2" data-number="36.2">
@@ -540,8 +551,10 @@ window.Quarto = {
 <p>Attrition rate denotes the expected rate at which participants may leave the study before it is completed. Higher expected dropout rates require oversampling to ensure adequate final sample size.</p>
 <p>Understanding these factors allows researchers to plan a sample size that balances feasibility with statistical rigor, ensuring the study’s findings are reliable and valid. Here’s a breakdown of sample size estimation methods for different study types and analysis.</p>
 </section>
-<section id="comparison-of-one-sample-mean-with-a-known-population-mean" class="level2" data-number="36.3">
-<h2 data-number="36.3" class="anchored" data-anchor-id="comparison-of-one-sample-mean-with-a-known-population-mean"><span class="header-section-number">36.3</span> Comparison of one-sample mean with a known population mean</h2>
+<section id="sample-size-for-testing-means" class="level2" data-number="36.3">
+<h2 data-number="36.3" class="anchored" data-anchor-id="sample-size-for-testing-means"><span class="header-section-number">36.3</span> Sample size for testing means</h2>
+<section id="one-sample-mean" class="level3" data-number="36.3.1">
+<h3 data-number="36.3.1" class="anchored" data-anchor-id="one-sample-mean"><span class="header-section-number">36.3.1</span> One-sample mean</h3>
 <p>To compare a single sample mean with a known population mean, the one-sample t-test is commonly used if the population variance is unknown and the sample size is relatively small. To estimate the required sample size of one-sample t-test, we need to consider several key factors:effect size <span class="math inline">\Delta</span>, significance level <span class="math inline">\alpha</span>, power 1-β, and population standard deviation <span class="math inline">\sigma</span> (or an estimate if unknown). The sample size <span class="math inline">n</span> can be estimated as:</p>
 <p><span class="math display">
 n = \left( \frac{Z_{1-\alpha/2} + Z_{1-\beta}}{\Delta / \sigma} \right)^2
@@ -586,8 +599,8 @@ n = \left( \frac{Z_{1-\alpha/2} + Z_{1-\beta}}{\Delta / \sigma} \right)^2
 </div>
 <p>Based on the results, the scientist would need 21 rats in order to have a 90% probability of detecting a significant increase in blood pressure of at least 10 mmHg with a one-sided test at a 5% significance level.</p>
 </section>
-<section id="comparison-of-two-sample-means" class="level2" data-number="36.4">
-<h2 data-number="36.4" class="anchored" data-anchor-id="comparison-of-two-sample-means"><span class="header-section-number">36.4</span> Comparison of two-sample means</h2>
+<section id="two-sample-means" class="level3" data-number="36.3.2">
+<h3 data-number="36.3.2" class="anchored" data-anchor-id="two-sample-means"><span class="header-section-number">36.3.2</span> Two-sample means</h3>
 <p>A two-sample mean comparison is used to determine if there is a significant difference between the means of two independent groups. This type of test is commonly applied in scenarios like comparing the effect of two treatments or comparing measurements between two different populations. To estimate the sample size, we use a formula that considers the effect size, significance level, power, and variability within each group. This is typically done for a two-sample t-test.</p>
 <p>The formula for estimating the required sample size <span class="math inline">n</span> per group is:</p>
 <p><span class="math display">
@@ -616,9 +629,11 @@ n = \frac{2 \sigma^2 (Z_{1-\alpha/2} + Z_{1-\beta})^2}{\Delta^2}
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.t.test</span>(</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>power.htest <span class="ot">&lt;-</span> <span class="fu">pwr.t.test</span>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">d =</span> <span class="dv">6</span> <span class="sc">/</span> <span class="dv">8</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"two.sample"</span>,<span class="at">alternative =</span> <span class="st">"two.sided"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"two.sample"</span>,<span class="at">alternative =</span> <span class="st">"two.sided"</span>) </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>power.htest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Two-sample t test power calculation 
@@ -631,11 +646,19 @@ n = \frac{2 \sigma^2 (Z_{1-\alpha/2} + Z_{1-\beta})^2}{\Delta^2}
 #&gt; 
 #&gt; NOTE: n is number in *each* group</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>power.htest <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sample-size_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>With these parameters, the output suggests that 39 mice each group are needed to reliably detect a significant difference in fasting blood glucose levels between the treatment and control groups.</p>
 </section>
-<section id="comparison-of-multiple-sample-means" class="level2" data-number="36.5">
-<h2 data-number="36.5" class="anchored" data-anchor-id="comparison-of-multiple-sample-means"><span class="header-section-number">36.5</span> Comparison of multiple sample means</h2>
+<section id="multiple-sample-means" class="level3" data-number="36.3.3">
+<h3 data-number="36.3.3" class="anchored" data-anchor-id="multiple-sample-means"><span class="header-section-number">36.3.3</span> Multiple sample means</h3>
 <p>When comparing multiple sample means, typically a one-way analysis of variance (ANOVA) is used to test if there are statistically significant differences among the means of three or more independent groups. The one-way ANOVA works under the assumption that the groups have approximately equal variances and that the data are normally distributed within each group.</p>
 <p>When comparing multiple sample means with ANOVA, the sample size estimation considers the desired power, significance level, number of groups, and effect size. For a one-way ANOVA with <span class="math inline">k</span> groups, the sample size <span class="math inline">n</span> required each group can be estimated using:</p>
 <p><span class="math display">
@@ -656,16 +679,16 @@ f = \frac{\sqrt{\frac{\sum_{i=1}^k (\bar{X}_i - \bar{X}_{\text{grand}})^2}{k}}}{
 </span></p>
 <p>Here we define a function named <code>cohens.f()</code> to compute Cohen’s f with the group means and the standard deviations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate Cohen's f for ANOVA</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cohens.f <span class="ot">&lt;-</span> <span class="cf">function</span>(means, sds) {</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  grand_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(means)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(sds<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  sd_mean <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((means <span class="sc">-</span> grand_mean)<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Cohen's f</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  cohens_f <span class="ot">&lt;-</span> sd_mean <span class="sc">/</span> pooled_sd</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cohens_f)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to calculate Cohen's f for ANOVA</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cohens.f <span class="ot">&lt;-</span> <span class="cf">function</span>(means, sds) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  grand_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(means)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  pooled_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(sds<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  sd_mean <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((means <span class="sc">-</span> grand_mean)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Cohen's f</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  cohens_f <span class="ot">&lt;-</span> sd_mean <span class="sc">/</span> pooled_sd</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(cohens_f)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="example">
 <strong>Example 3:</strong> 
@@ -673,12 +696,12 @@ f = \frac{\sqrt{\frac{\sum_{i=1}^k (\bar{X}_i - \bar{X}_{\text{grand}})^2}{k}}}{
 </div>
 <p>The <code>power.anova.test()</code> function and <code>pwr.anova.test()</code> function can perform this calculation for this example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.20</span>, <span class="fl">5.40</span>, <span class="fl">4.70</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.87</span>, <span class="fl">1.56</span>, <span class="fl">1.52</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">power.anova.test</span>(</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">groups =</span> <span class="dv">3</span>, <span class="at">between.var =</span> <span class="fu">var</span>(means), <span class="at">within.var =</span> <span class="fu">mean</span>(sds<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.20</span>, <span class="fl">5.40</span>, <span class="fl">4.70</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.87</span>, <span class="fl">1.56</span>, <span class="fl">1.52</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">power.anova.test</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">groups =</span> <span class="dv">3</span>, <span class="at">between.var =</span> <span class="fu">var</span>(means), <span class="at">within.var =</span> <span class="fu">mean</span>(sds<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Balanced one-way analysis of variance power calculation 
@@ -694,9 +717,10 @@ f = \frac{\sqrt{\frac{\sum_{i=1}^k (\bar{X}_i - \bar{X}_{\text{grand}})^2}{k}}}{
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cohens.f</span>(means, sds)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.anova.test</span>(<span class="at">k =</span> <span class="dv">3</span>, <span class="at">f =</span> f, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">cohens.f</span>(means, sds)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>power.htest <span class="ot">&lt;-</span> <span class="fu">pwr.anova.test</span>(<span class="at">k =</span> <span class="dv">3</span>, <span class="at">f =</span> f, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>power.htest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Balanced one-way analysis of variance power calculation 
@@ -708,6 +732,14 @@ f = \frac{\sqrt{\frac{\sum_{i=1}^k (\bar{X}_i - \bar{X}_{\text{grand}})^2}{k}}}{
 #&gt;           power = 0.9
 #&gt; 
 #&gt; NOTE: n is number in each group</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>power.htest <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sample-size_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>For the given parameters, the output shows that each group should include 32 subjects. This sample size ensures a 90% chance of detecting a meaningful difference between the groups.</p>
@@ -725,17 +757,17 @@ Tip
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data frame for ANOVA analysis</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="st">"B"</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="st">"C"</span>, <span class="dv">15</span>))),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">6.20</span>, <span class="fl">1.87</span>), <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">5.40</span>, <span class="fl">1.56</span>), <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">4.70</span>, <span class="fl">1.52</span>))</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(x <span class="sc">~</span> group, <span class="at">data =</span> data)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_f</span>(model, <span class="at">partial =</span> F, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example data frame for ANOVA analysis</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="st">"B"</span>, <span class="dv">15</span>), <span class="fu">rep</span>(<span class="st">"C"</span>, <span class="dv">15</span>))),</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">6.20</span>, <span class="fl">1.87</span>), <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">5.40</span>, <span class="fl">1.56</span>), <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="fl">4.70</span>, <span class="fl">1.52</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(x <span class="sc">~</span> group, <span class="at">data =</span> data)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cohens_f</span>(model, <span class="at">partial =</span> F, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # Effect Size for ANOVA (Type I)
 #&gt; 
@@ -745,8 +777,11 @@ Tip
 </div>
 </div>
 </section>
-<section id="comparison-of-one-sample-proportion-with-a-known-population-proportion" class="level2" data-number="36.6">
-<h2 data-number="36.6" class="anchored" data-anchor-id="comparison-of-one-sample-proportion-with-a-known-population-proportion"><span class="header-section-number">36.6</span> Comparison of one-sample proportion with a known population proportion</h2>
+</section>
+<section id="sample-size-for-testing-proportions" class="level2" data-number="36.4">
+<h2 data-number="36.4" class="anchored" data-anchor-id="sample-size-for-testing-proportions"><span class="header-section-number">36.4</span> Sample size for testing proportions</h2>
+<section id="one-sample-proportion" class="level3" data-number="36.4.1">
+<h3 data-number="36.4.1" class="anchored" data-anchor-id="one-sample-proportion"><span class="header-section-number">36.4.1</span> One-sample proportion</h3>
 <p>When comparing a sample proportion to a known population proportion, the goal is typically to determine whether the observed sample proportion differs significantly from the known or expected proportion in the population.</p>
 <p>For a large sample (typically <span class="math inline">n \geq 30</span>, or more strictly when <span class="math inline">np \geq 5</span> and <span class="math inline">n(1 - p) \geq 5</span>), a z-test is appropriate to compare the sample proportion to the known population proportion. This is because, with a large sample size, the distribution of the sample proportion approximates a normal distribution. The z-test statistic for this test is calculated as:</p>
 <p><span class="math display">
@@ -765,28 +800,28 @@ n = \frac{(Z_{1 - \alpha/2} + Z_{1 - \beta})^2 \cdot p_0 (1 - p_0)}{(\hat{p} - p
 </div>
 <p>Here we write a function named <code>sample.size.one.p()</code> to compute the sample size based on the formula above:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sample.size.one.p <span class="ot">&lt;-</span> <span class="cf">function</span>(p0, p, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"one.sided"</span>) {</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"one.sided"</span>) {</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"two.sided"</span>) {</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"alternative must be 'one.sided' or 'two.sided'"</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> (p <span class="sc">-</span> p0)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"One-sample comparison of proportion sample size calculation"</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">n =</span> n, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, <span class="at">alternative =</span> alternative, </span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> METHOD), </span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="fu">sample.size.one.p</span>(<span class="at">p0 =</span> <span class="fl">0.45</span>, <span class="at">p =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sample.size.one.p <span class="ot">&lt;-</span> <span class="cf">function</span>(p0, p, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"one.sided"</span>) {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"one.sided"</span>) {</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"two.sided"</span>) {</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"alternative must be 'one.sided' or 'two.sided'"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> (p <span class="sc">-</span> p0)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"One-sample comparison of proportion sample size calculation"</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">n =</span> n, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, <span class="at">alternative =</span> alternative, </span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">method =</span> METHOD), </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a><span class="fu">sample.size.one.p</span>(<span class="at">p0 =</span> <span class="fl">0.45</span>, <span class="at">p =</span> <span class="fl">0.6</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      One-sample comparison of proportion sample size calculation 
@@ -797,11 +832,11 @@ n = \frac{(Z_{1 - \alpha/2} + Z_{1 - \beta})^2 \cdot p_0 (1 - p_0)}{(\hat{p} - p
 #&gt;     alternative = one.sided</code></pre>
 </div>
 </div>
-<p>Alternative, you can use the <code>pwr.p.test()</code> function from the <code>pwr</code> packages:</p>
+<p>Alternatively, you can use the <code>pwr.p.test()</code> function from the <code>pwr</code> packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">ES.h</span>(<span class="fl">0.6</span>, <span class="fl">0.45</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.p.test</span>(<span class="at">h =</span> h, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">ES.h</span>(<span class="fl">0.6</span>, <span class="fl">0.45</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.p.test</span>(<span class="at">h =</span> h, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      proportion power calculation for binomial distribution (arcsine transformation) 
@@ -815,8 +850,8 @@ n = \frac{(Z_{1 - \alpha/2} + Z_{1 - \beta})^2 \cdot p_0 (1 - p_0)}{(\hat{p} - p
 </div>
 <p>In summary, for a study designed to detect an effect size (h = 0.3015) with 90% power and a 5% significance level, you would need approximately 95 observations in a one-sided test to determine if the sample proportion is significantly greater than the population proportion.</p>
 </section>
-<section id="comparison-of-two-sample-proportions" class="level2" data-number="36.7">
-<h2 data-number="36.7" class="anchored" data-anchor-id="comparison-of-two-sample-proportions"><span class="header-section-number">36.7</span> Comparison of two-sample proportions</h2>
+<section id="two-sample-proportions" class="level3" data-number="36.4.2">
+<h3 data-number="36.4.2" class="anchored" data-anchor-id="two-sample-proportions"><span class="header-section-number">36.4.2</span> Two-sample proportions</h3>
 <p>To compare two independent sample proportions, we generally conduct a hypothesis test for the difference between two population proportions. This is typically done using a two-sample z-test for proportions. The test statistic follows a normal distribution (under large sample sizes) and is calculated as:</p>
 <p><span class="math display">
 Z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\hat{p}(1 - \hat{p}) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}}
@@ -833,31 +868,31 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 <p>where <span class="math inline">Z_{\alpha/2}</span> is the critical value for the two-sided test at significance level <span class="math inline">\alpha</span>, <span class="math inline">Z_{\beta}</span> is the critical value corresponding to the desired power.</p>
 <p>Here we write a function named <code>sample.size.two.p()</code> to compute the sample size based on the formula above:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sample.size.two_p <span class="ot">&lt;-</span> <span class="cf">function</span>(p1, p2, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) {</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Z-scores for significance level based on test type</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"two.sided"</span>) {</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)  <span class="co"># Two-sided test</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"one.sided"</span>) {</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha)  <span class="co"># One-sided test</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"alternative must be 'two.sided', 'one.sided'"</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> </span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">asin</span>(<span class="fu">sqrt</span>(p1)) <span class="sc">-</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(p2)))<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  NOTE <span class="ot">&lt;-</span>  <span class="st">"n is the sample size for each group"</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Two-sample comparison of proportions sample size calculation"</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> n, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, <span class="at">alternative =</span> alternative, </span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> METHOD, <span class="at">note =</span> NOTE), </span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="fu">sample.size.two_p</span>(<span class="at">p1 =</span> <span class="fl">0.95</span>, <span class="at">p2 =</span> <span class="fl">0.80</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sample.size.two_p <span class="ot">&lt;-</span> <span class="cf">function</span>(p1, p2, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Z-scores for significance level based on test type</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"two.sided"</span>) {</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)  <span class="co"># Two-sided test</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"one.sided"</span>) {</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha)  <span class="co"># One-sided test</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"alternative must be 'two.sided', 'one.sided'"</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  numerator <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  denominator <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">asin</span>(<span class="fu">sqrt</span>(p1)) <span class="sc">-</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(p2)))<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> numerator <span class="sc">/</span> denominator</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  NOTE <span class="ot">&lt;-</span>  <span class="st">"n is the sample size for each group"</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Two-sample comparison of proportions sample size calculation"</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> n, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, <span class="at">alternative =</span> alternative, </span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> METHOD, <span class="at">note =</span> NOTE), </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="fu">sample.size.two_p</span>(<span class="at">p1 =</span> <span class="fl">0.95</span>, <span class="at">p2 =</span> <span class="fl">0.80</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Two-sample comparison of proportions sample size calculation 
@@ -870,9 +905,10 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 #&gt; NOTE: n is the sample size for each group</code></pre>
 </div>
 </div>
+<p>Alternatively, you can use the <code>power.prop.test()</code> function from the <code>stats</code> packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.prop.test</span>(<span class="at">p1 =</span> <span class="fl">0.95</span>, <span class="at">p2 =</span> <span class="fl">0.8</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.prop.test</span>(<span class="at">p1 =</span> <span class="fl">0.95</span>, <span class="at">p2 =</span> <span class="fl">0.8</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Two-sample comparison of proportions power calculation 
@@ -887,9 +923,12 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 #&gt; NOTE: n is number in *each* group</code></pre>
 </div>
 </div>
+<p>Another calculation method is the <code>pwr.2p.test()</code> function from the <code>pwr</code> packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">ES.h</span>(<span class="fl">0.95</span>, <span class="fl">0.8</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.2p.test</span>(<span class="at">h =</span> h, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">ES.h</span>(<span class="fl">0.95</span>, <span class="fl">0.8</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>power.htest <span class="ot">&lt;-</span> <span class="fu">pwr.2p.test</span>(<span class="at">h =</span> h, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">alternative =</span> <span class="st">"two"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>power.htest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;      Difference of proportion power calculation for binomial distribution (arcsine transformation) 
@@ -902,6 +941,14 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 #&gt; 
 #&gt; NOTE: same sample sizes</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>power.htest <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="sample-size_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>It should be noticed that the sample sizes calculated by <code>power.prop.test()</code> and <code>pwr.2p.test()</code> are different. The difference comes from the underlying methodologies they use to estimate effect size and power. Here’s a brief explanation of each:</p>
 <ul>
@@ -910,8 +957,8 @@ n_1 = n_2 = \frac{\left( Z_{\alpha/2} + Z_{\beta} \right)^2} {2(\text {sin}^{-1}
 </ul>
 <p>If you are working with proportions that are close to 0 or 1, <code>pwr.2p.test()</code> may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.</p>
 </section>
-<section id="comparison-of-multiple-sample-proportions" class="level2" data-number="36.8">
-<h2 data-number="36.8" class="anchored" data-anchor-id="comparison-of-multiple-sample-proportions"><span class="header-section-number">36.8</span> Comparison of multiple sample proportions</h2>
+<section id="multiple-sample-proportions" class="level3" data-number="36.4.3">
+<h3 data-number="36.4.3" class="anchored" data-anchor-id="multiple-sample-proportions"><span class="header-section-number">36.4.3</span> Multiple sample proportions</h3>
 <p>When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The formula for calculating sample size for each group in a multiple-proportion comparison is:</p>
 <p><span class="math display">
 n = \frac{\lambda} {2(\sin^{-1} \sqrt{p_{\text{max}}} - \sin^{-1} \sqrt{p_{\text{min}}})^2}
@@ -923,19 +970,19 @@ n = \frac{\lambda} {2(\sin^{-1} \sqrt{p_{\text{max}}} - \sin^{-1} \sqrt{p_{\text
 </div>
 <p>For a given power <span class="math inline">1 - \beta</span>, significance level <span class="math inline">\alpha</span>, and effect size <span class="math inline">w</span>, the sample size <span class="math inline">N</span> can be calculated using the <code>pwr.chisq.test()</code> function, which is based on the non-central chi-squared distribution. This approach ensures accurate power calculations, especially for cases where the central approximation does not hold.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.65</span>);  p1 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fl">0.35</span>)</span>
-<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(p0, p1), <span class="at">nrow =</span> k) <span class="sc">/</span> k</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-4" class="code-annotation-target"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">=</span> <span class="fu">ES.w2</span>(P)</span>
-<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">cohens_w</span>(P, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>)</span>
-<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w1, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span>
-<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w2, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-18"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-18-1"><a href="#annotated-cell-18-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="annotated-cell-18-2"><a href="#annotated-cell-18-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.65</span>);  p1 <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.5</span>, <span class="fl">0.35</span>)</span>
+<span id="annotated-cell-18-3"><a href="#annotated-cell-18-3" aria-hidden="true" tabindex="-1"></a>P <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(p0, p1), <span class="at">nrow =</span> k) <span class="sc">/</span> k</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-18" data-target-annotation="1">1</button><span id="annotated-cell-18-4" class="code-annotation-target"><a href="#annotated-cell-18-4" aria-hidden="true" tabindex="-1"></a>w1 <span class="ot">=</span> <span class="fu">ES.w2</span>(P)</span>
+<span id="annotated-cell-18-5"><a href="#annotated-cell-18-5" aria-hidden="true" tabindex="-1"></a>w2 <span class="ot">&lt;-</span> <span class="fu">cohens_w</span>(P, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) <span class="sc">|&gt;</span> <span class="fu">pluck</span>(<span class="dv">1</span>)</span>
+<span id="annotated-cell-18-6"><a href="#annotated-cell-18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-18-7"><a href="#annotated-cell-18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w1, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) </span>
+<span id="annotated-cell-18-8"><a href="#annotated-cell-18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.chisq.test</span>(<span class="at">w =</span> w2, <span class="at">df =</span> <span class="dv">2</span>, <span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-18" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-15" data-code-lines="4,5" data-code-annotation="1">Calculate the effect size, with the same results</span>
+<span data-code-cell="annotated-cell-18" data-code-lines="4,5" data-code-annotation="1">Calculate the effect size, with the same results</span>
 </dd>
 </dl>
 </div>
@@ -963,6 +1010,139 @@ n = \frac{\lambda} {2(\sin^{-1} \sqrt{p_{\text{max}}} - \sin^{-1} \sqrt{p_{\text
 #&gt; NOTE: N is the number of observations</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="sample-size-for-linear-correlation" class="level2" data-number="36.5">
+<h2 data-number="36.5" class="anchored" data-anchor-id="sample-size-for-linear-correlation"><span class="header-section-number">36.5</span> Sample size for linear correlation</h2>
+<p>In linear correlation analysis, sample size estimation is typically done to achieve a specified power in hypothesis test. The sample size required depends on the expected effect size (correlation coefficient), significance level <span class="math inline">\alpha</span>, and desired power <span class="math inline">1 -\beta</span>. The sample size <span class="math inline">N</span> can be estimated using the following formula:</p>
+<p><span class="math display">
+N = \frac{(Z_{\alpha / 2} + Z_{\beta})^2}{\left(0.5 \times \ln\left(\frac{1 + r}{1 - r}\right)\right)^2} + 3
+</span></p>
+<p>where <span class="math inline">r</span> expected correlation coefficient (effect size), <span class="math inline">Z_{\alpha / 2}</span> is the critical value from the standard normal distribution for the significance level <span class="math inline">\alpha</span> (for a two-tailed test, use <span class="math inline">\alpha / 2</span>), <span class="math inline">Z_{\beta}</span> is the critical value from the standard normal distribution for the power level <span class="math inline">1 - \beta</span>, and <span class="math inline">\ln\left(\frac{1 + r}{1 - r}\right)</span>represents Fisher’s z-transformation of the correlation coefficient <span class="math inline">r</span>, which converts the correlation coefficient to a standard normal form.</p>
+<p>The following function named <code>sample.size.corr()</code> can be used to calculate the sample size needed for correlation analysis based on the above formula:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sample.size.corr <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="cn">NULL</span>, r, <span class="at">alternative =</span> <span class="st">"two.sided"</span>) {</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate z-scores</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"two.sided"</span>) {</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> sig.level <span class="sc">/</span> <span class="dv">2</span>)  <span class="co"># Two-sided test</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (alternative <span class="sc">==</span> <span class="st">"one.sided"</span>) {</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha)  <span class="co"># One-sided test</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"alternative must be 'two.sided', 'one.sided'"</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate Fisher's z transformation of r</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  z_r <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="sc">*</span> <span class="fu">log</span>((<span class="dv">1</span> <span class="sc">+</span> r) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> r))</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate sample size</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> z_r<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"A approximate correlation sample size calculation"</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> n, <span class="at">r =</span> r, <span class="at">sig.level =</span> sig.level, <span class="at">power =</span> power,</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> METHOD), </span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="example">
+<strong>Example 6:</strong> 
+<p>According to previous experience, the correlation coefficient between food intake and weight gain in rats is known to be 0.8. To obtain a statistically significant conclusion for this correlation at a significance level of <span class="math inline">\alpha = 0.05</span> and power level of <span class="math inline">1 - \beta</span> = 0.90, how many rats should be studied?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample.size.corr</span>(<span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">r =</span> <span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;      A approximate correlation sample size calculation 
+#&gt; 
+#&gt;               n = 11.70577
+#&gt;               r = 0.8
+#&gt;       sig.level = 0.05
+#&gt;           power = 0.9</code></pre>
+</div>
+</div>
+<p>Alternative, you can use the <code>pwr.r.test()</code> function from the <code>pwr</code> packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pwr.r.test</span>(<span class="at">sig.level =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>, <span class="at">r =</span> <span class="fl">0.8</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;      approximate correlation power calculation (arctangh transformation) 
+#&gt; 
+#&gt;               n = 11.16238
+#&gt;               r = 0.8
+#&gt;       sig.level = 0.05
+#&gt;           power = 0.9
+#&gt;     alternative = two.sided</code></pre>
+</div>
+</div>
+</section>
+<section id="sample-size-for-testing-hazard-ratio-待完成" class="level2" data-number="36.6">
+<h2 data-number="36.6" class="anchored" data-anchor-id="sample-size-for-testing-hazard-ratio-待完成"><span class="header-section-number">36.6</span> Sample size for testing hazard ratio (待完成)</h2>
+<p>To estimate the sample size needed to compare two survival rates, the following formula can be used. This approach typically involves estimating the number of events required for sufficient statistical power in survival analysis. The sample size formula for comparing two survival rates, assuming exponential survival times and using the log-rank test.</p>
+<div class="example">
+<strong>Example 7:</strong> 
+<p>A researcher plans to conduct a study comparing the effects of a new surgical method with a traditional surgical method on the survival outcomes of patients with malignant adrenal tumors. The recruitment period for the study is set for 1 year, with all subjects entering the study uniformly, and a follow-up period of 2 years. It is known that the 2-year survival rate for the traditional surgical method is 50%, and the anticipated 2-year survival rate for the new surgical method is 80%. The estimated loss to follow-up rate for both groups is 6% per year, with a contamination rate of 3% in each group. Assuming a two-sided significance level of <span class="math inline">\alpha = 0.05</span> and a power of <span class="math inline">1 - \beta = 0.90</span>, what sample size is needed for this study?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getSampleSizeSurvival</span>(</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pi1 =</span> <span class="fl">0.5</span>, <span class="at">pi2 =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">eventTime =</span> <span class="dv">24</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">followUpTime =</span> , <span class="at">accrualTime =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>), <span class="at">dropoutRate1 =</span> <span class="fl">0.06</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dropoutRate2 =</span> <span class="fl">0.06</span>, <span class="at">typeOfComputation =</span> <span class="st">"Freedman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><em>Design plan parameters and output for survival data</em></p>
+<p><em>Design parameters</em></p>
+<ul>
+<li><em>Critical values</em>: 1.645</li>
+<li><em>Significance level</em>: 0.0500</li>
+<li><em>Type II error rate</em>: 0.1000</li>
+<li><em>Test</em>: one-sided</li>
+</ul>
+<p><em>User defined parameters</em></p>
+<ul>
+<li><em>Type of computation</em>: Freedman</li>
+<li><em>Assumed treatment rate</em>: 0.500</li>
+<li><em>Assumed control rate</em>: 0.800</li>
+<li><em>Event time</em>: 24</li>
+<li><em>Drop-out rate (1)</em>: 0.060</li>
+<li><em>Drop-out rate (2)</em>: 0.060</li>
+</ul>
+<p><em>Default parameters</em></p>
+<ul>
+<li><em>Theta H0</em>: 1</li>
+<li><em>Planned allocation ratio</em>: 1</li>
+<li><em>Accrual time</em>: 12.00</li>
+<li><em>kappa</em>: 1</li>
+<li><em>Follow up time</em>: 6.00</li>
+<li><em>Drop-out time</em>: 12.00</li>
+</ul>
+<p><em>Sample size and output</em></p>
+<ul>
+<li><em>Direction upper</em>: FALSE</li>
+<li><em>median(1)</em>: 24.0</li>
+<li><em>median(2)</em>: 10.3</li>
+<li><em>lambda(1)</em>: 0.0289</li>
+<li><em>lambda(2)</em>: 0.0671</li>
+<li><em>Hazard ratio</em>: 0.431</li>
+<li><em>Number of events</em>: 54.1</li>
+<li><em>Accrual intensity</em>: 11.2</li>
+<li><em>Number of events fixed</em>: 54.1</li>
+<li><em>Number of subjects fixed</em>: 134.1</li>
+<li><em>Number of subjects fixed (1)</em>: 67.1</li>
+<li><em>Number of subjects fixed (2)</em>: 67.1</li>
+<li><em>Analysis time</em>: 18.00</li>
+<li><em>Study duration</em>: 18.00</li>
+<li><em>Critical values (treatment effect scale)</em>: 0.639</li>
+</ul>
+<p><em>Legend</em></p>
+<ul>
+<li><em>(i)</em>: values of treatment arm i</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="section" class="level2" data-number="36.7">
+<h2 data-number="36.7" class="anchored" data-anchor-id="section"><span class="header-section-number">36.7</span> </h2>
 
 
 </section>
