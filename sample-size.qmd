@@ -14,6 +14,8 @@ Sample size estimation is an important step when conducting clinical trials, sur
 library(tidyverse)
 library(pwr)
 library(effectsize)
+library(powerSurvEpi)
+library(rpact)
 ```
 
 ## Factors affecting sample size
@@ -50,7 +52,9 @@ Attrition rate denotes the expected rate at which participants may leave the stu
 
 Understanding these factors allows researchers to plan a sample size that balances feasibility with statistical rigor, ensuring the study’s findings are reliable and valid. Here’s a breakdown of sample size estimation methods for different study types and analysis.
 
-## Comparison of one-sample mean with a known population mean
+## Sample size for testing means
+
+### One-sample mean
 
 To compare a single sample mean with a known population mean, the one-sample t-test is commonly used if the population variance is unknown and the sample size is relatively small. To estimate the required sample size of one-sample t-test, we need to consider several key factors:effect size $\Delta$, significance level $\alpha$, power 1-β, and population standard deviation $\sigma$ (or an estimate if unknown). The sample size $n$ can be estimated as:
 
@@ -82,7 +86,7 @@ pwr.t.test(
 
 Based on the results, the scientist would need 21 rats in order to have a 90% probability of detecting a significant increase in blood pressure of at least 10 mmHg with a one-sided test at a 5% significance level.
 
-## Comparison of two-sample means
+### Two-sample means
 
 A two-sample mean comparison is used to determine if there is a significant difference between the means of two independent groups. This type of test is commonly applied in scenarios like comparing the effect of two treatments or comparing measurements between two different populations. To estimate the sample size, we use a formula that considers the effect size, significance level, power, and variability within each group. This is typically done for a two-sample t-test.
 
@@ -105,14 +109,17 @@ power.t.test(delta = 6, sd = 8, sig.level = 0.05, power = 0.9, type = "two.sampl
 ```
 
 ```{r}
-pwr.t.test(
+power.htest <- pwr.t.test(
   d = 6 / 8, sig.level = 0.05, power = 0.9,
   type = "two.sample",alternative = "two.sided") 
+
+power.htest
+power.htest |> plot()
 ```
 
 With these parameters, the output suggests that 39 mice each group are needed to reliably detect a significant difference in fasting blood glucose levels between the treatment and control groups.
 
-## Comparison of multiple sample means
+### Multiple sample means
 
 When comparing multiple sample means, typically a one-way analysis of variance (ANOVA) is used to test if there are statistically significant differences among the means of three or more independent groups. The one-way ANOVA works under the assumption that the groups have approximately equal variances and that the data are normally distributed within each group.
 
@@ -175,7 +182,9 @@ power.anova.test(
 ```{r}
 f <- cohens.f(means, sds)
 
-pwr.anova.test(k = 3, f = f, sig.level = 0.05, power = 0.9)
+power.htest <- pwr.anova.test(k = 3, f = f, sig.level = 0.05, power = 0.9)
+power.htest
+power.htest |> plot()
 ```
 
 For the given parameters, the output shows that each group should include 32 subjects. This sample size ensures a 90% chance of detecting a meaningful difference between the groups.
@@ -198,7 +207,9 @@ model <- aov(x ~ group, data = data)
 cohens_f(model, partial = F, alternative = "two.sided")
 ```
 
-## Comparison of one-sample proportion with a known population proportion
+## Sample size for testing proportions
+
+### One-sample proportion
 
 When comparing a sample proportion to a known population proportion, the goal is typically to determine whether the observed sample proportion differs significantly from the known or expected proportion in the population.
 
@@ -251,7 +262,7 @@ sample.size.one.p <- function(p0, p, alpha = 0.05, power = 0.9, alternative = "o
 sample.size.one.p(p0 = 0.45, p = 0.6, alpha = 0.05, power = 0.9)
 ```
 
-Alternative, you can use the `pwr.p.test()` function from the `pwr` packages:
+Alternatively, you can use the `pwr.p.test()` function from the `pwr` packages:
 
 ```{r}
 h <- ES.h(0.6, 0.45)
@@ -261,7 +272,7 @@ pwr.p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "greater")
 
 In summary, for a study designed to detect an effect size (h = 0.3015) with 90% power and a 5% significance level, you would need approximately 95 observations in a one-sided test to determine if the sample proportion is significantly greater than the population proportion.
 
-## Comparison of two-sample proportions
+### Two-sample proportions
 
 To compare two independent sample proportions, we generally conduct a hypothesis test for the difference between two population proportions. This is typically done using a two-sample z-test for proportions. The test statistic follows a normal distribution (under large sample sizes) and is calculated as:
 
@@ -315,14 +326,21 @@ sample.size.two_p <- function(p1, p2, alpha = 0.05, power = 0.9, alternative = "
 sample.size.two_p(p1 = 0.95, p2 = 0.80, alpha = 0.05, power = 0.9, alternative = "two.sided")
 ```
 
+Alternatively, you can use the `power.prop.test()` function from the `stats` packages:
+
 ```{r}
 power.prop.test(p1 = 0.95, p2 = 0.8, sig.level = 0.05,
   power = 0.9, alternative = "two") 
 ```
 
+Another calculation method is the `pwr.2p.test()` function from the `pwr` packages:
+
 ```{r}
 h <- ES.h(0.95, 0.8)
-pwr.2p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "two")
+
+power.htest <- pwr.2p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "two")
+power.htest
+power.htest |> plot()
 ```
 
 It should be noticed that the sample sizes calculated by `power.prop.test()` and `pwr.2p.test()` are different. The difference comes from the underlying methodologies they use to estimate effect size and power. Here’s a brief explanation of each:
@@ -332,7 +350,7 @@ It should be noticed that the sample sizes calculated by `power.prop.test()` and
 
 If you are working with proportions that are close to 0 or 1, `pwr.2p.test()` may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.
 
-## Comparison of multiple sample proportions
+### Multiple sample proportions
 
 When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The formula for calculating sample size for each group in a multiple-proportion comparison is:
 
@@ -360,3 +378,73 @@ pwr.chisq.test(w = w2, df = 2, sig.level = 0.05, power = 0.9)
 ```
 
 1.  Calculate the effect size, with the same results
+
+## Sample size for linear correlation
+
+In linear correlation analysis, sample size estimation is typically done to achieve a specified power in hypothesis test. The sample size required depends on the expected effect size (correlation coefficient), significance level $\alpha$, and desired power $1 -\beta$. The sample size $N$ can be estimated using the following formula:
+
+$$
+N = \frac{(Z_{\alpha / 2} + Z_{\beta})^2}{\left(0.5 \times \ln\left(\frac{1 + r}{1 - r}\right)\right)^2} + 3
+$$
+
+where $r$ expected correlation coefficient (effect size), $Z_{\alpha / 2}$ is the critical value from the standard normal distribution for the significance level $\alpha$ (for a two-tailed test, use $\alpha / 2$), $Z_{\beta}$ is the critical value from the standard normal distribution for the power level $1 - \beta$, and $\ln\left(\frac{1 + r}{1 - r}\right)$represents Fisher’s z-transformation of the correlation coefficient $r$, which converts the correlation coefficient to a standard normal form.
+
+The following function named `sample.size.corr()` can be used to calculate the sample size needed for correlation analysis based on the above formula:
+
+```{r}
+sample.size.corr <- function(sig.level = 0.05, power = NULL, r, alternative = "two.sided") {
+  # Calculate z-scores
+  if (alternative == "two.sided") {
+    z_alpha <- qnorm(1 - sig.level / 2)  # Two-sided test
+  } else if (alternative == "one.sided") {
+    z_alpha <- qnorm(1 - alpha)  # One-sided test
+  } else {
+    stop("alternative must be 'two.sided', 'one.sided'")
+  }
+  z_beta <- qnorm(power)
+  
+  # Calculate Fisher's z transformation of r
+  z_r <- 0.5 * log((1 + r) / (1 - r))
+  
+  # Calculate sample size
+  n <- (z_alpha + z_beta)^2 / z_r^2 + 3
+  
+  METHOD <- "A approximate correlation sample size calculation"
+  structure(
+    list(
+      n = n, r = r, sig.level = sig.level, power = power,
+      method = METHOD), 
+    class = "power.htest")
+}
+```
+
+::: example
+According to previous experience, the correlation coefficient between food intake and weight gain in rats is known to be 0.8. To obtain a statistically significant conclusion for this correlation at a significance level of $\alpha = 0.05$ and power level of $1 - \beta$ = 0.90, how many rats should be studied?
+:::
+
+```{r}
+sample.size.corr(sig.level = 0.05, power = 0.9, r = 0.8)
+```
+
+Alternative, you can use the `pwr.r.test()` function from the `pwr` packages:
+
+```{r}
+pwr.r.test(sig.level = 0.05, power = 0.9, r = 0.8) 
+```
+
+## Sample size for testing hazard ratio (待完成)
+
+To estimate the sample size needed to compare two survival rates, the following formula can be used. This approach typically involves estimating the number of events required for sufficient statistical power in survival analysis. The sample size formula for comparing two survival rates, assuming exponential survival times and using the log-rank test.
+
+::: example
+A researcher plans to conduct a study comparing the effects of a new surgical method with a traditional surgical method on the survival outcomes of patients with malignant adrenal tumors. The recruitment period for the study is set for 1 year, with all subjects entering the study uniformly, and a follow-up period of 2 years. It is known that the 2-year survival rate for the traditional surgical method is 50%, and the anticipated 2-year survival rate for the new surgical method is 80%. The estimated loss to follow-up rate for both groups is 6% per year, with a contamination rate of 3% in each group. Assuming a two-sided significance level of $\alpha = 0.05$ and a power of $1 - \beta = 0.90$, what sample size is needed for this study?
+:::
+
+```{r}
+getSampleSizeSurvival(
+  pi1 = 0.5, pi2 = 0.8, alpha = 0.05, beta = 0.1, eventTime = 24,
+  followUpTime = , accrualTime = c(0, 12), dropoutRate1 = 0.06,
+  dropoutRate2 = 0.06, typeOfComputation = "Freedman")
+```
+
+## 

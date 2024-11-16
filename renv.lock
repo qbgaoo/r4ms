@@ -4121,6 +4121,33 @@
       ],
       "Hash": "fc1213566f2ed9f0b15bef656ed1000b"
     },
+    "powerSurvEpi": {
+      "Package": "powerSurvEpi",
+      "Version": "0.1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "pracma",
+        "stats",
+        "survival"
+      ],
+      "Hash": "4686e006c15116361aaa77dec8b023f3"
+    },
+    "pracma": {
+      "Package": "pracma",
+      "Version": "2.4.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats",
+        "utils"
+      ],
+      "Hash": "44bc172d47d1ea0a638d9f299e321203"
+    },
     "praise": {
       "Package": "praise",
       "Version": "1.0.0",
@@ -4743,6 +4770,25 @@
         "stats"
       ],
       "Hash": "c6fa270a97604238a5ce5fe5d327fdad"
+    },
+    "rpact": {
+      "Package": "rpact",
+      "Version": "4.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "Rcpp",
+        "graphics",
+        "knitr",
+        "methods",
+        "rlang",
+        "stats",
+        "tools",
+        "utils"
+      ],
+      "Hash": "c4bb9e01153051ff125fa6def3e9559b"
     },
     "rpart": {
       "Package": "rpart",
