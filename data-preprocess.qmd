@@ -381,13 +381,3 @@ get_dupes(df, id)
 # Cleans names of an data.frame and results names are unique 
 clean_names(df)  
 ```
-
-```{r}
-library(huxtable)
-data <- head(iris)
-ht <- huxtable(data)
-ht <- set_caption(ht, "Iris Data")
-ht <- set_all_borders(ht, 1) 
-ht <- set_background_color(ht, 1, everywhere, "grey95")
-ht
-```

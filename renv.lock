@@ -2760,32 +2760,6 @@
       ],
       "Hash": "ac107251d9d9fd72f0ca8049988f1d7f"
     },
-    "huxtable": {
-      "Package": "huxtable",
-      "Version": "5.5.7",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "R6",
-        "assertthat",
-        "base64enc",
-        "commonmark",
-        "fansi",
-        "generics",
-        "glue",
-        "htmltools",
-        "memoise",
-        "rlang",
-        "stats",
-        "stringi",
-        "stringr",
-        "tidyselect",
-        "utils",
-        "xml2"
-      ],
-      "Hash": "e24fbb6f2726397e0269034bdd11a895"
-    },
     "ids": {
       "Package": "ids",
       "Version": "1.0.1",

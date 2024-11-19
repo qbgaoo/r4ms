@@ -18,9 +18,9 @@ library(powerSurvEpi)
 library(rpact)
 ```
 
-## Factors affecting sample size
+## Experimental studies
 
-The required sample size in a study is influenced by several key factors, which determine how large a sample is necessary to detect meaningful effects or differences. Here are the primary factors affecting sample size:
+The required sample size in a experimental study is influenced by several key factors, which determine how large a sample is necessary to detect meaningful effects or differences. Here are the primary factors affecting sample size:
 
 **1. Effect size**
 
@@ -52,9 +52,9 @@ Attrition rate denotes the expected rate at which participants may leave the stu
 
 Understanding these factors allows researchers to plan a sample size that balances feasibility with statistical rigor, ensuring the study’s findings are reliable and valid. Here’s a breakdown of sample size estimation methods for different study types and analysis.
 
-## Sample size for testing means
+### Comparison of means
 
-### One-sample mean
+**1. One-sample mean**
 
 To compare a single sample mean with a known population mean, the one-sample t-test is commonly used if the population variance is unknown and the sample size is relatively small. To estimate the required sample size of one-sample t-test, we need to consider several key factors:effect size $\Delta$, significance level $\alpha$, power 1-β, and population standard deviation $\sigma$ (or an estimate if unknown). The sample size $n$ can be estimated as:
 
@@ -86,7 +86,7 @@ pwr.t.test(
 
 Based on the results, the scientist would need 21 rats in order to have a 90% probability of detecting a significant increase in blood pressure of at least 10 mmHg with a one-sided test at a 5% significance level.
 
-### Two-sample means
+**2. Two-sample means**
 
 A two-sample mean comparison is used to determine if there is a significant difference between the means of two independent groups. This type of test is commonly applied in scenarios like comparing the effect of two treatments or comparing measurements between two different populations. To estimate the sample size, we use a formula that considers the effect size, significance level, power, and variability within each group. This is typically done for a two-sample t-test.
 
@@ -119,7 +119,7 @@ power.htest |> plot()
 
 With these parameters, the output suggests that 39 mice each group are needed to reliably detect a significant difference in fasting blood glucose levels between the treatment and control groups.
 
-### Multiple sample means
+**3. Multiple sample means**
 
 When comparing multiple sample means, typically a one-way analysis of variance (ANOVA) is used to test if there are statistically significant differences among the means of three or more independent groups. The one-way ANOVA works under the assumption that the groups have approximately equal variances and that the data are normally distributed within each group.
 
@@ -207,9 +207,9 @@ model <- aov(x ~ group, data = data)
 cohens_f(model, partial = F, alternative = "two.sided")
 ```
 
-## Sample size for testing proportions
+### Comparison of proportions
 
-### One-sample proportion
+**1. One-sample proportion**
 
 When comparing a sample proportion to a known population proportion, the goal is typically to determine whether the observed sample proportion differs significantly from the known or expected proportion in the population.
 
@@ -235,10 +235,10 @@ For small samples (when $n < 30$ , or $np < 5$ and $n(1 - p) < 5$), the z-test i
 A pharmaceutical institute has developed a new drug expected to increase the effective rate of treating lung cancer model mice from the conventional 45% to 60%. To conduct an animal experiment, how many lung cancer model mice are required to detect an improvement of 15% in the effective rate of the new drug?
 :::
 
-Here we write a function named `sample.size.one.p()` to compute the sample size based on the formula above:
+Here we write a function named `ss.one.prop()` to compute the sample size based on the formula above:
 
 ```{r}
-sample.size.one.p <- function(p0, p, alpha = 0.05, power = 0.9, alternative = "one.sided") {
+ss.one.prop <- function(p0, p, alpha = 0.05, power = 0.9, alternative = "one.sided") {
   if (alternative == "one.sided") {
     z_alpha <- qnorm(1 - alpha)
   } else if (alternative == "two.sided") {
@@ -258,8 +258,10 @@ sample.size.one.p <- function(p0, p, alpha = 0.05, power = 0.9, alternative = "o
          method = METHOD), 
     class = "power.htest")
 }
+```
 
-sample.size.one.p(p0 = 0.45, p = 0.6, alpha = 0.05, power = 0.9)
+```{r}
+ss.one.prop(p0 = 0.45, p = 0.6, alpha = 0.05, power = 0.9)
 ```
 
 Alternatively, you can use the `pwr.p.test()` function from the `pwr` packages:
@@ -272,7 +274,7 @@ pwr.p.test(h = h, sig.level = 0.05, power = 0.9, alternative = "greater")
 
 In summary, for a study designed to detect an effect size (h = 0.3015) with 90% power and a 5% significance level, you would need approximately 95 observations in a one-sided test to determine if the sample proportion is significantly greater than the population proportion.
 
-### Two-sample proportions
+**2. Two-sample proportions**
 
 To compare two independent sample proportions, we generally conduct a hypothesis test for the difference between two population proportions. This is typically done using a two-sample z-test for proportions. The test statistic follows a normal distribution (under large sample sizes) and is calculated as:
 
@@ -296,10 +298,10 @@ $$
 
 where $Z_{\alpha/2}$ is the critical value for the two-sided test at significance level $\alpha$, $Z_{\beta}$ is the critical value corresponding to the desired power.
 
-Here we write a function named `sample.size.two.p()` to compute the sample size based on the formula above:
+Here we write a function named `ss.two.prop()` to compute the sample size based on the formula above:
 
 ```{r}
-sample.size.two_p <- function(p1, p2, alpha = 0.05, power = 0.9, alternative = "two.sided") {
+ss.two_prop <- function(p1, p2, alpha = 0.05, power = 0.9, alternative = "two.sided") {
   # Calculate Z-scores for significance level based on test type
   if (alternative == "two.sided") {
     z_alpha <- qnorm(1 - alpha / 2)  # Two-sided test
@@ -322,8 +324,10 @@ sample.size.two_p <- function(p1, p2, alpha = 0.05, power = 0.9, alternative = "
       method = METHOD, note = NOTE), 
     class = "power.htest")
 }
+```
 
-sample.size.two_p(p1 = 0.95, p2 = 0.80, alpha = 0.05, power = 0.9, alternative = "two.sided")
+```{r}
+ss.two_prop(p1 = 0.95, p2 = 0.80, alpha = 0.05, power = 0.9, alternative = "two.sided")
 ```
 
 Alternatively, you can use the `power.prop.test()` function from the `stats` packages:
@@ -350,7 +354,7 @@ It should be noticed that the sample sizes calculated by `power.prop.test()` and
 
 If you are working with proportions that are close to 0 or 1, `pwr.2p.test()` may provide a more accurate sample size estimate due to Cohen’s h. If both proportions are more central, then either method could be appropriate, though results will vary due to these differences.
 
-### Multiple sample proportions
+**3. Multiple sample proportions**
 
 When comparing the proportions of multiple samples, we are typically interested in determining whether there are statistically significant differences among the groups. Chi-square test is used to determine if there is a significant association between categorical variables. It can be applied when you have one categorical variable from two or more independent samples. The formula for calculating sample size for each group in a multiple-proportion comparison is:
 
@@ -379,7 +383,7 @@ pwr.chisq.test(w = w2, df = 2, sig.level = 0.05, power = 0.9)
 
 1.  Calculate the effect size, with the same results
 
-## Sample size for linear correlation
+### Linear correlation
 
 In linear correlation analysis, sample size estimation is typically done to achieve a specified power in hypothesis test. The sample size required depends on the expected effect size (correlation coefficient), significance level $\alpha$, and desired power $1 -\beta$. The sample size $N$ can be estimated using the following formula:
 
@@ -389,10 +393,10 @@ $$
 
 where $r$ expected correlation coefficient (effect size), $Z_{\alpha / 2}$ is the critical value from the standard normal distribution for the significance level $\alpha$ (for a two-tailed test, use $\alpha / 2$), $Z_{\beta}$ is the critical value from the standard normal distribution for the power level $1 - \beta$, and $\ln\left(\frac{1 + r}{1 - r}\right)$represents Fisher’s z-transformation of the correlation coefficient $r$, which converts the correlation coefficient to a standard normal form.
 
-The following function named `sample.size.corr()` can be used to calculate the sample size needed for correlation analysis based on the above formula:
+The following function named `ss.linear.corr()` can be used to calculate the sample size needed for correlation analysis based on the above formula:
 
 ```{r}
-sample.size.corr <- function(sig.level = 0.05, power = NULL, r, alternative = "two.sided") {
+ss.linear.corr <- function(sig.level = 0.05, power = NULL, r, alternative = "two.sided") {
   # Calculate z-scores
   if (alternative == "two.sided") {
     z_alpha <- qnorm(1 - sig.level / 2)  # Two-sided test
@@ -423,7 +427,7 @@ According to previous experience, the correlation coefficient between food intak
 :::
 
 ```{r}
-sample.size.corr(sig.level = 0.05, power = 0.9, r = 0.8)
+ss.linear.corr(sig.level = 0.05, power = 0.9, r = 0.8)
 ```
 
 Alternative, you can use the `pwr.r.test()` function from the `pwr` packages:
@@ -432,19 +436,425 @@ Alternative, you can use the `pwr.r.test()` function from the `pwr` packages:
 pwr.r.test(sig.level = 0.05, power = 0.9, r = 0.8) 
 ```
 
-## Sample size for testing hazard ratio (待完成)
+## Observational studies
 
-To estimate the sample size needed to compare two survival rates, the following formula can be used. This approach typically involves estimating the number of events required for sufficient statistical power in survival analysis. The sample size formula for comparing two survival rates, assuming exponential survival times and using the log-rank test.
+In observational studies, the sample size required for estimating population parameters typically depends on the following factors:
+
+**1. Confidence level (**$1 - \alpha$**)**
+
+It is commonly set at 95% (corresponding to $\alpha = 0.05$), the confidence level determines the width of the confidence interval around the estimate. Higher confidence levels increase the required sample size.
+
+**2. Margin of error (**$d$**)**
+
+This is the allowable deviation between the estimate and the true population parameter, such as 5%. A smaller margin of error requires a larger sample size.
+
+**3. Estimated proportion or effect size (**$p$ **or** $\theta$**)**
+
+For proportion estimates, an estimated proportion $p$ from prior studies (e.g., 20% disease prevalence) is often used. For mean estimates, an anticipated standard deviation or measure of variability is needed.
+
+4\. **Standard deviation (**$\sigma$**)**
+
+For continuous variables, an anticipated population standard deviation $\sigma$ is needed to account for variability. Higher variability increases the sample size requirement.
+
+**5. Power (**$1 - \beta$**)**
+
+Power is the probability of detecting a true effect and is commonly set at 80% (corresponding to $\beta = 0.20$). Higher power requires a larger sample size.
+
+**6. Design effect**
+
+For studies using complex sampling designs (e.g., stratified or clustered sampling), a design effect is applied to account for the potential increase in required sample size due to the design.
+
+**7. Number of strata or groups**
+
+If the study involves stratified or subgroup analysis, the sample size in each stratum or group must be adequate to ensure reliable estimates within each subgroup.
+
+These parameters collectively help determine the appropriate sample size for cross-sectional, case-control, or cohort studies, often using statistical formulas or software specifically designed for sample size estimation.
+
+### Cross-sectional study
+
+Cross-sectional studies typically aim to estimate the prevalence or proportion of an outcome (such as a disease or behavior) in a population.
+
+**1. Simple random sampling**
+
+In simple random sampling, the required sample size to estimate a population parameter accurately depends on the following formula and factors:
+
+**For estimating a proportion**, the sample size $n$ can be calculated using:
+
+$$
+n = \frac{Z_{1-\alpha/2}^2 \cdot p \cdot (1 - p)}{d^2}
+$$
+
+where $Z_{1-\alpha/2}$ is the Z-score corresponding to the significance level, $p$ is the expected proportion or prevalence of the outcome (based on prior studies or estimates), $d$ is the desired margin of error.
+
+```{r}
+ss.srs.prop <- function(p, d, alpha) {
+  z <- qnorm(1 - alpha / 2)
+  n <- (z^2 * p * (1 - p)) / d^2
+  n <- ceiling(n)
+  
+  METHOD <- "Sample size calculation for estimating a proportion"
+  structure(
+    list(
+      n = n, alpha = alpha, p = p, d = d, method = METHOD), 
+    class = "power.htest")
+}
+```
+
+**For estimating a mean**, the sample size $n$ is:
+
+$$
+n = \frac{{Z_{1-\alpha/2}^2 \cdot \sigma^2}}{{d^2}}
+$$
+
+where $Z_{1-\alpha/2}$ is the Z-score corresponding to the significance level, $\sigma$ is the estimated population standard deviation, $d$ is the margin of error.
+
+```{r}
+ss.srs.mean <- function(sigma, d, alpha = 0.05) {
+  z <- qnorm(1 - alpha / 2)
+  n <- (z^2 * sigma^2) / d^2
+  n <- ceiling(n)
+  
+  METHOD <- "Sample size calculation for estimating a mean"
+  structure(
+    list(
+      n = n, alpha = alpha, sigma = sigma, d = d, method = METHOD), 
+    class = "power.htest")
+}
+```
+
+If the population size $N$ is finite and relatively small, the sample size can be adjusted using the finite population correction:
+
+$$
+n_{\text{adj}} = \frac{n}{1 + \frac{n - 1}{N}}
+$$
+
+where $n$ is the calculated sample size from the above formulas without the correction.
+
+```{r}
+adjusted.sample.size <- function(x, N) {
+  n <- x$n
+  n_adj <- n / (1 + (n - 1) / N)
+  n_adj <- ceiling(n_adj)
+  
+  METHOD <- "Sample size adjusted by the finite population correction"
+  structure(
+    list(
+      N= N, n = n, n_adj = n_adj, alpha = alpha, sigma = sigma,
+      d = d, method = METHOD), 
+    class = "power.htest")
+}
+```
 
 ::: example
-A researcher plans to conduct a study comparing the effects of a new surgical method with a traditional surgical method on the survival outcomes of patients with malignant adrenal tumors. The recruitment period for the study is set for 1 year, with all subjects entering the study uniformly, and a follow-up period of 2 years. It is known that the 2-year survival rate for the traditional surgical method is 50%, and the anticipated 2-year survival rate for the new surgical method is 80%. The estimated loss to follow-up rate for both groups is 6% per year, with a contamination rate of 3% in each group. Assuming a two-sided significance level of $\alpha = 0.05$ and a power of $1 - \beta = 0.90$, what sample size is needed for this study?
+To determine the prevalence of hypertension in a city’s population, given that the national prevalence of hypertension is 19.6% according to past data, and allowing for a margin of error of 0.01 with a significance level of $\alpha$ = 0.05, estimate the required sample size using simple random sampling.
 :::
 
 ```{r}
-getSampleSizeSurvival(
-  pi1 = 0.5, pi2 = 0.8, alpha = 0.05, beta = 0.1, eventTime = 24,
-  followUpTime = , accrualTime = c(0, 12), dropoutRate1 = 0.06,
-  dropoutRate2 = 0.06, typeOfComputation = "Freedman")
+p <- 0.196; d <- 0.01; alpha <- 0.05
+ss.srs.prop(p, d, alpha)
 ```
 
-## 
+::: example
+A factory has 5,500 workers, and a simple random sample is planned to assess the average white blood cell count of the workers to determine whether working conditions affect white blood cell levels. The allowable error margin is set to 0.1 × 10⁹/L, and with a significance level of $\alpha$ = 0.05, how many workers need to be surveyed at minimum? (Based on previous data, the standard deviation of employees’ white blood cell counts is 0.95 × 10⁹/L)
+:::
+
+```{r}
+alpha <- 0.05; sigma <- 0.95 * 10^9; d <- 0.1 * 10^9  
+res <- ss.srs.mean(sigma, d, alpha)
+adjusted.sample.size(res, N = 5500)
+```
+
+**2. Stratified random sampling**
+
+In stratified random sampling, the formulas for calculating the total sample size needed to estimate a proportion and a mean are slightly different. Each involves breaking down the population into strata and using information within each stratum to improve the precision of the overall estimate.
+
+**To estimate a proportion** with stratified random sampling, the sample size $n$ can be estimated using the following formula, which takes into account finite population correction and the weights of each strata.
+
+$$
+n = \frac{Z_{1-\alpha/2}^2 \sum_{h=1}^L W_h^2 \frac{\sqrt{p_h (1 - p_h)} \sum N_h \sqrt{p_h (1 - p_h)}}{N_h}}{d^2 + Z_{1-\alpha/2}^2  \frac{\sum_{h=1}^L W_h p_h (1 - p_h)}{N}}
+$$
+
+where $n$ is the total sample size across all strata, $Z_{1-\alpha/2}$ is the z-score corresponding to the desired confidence level, $W_h = N_h / N$ is the weight for the $h$-th stratum, representing the proportion of the stratum within the total population, $N_h$ is the population size of the $h$-th stratum, $N$ is the overall population size, $p_h$ is the estimated proportion in the $h$-th stratum, $d$ is the allowable margin of error, and $L$ total number of strata.
+
+Once $n$ is calculated, the sample size for each stratum $n_h$ can be determined using Neyman (optimal) allocation:
+
+$$
+n_h = n \times \frac{N_h \sqrt{p_h (1 - p_h)}}{\sum_{h=1}^L N_h \sqrt{p_h (1 - p_h)}}
+$$
+
+This allocation minimizes the variance in estimating the overall proportion.
+
+```{r}
+ss.strata.prop <- function(N_h, p_h, d, alpha = 0.05) {
+  N <- sum(N_h)
+  z <- qnorm(1 - alpha / 2)
+  W_h <- N_h / N 
+  u <- sum(N_h * sqrt(p_h * (1 - p_h)))
+  numerator <- z^2 * sum(W_h^2 * sqrt(p_h * (1 - p_h)) * u / N_h)
+  denominator <- d^2 + z^2 * sum(W_h * p_h * (1 - p_h) / N)
+  
+  n <- numerator / denominator
+  n_h <- (n * N_h / N) * (N_h - n / N) / (N_h -1)
+  n <- ceiling(n)
+  n_h <- ceiling(n_h)
+  
+  METHOD <- "Sample size calculation for estimating a proportion"
+  structure(
+    list(n = n, n_h = n_h, alpha = alpha, d = d, method = METHOD), 
+    class = "power.htest")
+}
+```
+
+**When estimating a mean**, the total sample size $n$ for stratified sampling, adjusted for finite population correction, can be estimated using:
+
+$$
+n = \frac{Z_{1- \alpha/2}^2 \sum_{h=1}^L W_h^2 \frac{S_h \sum N_h S_h}{N_h}}{d^2 + Z_{1- \alpha/2} ^2\sum_{h=1}^L \frac{W_h S_h^2}{N}}
+$$
+
+where $S_h$ is the standard deviation within the $h$-th stratum (an estimate of the population variance within each stratum). Other terms are as defined above.
+
+Similar to proportions, Neyman allocation for means is:
+
+$$
+n_h = n \times \frac{N_h S_h}{\sum_{h=1}^L N_h S_h}
+$$
+
+where $S_h$ is the standard deviation within each stratum. This allocation ensures efficient estimation by reducing sampling error.
+
+```{r}
+ss.strata.mean <- function(N_h, S_h, d, alpha = 0.05) {
+  N <- sum(N_h)
+  z <- qnorm(1 - alpha / 2)
+  
+  u <- z^2 * sum((N_h / N)^2 * (S_h * sum(N_h * S_h)) / N_h)
+  v <- d^2
+  w <- z^2 * sum((N_h / N) * S_h^2 / N) 
+  
+  # Calculate sample size
+  n <- u / (v + w)
+  n_h <- n * (N_h * S_h) / sum(N_h * S_h)
+  
+  n <- ceiling(n)
+  n_h <- ceiling(n_h)
+  
+  METHOD <- "Sample size calculation for estimating a mean"
+  structure(
+    list(n = n, n_h = n_h, alpha = alpha, d = d, method = METHOD), 
+    class = "power.htest")
+}
+```
+
+::: example
+To conduct a stratified random sampling survey on the annual medical expenses of workers in a certain factory, past survey data is provided in @tbl-drug-expense . The goal is to understand the annual medical expenses of the factory’s employees, with an allowable margin of error, $\delta$, not exceeding 5 yuan and with a confidence level of $\alpha = 0.05$. What is the minimum number of workers that need to be surveyed?
+:::
+
+```{r}
+#| echo: false
+#| label: tbl-drug-expense
+#| tbl-cap: Drug expenses of workers in each workshop of a factory
+tibble(
+  workshop = c(1:3),
+  n = c(1200, 3200, 600),
+  mean = c(180, 150, 260),
+  sd = c(65, 50, 90)
+) |> 
+  knitr::kable(align = "c")
+```
+
+```{r}
+N_h <- c(1200, 3200, 600)  # Population size for each stratum
+S_h <- c(65, 50, 90) # Standard deviation for each stratum
+d <- 5                     # Allowable error
+alpha <- 0.05
+
+ss.strata.mean(N_h, S_h, d, alpha = 0.05)
+```
+
+**3. Cluster sampling**
+
+Cluster sampling is a sampling method where the population is divided into separate groups, called clusters, and a random sample of these clusters is selected for study. Cluster sampling is often used when the population is large and geographically dispersed, as it can be more practical and cost-effective than simple random sampling.
+
+**Estimating sample size for population proportion**
+
+For an infinite population, the required sample size for estimating a population proportion is calculated using:
+
+$$
+k = Z_{1-\alpha/2}^2 \sum \frac{m_h^2 (p_h - p)^2}{(k_y - 1) \bar m^2 d^2}
+$$
+
+For a finite population, adjust the sample size as follows:
+
+$$
+k_\text {adj} = k \left(1 - \frac{k_0}{K}\right)
+$$ {#eq-adj-k0}
+
+where $Z_{1 - \alpha / 2}$ is the Z-score corresponding to the desired confidence level, $k_0$ is the sample size for an infinite population, $k$ is the number of clusters to be surveyed, $m_h$ is the number of individuals surveyed in the $h$-th cluster, $p_h$ is the event occurrence rate in the $h$-th cluster, $\bar m$ is the average number of individuals per cluster, $p$ is the average occurrence rate, $d$ is the allowable error margin, and $K$ is the total number of clusters in the population.
+
+```{r}
+ss.cluster.prop <- function(m_h, p_h, K, d, alpha = 0.05) {
+  z <- qnorm(1 - alpha / 2)
+  k_y <- length(m_h)
+  m <- sum(m_h) / k_y
+  p <- sum(m_h * p_h) / sum(m_h)
+  sum_p <- sum(m_h^2 * (p_h - p)^2 / ((k_y - 1) * m^2 * d^2))
+  k <- z^2 * sum_p
+  k.adj <- k * (1 - k / K)
+  
+  k <- ceiling(k)
+  k.adj <- ceiling(k.adj)
+  
+  METHOD <- "Sample size calculation for estimating a proportion"
+  structure(
+    list(k = k, k.adj = k.adj, alpha = alpha, d = d, method = METHOD),
+    class = "power.htest")
+}
+```
+
+**Estimating sample size for population mean**
+
+For an infinite population, the required sample size for estimating a population mean is calculated using:
+
+$$
+k_0 = Z_{\alpha/2}^2 \sum \frac{m_h (\bar{X}_h - \bar{X})^2}{(k_y - 1) \bar m^2 d^2}
+$$
+
+where $\bar{X}_i$ is the mean of the observed index for the $i$-th cluster, $\bar{X}$ is the overall mean. Other variables have meanings similar to those in the proportion estimation formula.
+
+For a finite population, adjust the sample size as @eq-adj-k0 .
+
+```{r}
+ss.cluster.mean <- function(m_h, x_h, K, d, alpha = 0.05) {
+  z <- qnorm(1 - alpha / 2)
+  k_y <- length(m_h)
+  m <- sum(m_h) / k_y
+  x <- sum(m_h * x_h) / sum(m_h)
+  sum_m <- sum(m_h^2 * (p_h - p)^2 / ((k_y - 1) * m^2 * d^2))
+  k <- z^2 * sum_m
+  k.adj <- k * (1 - k / K)
+  
+  k <- ceiling(k)
+  k.adj <- ceiling(k.adj)
+  
+  METHOD <- "Sample size calculation for estimating a mean"
+  structure(
+    list(k = k, k.adj = k.adj, alpha = alpha, d = d, method = METHOD),
+    class = "power.htest")
+}
+```
+
+::: example
+To estimate the prevalence of cardiovascular and cerebrovascular diseases in people over 40 in a city, a cluster sampling survey is planned across 62 communities. A preliminary survey was conducted in two districts, randomly selected by the survey team: In the first district, 5,368 people were surveyed, with 1,860 cases of cardiovascular and cerebrovascular diseases, resulting in a prevalence rate of 0.3465. In the second district, 6,236 people were surveyed, with 1,268 cases, resulting in a prevalence rate of 0.2033. The question is: How many districts need to be surveyed to estimate the prevalence, given a significance level of $\alpha = 0.05$ and a margin of error $\delta = 0.1$?
+:::
+
+```{r}
+m_h <- c(5368, 6236)
+p_h <- c(0.3465, 0.2033)
+K <- 62
+d <- 0.1
+alpha <- 0.05
+ss.cluster.prop(m_h, p_h, K, d, alpha)
+```
+
+### **Case-control study**
+
+Sample size estimation for a case-control study is essential to ensure adequate power to detect an association between exposure and outcome. The required sample size can be estimated based on the expected odds ratio for the exposure between cases and controls, the prevalence of exposure in the control group, desired significance level, power, and ratio of controls to cases. This ratio is often set to 1 (equal number of cases and controls), but can be different.
+
+For a case-control study, the sample size $n_1$ (cases) and $n_0$ (controls) can be estimated using the following formula:
+
+$$
+n1 = \frac{\left(Z_{1-\alpha/2} \sqrt{2p(1 - p)} + Z_{1-\beta} \sqrt{p_1(1 - p_1) + p_0(1 - p_0)}\right)^2}{(p_1 - p_0)^2}
+$$
+
+where $Z_{1-\alpha/2}$ and $Z_{1-\beta}$ are the Z-scores for the significance level $\alpha$ and desired power $1 - \beta$, respectively, $p_0$ is the the proportion of controls expected to have the exposure, $p_1$ is the expected proportion of exposure in cases, which can be calculated using the odds ratio (OR):
+
+$$
+p_1 = \frac{\text {OR} \times p_0}{1 + p_0 \times (\text {OR} - 1)}
+$$
+
+$p = \frac{p_1 + p_0}{2}$ is the average of exposure rates in cases and controls. The sample size of control $n_0 = k \times n_1$, where $k$ is the ratio of controls to cases. The total sample size is then obtained by $n = n_0 + n_1$,
+
+```{r}
+ss.case.control <- function(p0, or, alpha, beta, k = 1){
+  z_alpha <- qnorm(1 - alpha / 2)
+  z_beta <- qnorm(1 - beta)
+  p1 <- (or * p0) / (1 + p0 * (or - 1))
+  p <- (p0 + p1) / 2
+  
+  u <- (z_alpha * sqrt(2 * p * (1 - p)) + 
+        z_beta * sqrt(p1 * (1 - p1) + p0 * (1 - p0)))^2
+  v <- (p1 - p0)^2
+  n1 <- ceiling(u / v)
+  n0 <- ceiling(k * n1)
+
+  METHOD <- "Sample size calculation for case-control study"
+  structure(
+    list(n0 = n0, n1 = n1, alpha = alpha, beta = beta, 
+         OR = or, method = METHOD),
+    class = "power.htest")
+}
+```
+
+```{r}
+p0 <- 0.3; or <- 3; alpha <- 0.05; beta <- 0.1
+ss.case.control(p0, or, alpha, beta)
+```
+
+### Cohort study
+
+In cohort studies, sample size estimation typically depends on the incidence rates in the exposed and unexposed groups and the expected risk ratio (RR). The formula is similar to that used in case-control studies:
+
+$$
+n1 = \frac{\left(Z_{1-\alpha/2} \sqrt{2p(1 - p)} + Z_{1-\beta} \sqrt{p_1(1 - p_1) + p_0(1 - p_0)}\right)^2}{(p_1 - p_0)^2}
+$$
+
+where $p_1$ and $p_0$ represent the expected incidence rates for the exposed and unexposed groups, respectively, $p_1$ can be calculated by RR: $p_1 = p_0 \times \text {RR}$.
+
+```{r}
+ss.cohort <- function(p0, rr, alpha, beta, k = 1){
+  z_alpha <- qnorm(1 - alpha / 2)
+  z_beta <- qnorm(1 - beta)
+  p1 <- rr * p0
+  p <- (p0 + p1) / 2
+  
+  u <- (z_alpha * sqrt(2 * p * (1 - p)) + 
+        z_beta * sqrt(p1 * (1 - p1) + p0 * (1 - p0)))^2
+  v <- (p1 - p0)^2
+  n1 <- ceiling(u / v)
+  n0 <- ceiling(k * n1)
+
+  METHOD <- "Sample size calculation for cohort study"
+  structure(
+    list(n0 = n0, n1 = n1, alpha = alpha, beta = beta, 
+         RR = rr, method = METHOD),
+    class = "power.htest")
+}
+```
+
+```{r}
+p0 <- 0.01; rr <- 2; alpha <- 0.05; beta <- 0.1
+ss.cohort(p0, rr, alpha, beta)
+```
+
+## Survival analysis
+
+### Two survival rates
+
+The sample size for comparing two survival rates, assuming exponential survival times and using the log-rank test. This approach typically involves estimating the number of events required for sufficient statistical power in survival analysis.
+
+The `getSampleSizeSurvival()` function from `rpact` packages can be used for this purpose:
+
+::: example
+A scientist plans to conduct a study comparing the effects of a new surgical method with a traditional surgical method on the survival outcomes of patients with malignant adrenal tumors. The recruitment period for the study is set for 1 year, with all subjects entering the study uniformly, and a follow-up period of 2 years. It is known that the 2-year survival rate for the traditional surgical method is 50%, and the anticipated 2-year survival rate for the new surgical method is 80%. The estimated loss to follow-up rate for both groups is 6% per year, with a contamination rate of 3% in each group. Assuming a two-sided significance level of $\alpha = 0.05$ and a power of $1 - \beta = 0.90$, what sample size is needed for this study?
+:::
+
+```{r}
+res <- getSampleSizeSurvival(
+  alpha = 0.05, sided = 2, beta = 0.1, twoSidedPower = F, 
+  pi1 = 0.5, pi2 = 0.8, eventTime = 24, followUpTime = 24, 
+  accrualTime = c(0, 12), dropoutRate1 = 0.06, dropoutRate2 = 0.06, 
+  typeOfComputation = "Freedman", allocationRatioPlanned = 1)
+
+res |> 
+  as_tibble() |> 
+  select(pi1, pi2, hazardRatio, nFixed1, nFixed2)
+```
