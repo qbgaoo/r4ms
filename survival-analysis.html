@@ -549,7 +549,7 @@ window.Quarto = {
 <h2 data-number="21.2" class="anchored" data-anchor-id="basic-concepts"><span class="header-section-number">21.2</span> Basic concepts</h2>
 <p>Survival data has several distinctive characteristics that differentiate it from other types of data, which make specialized methods necessary for analysis. The key characteristics of survival data include time-to-event data, censored data, non-normal distribution, and multiple covariates that influence survival time. Here is an example used to illustrate these features and related concepts.</p>
 <div id="ex21-01" class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>To estimate the survival time of patients who are HIV-positive, a researcher conducted a clinical follow-up study. The subjects were individuals diagnosed with HIV in a certain city between January 1, 2002, and December 31, 2004. These subjects were followed until they died of AIDS or its complications (with status = 1 for death, and 0 for censored cases). The study cutoff date was December 31, 2008. Additionally, the gender (sex = 1 for male, 0 for female), age (in years), and medication status (drug = 1 for on medication, 0 for not on medication) of each subject were recorded. The data format are shown in <a href="#tbl-hiv-survival" class="quarto-xref">Table&nbsp;<span>21.1</span></a> .</p>
 </div>
 <div>
@@ -776,7 +776,7 @@ H(t) = \int_0^t h(u) du
 </span></p>
 <p>where <span class="math inline">t_i</span> = the event time (time at which an event occurs), <span class="math inline">d_i</span> = the number of events (e.g., deaths) at time <span class="math inline">t_i</span>, <span class="math inline">n_i</span> = the number of individuals at risk just before time <span class="math inline">t_i</span>.</p>
 <div id="ex21-02" class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>To compare the efficacy of different surgical methods for treating adrenal tumors, a researcher randomly divided 43 patients into two groups: 23 in group A and 20 in group B. The survival times (in months) for each group are shown in the table below. Calculate the survival rate.</p>
 </div>
 <div>
@@ -974,7 +974,7 @@ H(t) = \int_0^t h(u) du
 <h3 data-number="21.4.2" class="anchored" data-anchor-id="life-table-method"><span class="header-section-number">21.4.2</span> Life table method</h3>
 <p>Life tables are a classic method for estimating survival rates by dividing individuals into different age groups or time intervals. This method calculates survival rates based on the number of deaths and survivors in each age group. It is commonly used in public health and epidemiological studies to estimate the survival probability of specific populations.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>A researcher followed up and collected data on 2,418 male angina patients in a certain region. The organized data is presented in Table 18-6. Please calculate the survival rate for male angina patients in this region.</p>
 </div>
 <div>
@@ -1279,7 +1279,7 @@ H(t) = \int_0^t h(u) du
 <h2 data-number="21.5" class="anchored" data-anchor-id="comparison-of-survival-rates"><span class="header-section-number">21.5</span> Comparison of survival rates</h2>
 <p>The comparison of survival rates in survival analysis is often done to evaluate whether the survival experiences of two or more groups differ significantly. There are various statistical methods available to compare survival rates across groups. Here’s an outline of common methods used for comparing survival rates:</p>
 <div class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>Based on the data from <a href="#ex21-02">Example 2</a>, compare the survival rates between the two surgical methods, A and B, to determine if there is a significant difference.</p>
 </div>
 <div class="cell">
@@ -1433,7 +1433,7 @@ L(\beta) = \prod_{i \in \text{events}} \frac{\exp(\beta^T X_i)}{\sum_{j \in \tex
 <p>The concordance index (or c-index) measures the predictive accuracy of the model, indicating how well the model predicts the ordering of survival times. A c-index of 0.5 indicates random predictions, while a value closer to 1 indicates better predictive power.</p></li>
 </ol>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>To investigate the prognosis of a certain malignant tumor, a researcher collected survival times, survival outcomes, and influencing factors for 63 patients. The influencing factors include patient age, gender, histological type, treatment method, lymph node metastasis, and tumor infiltration depth. The survival time, denoted as t , is measured in months. The variable coding is shown in <a href="#tbl-cox-tumor" class="quarto-xref">Table&nbsp;<span>21.2</span></a> . Perform an analysis on the data using Cox regression model.</p>
 </div>
 <div>

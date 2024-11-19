@@ -533,7 +533,7 @@ t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
 <p>where <span class="math inline">\bar{X}</span> is the sample mean , <span class="math inline">S</span> is the sample standard deviation and <span class="math inline">n</span> is the sample size, <span class="math inline">\mu_0</span> is the hypothesized population mean.</p>
 <p>The one-sample <em>t</em>-test is a straightforward but powerful tool for hypothesis testing in many research scenarios.</p>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>A doctor measured the hemoglobin concentration in 36 male workers involved in lead-related jobs. The data can be downloaded below. The question is whether the mean hemoglobin concentration (<span class="math inline">\mu</span>) of male workers involved in lead-related jobs differs from the mean of 140 (g/L) for normal adult males.</p>
 </div>
 <div>
@@ -569,7 +569,7 @@ t = \frac{\bar{X} - \mu_0}{S_{\bar{X}}} = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}
 <p>The test statistic for the paired t-test is calculated as:</p>
 <p><span class="math display">t = \frac{\bar{d}}{S_d / \sqrt{n}}</span> Where <span class="math inline">\bar{d}</span> is the mean of the differences between the paired observations, <span class="math inline">S_d</span> is the standard deviation of the differences, and <span class="math inline">n</span> is the number of pairs.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>To compare whether the results of fat content measurement in lactic acid beverages differ between two methods, 10 samples of lactic acid beverages were randomly selected. The fat content was measured using both the Gerber-Gottlieb method and the fatty acid hydrolysis method. The data can be downloaded below. The question is whether the measurement results from the two methods are different?</p>
 </div>
 <div>
@@ -617,7 +617,7 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{S_c^2 \left(\frac{1}{n_1} + \frac{1}{n_2}
 <p><span class="math inline">H_1</span>: There is a difference between the population means (<span class="math inline">\mu_1 \neq \mu_2</span>).</p>
 <p>If the variances are unequal, the Welch <em>t</em>-test (which does not assume equal variances) is recommended.</p>
 <div id="ex07-03" class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>To investigate the anti-atherosclerotic effects of tetrandrine on rabbits, an atherosclerosis rabbit model was established using a high-fat diet over 12 weeks. 16 rabbits successfully modeled after 12 weeks were randomly divided into two groups. The group A was given a high-fat diet of 100g/day, while the group B was given the same high-fat diet along with an additional 109mg/(kg·d) of tetrandrine mixed into the feed. After continuous feeding for 3 weeks, blood was drawn from the heart at the end of the experiment to measure the high-density lipoprotein (mmol/L) levels in the heart blood. The data can be downloaded below. Can it be concluded that the population means of high-density lipoprotein content in the heart blood differ between group A and B?</p>
 </div>
 <div>
@@ -666,7 +666,7 @@ t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
 </span></p>
 <p>This formula typically results in a non-integer value for the degrees of freedom, which is a characteristic of the Welch <em>t</em>-test. It is generally considered more robust than the combined variance <em>t</em>-test in situations where variances differ.</p>
 <div id="ex07-04" class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>To analyze the effect of blood glucose control on serum total cholesterol levels, a study was conducted on type 2 diabetes patients in a community. Hemoglobin A1c levels below 7.0% were used as the target for blood glucose control. Total cholesterol levels (mmol/L) were measured in 25 patients with poor blood glucose control (Group A) and 25 patients with good blood glucose control (Group B). The data can be downloaded below. Determine whether the mean total cholesterol levels of those with poor blood glucose control and those with good blood glucose control are equal or not.</p>
 </div>
 <div>
@@ -742,7 +742,7 @@ F = \frac{S_1^2}{S_2^2}
 </div>
 </div>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>For <a href="#ex07-03">Example 3</a>, use the F-test to determine whether the variances of high-density lipoprotein content in the heart blood of the two populations are unequal.</p>
 </div>
 <div class="cell">
@@ -764,7 +764,7 @@ F = \frac{S_1^2}{S_2^2}
 </div>
 <p>The results show: <span class="math inline">F = 2.299</span>, <span class="math inline">\text{p-value} = 0.2944</span>, at the significant level of <span class="math inline">\alpha = 0.1</span>, do not reject <span class="math inline">H_0</span>. The difference is not statistically significant. Therefore, we cannot conclude that the variances of high-density lipoprotein content in the heart blood of the Qingfujian group and the model group are unequal. Consequently, <a href="#ex07-03">Example 3</a> used a two-sample t-test under the assumption of equal variances.</p>
 <div class="example">
-<strong>Example 6:</strong> 
+<strong>Example 6</strong> 
 <p>For <a href="#ex07-04">Example 4</a>, Use the F test to determine whether the population variances of serum total cholesterol levels differ between those with poor and good blood glucose control.</p>
 </div>
 <div class="cell">

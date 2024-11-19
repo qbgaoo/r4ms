@@ -633,7 +633,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 <h2 data-number="8.3" class="anchored" data-anchor-id="anova-for-completely-randomized-design"><span class="header-section-number">8.3</span> ANOVA for completely randomized design</h2>
 <p>In a completely randomized design, subjects are randomly assigned to different groups without any restrictions or blocks. Each patient has an equal chance of being assigned to any of the groups, ensuring that the groups are comparable and that the treatment effects can be attributed to the interventions rather than other factors.</p>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>To clear the efficacy of three drugs, 120 patients were selected according to a inclusion criteria and evenly divided into three groups using a completely randomized design. How to use R to arrange random group assignments?</p>
 </div>
 <p>You can use the <code>sample()</code> function to perform random group assignments and random drug allocation. Below is an example of how to achieve this:</p>
@@ -673,7 +673,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 </div>
 </div>
 <div id="lower-lipid-drug" class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>To study the clinical efficacy of three lipid-lowering drugs, 120 patients were selected based on uniform inclusion criteria and randomly divided into three groups using a completely randomized design. Each group received one of the drugs in a double-blind trial. The effectiveness was evaluated based on the reduction in triglyceride levels before and after 6 weeks of treatment. To analyze whether there are any differences in the average reduction in triglyceride levels among the three groups.</p>
 </div>
 <div>
@@ -748,7 +748,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 <p>A randomized block design is a type of experimental design in which subjects are divided into blocks based on certain characteristics (e.g., age, gender, baseline measurements) that are expected to influence the response to the treatments. Within each block, subjects are then randomly assigned to different treatment groups. This design helps to control for the variability within blocks, thereby increasing the precision of the experiment.</p>
 <p>Randomized block design is particularly useful when there are sources of variation that are not of primary interest but could affect the outcome, allowing the experimenter to control for these factors and focus on the treatment effects.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>In a study to compare the effectiveness of three different types of pain relief medications (A, B, and C) in postoperative patients, the patients’ baseline pain levels (low, medium, high) may influence their response to the medications. So you want to control for this variable in your study. Patients are first divided into blocks based on their baseline pain levels. Then, within each block, patients are randomly assigned to one of the three pain relief medications (A, B, or C).</p>
 </div>
 <p>Here’s the R code to achieve the randomized block design:</p>
@@ -801,7 +801,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 </div>
 <p>The output will show each patient’s ID, their baseline pain level, and the randomly assigned medication. The assignment will be random within each block, reflecting the randomized block design.</p>
 <div class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>In a trial to study the effects of three prenatal nutritional supplements on newborn weight, a randomized block design was used. Pregnant women with similar living locations, ages, and similar family economic status formed 10 blocks, each containing 3 pregnant women. Within each block, Pregnant women were randomly assigned to one of the three nutritional supplements (A, B, or C). Explore whether there is a difference in newborn birth weights among the three prenatal nutritional supplements?</p>
 </div>
 <div>
@@ -853,7 +853,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 </div>
 <p>This code generates a 6x6 Latin dquare design where each treatment (A, B, C, D, E, F) appears exactly once in each row and column.</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>To compare the size of skin blisters caused by six different drugs (A, B, C, D, E, F) after being injected into rabbits. A Latin square design was employed, using six rabbits, with each drug being injected into six different sites on each rabbit. The task is to perform an analysis of variance (ANOVA) to determine if there are any significant differences in the blister sizes caused by these drugs.</p>
 </div>
 <div>
@@ -920,7 +920,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 <p>This example generates a basic 2x2 cross-over design. For more complex designs, the package can accommodate more treatments and periods.</p>
 <p>Cross-over designs are powerful tools in clinical research, especially when the treatment effects are short-lived and the sample size is limited.</p>
 <div class="example">
-<strong>Example 6:</strong> 
+<strong>Example 6</strong> 
 <p>A cross-over trial was conducted to measure 3H-cGMP levels in plasma using two scintillation liquids, A and B. In the first phase, samples from subjects 1, 3, 4, 7, and 9 were measured using liquid A, while samples from subjects 2, 5, 6, 8, and 10 were measured using liquid B. In the second phase, the measurement methods were switched, with subjects 1, 3, 4, 7, and 9 using liquid B and subjects 2, 5, 6, 8, and 10 using liquid A. Perform an analysis of variance (ANOVA) on the results of the cross-over trial.</p>
 </div>
 <div>
@@ -971,7 +971,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 <li>Use Dunnett’s if your comparisons are focused on multiple treatments against a single control group.</li>
 </ul>
 <div class="example">
-<strong>Example 7:</strong> 
+<strong>Example 7</strong> 
 <p>In <a href="#lower-lipid-drug">Example 1</a>, after ANOVA rejected the null hypothesis, we still want to know whihc pairs of drugs differ in the mean reduction of triglycerides?</p>
 </div>
 <p>The <code>PostHocTest()</code> function in <code>DescTools</code> package is a convenience wrapper for computing post-hoc test after having calculated an ANOVA.</p>
@@ -1093,7 +1093,7 @@ F = \frac{\text{MSB}}{\text{MSW}}
 <h2 data-number="8.8" class="anchored" data-anchor-id="comparison-of-multiple-sample-variances"><span class="header-section-number">8.8</span> Comparison of multiple sample variances</h2>
 <p>In statistical analysis, comparing multiple sample variances is important to determine whether the variances across different groups are equal. This is often referred to as testing for homogeneity of variances. There are several common statistical tests for this purpose:</p>
 <div class="example">
-<strong>Example 8:</strong> 
+<strong>Example 8</strong> 
 <p>For data in <a href="#lower-lipid-drug">Example 1</a>, whether the reduction of triglyceride levels in three groups satisfies the assumption of homogeneity of variances?</p>
 </div>
 <section id="bartletts-test" class="level3" data-number="8.8.1">

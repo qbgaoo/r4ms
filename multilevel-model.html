@@ -543,7 +543,7 @@ Y_{ij} = \beta_0 + \beta_1 X_{ij} + u_{0j} + u_{1j}X_{ij} + \epsilon_{ij}
 <li>Random intercepts and slopes: Random intercepts allow different groups to have different baseline levels, while random slopes allow for different relationships between predictors and outcomes within each group.</li>
 </ol>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>A researcher randomly selected 10 patients with mild hypertension and measured their diastolic blood pressure before and after taking a medication. Analyze the changes in diastolic blood pressure before and after treatment.</p>
 </div>
 <div>
@@ -709,8 +709,8 @@ Packages for linear mixed models
 <pre><code>#&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 5e-05 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.5 seconds.
+#&gt; Chain 1: Gradient evaluation took 5.1e-05 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -727,9 +727,9 @@ Packages for linear mixed models
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.128 seconds (Warm-up)
+#&gt; Chain 1:  Elapsed Time: 0.121 seconds (Warm-up)
 #&gt; Chain 1:                0.05 seconds (Sampling)
-#&gt; Chain 1:                0.178 seconds (Total)
+#&gt; Chain 1:                0.171 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -752,15 +752,15 @@ Packages for linear mixed models
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.09 seconds (Warm-up)
-#&gt; Chain 2:                0.048 seconds (Sampling)
-#&gt; Chain 2:                0.138 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.085 seconds (Warm-up)
+#&gt; Chain 2:                0.049 seconds (Sampling)
+#&gt; Chain 2:                0.134 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 #&gt; Chain 3: 
-#&gt; Chain 3: Gradient evaluation took 4e-06 seconds
-#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#&gt; Chain 3: Gradient evaluation took 3e-06 seconds
+#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #&gt; Chain 3: Adjust your expectations accordingly!
 #&gt; Chain 3: 
 #&gt; Chain 3: 
@@ -777,15 +777,15 @@ Packages for linear mixed models
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.082 seconds (Warm-up)
-#&gt; Chain 3:                0.046 seconds (Sampling)
-#&gt; Chain 3:                0.128 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.081 seconds (Warm-up)
+#&gt; Chain 3:                0.045 seconds (Sampling)
+#&gt; Chain 3:                0.126 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 #&gt; Chain 4: 
-#&gt; Chain 4: Gradient evaluation took 5e-06 seconds
-#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+#&gt; Chain 4: Gradient evaluation took 3e-06 seconds
+#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #&gt; Chain 4: Adjust your expectations accordingly!
 #&gt; Chain 4: 
 #&gt; Chain 4: 
@@ -857,7 +857,7 @@ S_{Y_{ij}} = \sigma_u^2 + \sigma_e^2
 </blockquote>
 <p>Variance component models are typically estimated using maximum likelihood estimation (MLE) or restricted maximum likelihood estimation (REML). The packages like <code>lme4</code> or <code>nlme</code> are used to fit variance component models.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>A researcher intends to use a meta-analysis to understand the effect of migraines on adult depression. The literature search was conducted up and 16 eligible studies were included. Each study was independent and had the same research hypothesis. The available data include the odds ratios (OR) for each study, as well as study-level explanatory variables such as sample size, whether adjustments for education level were made, and study region, as shown in the data file. Please use R to perform a variance components model analysis.</p>
 </div>
 <div>
@@ -916,7 +916,7 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 </span></p>
 <p>where<span class="math inline">Y_{ij}</span> is the outcome for individual <span class="math inline">i</span> at time <span class="math inline">i</span>, <span class="math inline">\beta_0</span>is the fixed intercept (average starting point),<span class="math inline">b_{0i}</span> is the random intercept for individual <span class="math inline">i</span>, <span class="math inline">\beta_1</span> <em>is the</em> fixed slope (average rate of change over time), <span class="math inline">b_{1i}</span> is the random slope for individual <span class="math inline">i</span> (individual variation in the rate of change), <span class="math inline">X_{ij}</span> is the time variable for individual <span class="math inline">i</span> at time <span class="math inline">j</span>, <span class="math inline">\epsilon_{ij}</span> is the residual error.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>To study the efficacy of treatments A and B on patients with leukopenia, a random method was used. 50 patients first received treatment A, followed by a break, and then received treatment B. Another 50 patients received treatment B first, followed by the same interval, and then treatment A. White blood cell counts were recorded after each treatment, as shown in the data.</p>
 </div>
 <div>
@@ -1036,7 +1036,7 @@ Y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) \cdot X_{ij} + \epsilon_{ij}
 <p>where <span class="math inline">Y</span> is the discrete dependent variable (e.g., binary 0 or 1), <span class="math inline">X \beta</span> is fixed effects, <span class="math inline">Zb</span> is random effects, <span class="math inline">\text {link}()</span> is a link function to handle non-normality in discrete data, such as <span class="math inline">\text {logit}</span> (for logistic regression) or <span class="math inline">\text {log}</span> (for Poisson regression).</p>
 <p>You can use the <code>glmer()</code> function from the lme4 package to fit these models. For a binary outcome (e.g., success/failure), you can use the <span class="math inline">\text {logit}</span> link function. For categorical outcomes with more than two categories, a multinomial (multiclass) model is appropriate. Since <code>glmer()</code> doesn’t directly support multinomial regression, you can use <code>nnet::multinom()</code> or <code>brms::brm()</code> for Bayesian multinomial mixed models. For count data, you can use a Poisson or negative binomial distribution.</p>
 <div class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>Below is a questionnaire survey data, conducted by 20 investigators on 135 rural community doctors, analyzed responses to the following three questions:</p>
 <ol type="1">
 <li>“Patients often ask doctors to prescribe a specific antibiotic, have you encountered this situation?”</li>

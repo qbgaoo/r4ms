@@ -704,7 +704,7 @@ Table&nbsp;11.2: Heart attack outcomes by two treatment groups
 <li>Fisher’s test is preferred when dealing with sparse data (i.e., a lot of cells with small counts), as it doesn’t rely on assumptions of normality or expected frequencies.</li>
 </ul>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>To determine if a new treatment for heart attack patients improves survival rates compared to a standard treatment, a total of 100 patients who have suffered heart attacks were randomly divided into two groups: 50 patients receive new treatment, 50 patients receive standard treatment. The outcome of interest is whether the patient survived (recovered or showed significant improvement) or died (passed away due to complications from the heart attack) after the treatment. The observed data is summarized in <a href="#tbl-heart-attack" class="quarto-xref">Table&nbsp;<span>11.2</span></a> . Is there a significant difference in survival rates between patients who received the new treatment and those who received the standard treatment?</p>
 </div>
 <div class="cell">
@@ -739,7 +739,7 @@ Table&nbsp;11.2: Heart attack outcomes by two treatment groups
 <p>where <span class="math inline">b</span> is the number of individuals who succeeded in pre-treatment but failed in post-treatment, <span class="math inline">c</span> is the number of individuals who failed in pre-treatment but succeeded in post-treatment, <span class="math inline">1</span> in the formula is a continuity correction applied for small sample sizes.</p>
 <p>The continuity correction is especially important when <span class="math inline">b + c</span> is small (e.g., less than 40). It helps to prevent overestimating the test statistic. For larger sample sizes, the correction has a smaller impact, and some recommend not applying it (i.e., setting <code>correct = FALSE</code>), as it can be overly conservative.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>A study is conducted to evaluate the efficacy of a new vaccine in preventing the flu. The same group of individuals is tested before and after receiving the vaccine to see if they develop flu symptoms. The observed data is summarized in <a href="#tbl-vaccine-data" class="quarto-xref">Table&nbsp;<span>11.3</span></a> . Determine whether the vaccine have a significant effect on reducing flu incidence.</p>
 </div>
 <div class="cell">
@@ -816,7 +816,7 @@ P = \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!N!}
 </span></p>
 <p>where <span class="math inline">N = a + b + c + d</span> is the total sample size.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>A clinical trial is conducted to evaluate the effectiveness of a new drug for treating hypertension. Patients are divided into treatment group and control group. After treatment, the number of patients whose blood pressure returned to normal (cured) and those whose blood pressure remained high (not cured) is recorded. The data collected is in . Determine if the new drug shows a statistically significant difference in its effectiveness compared to the control.</p>
 </div>
 <div class="cell">
@@ -892,7 +892,7 @@ Table&nbsp;11.4: Structure of a 2x2 contingency table
 <li><p><strong>Chi-Square test for rates</strong></p>
 <p>The Chi-square test is widely used to compare rates across multiple independent samples. It tests whether the observed differences between sample proportions are statistically significant.</p>
 <div id="exp-multi-sample-rates" class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>Suppose you want to compare recovery rates between three hospitals for a specific disease. The data is in <a href="#tbl-hospital-recover" class="quarto-xref">Table&nbsp;<span>11.5</span></a> . Determine if the recovery rates are significantly different between these hospitals.</p>
 </div>
 <div class="cell">
@@ -949,7 +949,7 @@ Table&nbsp;11.5: The recovery results of a disease in three hospitals
 <li><p><strong>Cochran’s Q test</strong></p>
 <p>Cochran’s Q test is an extension of the Chi-Square test, designed for comparing rates across multiple samples in paired or repeated measures settings. It is typically used with binary outcomes (e.g., “yes/no” or “success/failure”).</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>A study is conducted to test the effectiveness of a new drug across three time points (1 month, 3 months, and 6 months) on the same group of patients. The outcome is whether the treatment was successful (1) or not (0), recorded for 10 patients in <a href="#tbl-drug-success-rate" class="quarto-xref">Table&nbsp;<span>11.6</span></a> . Determine if there is a significant difference in success rates across the three time points.</p>
 </div>
 <div class="cell">
@@ -1057,7 +1057,7 @@ Table&nbsp;11.6: The recovery results of a disease in three hospitals
 <li><p>Cochran-Armitage trend test</p>
 <p>If you want to test whether there is a linear trend in the rates across ordered groups, you can use the Cochran-Armitage test for trend. This test is useful for ordered categorical data and examines if there is a significant linear trend in proportions.</p>
 <div class="example">
-<strong>Example 6:</strong> 
+<strong>Example 6</strong> 
 <p>Suppose you have data from a study on smoking and lung cancer risk. The groups are non-smokers, light smokers, and heavy smokers, and the outcome is the presence of lung cancer (yes/no). The data is listed in <a href="#tbl-smoke-cancer" class="quarto-xref">Table&nbsp;<span>11.7</span></a> . Determine if there’s a linear trend in cancer risk across the ordered smoking categories.</p>
 </div>
 <div class="cell">
@@ -1116,7 +1116,7 @@ Table&nbsp;11.7: The data from a study on smoking and lung cancer risk
 <section id="comparison-of-multiple-sample-proportions" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="comparison-of-multiple-sample-proportions"><span class="header-section-number">11.5.2</span> Comparison of multiple sample proportions</h3>
 <div class="example">
-<strong>Example 7:</strong> 
+<strong>Example 7</strong> 
 <p>Suppose you are studying the distribution of a gene variant related to a certain disease in two groups: a healthy control group, and a disease group. You aim to compare the frequencies of the AA, Aa, and aa genotypes between these groups. The data is in <a href="#tbl-genetype-disease" class="quarto-xref">Table&nbsp;<span>11.8</span></a> . Determine whether there is a significant difference in the distribution of genotypes between the healthy and disease groups.</p>
 </div>
 <div class="cell">
@@ -1183,7 +1183,7 @@ C = \sqrt{\frac{\chi^2}{\chi^2 + n}}
 <p>where <span class="math inline">C</span> is the Pearson’s contingency coefficient, <span class="math inline">\chi^2</span> is the chi-square statistic obtained from a chi-square test, <span class="math inline">n</span> is the total sample size.</p>
 <p>The value of C ranges from <span class="math inline">0 \leq C &lt; 1</span>. Values closer to 1 indicate a stronger association between the variables, while values close to 0 indicate weak or no association. As the size of the contingency table (degrees of freedom) increases, the contingency coefficient tends to decrease.</p>
 <div class="example">
-<strong>Example 8:</strong> 
+<strong>Example 8</strong> 
 <p>Researchers aim to evaluate the effectiveness of two different antibiotics (A and B) for two types of infections (X and Y). The effectiveness is measured by whether patients recover, categorized as “recovered” or “not recovered.” The data is summarized in <a href="#tbl-anti-infec" class="quarto-xref">Table&nbsp;<span>11.9</span></a> . The goal is to determine if the effectiveness of the antibiotics differs significantly for different infection types.</p>
 </div>
 <div class="cell">
@@ -1392,7 +1392,7 @@ Figure&nbsp;11.1: Interaction of antibiotics and infection types on recovery
 <h3 data-number="11.5.4" class="anchored" data-anchor-id="linear-trend-test-for-two-way-ordinal-data"><span class="header-section-number">11.5.4</span> Linear trend test for two-way ordinal data</h3>
 <p>This test evaluates whether there is a linear trend between the categories in two ordinal variables, typically one variable representing treatment or groups and the other representing ordered outcomes. In this case, both “group” and “outcome” are ordinal variables.</p>
 <div class="example">
-<strong>Example 9:</strong> 
+<strong>Example 9</strong> 
 <p>Suppose you are studying the effect of different drug dosages on pain relief in patients. Patients are divided into four dosage groups (low dose, low-medium dose, medium-high dose, and high dose), and their pain relief is categorized into four levels (no relief, partial relief, moderate relief, and complete relief). This type of data is referred to as two-way ordinal data, listed in <a href="#tbl-dosage-pain" class="quarto-xref">Table&nbsp;<span>11.10</span></a> . The aim is to assess whether there is a significant linear trend in pain relief as the drug dosage increases. For example, does increasing the dosage lead to a higher likelihood of better pain relief?</p>
 </div>
 <div class="cell">
@@ -1561,7 +1561,7 @@ Results interpretation
 <h3 data-number="11.6.1" class="anchored" data-anchor-id="pairwise-comparison"><span class="header-section-number">11.6.1</span> Pairwise comparison</h3>
 <p>The Bonferroni correction is used to adjust the significance level <span class="math inline">\alpha</span> to control for this risk, ensuring the results are reliable.</p>
 <div class="example">
-<strong>Example 10:</strong> 
+<strong>Example 10</strong> 
 <p>Conducting pairwise comparisons for the data in <a href="#exp-multi-sample-rates">Example 4</a> to determine whether the recovery rates are different between any two hospitals.</p>
 </div>
 <p>Here we use the <code>prop.test()</code> function for testing the null that the proportions in several groups are the same.</p>
@@ -1666,7 +1666,7 @@ Results interpretation
 </span></p>
 <p><span class="math inline">O_i</span> is the observed frequency for category <span class="math inline">i</span>, <span class="math inline">E_i</span> is the expected frequency for category <span class="math inline">i</span>, <span class="math inline">k</span> is the number of categories. The expected frequencies should be sufficiently large, typically at least 5 for each category, to ensure the validity of the chi-square test.</p>
 <div class="example">
-<strong>Example 11:</strong> 
+<strong>Example 11</strong> 
 <p>To observe the spatial distribution of Keshan disease patients in a certain Keshan disease area, the investigators divided the region into 279 sampling units and recorded the cumulative number of cases in each unit over the years. The data are presented in <a href="#tbl-keshan-disease" class="quarto-xref">Table&nbsp;<span>11.11</span></a> . Does this data follow a Poisson distribution?</p>
 </div>
 <div class="cell">

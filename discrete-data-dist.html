@@ -583,7 +583,7 @@ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
 </div>
 </div>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>Suppose you are conducting a clinical trial for a new medication. Each patient has a 70% chance of responding positively to the treatment. If you treat 10 patients, the binomial distribution can be used to model the number of positive responses.</p>
 </div>
 <p>Here <span class="math inline">n</span> is 10 patients, <span class="math inline">p</span> is 0.70. You can calculate the probability of exactly 7 patients responding positively:</p>
@@ -696,7 +696,7 @@ P(X = 7) = \binom{10}{7} (0.7)^7 (0.3)^3 = 0.2668
 <p><span class="math inline">\hat{p} \pm Z_{\alpha/2} \times \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}</span></p>
 <p>Where <span class="math inline">\hat{p}</span> is the sample proportion (i.e., the number of successes divided by the total sample size), <span class="math inline">Z_{\alpha/2}</span> is the critical value from the standard normal distribution for a given confidence level (e.g., 1.96 for 95% confidence), <span class="math inline">n</span> is the sample size, <span class="math inline">\sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}</span> is the standard error of the proportion.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>Suppose you take a sample of 200 people, and 50 people have a positive result. To calculate a 95% confidence interval for the population rate of positive.</p>
 </div>
 <p>If you want to manually calculate the Wald CI, you can write your own R code, for example:</p>
@@ -745,7 +745,7 @@ P(X = 7) = \binom{10}{7} (0.7)^7 (0.3)^3 = 0.2668
 Z = \frac{\hat{p} - p_0}{SE}
 </span></p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>Suppose each patient has a 70% chance of responding to a treatment. In a clinical trial, 13 out of a set of 20 patients taking this treatment have positive responses. Determine if there is a significant difference between the sample and population proportion.</p>
 </div>
 <p>You can perform the one-sample proportion test using the <code>prop.test()</code> function or <code>binom.test()</code> function in R:</p>
@@ -802,7 +802,7 @@ SE = \sqrt{\hat{p}(1 - \hat{p}) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}
 </span></p>
 <p>where <span class="math inline">X_1</span> and <span class="math inline">X_2</span> are the number of successes in the two groups, and <span class="math inline">n_1</span> and <span class="math inline">n_2</span> are the sample sizes of the two groups.</p>
 <div class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>Suppose you have two independent groups: Group A 30 successes out of 150 trials; Group B 45 successes out of 200 trials. Perform the two-sample proportion test to check if the proportions in these two groups differ significantly.</p>
 </div>
 <div class="cell">
@@ -851,7 +851,7 @@ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="mean-and-standard-deviation-1"><span class="header-section-number">10.2.3</span> Mean and standard deviation</h3>
 <p>In a Poisson distribution, mean <span class="math inline">\mu = \lambda</span>, variance <span class="math inline">\sigma = \sqrt\lambda</span>. This means that the mean and variance of the Poisson distribution are both equal to the rate parameter <span class="math inline">\lambda</span>.</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>If the average number of patients arriving at a hospital per hour is 50, you could use a Poisson distribution with <span class="math inline">\lambda = 50</span> to model the number of patients expected to arrive in any given hour.</p>
 </div>
 <p>You can use the <code>rpois()</code> function in R to generate random values from a Poisson distribution.</p>
@@ -932,7 +932,7 @@ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}
 <li><p><strong>One-sample comparison</strong></p>
 <p>To test whether the observed number of events follows a hypothesized Poisson rate <span class="math inline">\lambda</span>.</p>
 <div class="example">
-<strong>Example 6:</strong> 
+<strong>Example 6</strong> 
 <p>An emergency room wants to determine if the average number of patients arriving per hour differs from a known average rate. Suppose the historical data shows an average of 8 patients arriving per hour. They observed 17 patients arriving in 2 hours.Test if the observed rates differ significantly from the historical average of 8 patients per hour.</p>
 </div>
 <div class="cell">
@@ -961,7 +961,7 @@ P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}
 </ol>
 <p>To test whether the rates from two Poisson-distributed samples are equal.</p>
 <div class="example">
-<strong>Example 7:</strong> 
+<strong>Example 7</strong> 
 <p>A researcher is studying the incidence of a rare disease in two different regions to see if the rate of new cases per year is the same. The researcher wants to compare the rates of the disease in two regions. 15 new cases of the disease were observed in 2 years in region A. 4 new cases of the disease were observed in 2 years in region B. Test if the disease incidence rates in the two regions are significantly different.</p>
 </div>
 <div class="cell">
@@ -1022,7 +1022,7 @@ P(X = k) = \binom{k + r - 1}{k} p^r (1 - p)^k
 <li><p>Clustering of organisms</p>
 <p>The negative ninomial distribution is often used in ecological studies and public health to describe the clustering of organisms or events when the data are overdispersed (i.e., the variance is greater than the mean). This distribution is particularly useful in modeling situations where events (such as organisms) tend to cluster or aggregate rather than be randomly distributed.</p>
 <div class="example">
-<strong>Example 8:</strong> 
+<strong>Example 8</strong> 
 <p>A hospital is studying the clustering of bacterial infections in patients within a specific unit. The hospital collects data on the number of bacterial colonies detected in wound samples from 50 patients over a month. The mean number of bacterial colonies per patient is <span class="math inline">\lambda = 10</span>, but due to clustering, some patients have many colonies, while others have very few. This clustering leads to overdispersion, where the variance is greater than the mean. To model the number of bacterial colonies detected per patient and estimate the clustering pattern.</p>
 </div>
 <div class="cell">
@@ -1092,7 +1092,7 @@ P(X = k) = \binom{k + r - 1}{k} p^r (1 - p)^k
 <li><p><strong>One-sample comparison</strong></p>
 <p>For a single-sample comparison, you compare the sample mean to a known or hypothesized population mean. You may use a Wald test or likelihood ratio test in the context of a negative binomial regression model to compare the sample mean with the hypothesized mean.</p>
 <div class="example">
-<strong>Example 9:</strong> 
+<strong>Example 9</strong> 
 <p>Suppose a hospital wants to check if the average number of emergency room (ER) visits due to asthma per month has increased compared to a hypothesized national mean. Historically, it is known that the average number of ER visits due to asthma per month is <span class="math inline">\mu_0 = 30</span>. The hospital collects data for 12 months and finds that the mean number of ER visits per month is 35. To compare whether the hospital’s average ER visits due to asthma differ significantly from the national average of 30 visits per month.</p>
 </div>
 <div class="cell">
@@ -1137,7 +1137,7 @@ P(X = k) = \binom{k + r - 1}{k} p^r (1 - p)^k
 <p>For a two-sample comparison, you compare the means of two independent samples.</p>
 <p>A common approach for comparing two means in the negative binomial distribution is using a negative binomial regression model. This is analogous to a two-sample t-test, but tailored for count data.</p>
 <div class="example">
-<strong>Example 10:</strong> 
+<strong>Example 10</strong> 
 <p>A clinical trial is conducted to compare the number of hospitalizations between two groups of patients: those receiving a new drug and those receiving a standard drug for chronic obstructive pulmonary disease. Over the course of a year, the hospital records the number of hospitalizations for both groups.To determine if the mean number of hospitalizations differs significantly between the two groups.</p>
 </div>
 <div class="cell">

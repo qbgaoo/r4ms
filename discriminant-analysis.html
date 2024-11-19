@@ -565,7 +565,7 @@ k = \arg \min_j \{ d_j(\mathbf{x}) \}
 <p>In other words, the object is assigned to the group with the smallest discriminant function value, or in practical terms, the closest group centroid in terms of the chosen distance metric.</p>
 <p>For instance, if there are two groups with centroids <span class="math inline">\boldsymbol{\mu}_1</span>and <span class="math inline">\boldsymbol{\mu}_2</span>, for a new observation <span class="math inline">\mathbf{x}</span>, if <span class="math inline">d_1(\mathbf{x}) &lt; d_2(\mathbf{x})</span>, the observation is classified as belonging to group <span class="math inline">1</span>, otherwise it is classified as belonging to group <span class="math inline">2</span>.</p>
 <div id="ex23-01" class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>In order to predict whether a patient will develop an infection after surgery, 54 surgical patients were recruited and their extracorporeal circulation time (X1, in minutes), occlusion time (X2, in minutes), and drainage volume on the day of surgery (X3, in milliliters) were recorded. The surgical patients include 18 cases of infection and 36 cases without infection. Perform a discriminant analysis on this data.</p>
 </div>
 <div>
@@ -759,7 +759,7 @@ f(\mathbf {x}) =  \mathbf w^\top \mathbf x + \mathbf b
 <p><span class="math inline">f(\mathbf {x}) = \mathbf w^\top \mathbf x + \mathbf b &gt; 0, \quad \mathbf {x} \in \text G_1</span></p>
 <p><span class="math inline">f(\mathbf {x}) = \mathbf w^\top \mathbf x + \mathbf b &lt; 0, \quad \mathbf x \in \text G_2</span></p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>Try performing Fisher discriminant analysis on the data from <a href="#ex23-01">Example 1</a>.</p>
 </div>
 <div class="cell">
@@ -852,7 +852,7 @@ P(\mathbf x| C_k) = \prod_{i=1}^d P(x_i | C_k)
 </span></p>
 <p>Despite the strong independence assumption, Naive Bayes often performs surprisingly well, particularly in high-dimensional spaces.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>To differentiate between vocal cord polyps and vocal cord nodules through a non-invasive voice test, a researcher randomly selected 30 patients diagnosed with vocal cord polyps and 30 patients diagnosed with vocal cord nodules. At the same time, 40 healthy individuals, matched in age, gender, and education level, were selected as a control group. The longest phonation time X1, fundamental frequency X2, minimum sound pressure level X3, and voice handicap index X4 were measured for each individual through voice tests and voice evaluation scales. Based on this data, can the researcher distinguish between individuals with normal vocal cords, vocal cord nodules, and vocal cord polyps? From the 100 subjects, 85 were randomly selected as the training sample and 15 as the testing sample.</p>
 </div>
 <div>

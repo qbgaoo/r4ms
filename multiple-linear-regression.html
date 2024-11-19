@@ -562,7 +562,7 @@ Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_nX_n + \epsilon
 </span></p>
 <p>This formula minimizes the sum of squared residuals and provides the best linear unbiased estimates of the coefficients under the assumptions of the classical linear regression model.</p>
 <div id="ex-18-01" class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>Given the measurements of total serum cholesterol (X1), triglycerides (X2), fasting insulin (X3), glycated hemoglobin (X4), and fasting blood glucose (Y) from 27 diabetic patients, establish a multiple linear regression equation for fasting blood glucose with the other indicators.</p>
 </div>
 <div>
@@ -753,7 +753,7 @@ C_p = \frac{\text{RSS}_p}{\hat{\sigma}^2} + 2p - n
 <p>In practice, the goal is to find the model with the lowest <span class="math inline">C_p</span> that is close to <span class="math inline">p</span>.</p></li>
 </ul>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>Use the all-subsets regression method to select the independent variables of the data in <a href="#ex-18-01">Example 1</a>.</p>
 </div>
 <p>The <code>regsubsets()</code> function from <code>leaps</code> package is a tool primarily used for performing best subset selection in regression analysis. It helps identify the best-fitting model with a given number of predictors by comparing all possible subsets of predictors based on specific criteria like Adjusted R-squared, AIC, BIC, <em>etc</em>.</p>

@@ -606,7 +606,7 @@ G = 2 \cdot \left(\log L_{\text{full}} - \log L_{\text{reduced}} \right)
 <p>where <span class="math inline">L_{\text{full}}</span> is the likelihood of the reduced model, <span class="math inline">L_{\text{reduced}}</span> is the likelihood of the full model. The <span class="math inline">G</span> statistic follows a chi-squared distribution, with degrees of freedom equal to the difference in the number of parameters between the full and reduced models. A large <span class="math inline">G</span> statistic suggests that the full model significantly improves the fit compared to the reduced model, leading to rejection of the null hypothesis that the additional parameters do not improve the model. The likelihood ratio test is more reliable than the Wald test in small samples and can be used for more complex models where multiple parameters are tested simultaneously.</p>
 <p>P-value are used to assess the significance of parameters. If the P-value is below a significance level (e.g., 0.05), the independent variable is considered to have a significant effect on the dependent variable.</p>
 <div id="ex-18-01" class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>Here is the data on a case-control study investigating the relationship between smoking, alcohol consumption, and esophageal cancer. Conduct a logistic regression analysis.</p>
 </div>
 <div>
@@ -699,7 +699,7 @@ G = 2 \cdot \left(\log L_{\text{full}} - \log L_{\text{reduced}} \right)
 <h3 data-number="19.2.4" class="anchored" data-anchor-id="variable-selection"><span class="header-section-number">19.2.4</span> Variable selection</h3>
 <p>In logistic regression, like any regression model, variable selection is the process of choosing the most relevant independent variables for the model. This step is crucial because including too many irrelevant variables can lead to overfitting, making the model less generalizable to new data. On the other hand, excluding important variables can result in biased estimates.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>To investigate the risk factors for coronary heart disease, a case-control study was conducted with 26 coronary heart disease patients and 28 controls. The description of each factor are shown in <a href="#tbl-factor-value" class="quarto-xref">Table&nbsp;<span>19.1</span></a> . Logistic stepwise regression analysis was performed to screen for risk factors.</p>
 </div>
 <div>
@@ -972,7 +972,7 @@ L(\beta) = \prod_{i=1}^{n} \frac{\exp(X_{i_1}^\top \beta)}{\exp(X_{i_1}^\top \be
 </span></p>
 <p>where <span class="math inline">X_{i_1}</span> and <span class="math inline">X_{i_2}</span> are the vectors of independent variables for the two individuals in the matched pair, <span class="math inline">\beta</span> is the vector of coefficients you aim to estimate, <span class="math inline">\exp(X_{i}^\top \beta)</span> represents the linear predictor component in the logistic regression model.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>To investigate the risk factors associated with laryngeal cancer in a northern city, a 1:2 matched case-control study was conducted. Six potential risk factors were selected, and data from 25 matched pairs were extracted. The descriptions for the variable assignments are provided in <a href="#tbl-throat-assignment" class="quarto-xref">Table&nbsp;<span>19.2</span></a> . Please perform a conditional logistic stepwise regression analysis.</p>
 </div>
 <div>
@@ -1133,7 +1133,7 @@ P(Y \leq k | X) = \frac{1}{1 + e^{-(\beta_0^* + \beta_1 X_1 + \beta_2 X_2 + \ldo
 <p>where <span class="math inline">P(Y \leq k|X)</span> is the cumulative probability of the outcome being in category <span class="math inline">k</span> or lower given independent variable <span class="math inline">X</span>, <span class="math inline">P(Y &gt; k|X)</span> is the probability of the outcome being in a category higher than <span class="math inline">k</span>, <span class="math inline">\log \left( \frac{P(Y \leq j|X)}{P(Y &gt; j|X)} \right)</span> is the log-odds of being in a category <span class="math inline">k</span> or lower, <span class="math inline">\beta_0^*</span> is the intercept for the model that separate the different categories, <span class="math inline">\beta_p</span> are the regression coefficients associated with the independent variables.</p>
 <p>In other words, this model estimates the odds of the outcome falling in category <span class="math inline">j</span> or lower, compared to falling in a higher category, as a function of the variables.</p>
 <div id="ex19-04" class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>In order to study the changes in nucleolar organization related to gastric cancer and precancerous lesions, we analyzed the variation in the number and size of silver-staining nucleolar proteins (AgNOR) granules in cases of gastritis, atypical hyperplasia, and gastric cancer, as well as their clinical diagnostic significance. A total of 129 patients were tested. Perform a ordinal logistic regression analysis.</p>
 </div>
 <div>
@@ -1189,7 +1189,7 @@ P(Y = k | X) = \frac{e^{\beta_{0k} + \beta_{1k} X_1 + \beta_{2k} X_2 + \ldots + 
 <p>where <span class="math inline">P(Y = k | X)</span> is the probability of the dependent variable being in category <span class="math inline">k</span>, <span class="math inline">P(Y = K | X)</span> is the probability of the response variable Y being in the reference category <span class="math inline">K</span>, <span class="math inline">\beta_{jk}</span> are the coefficients for the <span class="math inline">j-{\text{th}}</span> independent variable associated with the <span class="math inline">k-\text{th}</span> category.</p>
 <p>Each coefficient in the model represents the change in the log odds of the dependent variable being in a particular category compared to a reference category for a one-unit change in the predictor variable. Odds ratio can be calculated by exponentiating the coefficients, providing a multiplicative effect on the odds of being in one category versus the reference category.</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>Use the data in <a href="#ex19-04">Example 4</a> to perform multinomial logistic regression analysis.</p>
 </div>
 <p>You can perform multinomial logistic regression using the <code>nnet</code> package with the <code>multinom()</code> function:</p>

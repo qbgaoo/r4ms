@@ -585,7 +585,7 @@ r_{ij} = \frac{\text{Cov}(X_i, X_j)}{\sigma_{X_i} \sigma_{X_j}}
 <p>A scatterplot matrix (also called a pairs plot) is a grid of scatterplots that visually represents the relationships between pairs of variables in a multivariate dataset. It is particularly useful for examining potential correlations or patterns among multiple variables simultaneously.</p>
 <p>For a dataset with <span class="math inline">p</span> variables, a scatterplot matrix will contain a <span class="math inline">p \times p</span> grid of plots, where the plot in the <span class="math inline">i -th</span> and <span class="math inline">j -th</span> column displays a scatterplot of the <span class="math inline">i -th</span> variable versus the <span class="math inline">j -th</span> variable. The diagonal often shows the distribution of each variable, typically as a histogram or a density plot. Each off-diagonal plot shows the relationship (scatterplot) between two variables, helping identify patterns like linearity, clusters, or outliers.</p>
 <div class="example">
-<strong>Example 1:</strong> 
+<strong>Example 1</strong> 
 <p>Pulmonary function measurements were performed on 15 patients with acute lower respiratory tract infections admitted to the respiratory department of a hospital. The measurements included forced vital capacity (FVC), forced expiratory volume in the first second (FEV1), and peak expiratory flow (PEF). Please perform a multivariate description of these three response variables.</p>
 </div>
 <div>
@@ -687,7 +687,7 @@ F = \frac{(n - p)}{p(n - 1)} T^2 \sim F(p, n - p)
 </span></p>
 <p>where <span class="math inline">p</span> is the number of variables (dimensions) in the data.</p>
 <div class="example">
-<strong>Example 2:</strong> 
+<strong>Example 2</strong> 
 <p>In a battery factory, 15 workers engaged in lead-related tasks were randomly selected for measurement of liver function indicators, including alanine aminotransferase (ALT), aspartate aminotransferase (AST), and gamma-glutamyl transferase (GGT). It is known that the mean values for ALT, AST, and GGT in the general population in that area are 23.9 U/L, 25.7 U/L, and 26.7 U/L, respectively. The question is whether the liver function of the lead-exposed workers differs from that of the normal population.</p>
 </div>
 <div>
@@ -731,7 +731,7 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 <p>where <span class="math inline">p</span> is the number of variables.</p>
 <p><span class="math inline">F</span> follows an <span class="math inline">F</span>-distribution with <span class="math inline">p</span> and <span class="math inline">n_1 + n_2 - p - 1</span> degrees of freedom under the null hypothesis.</p>
 <div class="example">
-<strong>Example 3:</strong> 
+<strong>Example 3</strong> 
 <p>A hospital conducted a study to investigate the therapeutic effect of drug A on heart failure. 20 heart failure patients were randomly divided into two groups: one group received standard treatment, while the other group received drug A in addition to the standard treatment. The post-treatment heart function indicators, left ventricular ejection fraction (LVEF) and the 6-minute walk test (6MWT) were measured. It is known that lower values of LVEF and 6MWT indicate more severe heart function impairment. The question is whether drug A is effective in treating heart failure.</p>
 </div>
 <div>
@@ -776,7 +776,7 @@ F = \frac{(n_1 + n_2 - p - 1) T^2}{(n_1 + n_2 - 2)p}
 <h3 data-number="17.3.3" class="anchored" data-anchor-id="manova-for-multiple-groups"><span class="header-section-number">17.3.3</span> MANOVA for multiple groups</h3>
 <p>MANOVA (Multivariate analysis of variance) is an extension of ANOVA that allows for comparing the mean vectors of multiple groups across several dependent variables while considering the correlation between them.</p>
 <div class="example">
-<strong>Example 4:</strong> 
+<strong>Example 4</strong> 
 <p>The children with chronic gastritis were randomly divided into 3 groups, with group I and group II as treatment groups, and another group serving as the control. The aim is to compare the effect of the treatment drugs on T-cell immune function (percentages of peripheral blood T3, T4, and T5 cells).</p>
 </div>
 <div>
@@ -1015,7 +1015,7 @@ Caution
 <p><strong>Conclusion</strong></p>
 <p>If the response variables are uncorrelated and you adjust for multiple comparisons in the univariate tests, the conclusions from the multivariate test and the separate univariate tests may be similar. If the response variables are correlated, or if no correction is applied to the univariate tests, the conclusions can differ significantly. Multivariate tests provide a more comprehensive picture by accounting for relationships between variables, whereas univariate tests focus on one variable at a time.</p>
 <div class="example">
-<strong>Example 5:</strong> 
+<strong>Example 5</strong> 
 <p>A researcher collected data of birth weight and length for two groups of newborns. Perform univariate and multivariate analysis separately.</p>
 </div>
 <div>
@@ -1096,7 +1096,7 @@ Caution
 <h2 data-number="17.4" class="anchored" data-anchor-id="repeated-measures-manova"><span class="header-section-number">17.4</span> Repeated measures MANOVA</h2>
 <p>Repeated measures MANOVA is an extension of MANOVA that accounts for multiple measurements of the same subjects over time. It’s a robust technique used when there are several dependent variables and repeated measurements for each subject, considering the correlations between these repeated measurements.</p>
 <div class="example">
-<strong>Example 6:</strong> 
+<strong>Example 6</strong> 
 <p>The weight of 10 obese patients was recorded before and during the 1st to 4th weeks of taking weight-loss medication under the guidance of a doctor, following a unified standard. Analyze the effectiveness of the weight-loss medication.</p>
 </div>
 <div>
@@ -1220,7 +1220,7 @@ Caution
 <p>Is the profile flat, meaning there is no significant difference between the variables? A significant test means that there are significant differences between the variables for each group.</p></li>
 </ol>
 <div class="example">
-<strong>Example 7:</strong> 
+<strong>Example 7</strong> 
 <p>A health status survey was conducted on 50 master’s students and 30 doctoral students. The questionnaire included 7 questions, and responses to each question were rated on a 4-point scale from good to poor (scored as 1, 2, 3, and 4, respectively). The question is: are the responses to each question the same between the master’s students and the doctoral students?</p>
 </div>
 <div>
