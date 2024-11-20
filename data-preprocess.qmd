@@ -16,6 +16,7 @@ library(validate)
 library(pointblank)
 library(assertr)
 library(janitor)
+library(VIM)
 ```
 
 ## Data validation
@@ -24,53 +25,29 @@ Data validation is a critical process in ensuring data accuracy, completeness, a
 
 ### Data integrity checks
 
-**1. Missing values**
-
-Identify missing values, assess their impact, and consider appropriate handling methods (such as imputation, deletion, or marking).
-
-```{r}
-x <- c(0:4)
-is.na(x) <- c(2, 4)       # <1>
-x                    
-anyNA(x) 
-is.na(x)
-```
-
-1.  Set the positions with indices 2 and 4 in the vector **x** to `NA`.
-
-```{r}
-df <- data.frame(
-  id = 1:5,
-  value1 = c(10, 20, NA, 40, 50),
-  value2 = c(NA, 2, 3, 4, 5)
-)
-
-# Check the number of missing values in each column
-missing_values <- sapply(df, \(x) sum(is.na(x)))
-missing_values
-
-# Delete rows that contain missing values
-df_clean <- na.omit(df)
-df_clean
-```
-
-**2. Duplicate records**
+**1. Duplicate records**
 
 Identify and remove duplicate records, especially in unique identifiers to ensure each record is unique.
 
 ```{r}
-x <- c(9:20, 1:5, 3:7, 0:8)
-x[!duplicated(x)]      # <1>
-unique(x)              # <1>
+df <- data.frame(
+  id = c(1:5,5),
+  weight_kg = c(70, 75, 80, 65, 72, 72),
+  height_cm = c(170, 175, 180, 165, 177, 177)
+)
+length(unique(df$id)) == nrow(df)    # <1>
 
-unique_ids <- length(unique(df$id)) == nrow(df)    # <2>
-unique_ids
+x <- c(9:20, 1:5, 3:7, 0:8)
+x[!duplicated(x)]       # <2>
+unique(x)               # <2>
+df |> 
+  filter(!duplicated(id))
 ```
 
-1.  Extract unique elements
-2.  Check that the `id` column is unique
+1.  Check the `id` column is unique or not
+2.  Extract unique elements
 
-**3. Range and logical checks**
+**2. Range and logical checks**
 
 Ensure data falls within reasonable ranges. For example, age values should typically range between 0 and 120, and negative income values may indicate input errors.
 
@@ -163,11 +140,252 @@ is_cm
 
 This function will display a message listing the rows with values outside the expected range, making it easier to locate and address discrepancies.
 
+### Missing values
+
+Handling and identifying missing data is crucial in data analysis and statistical modeling, as missing values can introduce bias or instability in the model. Below is an overview of methods for identifying, classifying, and handling missing data.
+
+**1. Identifying missing data**
+
+```{r}
+x <- c(0:4)
+is.na(x) <- c(2, 4)       # <1>
+x                    
+anyNA(x) 
+is.na(x)
+```
+
+1.  Set the positions with indices 2 and 4 in the vector **x** to `NA`.
+
+```{r}
+df <- data.frame(
+  id = 1:6,
+  x1 = c(19.8, 23.5, 22.4, 21.4, 20.7, 21.6),
+  x2 = c(3.2, 2.4, 3.2, NA, 3.5, 2.9)
+)
+
+# Check the number of missing values in each column
+missing_values <- sapply(df, \(x) sum(is.na(x)))
+missing_values
+
+missing_values <- colSums(is.na(df))
+missing_values
+
+# Check the percentage of missing values for each column
+missing_percentage <- (colSums(is.na(df)) / nrow(df)) * 100
+missing_percentage
+```
+
+```{r}
+df |> 
+  mutate(
+    flag = is.na(x2),
+    label = ifelse(flag, id, NA)
+  ) |> 
+  filter(flag) |> 
+  select("ID" = id, "value" = x2) 
+```
+
+**2. Types of missing data**
+
+There are three main types of missing data, based on the missing data mechanism:
+
+**(1) Missing completely at random (MCAR):** The missingness is unrelated to observed or unobserved data. For example, data lost due to a system error.
+
+**(2) Missing at random (MAR):** The missingness is related to other observed variables, but not to the missing value itself. For example, income might be related to education level, and people with higher income are less likely to disclose their age.
+
+**(3) Missing not at random (MNAR):** The missingness is related to the missing value itself. For example, lower-income individuals may be more likely to omit income information.
+
+**3 Methods for determining the type of missing data**
+
+Here is a data with missing values.
+
+```{r}
+df <- read_csv("datasets/ex33-01.csv", show_col_types = F)
+```
+
+**(1) Exploring associations with observed values**
+
+First, you should create a missing value indicator variable (1 for missing, 0 for non-missing):
+
+```{r}
+df <- mutate(df, indicator = ifelse(is.na(max_pul), 1, 0))
+```
+
+**Logistic regression for missingness:** Check if missingness in a variable depends on the observed values of other variables.
+
+```{r}
+glm(indicator ~ age + weight + time, data = df, family = binomial) |> 
+  summary()
+```
+
+**Group Comparisons:** Compare observed variable distributions for groups with and without missing values in another variable:
+
+```{r}
+t.test(y ~ indicator, data = df, var.equal = T)
+```
+
+**(2) R packages**
+
+The `mcar()` function from the `mice` package can be used to test whether missingness is contingent upon the observed variables:
+
+```{r}
+data(nhanes, package = "mice")
+res <- mice::mcar(nhanes, method = "auto") 
+```
+
+The test is *not significant*, conclude that there is no evidence against multivariate normality of the data, nor against MCAR.
+
+::: callout-note
+## Note
+
+An MCAR test can only indicate whether missingness is MCAR or MAR. The procedure cannot distinguish MCAR from MNAR, so a non-significant result does not rule out MNAR. If the test is significant, it indicates that the data is not MCAR but could be MAR or MNAR.
+:::
+
+The `mcar_test()` function from `naniar` package uses Little's test statistic to assess if data is MCAR. The null hypothesis in this test is that the data is MCAR, and the test statistic is a chi-squared value.
+
+```{r}
+naniar::mcar_test(nhanes)
+```
+
+**4. Methods for handling missing data**
+
+**(1) Deletion methods**
+
+**Row deletion**: Remove rows with missing values. This is suitable if missing values are minimal and are MCAR.
+
+**Column deletion**: Remove columns with a high proportion of missing values, especially if those variables are not critical to the analysis.
+
+```{r}
+# Remove rows that contain missing values
+df_row_del <- na.omit(df)
+df_row_del
+
+# Removes columns that contain missing values
+df_col_del = df[, colSums(is.na(df)) == 0]
+df_col_del
+```
+
+**(2) Imputation** **methods**
+
+**Mean imputation**: Fill missing values with the mean of the variable. Useful when missing values are few and data is approximately normally distributed.
+
+**Median imputation**: Use the median for imputation, suitable for skewed data.
+
+**Mode imputation**: For categorical variables, fill missing values with the most frequent category.
+
+**Forward or backward fill**: Use previous or next values for imputation in time-series data.
+
+**Interpolation**: Use linear or polynomial interpolation for continuous ordered data.
+
+**Multiple imputation**: Use multiple models (like regression models) to impute missing values multiple times, generating multiple datasets. This approach reduces uncertainty.
+
+```{r}
+df <- data.frame(
+  id = 1:6,
+  x1 = c(19.8, 23.5, 22.4, 21.4, 20.7, 21.6),
+  x2 = c(3.2, 2.4, 3.2, NA, 3.5, 2.9)
+)
+# mean
+mutate(df, x2_filled = ifelse(is.na(x2), mean(x2, na.rm = T), x2))
+
+# median
+mutate(df, x2_filled = ifelse(is.na(x2), median(x2, na.rm = T), x2))
+
+# mode
+mode <- names(which.max(table(df$x2)))
+mutate(df, x2_filled = ifelse(is.na(x2), mode, x2))
+```
+
+```{r}
+# interpolation
+with(df, approx(x = which(!is.na(x2)), y = x2[!is.na(x2)], xout = seq_along(x2))$y)
+```
+
+```{r}
+# Multiple imputation using mice packages
+library(mice)
+mice(df, m = 3, method = 'pmm', maxit = 50, seed = 500, printFlag = F) |> 
+  complete()
+```
+
+::: example
+The data collected from 22 healthy middle-aged men include age (years), weight (kg), time required to run 2,000 meters (min), pulse rate during running (beats/min), maximum pulse rate during running (beats/min), and arterial oxygen partial pressure (kPa). The data are shown in Table 2. Among them, the pulse rate during running and the maximum pulse rate during running have 1 and 5 missing values, respectively. Analyze the missing values in the table.
+:::
+
+<div>
+
+<a href="datasets/ex33-01.csv" download="ex33-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+df <- read_csv("datasets/ex33-01.csv", show_col_types = F)
+```
+
+```{r}
+res <- aggr(df, plot = F)
+pluck(res, "missings") |> as_tibble()
+
+# Draw a summary map of missing values
+plot(
+  res, col = c('navyblue','red'), numbers = T, prop = F, combined = F,
+  varheight = T, border= "lightblue", cex.lab = 0.8, cex.axis = 0.8,
+  cex.numbers = 0.8, ylab=c("Histogram of missing data", "Pattern")
+)
+```
+
+```{r}
+# Plot the missing value matrix
+matrixplot(df, cex.lab = 0.8, cex.axis = 0.8)
+```
+
+```{r}
+library(naniar)
+vis_miss(df)       # Missing value visualization
+gg_miss_var(df)    # By missing variables
+```
+
+```{r}
+library(Amelia)
+missmap(
+  df, col = c("red", "black"), y.labels = paste0("s", c(1:22)), 
+  rank.order = F)
+```
+
+```{r}
+df |> 
+  mutate(flag = ifelse(is.na(max_pul), "Yes", "No")) |> 
+  select(y, flag) |> 
+  t.test(y ~ flag, data = _, var.equal = T)
+```
+
+The p value of the t-test is \> 0.05, the variable *`max_pul`* are consistent with the MCAR hypothesis.
+
+**(3) Model-based methods**
+
+Use machine learning models (e.g., regression, random forest) to predict missing values. • Regression Imputation: Use other variables to build a regression model to predict missing values. • K-Nearest Neighbors (KNN): Impute values based on the nearest neighbors, suitable for smaller datasets. • Random Forest Imputation: Use a random forest model to predict missing values.
+
+**(4) Modeling after imputation**
+
+For MAR and MNAR cases, simple imputation may be insufficient. Multiple imputation, which imputes values multiple times and creates multiple datasets, can account for imputation uncertainty. Results from models on these datasets are combined to produce a more robust outcome.
+
+**(5) Indicator method**
+
+In some cases, it may be appropriate to create a new binary feature indicating whether the value is missing or not, incorporating missingness information into the model. This method is suitable for MNAR data.
+
+**(6) Choosing a method**
+
+Minimal missing data (\< 5%): Simple methods (e.g., mean or deletion) can work effectively.
+
+Moderate missing data (5%-20%): Consider more sophisticated methods like interpolation, multiple imputation, or KNN.
+
+Substantial missing data (\> 20%): Multiple imputation or model-based imputation is recommended. If missing data is severe, consider gathering additional data.
+
 ### Outlier checks
 
 **1. Statistical methods**
 
--   **IQR method**
+**(1) IQR method**
 
 Outliers are typically defined as values that lie outside 1.5 times the interquartile range (IQR) from the first and third quartiles. This method is straightforward for numeric data.
 
@@ -187,7 +405,7 @@ x <- c(7, 8, 3, 12, 5, 8, 9, 35, 10)
 find_outliers_iqr(x)
 ```
 
--   **Z-score method**
+**(2) Z-score method**
 
 Outliers can also be detected by calculating Z-scores, which measure how many standard deviations an observation is from the mean. Here the threshold for outliers is a Z-score above 2.5 or below -2.5.
 
@@ -230,6 +448,23 @@ df |>
     outlier.shape = 1, outlier.size = 2)  +
   labs(x = " ") +
   theme(axis.text.x = element_blank())
+```
+
+```{r}
+df |> 
+  mutate(
+    Q1 = quantile(x, 0.25, na.rm = T),
+    Q3 = quantile(x, 0.75, na.rm = T),
+    IQR = Q3 - Q1,
+    lwr_bound = Q1 - 1.5 * IQR,  # 离群值下限
+    upr_bound = Q3 + 1.5 * IQR   # 离群值上线
+  ) |> 
+  mutate(
+    flag = ifelse(x < lwr_bound | x > upr_bound, T, F),
+    label = ifelse(flag, id, NA)
+  ) |> 
+  filter(flag) |> 
+  select("ID" = id, "value" = x) 
 ```
 
 ### Distribution checks
