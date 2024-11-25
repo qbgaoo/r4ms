@@ -107,6 +107,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -119,7 +162,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./community-interfere.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./community-intervention.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -349,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./community-interfere.html" class="sidebar-item-text sidebar-link active">
+  <a href="./community-intervention.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></span></a>
   </div>
 </li>
@@ -437,14 +480,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#prerequisite" id="toc-prerequisite" class="nav-link active" data-scroll-target="#prerequisite"><span class="header-section-number">29.1</span> Prerequisite</a></li>
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">29.2</span> Overview</a></li>
+  <li><a href="#basic-concepts" id="toc-basic-concepts" class="nav-link" data-scroll-target="#basic-concepts"><span class="header-section-number">29.2</span> Basic concepts</a>
+  <ul class="collapse">
+  <li><a href="#intracluster-correlation" id="toc-intracluster-correlation" class="nav-link" data-scroll-target="#intracluster-correlation"><span class="header-section-number">29.2.1</span> Intracluster correlation</a></li>
+  <li><a href="#design-effect" id="toc-design-effect" class="nav-link" data-scroll-target="#design-effect"><span class="header-section-number">29.2.2</span> Design effect</a></li>
+  <li><a href="#commonly-used-design-methods" id="toc-commonly-used-design-methods" class="nav-link" data-scroll-target="#commonly-used-design-methods"><span class="header-section-number">29.2.3</span> Commonly used design methods</a></li>
+  </ul></li>
+  <li><a href="#completely-randomized-community-intervention-trials" id="toc-completely-randomized-community-intervention-trials" class="nav-link" data-scroll-target="#completely-randomized-community-intervention-trials"><span class="header-section-number">29.3</span> Completely randomized community intervention trials</a>
+  <ul class="collapse">
+  <li><a href="#sample-size-estimation" id="toc-sample-size-estimation" class="nav-link" data-scroll-target="#sample-size-estimation"><span class="header-section-number">29.3.1</span> Sample size estimation</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/community-interfere.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/community-intervention.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./community-interfere.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./advanced-stat.html">Advanced methods</a></li><li class="breadcrumb-item"><a href="./community-intervention.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Community intervention trials</span></h1>
 </div>
@@ -467,16 +519,208 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="prerequisite" class="level2" data-number="29.1">
 <h2 data-number="29.1" class="anchored" data-anchor-id="prerequisite"><span class="header-section-number">29.1</span> Prerequisite</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visNetwork)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ahp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="overview" class="level2" data-number="29.2">
-<h2 data-number="29.2" class="anchored" data-anchor-id="overview"><span class="header-section-number">29.2</span> Overview</h2>
-<p>The term “community” here refers to a basic unit in cluster randomized trials or stratified sampling. It can denote a geographical area (e.g., villages, neighborhoods) or a group of individuals sharing certain characteristics (e.g., patients in the same hospital or students in the same school). In cluster randomized trials, a community represents the fundamental unit for random assignment of interventions.</p>
+<section id="basic-concepts" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="basic-concepts"><span class="header-section-number">29.2</span> Basic concepts</h2>
+<p>The term “community” here refers to a geographical area or a group of individuals sharing certain characteristics (e.g., patients in the same hospital or residents in the same neighborhood). In cluster randomized trials, a community represents the fundamental unit for random assignment of interventions. Community data often have a nested or hierarchical structure, for instance, patients nested within hospitals, which are nested within regions.</p>
+<section id="intracluster-correlation" class="level3" data-number="29.2.1">
+<h3 data-number="29.2.1" class="anchored" data-anchor-id="intracluster-correlation"><span class="header-section-number">29.2.1</span> Intracluster correlation</h3>
+<p>In community intervention trials, intracluster correlation and between-cluster variation are critical statistical concepts that significantly impact trial design, sample size estimation, and data analysis.</p>
+<p>The intracluster correlation measures the degree of similarity among individuals within the same community (cluster) in terms of the outcome variable. The intracluster correlation coefficient (ICC, denoted as <span class="math inline">\rho</span>) quantifies the degree of similarity or clustering within groups or communities. It is a measure used in studies with hierarchical or clustered data to describe how strongly individuals within the same group resemble each other in terms of the outcome variable.</p>
+<p>Between-cluster variation reflects the natural variability across clusters, regardless of the intervention. It accounts for inherent differences between communities, such as disparities in healthcare access, cultural practices, or baseline health conditions, which may influence outcomes even in the absence of an intervention.</p>
+<p>A high ICC indirectly indicates substantial between-cluster variation relative to total variability. A low ICC reflects that within-cluster variability dominates, meaning individuals within a cluster are less similar. High ICC decreases the effective sample size because individuals within the same cluster contribute less independent information. Between-cluster variation needs to be accounted for during both design and analysis phases to ensure accurate conclusions.</p>
+</section>
+<section id="design-effect" class="level3" data-number="29.2.2">
+<h3 data-number="29.2.2" class="anchored" data-anchor-id="design-effect"><span class="header-section-number">29.2.2</span> Design effect</h3>
+<p>ICC undermines the assumption of independence between individuals within the same cluster. Ignoring ICC can underestimate the required sample size, increasing the risk of type II error (failure to detect a true effect). Adjustment of sample size using the design effect (DE) is necessary. The adjusted sample size is <span class="math inline">n_{\text{adjusted}} = n_{\text{traditional}} \cdot \text{DE}</span>, where <span class="math inline">\text{DE} = 1 + (m - 1) \cdot \rho</span>, <span class="math inline">m</span> is the average cluster size.</p>
+<p>If ICC and between-cluster variation are ignored, standard errors of effect estimates may be underestimated, leading to inflated type I error rates (false positives). Traditional statistical methods may overstate the significance of intervention effects. For example, in a two-sample t-test comparing means, if <span class="math inline">n = 100</span> and <span class="math inline">\rho = 0.01</span>, the type I error probability at a significance level of <span class="math inline">\alpha = 0.05</span> will increase from 0.05 to 0.166, a more than threefold increase in the false-positive rate. For F-tests comparing multiple group means, the false-positive rate due to the design effect will be even higher.</p>
+<p>Advanced statistical techniques like multilevel models or generalized estimating equations are recommended, which can handle the clustering and ensure valid inference.</p>
+<p>When the outcome variable is continuous, the ICC <span class="math inline">\rho</span> can be estimated as the ratio of between-cluster variance to the total variance (the sum of between-cluster and within-cluster variances). Suppose there are <span class="math inline">k</span> clusters, each with m individuals. The mean square errors for between-cluster and within-cluster variations are denoted as <span class="math inline">\text{MS}_A</span> and <span class="math inline">\text{MS}_W</span>, respectively. The estimate for <span class="math inline">\rho</span> is given by the following ANOVA-based formula:</p>
+<p><span id="eq-icc-continuous"><span class="math display">
+\hat{\rho} = \frac{\text{MS}_A - \text{MS}_W}{\text{MS}_A + (m-1)\text{MS}_W} = \frac{S_A^2}{S_A^2 + S_W^2}
+\tag{29.1}</span></span></p>
+<p>Where <span class="math inline">S_A^2 = (\text{MS}_A - \text{MS}_W)/m</span> and <span class="math inline">S_W^2 = \text{MS}_W</span> are the observed variances between and within clusters.</p>
+<p>For cases where the number of individuals per cluster is unequal, let <span class="math inline">m_j</span> represent the number of individuals in the <span class="math inline">j</span>-th cluster (<span class="math inline">j = 1, 2, \ldots, k</span>). The effective average cluster size <span class="math inline">m_0</span> can be calculated as: <span class="math display">m_0 = \frac{1}{k-1} \left( M - \sum_{j=1}^k \frac{m_j^2}{M} \right) </span></p>
+<p>Where <span class="math inline">M = \sum_{j=1}^k m_j</span> is the total number of individuals across all clusters. This value <span class="math inline">m_0</span> can replace <span class="math inline">m</span> in <a href="#eq-icc-continuous" class="quarto-xref">Equation&nbsp;<span>29.1</span></a> for cases with unequal cluster sizes.</p>
+<p>When the outcome variable is binary (e.g., proportions such as incidence or mortality rates), the ICC <span class="math inline">\rho</span> can be estimated as follows:</p>
+<p><span class="math display">
+\hat{\rho} = \frac{\sum_{j=1}^k \hat{P}_j(1 - \hat{P}_j)}{k(m-1)\hat{P}(1 - \hat{P})}
+</span></p>
+<p>Where <span class="math inline">\hat{P}j</span>is the observed proportion in the <span class="math inline">j</span>-th cluster (<span class="math inline">j = 1, 2, \ldots, k</span>), <span class="math inline">\hat{P}</span> is the overall proportion across all clusters, calculated as <span class="math inline">\hat{P} = \sum{j=1}^k m_j \hat{P}_j / M</span>. In practice, the value of <span class="math inline">\rho</span> depends not only on the measurement results of the outcome indicator but also on the size of the clusters.</p>
+</section>
+<section id="commonly-used-design-methods" class="level3" data-number="29.2.3">
+<h3 data-number="29.2.3" class="anchored" data-anchor-id="commonly-used-design-methods"><span class="header-section-number">29.2.3</span> Commonly used design methods</h3>
+<p>When conducting a community intervention trial, three fundamental aspects must be considered: 1. Selection of the intervention 2. Inclusion and exclusion criteria for individuals and communities 3. Evaluation of intervention effects. Based on these considerations, it is essential to adopt a scientifically rational trial design. The most commonly used design methods for community intervention trials include:</p>
+<p><strong>1. Completely randomized design</strong></p>
+<p>The completely randomized design is the simplest and most straightforward design method used in community intervention trials. In this approach, communities (or clusters) are randomly assigned to the intervention group or the control group without considering any pre-existing characteristics of the communities.</p>
+<p>It is best suited for trials with a large number of communities where balancing baseline characteristics through randomization alone is sufficient. It is less ideal for trials with small sample sizes or significant between-community variability, where matched or stratified designs might be more appropriate.</p>
+<p><strong>2. Matched-pair design</strong></p>
+<p>The matched-pair design is a widely used method in community intervention trials to improve balance and reduce variability between intervention and control groups. In this design, communities are paired based on similar baseline characteristics, and one community from each pair is randomly assigned to the intervention group while the other is assigned to the control group.</p>
+<p>Communities are matched into pairs using pre-specified criteria such as demographics (e.g., population size, socioeconomic status) , geographic location, or pre-intervention outcome measures. It is particularly valuable in small-scale trials or when the number of clusters is limited, making balance between groups critical.</p>
+<p><strong>3. Stratified randomization design</strong></p>
+<p>The stratified randomization design is a method used in community intervention trials to ensure that the intervention and control groups are balanced with respect to specific characteristics that may influence the outcomes of interest. Communities are grouped into strata based on pre-determined characteristics, and randomization occurs separately within each stratum.</p>
+<p>Communities are divided into strata (groups) based on factors such as geographic region, population size, socioeconomic status, or baseline outcome measures. It is especially beneficial in large-scale trials with significant variability among communities, as it ensures balanced allocation while allowing for flexibility in group sizes and analytical methods.</p>
+</section>
+</section>
+<section id="completely-randomized-community-intervention-trials" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="completely-randomized-community-intervention-trials"><span class="header-section-number">29.3</span> Completely randomized community intervention trials</h2>
+<section id="sample-size-estimation" class="level3" data-number="29.3.1">
+<h3 data-number="29.3.1" class="anchored" data-anchor-id="sample-size-estimation"><span class="header-section-number">29.3.1</span> Sample size estimation</h3>
+<p>Sample size estimation in community intervention trials must consider intracluster correlation (ICC) because individuals within the same community tend to exhibit correlated responses. Ignoring ICC can lead to underestimation of the required sample size, increasing the risk of type II error and reducing statistical power.</p>
+<p><strong>1. Continuous outcome</strong></p>
+<p>For a two-arm trial comparing means:</p>
+<p><span class="math display">
+n = \frac{(Z_{1-\alpha/2} + Z_{1-\beta})^2 \cdot 2 \sigma^2}{(\mu_1 - \mu_2)^2} \cdot DE
+</span></p>
+<p>where <span class="math inline">Z_{1-\alpha/2}</span> is the critical value for the two-tailed test, <span class="math inline">Z_{1-\beta}</span> is the critical value for the power, <span class="math inline">\sigma^2</span> is the population variance, <span class="math inline">\mu_1</span> and <span class="math inline">\mu_2</span> are the pupulation means of two groups, <span class="math inline">DE</span> is the design effect, <span class="math inline">\text{DE} = 1 + (m - 1) \cdot \rho</span>, <span class="math inline">m</span> is the average cluster size.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ss_crd.means <span class="ot">&lt;-</span> <span class="cf">function</span>(d, sd, m, icc, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.9</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the design effect</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  de <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (m <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> icc</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> (<span class="dv">2</span> <span class="sc">*</span> sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> d<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust for design effect</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  n_adjusted <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(n <span class="sc">*</span> de)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(n_adjusted <span class="sc">/</span> m)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  NOTE <span class="ot">&lt;-</span>  <span class="st">"n is the sample size for each group, k is the number of communities for each group"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Two-arm trial comparing means sample size calculation"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> n_adjusted, <span class="at">k =</span> k, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> METHOD, <span class="at">note =</span> NOTE), </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="example">
+<strong>Example 1</strong> 
+<p>In a community intervention trial investigating salt restriction for the prevention of hypertension, diastolic blood pressure is used as the trial effect indicator to estimate the required sample size for the study. The standard deviation of diastolic blood pressure in the population is <span class="math inline">\delta = 8.886</span> mmHg, the intracluster correlation coefficient for diastolic blood pressure is <span class="math inline">\rho = 0.075</span>, the average number of individuals per community is 500, the expected trial effect size is a reduction of at least 3mmHg in the mean diastolic blood pressure in the intervention group compared to the control group after one year, a two-sided significance level of <span class="math inline">\alpha = 0.05</span>, statistical power of <span class="math inline">1 - \beta = 0.90</span>.</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">3</span>; sd <span class="ot">&lt;-</span> <span class="fl">8.886</span>; m <span class="ot">=</span> <span class="dv">500</span>; icc <span class="ot">&lt;-</span> <span class="fl">0.075</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ss_crd.means</span>(d, sd, m, icc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;      Two-arm trial comparing means sample size calculation 
+#&gt; 
+#&gt;               n = 7085
+#&gt;               k = 15
+#&gt;           alpha = 0.05
+#&gt;           power = 0.9
+#&gt; 
+#&gt; NOTE: n is the sample size for each group, k is the number of communities for each group</code></pre>
+</div>
+</div>
+<p><strong>2. Binary outcome</strong></p>
+<p>For a two-arm trial comparing proportions:</p>
+<p><span class="math display">
+n = \frac{(Z_{1-\alpha/2} + Z_{1-\beta})^2 {[p_1 (1-p_1) + p_2 (1-p_2)}]}{(p_1 - p_2)^2} \cdot DE
+</span></p>
+<p>Where <span class="math inline">p_1</span> and <span class="math inline">p_2</span> are the proportions in the intervention and control groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ss_crd.proportion <span class="ot">&lt;-</span> <span class="cf">function</span>(p1, p2, m, icc, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.8</span>) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the design effect</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  de <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (m <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> icc</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (p1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p1) <span class="sc">+</span> p2 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p2)) <span class="sc">/</span> (p1 <span class="sc">-</span> p2)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> <span class="co"># Adjust for design effect</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  n_adjusted <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(n <span class="sc">*</span> de)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(n_adjusted <span class="sc">/</span> m)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  NOTE <span class="ot">&lt;-</span>  <span class="st">"n is the sample size for each group, k is the number of communities for each group"</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Two-arm trial comparing proportions sample size calculation"</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> n_adjusted, <span class="at">k =</span> k, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">method =</span> METHOD, <span class="at">note =</span> NOTE), </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="example">
+<strong>Example 2</strong> 
+<p>In a school intervention trial on student smoking rates, the study aim is to compare the effects of two interventions: “school-wide no-smoking campaigns” and “standard smoking cessation education programs,” on smoking cessation rates among adolescents over two years. From 24 schools, the intracluster correlation coefficient is estimated to be <span class="math inline">\rho = 0.01</span>. In the trial design, 100 students are randomly selected from each school. The expected smoking cessation rates for the two groups are <span class="math inline">P_1 = 0.06</span> and <span class="math inline">P_2 = 0.04</span>, respectively. Under the conditions of a two-sided significance level <span class="math inline">\alpha = 0.05</span> and statistical power <span class="math inline">1 - \beta = 0.8</span>, how many individuals are required for each group?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fl">0.06</span>; p2 <span class="ot">&lt;-</span> <span class="fl">0.04</span>; m <span class="ot">&lt;-</span> <span class="dv">100</span>; icc <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ss_crd.proportion</span>(p1, p2, m, icc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;      Two-arm trial comparing proportions sample size calculation 
+#&gt; 
+#&gt;               n = 3702
+#&gt;               k = 38
+#&gt;           alpha = 0.05
+#&gt;           power = 0.8
+#&gt; 
+#&gt; NOTE: n is the sample size for each group, k is the number of communities for each group</code></pre>
+</div>
+</div>
+<p><strong>3. Incidence densities</strong></p>
+<p>Comparison of incidence densities is commonly used in studies analyzing events with low occurrence rates, measured as events per person-year, such as chronic disease incidence studies. In cluster-randomized trials, if the intervention’s effect is measured by a reduction in incidence density, the sample size calculation should account for person-years at risk within each community.</p>
+<p>Assume a study involving <span class="math inline">k</span> communities, each with <span class="math inline">m</span> individuals, randomly allocated to two groups. All individuals are followed for <span class="math inline">t</span> person-years. The goal is to determine whether <span class="math inline">H_0</span>: <span class="math inline">\lambda_1 = \lambda_2</span> holds under a specified significance level (<span class="math inline">\alpha</span>) and power (<span class="math inline">1 - \beta</span>). Here, <span class="math inline">\lambda_1</span> and <span class="math inline">\lambda_2</span> are the estimated incidence densities for the intervention and control groups, respectively. The variance of community-specific incidence rates within each group is denoted by <span class="math inline">\sigma_1^2</span> and <span class="math inline">\sigma_2^2</span> . Assuming an equal coefficient of variation ( CV ) between groups, defined as <span class="math inline">CV = \sigma_1 / \lambda_1 = \sigma_2 / \lambda_2</span>, the coefficient of variation can be interpreted as the intraclass correlation coefficient (<span class="math inline">\rho</span>) for continuous variables. A higher CV indicates greater community-level variation, leading to a larger required sample size.</p>
+<p>The estimated number of communities per group is given by:</p>
+<p><span class="math display">
+k = \frac{(Z_{\alpha} + Z_{\beta})^2 (\lambda_1 + \lambda_2)}{t \cdot (\lambda_1 - \lambda_2)^2} \cdot \text{VIF}
+</span></p>
+<p>where the variance inflation factor (VIF), accounting for the clustering effect, is calculated as:</p>
+<p><span class="math display">
+\text{VIF} = 1 + \frac{CV^2 (\lambda_1^2 + \lambda_2^2)}{\lambda_1 + \lambda_2} t.
+</span></p>
+<p>When there is no variation between communities ( CV = 0 ), VIF = 1 , and the formula simplifies to the conventional sample size calculation for cohort studies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ss_crd_incidence <span class="ot">&lt;-</span> <span class="cf">function</span>(p1, p2, cv, t, <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">power =</span> <span class="fl">0.8</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  z_alpha <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  z_beta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(power) </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  vif <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (cv<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (p1<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> p2<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">/</span> (p1 <span class="sc">+</span> p2) <span class="sc">*</span> t</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the sample size per group</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> (z_alpha <span class="sc">+</span> z_beta)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (p1 <span class="sc">+</span> p2)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  v <span class="ot">&lt;-</span> t <span class="sc">*</span> (p1 <span class="sc">-</span> p2)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  k <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(u <span class="sc">/</span> v <span class="sc">*</span> vif)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  NOTE <span class="ot">&lt;-</span>  <span class="st">"k is the number of communities for each group"</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  METHOD <span class="ot">&lt;-</span> <span class="st">"Two-arm trial comparing incidence density sample size calculation"</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">k =</span> k, <span class="at">lambda1 =</span> p1, <span class="at">lambda2 =</span> p2, <span class="at">alpha =</span> alpha, <span class="at">power =</span> power, </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">t =</span> t, <span class="at">cv =</span> cv, <span class="at">method =</span> METHOD, <span class="at">note =</span> NOTE), </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"power.htest"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="example">
+<strong>Example 3</strong> 
+<p>In a community intervention trial for the prevention of HIV infection, the incidence density (<span class="math inline">\lambda_2</span>) in the control group is 0.01 per person-year, while the expected incidence density in the intervention group (<span class="math inline">\lambda_1</span>) is reduced to 0.005 per person-year. The coefficient of variation (CV) is estimated to be 0.25. Assuming that 1,000 individuals are randomly selected from each community, with a follow-up period of 2 years, yielding 2,000 person-years of observation per community. Under a two-sided test with <span class="math inline">\alpha = 0.05</span> and a power of <span class="math inline">1 - \beta = 0.8</span>, how many communities are required for each group?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lambda1 <span class="ot">&lt;-</span> <span class="fl">0.01</span>; lambda2 <span class="ot">&lt;-</span> <span class="fl">0.005</span>; cv <span class="ot">&lt;-</span> <span class="fl">0.25</span>; t <span class="ot">&lt;-</span> <span class="dv">2000</span>        </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ss_crd_incidence</span>(lambda1, lambda2, cv, t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 
+#&gt;      Two-arm trial comparing incidence density sample size calculation 
+#&gt; 
+#&gt;               k = 5
+#&gt;         lambda1 = 0.01
+#&gt;         lambda2 = 0.005
+#&gt;           alpha = 0.05
+#&gt;           power = 0.8
+#&gt;               t = 2000
+#&gt;              cv = 0.25
+#&gt; 
+#&gt; NOTE: k is the number of communities for each group</code></pre>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1100,5 +1344,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/community-interfere.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://qbgaoo.github.io/r4ms/edit/main/community-intervention.qmd" class="toc-action"><i class="bi bi-git"></i>Edit this page</a></li><li><a href="https://qbgaoo.github.io/r4ms/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

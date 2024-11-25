@@ -231,6 +231,7 @@ The `mcar()` function from the `mice` package can be used to test whether missin
 ```{r}
 data(nhanes, package = "mice")
 res <- mice::mcar(nhanes, method = "auto") 
+res
 ```
 
 The test is *not significant*, conclude that there is no evidence against multivariate normality of the data, nor against MCAR.

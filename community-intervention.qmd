@@ -1,0 +1,220 @@
+# Community intervention trials
+
+```{r}
+#| echo: false
+source("_common.R")
+```
+
+Community intervention trials are used to evaluate the impact of interventions at the community or group level, often applied in public health to assess the effectiveness of policies, education programs, or preventive measures. Below is a detailed guide for designing such studies.
+
+## Prerequisite
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+## Basic concepts
+
+The term “community” here refers to a geographical area or a group of individuals sharing certain characteristics (e.g., patients in the same hospital or residents in the same neighborhood). In cluster randomized trials, a community represents the fundamental unit for random assignment of interventions. Community data often have a nested or hierarchical structure, for instance, patients nested within hospitals, which are nested within regions.
+
+### Intracluster correlation
+
+In community intervention trials, intracluster correlation and between-cluster variation are critical statistical concepts that significantly impact trial design, sample size estimation, and data analysis.
+
+The intracluster correlation measures the degree of similarity among individuals within the same community (cluster) in terms of the outcome variable. The intracluster correlation coefficient (ICC, denoted as $\rho$) quantifies the degree of similarity or clustering within groups or communities. It is a measure used in studies with hierarchical or clustered data to describe how strongly individuals within the same group resemble each other in terms of the outcome variable.
+
+Between-cluster variation reflects the natural variability across clusters, regardless of the intervention. It accounts for inherent differences between communities, such as disparities in healthcare access, cultural practices, or baseline health conditions, which may influence outcomes even in the absence of an intervention.
+
+A high ICC indirectly indicates substantial between-cluster variation relative to total variability. A low ICC reflects that within-cluster variability dominates, meaning individuals within a cluster are less similar. High ICC decreases the effective sample size because individuals within the same cluster contribute less independent information. Between-cluster variation needs to be accounted for during both design and analysis phases to ensure accurate conclusions.
+
+### Design effect 
+
+ICC undermines the assumption of independence between individuals within the same cluster. Ignoring ICC can underestimate the required sample size, increasing the risk of type II error (failure to detect a true effect). Adjustment of sample size using the design effect (DE) is necessary. The adjusted sample size is $n_{\text{adjusted}} = n_{\text{traditional}} \cdot \text{DE}$, where $\text{DE} = 1 + (m - 1) \cdot \rho$, $m$ is the average cluster size.
+
+If ICC and between-cluster variation are ignored, standard errors of effect estimates may be underestimated, leading to inflated type I error rates (false positives). Traditional statistical methods may overstate the significance of intervention effects. For example, in a two-sample t-test comparing means, if $n = 100$ and $\rho = 0.01$, the type I error probability at a significance level of $\alpha = 0.05$ will increase from 0.05 to 0.166, a more than threefold increase in the false-positive rate. For F-tests comparing multiple group means, the false-positive rate due to the design effect will be even higher.
+
+Advanced statistical techniques like multilevel models or generalized estimating equations are recommended, which can handle the clustering and ensure valid inference.
+
+When the outcome variable is continuous, the ICC $\rho$ can be estimated as the ratio of between-cluster variance to the total variance (the sum of between-cluster and within-cluster variances). Suppose there are $k$ clusters, each with m individuals. The mean square errors for between-cluster and within-cluster variations are denoted as $\text{MS}_A$ and $\text{MS}_W$, respectively. The estimate for $\rho$ is given by the following ANOVA-based formula:
+
+$$
+\hat{\rho} = \frac{\text{MS}_A - \text{MS}_W}{\text{MS}_A + (m-1)\text{MS}_W} = \frac{S_A^2}{S_A^2 + S_W^2}
+$$ {#eq-icc-continuous}
+
+Where $S_A^2 = (\text{MS}_A - \text{MS}_W)/m$ and $S_W^2 = \text{MS}_W$ are the observed variances between and within clusters.
+
+For cases where the number of individuals per cluster is unequal, let $m_j$ represent the number of individuals in the $j$-th cluster ($j = 1, 2, \ldots, k$). The effective average cluster size $m_0$ can be calculated as: $$m_0 = \frac{1}{k-1} \left( M - \sum_{j=1}^k \frac{m_j^2}{M} \right) $$
+
+Where $M = \sum_{j=1}^k m_j$ is the total number of individuals across all clusters. This value $m_0$ can replace $m$ in @eq-icc-continuous for cases with unequal cluster sizes.
+
+When the outcome variable is binary (e.g., proportions such as incidence or mortality rates), the ICC $\rho$ can be estimated as follows:
+
+$$
+\hat{\rho} = \frac{\sum_{j=1}^k \hat{P}_j(1 - \hat{P}_j)}{k(m-1)\hat{P}(1 - \hat{P})}
+$$
+
+Where $\hat{P}j$is the observed proportion in the $j$-th cluster ($j = 1, 2, \ldots, k$), $\hat{P}$ is the overall proportion across all clusters, calculated as $\hat{P} = \sum{j=1}^k m_j \hat{P}_j / M$. In practice, the value of $\rho$ depends not only on the measurement results of the outcome indicator but also on the size of the clusters.
+
+### Commonly used design methods
+
+When conducting a community intervention trial, three fundamental aspects must be considered: 1. Selection of the intervention 2. Inclusion and exclusion criteria for individuals and communities 3. Evaluation of intervention effects. Based on these considerations, it is essential to adopt a scientifically rational trial design. The most commonly used design methods for community intervention trials include:
+
+**1. Completely randomized design**
+
+The completely randomized design is the simplest and most straightforward design method used in community intervention trials. In this approach, communities (or clusters) are randomly assigned to the intervention group or the control group without considering any pre-existing characteristics of the communities.
+
+It is best suited for trials with a large number of communities where balancing baseline characteristics through randomization alone is sufficient. It is less ideal for trials with small sample sizes or significant between-community variability, where matched or stratified designs might be more appropriate.
+
+**2. Matched-pair design**
+
+The matched-pair design is a widely used method in community intervention trials to improve balance and reduce variability between intervention and control groups. In this design, communities are paired based on similar baseline characteristics, and one community from each pair is randomly assigned to the intervention group while the other is assigned to the control group.
+
+Communities are matched into pairs using pre-specified criteria such as demographics (e.g., population size, socioeconomic status) , geographic location, or pre-intervention outcome measures. It is particularly valuable in small-scale trials or when the number of clusters is limited, making balance between groups critical.
+
+**3. Stratified randomization design**
+
+The stratified randomization design is a method used in community intervention trials to ensure that the intervention and control groups are balanced with respect to specific characteristics that may influence the outcomes of interest. Communities are grouped into strata based on pre-determined characteristics, and randomization occurs separately within each stratum.
+
+Communities are divided into strata (groups) based on factors such as geographic region, population size, socioeconomic status, or baseline outcome measures. It is especially beneficial in large-scale trials with significant variability among communities, as it ensures balanced allocation while allowing for flexibility in group sizes and analytical methods.
+
+## Completely randomized community intervention trials
+
+### Sample size estimation
+
+Sample size estimation in community intervention trials must consider intracluster correlation (ICC) because individuals within the same community tend to exhibit correlated responses. Ignoring ICC can lead to underestimation of the required sample size, increasing the risk of type II error and reducing statistical power.
+
+**1. Continuous outcome**
+
+For a two-arm trial comparing means:
+
+$$
+n = \frac{(Z_{1-\alpha/2} + Z_{1-\beta})^2 \cdot 2 \sigma^2}{(\mu_1 - \mu_2)^2} \cdot DE
+$$
+
+where $Z_{1-\alpha/2}$ is the critical value for the two-tailed test, $Z_{1-\beta}$ is the critical value for the power, $\sigma^2$ is the population variance, $\mu_1$ and $\mu_2$ are the pupulation means of two groups, $DE$ is the design effect, $\text{DE} = 1 + (m - 1) \cdot \rho$, $m$ is the average cluster size.
+
+```{r}
+ss_crd.means <- function(d, sd, m, icc, alpha = 0.05, power = 0.9) {
+  z_alpha <- qnorm(1 - alpha / 2)
+  z_beta <- qnorm(power)
+  
+  # Calculate the design effect
+  de <- 1 + (m - 1) * icc
+  n <- (2 * sd^2 * (z_alpha + z_beta)^2) / d^2
+  
+  # Adjust for design effect
+  n_adjusted <- ceiling(n * de)
+  k <- ceiling(n_adjusted / m)
+  
+  NOTE <-  "n is the sample size for each group, k is the number of communities for each group"
+  METHOD <- "Two-arm trial comparing means sample size calculation"
+  structure(
+    list(
+      n = n_adjusted, k = k, alpha = alpha, power = power, 
+      method = METHOD, note = NOTE), 
+    class = "power.htest")
+}
+```
+
+::: example
+In a community intervention trial investigating salt restriction for the prevention of hypertension, diastolic blood pressure is used as the trial effect indicator to estimate the required sample size for the study. The standard deviation of diastolic blood pressure in the population is $\delta = 8.886$ mmHg, the intracluster correlation coefficient for diastolic blood pressure is $\rho = 0.075$, the average number of individuals per community is 500, the expected trial effect size is a reduction of at least 3mmHg in the mean diastolic blood pressure in the intervention group compared to the control group after one year, a two-sided significance level of $\alpha = 0.05$, statistical power of $1 - \beta = 0.90$.
+:::
+
+```{r}
+d <- 3; sd <- 8.886; m = 500; icc <- 0.075
+ss_crd.means(d, sd, m, icc)
+```
+
+**2. Binary outcome**
+
+For a two-arm trial comparing proportions:
+
+$$
+n = \frac{(Z_{1-\alpha/2} + Z_{1-\beta})^2 {[p_1 (1-p_1) + p_2 (1-p_2)}]}{(p_1 - p_2)^2} \cdot DE
+$$
+
+Where $p_1$ and $p_2$ are the proportions in the intervention and control groups.
+
+```{r}
+ss_crd.proportion <- function(p1, p2, m, icc, alpha = 0.05, power = 0.8) {
+  z_alpha <- qnorm(1 - alpha / 2)
+  z_beta <- qnorm(power)
+  
+  # Calculate the design effect
+  de <- 1 + (m - 1) * icc
+  n <- (z_alpha + z_beta)^2 * (p1 * (1 - p1) + p2 * (1 - p2)) / (p1 - p2)^2
+  
+ # Adjust for design effect
+  n_adjusted <- ceiling(n * de)
+  k <- ceiling(n_adjusted / m)
+
+  NOTE <-  "n is the sample size for each group, k is the number of communities for each group"
+  METHOD <- "Two-arm trial comparing proportions sample size calculation"
+  structure(
+    list(
+      n = n_adjusted, k = k, alpha = alpha, power = power, 
+      method = METHOD, note = NOTE), 
+    class = "power.htest")
+}
+```
+
+::: example
+In a school intervention trial on student smoking rates, the study aim is to compare the effects of two interventions: “school-wide no-smoking campaigns” and “standard smoking cessation education programs,” on smoking cessation rates among adolescents over two years. From 24 schools, the intracluster correlation coefficient is estimated to be $\rho = 0.01$. In the trial design, 100 students are randomly selected from each school. The expected smoking cessation rates for the two groups are $P_1 = 0.06$ and $P_2 = 0.04$, respectively. Under the conditions of a two-sided significance level $\alpha = 0.05$ and statistical power $1 - \beta = 0.8$, how many individuals are required for each group?
+:::
+
+```{r}
+p1 <- 0.06; p2 <- 0.04; m <- 100; icc <- 0.01
+ss_crd.proportion(p1, p2, m, icc)
+```
+
+**3. Incidence densities**
+
+Comparison of incidence densities is commonly used in studies analyzing events with low occurrence rates, measured as events per person-year, such as chronic disease incidence studies. In cluster-randomized trials, if the intervention’s effect is measured by a reduction in incidence density, the sample size calculation should account for person-years at risk within each community.
+
+Assume a study involving $k$ communities, each with $m$ individuals, randomly allocated to two groups. All individuals are followed for $t$ person-years. The goal is to determine whether $H_0$: $\lambda_1 = \lambda_2$ holds under a specified significance level ($\alpha$) and power ($1 - \beta$). Here, $\lambda_1$ and $\lambda_2$ are the estimated incidence densities for the intervention and control groups, respectively. The variance of community-specific incidence rates within each group is denoted by $\sigma_1^2$ and $\sigma_2^2$ . Assuming an equal coefficient of variation ( CV ) between groups, defined as $CV = \sigma_1 / \lambda_1 = \sigma_2 / \lambda_2$, the coefficient of variation can be interpreted as the intraclass correlation coefficient ($\rho$) for continuous variables. A higher CV indicates greater community-level variation, leading to a larger required sample size.
+
+The estimated number of communities per group is given by:
+
+$$
+k = \frac{(Z_{\alpha} + Z_{\beta})^2 (\lambda_1 + \lambda_2)}{t \cdot (\lambda_1 - \lambda_2)^2} \cdot \text{VIF}
+$$
+
+where the variance inflation factor (VIF), accounting for the clustering effect, is calculated as:
+
+$$
+\text{VIF} = 1 + \frac{CV^2 (\lambda_1^2 + \lambda_2^2)}{\lambda_1 + \lambda_2} t.
+$$
+
+When there is no variation between communities ( CV = 0 ), VIF = 1 , and the formula simplifies to the conventional sample size calculation for cohort studies.
+
+```{r}
+ss_crd_incidence <- function(p1, p2, cv, t, alpha = 0.05, power = 0.8) {
+  z_alpha <- qnorm(1 - alpha / 2)
+  z_beta <- qnorm(power) 
+  vif <- 1 + (cv^2 * (p1^2 + p2^2)) / (p1 + p2) * t
+  
+  # Calculate the sample size per group
+  u <- (z_alpha + z_beta)^2 * (p1 + p2)
+  v <- t * (p1 - p2)^2
+  k <- ceiling(u / v * vif)
+  
+  NOTE <-  "k is the number of communities for each group"
+  METHOD <- "Two-arm trial comparing incidence density sample size calculation"
+  structure(
+    list(
+      k = k, lambda1 = p1, lambda2 = p2, alpha = alpha, power = power, 
+      t = t, cv = cv, method = METHOD, note = NOTE), 
+    class = "power.htest")
+}
+```
+
+::: example
+In a community intervention trial for the prevention of HIV infection, the incidence density ($\lambda_2$) in the control group is 0.01 per person-year, while the expected incidence density in the intervention group ($\lambda_1$) is reduced to 0.005 per person-year. The coefficient of variation (CV) is estimated to be 0.25. Assuming that 1,000 individuals are randomly selected from each community, with a follow-up period of 2 years, yielding 2,000 person-years of observation per community. Under a two-sided test with $\alpha = 0.05$ and a power of $1 - \beta = 0.8$, how many communities are required for each group?
+:::
+
+```{r}
+lambda1 <- 0.01; lambda2 <- 0.005; cv <- 0.25; t <- 2000        
+
+ss_crd_incidence(lambda1, lambda2, cv, t)
+```
