@@ -28,7 +28,7 @@ Between-cluster variation reflects the natural variability across clusters, rega
 
 A high ICC indirectly indicates substantial between-cluster variation relative to total variability. A low ICC reflects that within-cluster variability dominates, meaning individuals within a cluster are less similar. High ICC decreases the effective sample size because individuals within the same cluster contribute less independent information. Between-cluster variation needs to be accounted for during both design and analysis phases to ensure accurate conclusions.
 
-### Design effect 
+### Design effect
 
 ICC undermines the assumption of independence between individuals within the same cluster. Ignoring ICC can underestimate the required sample size, increasing the risk of type II error (failure to detect a true effect). Adjustment of sample size using the design effect (DE) is necessary. The adjusted sample size is $n_{\text{adjusted}} = n_{\text{traditional}} \cdot \text{DE}$, where $\text{DE} = 1 + (m - 1) \cdot \rho$, $m$ is the average cluster size.
 
@@ -217,4 +217,52 @@ In a community intervention trial for the prevention of HIV infection, the incid
 lambda1 <- 0.01; lambda2 <- 0.005; cv <- 0.25; t <- 2000        
 
 ss_crd_incidence(lambda1, lambda2, cv, t)
+```
+
+::: example
+In a community intervention trial evaluating the “Whole-School Smoking Ban Initiative” and the “Routine Smoking Cessation Curriculum” for preventing smoking among primary school students, 24 schools were randomly assigned to two groups, with 12 schools in each group. One group implemented the “Whole-School Smoking Ban Initiative,” while the other implemented the “Routine Smoking Cessation Curriculum.” The intervention effect was evaluated using students’ self-reported smoking status two years after the trial, where “0” indicates non-smoking and “1” indicates smoking. The results are summarized in the dataset below. Please analyze whether the overall smoking rates of the two groups are the same.
+:::
+
+<div>
+
+<a href="datasets/ex29-01.csv" download="ex29-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a>
+
+</div>
+
+```{r}
+data <- read_csv("datasets/ex29-01.csv", col_types = list(group = col_factor())) 
+```
+
+```{r}
+df <- data |>
+  mutate(n0 = n - n1, n = NULL) |> 
+  pivot_longer(
+    cols = contains("n"),
+    names_to = "smoking",
+    names_prefix = "n",
+    names_transform = list(smoking = as.factor),
+    values_to = "n"
+  ) |> 
+  uncount(n) 
+```
+
+```{r}
+library(lme4)
+
+model <- glmer(
+  smoking ~ group + (1 | id), 
+  data = df,
+  family = binomial(link = "logit")) 
+model |> summary()
+```
+
+```{r}
+library(brms)
+
+brms_model <- brm(
+  smoking ~ group + (1 | id), 
+  data = df,
+  family = bernoulli(link = "logit")
+)
+summary(brms_model)
 ```
