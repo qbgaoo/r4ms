@@ -255,14 +255,3 @@ model <- glmer(
   family = binomial(link = "logit")) 
 model |> summary()
 ```
-
-```{r}
-library(brms)
-
-brms_model <- brm(
-  smoking ~ group + (1 | id), 
-  data = df,
-  family = bernoulli(link = "logit")
-)
-summary(brms_model)
-```

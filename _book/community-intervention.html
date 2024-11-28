@@ -718,6 +718,78 @@ k = \frac{(Z_{\alpha} + Z_{\beta})^2 (\lambda_1 + \lambda_2)}{t \cdot (\lambda_1
 #&gt; NOTE: k is the number of communities for each group</code></pre>
 </div>
 </div>
+<div class="example">
+<strong>Example 4</strong> 
+<p>In a community intervention trial evaluating the “Whole-School Smoking Ban Initiative” and the “Routine Smoking Cessation Curriculum” for preventing smoking among primary school students, 24 schools were randomly assigned to two groups, with 12 schools in each group. One group implemented the “Whole-School Smoking Ban Initiative,” while the other implemented the “Routine Smoking Cessation Curriculum.” The intervention effect was evaluated using students’ self-reported smoking status two years after the trial, where “0” indicates non-smoking and “1” indicates smoking. The results are summarized in the dataset below. Please analyze whether the overall smoking rates of the two groups are the same.</p>
+</div>
+<div>
+<p><a href="datasets/ex29-01.csv" download="ex29-01.csv" class="btn btn-success"> <i class="bi bi-database-fill-down"></i> Download data </a></p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"datasets/ex29-01.csv"</span>, <span class="at">col_types =</span> <span class="fu">list</span>(<span class="at">group =</span> <span class="fu">col_factor</span>())) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n0 =</span> n <span class="sc">-</span> n1, <span class="at">n =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">contains</span>(<span class="st">"n"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"smoking"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"n"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">smoking =</span> as.factor),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"n"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">uncount</span>(n) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; 
+#&gt; Attaching package: 'Matrix'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; The following objects are masked from 'package:tidyr':
+#&gt; 
+#&gt;     expand, pack, unpack</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  smoking <span class="sc">~</span> group <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> id), </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>)) </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>model <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
+#&gt;   Approximation) [glmerMod]
+#&gt;  Family: binomial  ( logit )
+#&gt; Formula: smoking ~ group + (1 | id)
+#&gt;    Data: df
+#&gt; 
+#&gt;      AIC      BIC   logLik deviance df.resid 
+#&gt;   1159.3   1177.1   -576.6   1153.3     2817 
+#&gt; 
+#&gt; Scaled residuals: 
+#&gt;     Min      1Q  Median      3Q     Max 
+#&gt; -0.3116 -0.2590 -0.2191 -0.1836  6.6598 
+#&gt; 
+#&gt; Random effects:
+#&gt;  Groups Name        Variance Std.Dev.
+#&gt;  id     (Intercept) 0.1645   0.4055  
+#&gt; Number of obs: 2820, groups:  id, 12
+#&gt; 
+#&gt; Fixed effects:
+#&gt;             Estimate Std. Error z value Pr(&gt;|z|)    
+#&gt; (Intercept)  -3.2125     0.1885 -17.043   &lt;2e-16 ***
+#&gt; group2        0.4019     0.1781   2.257    0.024 *  
+#&gt; ---
+#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#&gt; 
+#&gt; Correlation of Fixed Effects:
+#&gt;        (Intr)
+#&gt; group2 -0.585</code></pre>
+</div>
+</div>
 
 
 </section>
