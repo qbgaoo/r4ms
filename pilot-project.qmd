@@ -23,8 +23,7 @@ adsl |>
 ```
 
 ```{r}
-adsl |> 
-  glimpse()
+adsl |> glimpse()
 ```
 
 `glimpse()` makes it possible to see every column in a data frame. It's a little like `str()` applied to a data frame but it tries to show you as much data as possible.
@@ -32,6 +31,5 @@ adsl |>
 Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use `janitor::clean_names()` to turn all column names of data frame `adsl` into snake case.
 
 ```{r}
-adsl |> 
-  janitor::clean_names()
+adsl |> janitor::clean_names()
 ```
