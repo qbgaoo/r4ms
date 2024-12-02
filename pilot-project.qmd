@@ -7,6 +7,7 @@ In this book, we used publicly available CDISC pilot study data, which is access
 The SDTM-ADaM Pilot Project datasets were created to demonstrate the process of converting clinical trial data into formats that comply with the Study Data Tabulation Model (SDTM) and Analysis Data Model (ADaM) standards, which are set by the Clinical Data Interchange Standards Consortium (CDISC). These datasets are used to test, validate, and illustrate how to implement CDISC standards in real-world scenarios, helping pharmaceutical companies and regulatory agencies like the FDA ensure data quality and consistency in clinical trials.
 
 ```{r}
+#| message: false
 library(haven)
 library(tidyverse)
 ```
@@ -19,7 +20,6 @@ adsl |>
   filter(EFFFL == "Y") |> 
   group_by(ARM) |> 
   summarise(n = n())
-  
 ```
 
 ```{r}
@@ -30,3 +30,8 @@ adsl |>
 `glimpse()` makes it possible to see every column in a data frame. It's a little like `str()` applied to a data frame but it tries to show you as much data as possible.
 
 Once you read data in, the first step usually involves transforming it in some way to make it easier to work with in the rest of your analysis. Firstly, we use `janitor::clean_names()` to turn all column names of data frame `adsl` into snake case.
+
+```{r}
+adsl |> 
+  janitor::clean_names()
+```
